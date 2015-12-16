@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="0f849f20891e4e79b6eee179224f28ac" Name="Diagram1">
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.Campaign" Width="1.5" PointX="0.75" PointY="8.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.CampaignContent" Width="1.5" PointX="3" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.CampaignMember" Width="1.5" PointX="3" PointY="10" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.ClientConfig" Width="1.5" PointX="10.625" PointY="2.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.Content" Width="1.5" PointX="0.75" PointY="1.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.Survey" Width="1.5" PointX="3" PointY="6.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.SurveyQuestion" Width="1.5" PointX="10.5" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.UserContent" Width="1.5" PointX="5.25" PointY="2.5" IsExpanded="true" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_Campaign_CampaignContent" ManuallyRouted="false" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_Campaign_CampaignMember" ManuallyRouted="false" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_CampaignContent_UserContent" ManuallyRouted="false" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_Content_CampaignContent" ManuallyRouted="false" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_Content_Survey" ManuallyRouted="false" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_Content_UserContent" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.ContentDisplayRule" Width="1.5" PointX="5.875" PointY="8.875" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.ContentStatu" Width="1.5" PointX="5.25" PointY="11" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.ContentType" Width="1.5" PointX="7.375" PointY="2.5" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.ContentTypeState" Width="1.5" PointX="8.125" PointY="5.25" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.UserContentPreference" Width="1.5" PointX="10.375" PointY="8.625" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_ContentType_Content" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_ContentStatus_UserContent" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_ContStatus_ContTypeState" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_ContType_ContTypeState" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.Enrollment" Width="1.5" PointX="7.375" PointY="11.75" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.ContentTranslation" Width="1.5" PointX="13.125" PointY="3.25" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_Content_ContentTranslation" />
+        <EntityTypeShape EntityType="CCH_CustomerDemoNCCTModel.Locale" Width="1.5" PointX="13.125" PointY="8" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_Locale_ContentTranslation" />
+        <AssociationConnector Association="CCH_CustomerDemoNCCTModel.FK_Locale_UserContentPreference" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

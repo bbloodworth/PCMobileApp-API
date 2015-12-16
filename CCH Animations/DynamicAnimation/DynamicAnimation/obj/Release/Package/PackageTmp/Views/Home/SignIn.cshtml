@@ -1,0 +1,101 @@
+﻿@model DynamicAnimation.Models.SignInModel
+
+@{
+    ViewBag.Title = "SignIn";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => model.Id)
+
+    @*<h4>
+            The information you are about to see is personalized and is intended only for the recipient of this e-mail.
+            Please confirm your identity by entering the following information:
+        </h4>
+
+        <div class="form-horizontal">
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.BirthDate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.BirthDate)
+                    @Html.ValidationMessageFor(model => model.BirthDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Ssn, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Ssn)
+                    @Html.ValidationMessageFor(model => model.Ssn)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Sign In" class="btn btn-default" />
+                </div>
+            </div>
+        </div>*@
+
+    <style>
+        #leftColumn {
+            float: left;
+            width: 50%;
+            padding-left: 15%;
+        }
+        #leftColumn label {
+            margin-bottom: 1%;
+        }
+        #rightColumn {
+            padding-right: 0%;
+        }
+        #rightColumn input {
+            margin-bottom: 1%;
+        }
+        #header {
+            padding-top: 3%;
+            padding-bottom: 2%;
+            text-align: center;
+        }
+        #footer {
+            clear: both;
+            text-align: center;
+            padding-top: 3%;
+        }
+    </style>
+
+    <div id="container">
+        <div id="header">
+            The information you are about to see is personalized and is intended only for the recipient of this e-mail.<br/>
+            Please confirm your identity by entering the following information:<br/>
+        </div>
+        <div id="leftColumn">
+            @Html.LabelFor(model => model.LastName)<br/>
+            @Html.LabelFor(model => model.BirthDate)<br/>
+            @Html.LabelFor(model => model.Ssn)<br/>
+        </div>
+        <div id="rightColumn">
+            @Html.EditorFor(model => model.LastName)
+            @Html.ValidationMessageFor(model => model.LastName)<br/>
+            @Html.EditorFor(model => model.BirthDate)
+            @Html.ValidationMessageFor(model => model.BirthDate)<br />
+            @Html.EditorFor(model => model.Ssn)
+            @Html.ValidationMessageFor(model => model.Ssn)<br/>
+        </div>
+        <div id="footer">
+            <input type="submit" value="View Your Personalized Animation" class="greenButton"/>
+            <br/>
+            <br/>
+            @Html.ActionLink("Back to Intro", "Index",
+                routeValues: null, htmlAttributes: new {@style = "clear: both;"})
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

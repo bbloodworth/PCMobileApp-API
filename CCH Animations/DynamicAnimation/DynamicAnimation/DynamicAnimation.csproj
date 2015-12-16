@@ -1,0 +1,542 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C0E79067-EC83-4EEC-88D9-B913282D9D47}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DynamicAnimation</RootNamespace>
+    <AssemblyName>DynamicAnimation</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <MvcBuildViews>false</MvcBuildViews>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <ApplicationInsightsResourceId>/subscriptions/640f218a-cbcc-4606-9cb6-72a315073d5d/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/DynamicAnimation</ApplicationInsightsResourceId>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.ApplicationInsights">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.0.11.1-build00694\lib\net40\Microsoft.ApplicationInsights.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights.Extensibility.RuntimeTelemetry">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.RuntimeTelemetry.0.11.1-build00694\lib\net45\Microsoft.ApplicationInsights.Extensibility.RuntimeTelemetry.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.ApplicationInsights.Extensibility.Web">
+      <HintPath>..\packages\Microsoft.ApplicationInsights.Web.0.11.1-build00694\lib\net45\Microsoft.ApplicationInsights.Extensibility.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Data.Edm, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Edm.5.6.2\lib\net40\Microsoft.Data.Edm.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.OData, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.OData.5.6.2\lib\net40\Microsoft.Data.OData.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Data.Services.Client, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Microsoft.Data.Services.Client.5.6.2\lib\net40\Microsoft.Data.Services.Client.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Diagnostics.Tracing.EventSource">
+      <HintPath>..\packages\Microsoft.Diagnostics.Tracing.EventSource.Redist.1.0.24\lib\net40\Microsoft.Diagnostics.Tracing.EventSource.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Threading.Tasks.Extensions.Desktop">
+      <HintPath>..\packages\Microsoft.Bcl.Async.1.0.168\lib\net40\Microsoft.Threading.Tasks.Extensions.Desktop.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Common">
+      <HintPath>..\packages\Microsoft.WindowsAzure.Common.1.4.1\lib\net45\Microsoft.WindowsAzure.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Common.NetFramework">
+      <HintPath>..\packages\Microsoft.WindowsAzure.Common.1.4.1\lib\net45\Microsoft.WindowsAzure.Common.NetFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Configuration">
+      <HintPath>..\packages\Microsoft.WindowsAzure.ConfigurationManager.1.8.0.0\lib\net35-full\Microsoft.WindowsAzure.Configuration.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Management.Storage">
+      <HintPath>..\packages\Microsoft.WindowsAzure.Management.Storage.3.2.2\lib\net40\Microsoft.WindowsAzure.Management.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.WindowsAzure.Storage">
+      <HintPath>..\packages\WindowsAzure.Storage.4.3.0\lib\net40\Microsoft.WindowsAzure.Storage.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net" />
+    <Reference Include="System.Net.Http.Extensions">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\net45\System.Net.Http.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Primitives">
+      <HintPath>..\packages\Microsoft.Net.Http.2.2.22\lib\net45\System.Net.Http.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Spatial, Version=5.6.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\System.Spatial.5.6.2\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Abstractions" />
+    <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http">
+    </Reference>
+    <Reference Include="System.Net.Http.WebRequest">
+    </Reference>
+    <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc, Version=__MvcPagesVersion__, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.2\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Optimization">
+      <HintPath>..\packages\Microsoft.AspNet.Web.Optimization.1.1.3\lib\net40\System.Web.Optimization.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.2\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Deployment, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.WebPages.Razor, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <Private>True</Private>
+      <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease">
+      <Private>True</Private>
+      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
+    </Reference>
+    <Reference Include="Antlr3.Runtime">
+      <Private>True</Private>
+      <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http.Formatting">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\BundleConfig.cs" />
+    <Compile Include="App_Start\FilterConfig.cs" />
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\AzureBlobManager.cs" />
+    <Compile Include="Common\BaseService.cs" />
+    <Compile Include="Common\CchExtensions.cs" />
+    <Compile Include="Common\HelperService.cs" />
+    <Compile Include="Common\WebApiService.cs" />
+    <Compile Include="Controllers\CardController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProxyController.cs" />
+    <Compile Include="Controllers\ViewSwitchController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Handlers\CorsHandler.cs" />
+    <Compile Include="Handlers\ProxyHandler.cs" />
+    <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AuthMemberDataRequest.cs" />
+    <Compile Include="Models\BenefitPlan1210BareModel.cs" />
+    <Compile Include="Models\CampaignIntroModel.cs" />
+    <Compile Include="Models\CampaignSessionModel.cs" />
+    <Compile Include="Models\MemberCardDataModel.cs" />
+    <Compile Include="Models\SignInModel.cs" />
+    <Compile Include="Models\UserContentRecord.cs" />
+    <Compile Include="Models\UserContentResponse.cs" />
+    <Compile Include="Models\UserSessionVideoModel.cs" />
+    <Compile Include="Models\VideoCampaignMemberModel.cs" />
+    <Compile Include="Models\VideoCampaignModel.cs" />
+    <Compile Include="Models\ExperienceLogRequest.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\bootstrap.css" />
+    <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\jquery.mobile-1.4.4.css" />
+    <Content Include="Content\jquery.mobile-1.4.4.min.css" />
+    <Content Include="Content\jquery.mobile.structure-1.4.4.css" />
+    <Content Include="Content\jquery.mobile.structure-1.4.4.min.css" />
+    <Content Include="Content\jquery.mobile.theme-1.4.4.css" />
+    <Content Include="Content\jquery.mobile.theme-1.4.4.min.css" />
+    <Content Include="Css\FlashMainTimeline.css" />
+    <Content Include="Css\MainTimeline.css" />
+    <Content Include="Css\Player.css" />
+    <Content Include="Css\Player.ie8.css" />
+    <Content Include="favicon.ico" />
+    <Content Include="Flash\benefit_plan.swf" />
+    <Content Include="Flash\savings_alert.swf" />
+    <Content Include="Flash\savings_alert_avaya.swf" />
+    <Content Include="fonts\Lato-Bold.svg" />
+    <Content Include="fonts\Lato-Regular.svg" />
+    <Content Include="fonts\VarelaRound-Regular.svg" />
+    <Content Include="Global.asax" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Html\benefit_plan.html" />
+    <Content Include="Html\savings_alert.html" />
+    <Content Include="Html\savings_alert_avaya.html" />
+    <Content Include="Images\1x1-000000-1.0.png" />
+    <Content Include="Images\1x1-005ABC-0.6.png" />
+    <Content Include="Images\1x1-3F414B-0.21.png" />
+    <Content Include="Images\1x1-3F414B-0.38.png" />
+    <Content Include="Images\1x1-E9E9E9-1.0.png" />
+    <Content Include="Images\1x1-FFFFFF-1.0.png" />
+    <Content Include="Images\1x1.png" />
+    <Content Include="Images\CCH-Logo.jpg" />
+    <Content Include="Images\getflash.png" />
+    <Content Include="Images\loading-size-l.gif" />
+    <Content Include="Images\loading-size-m.gif" />
+    <Content Include="Images\loading-size-s.gif" />
+    <Content Include="Images\posters\savings_alert.mobile.png" />
+    <Content Include="Images\posters\savings_alert.png" />
+    <Content Include="Images\spritesheet-player.png" />
+    <Content Include="Libs\AnzovinMod\all.flash.js" />
+    <Content Include="Libs\AnzovinMod\all.flash.min.js" />
+    <Content Include="Libs\AnzovinMod\all.js" />
+    <Content Include="Libs\AnzovinMod\all.min.js" />
+    <Content Include="Libs\AnzovinMod\AsyncRequestObject.js" />
+    <Content Include="Libs\AnzovinMod\LateEaselLoader.js" />
+    <Content Include="Libs\AnzovinMod\Logging.js" />
+    <Content Include="Libs\AnzovinMod\MainTimeline.js" />
+    <Content Include="Libs\AnzovinMod\MainTimeline_Nodes.js" />
+    <Content Include="Libs\AnzovinMod\MainTimeline_Scenes.js" />
+    <Content Include="Libs\AnzovinMod\MainTimeline_Size.js" />
+    <Content Include="Libs\AnzovinMod\MainTimeline_Sound.js" />
+    <Content Include="Libs\AnzovinMod\MainTimeline_Stage.js" />
+    <Content Include="Libs\AnzovinMod\MainTimeline_State.js" />
+    <Content Include="Libs\AnzovinMod\MainTimeline_Vars.js" />
+    <Content Include="Libs\AnzovinMod\Player.js" />
+    <Content Include="Libs\AnzovinMod\ReplacementVariableContainer.js" />
+    <Content Include="Libs\AnzovinMod\SelfAdjustingTicker.js" />
+    <Content Include="Libs\AnzovinMod\SimpleMovingArray.js" />
+    <Content Include="Libs\AnzovinMod\TextController.js" />
+    <Content Include="Libs\AnzovinMod\TimelineFindChildren.js" />
+    <Content Include="Libs\AnzovinMod\Utilities.js" />
+    <Content Include="Libs\CreateJs\all.js" />
+    <Content Include="Libs\CreateJs\all.min.js" />
+    <Content Include="Libs\CreateJs\easeljs-0.8.0.combined.js" />
+    <Content Include="Libs\CreateJs\easeljs-0.8.0.min.js" />
+    <Content Include="Libs\CreateJs\flashaudioplugin-0.6.0.combined.js" />
+    <Content Include="Libs\CreateJs\flashaudioplugin-0.6.0.min.js" />
+    <Content Include="Libs\CreateJs\movieclip-0.8.0.combined.js" />
+    <Content Include="Libs\CreateJs\movieclip-0.8.0.min.js" />
+    <Content Include="Libs\CreateJs\preloadjs-0.6.0.combined.js" />
+    <Content Include="Libs\CreateJs\preloadjs-0.6.0.min.js" />
+    <Content Include="Libs\CreateJs\soundjs-0.6.0.combined.js" />
+    <Content Include="Libs\CreateJs\soundjs-0.6.0.min.js" />
+    <Content Include="Libs\CreateJs\tweenjs-0.6.0.combined.js" />
+    <Content Include="Libs\CreateJs\tweenjs-0.6.0.min.js" />
+    <Content Include="Libs\jquery\jquery-1.11.2.js" />
+    <Content Include="Libs\jquery\jquery-1.11.2.min.js" />
+    <Content Include="Libs\jquery\jquery-2.1.3.js" />
+    <Content Include="Libs\jquery\jquery-2.1.3.min.js" />
+    <Content Include="Libs\jquery\rangeslider.1.1.0.custom.js" />
+    <Content Include="Libs\jquery\rangeslider.1.1.0.js" />
+    <Content Include="Libs\jquery\rangeslider.1.2.1.custom.js" />
+    <Content Include="Libs\jquery\rangeslider.1.2.1.custom.nojquery.js" />
+    <Content Include="Libs\jquery\rangeslider.1.2.1.custom.nojquery.min.js" />
+    <Content Include="Libs\jquery\rangeslider.1.2.1.js" />
+    <Content Include="Scripts\bootstrap.js" />
+    <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="ApplicationInsights.config" />
+    <Content Include="fonts\Lato-Bold.eot" />
+    <Content Include="fonts\Lato-Bold.otf" />
+    <Content Include="fonts\Lato-Bold.ttf" />
+    <Content Include="fonts\Lato-Bold.woff" />
+    <Content Include="fonts\Lato-Bold.woff2" />
+    <Content Include="fonts\Lato-Regular.eot" />
+    <Content Include="fonts\Lato-Regular.otf" />
+    <Content Include="fonts\Lato-Regular.ttf" />
+    <Content Include="fonts\Lato-Regular.woff" />
+    <Content Include="fonts\Lato-Regular.woff2" />
+    <Content Include="fonts\VarelaRound-Regular.eot" />
+    <Content Include="fonts\VarelaRound-Regular.otf" />
+    <Content Include="fonts\VarelaRound-Regular.ttf" />
+    <Content Include="fonts\VarelaRound-Regular.woff" />
+    <Content Include="fonts\VarelaRound-Regular.woff2" />
+    <None Include="Properties\PublishProfiles\cch-a2media %282%29.pubxml" />
+    <None Include="Properties\PublishProfiles\cch-a2media.pubxml" />
+    <None Include="Properties\PublishProfiles\cch-amedia.pubxml" />
+    <None Include="Properties\PublishProfiles\cch-dmedia.pubxml" />
+    <None Include="Properties\PublishProfiles\CchDynamicAnimation.pubxml" />
+    <None Include="Properties\PublishProfiles\CchDynamicAnimationIIS.pubxml" />
+    <None Include="Properties\PublishProfiles\DynamicFileSystem.pubxml" />
+    <None Include="Scripts\jquery-1.10.2.intellisense.js" />
+    <Content Include="Scripts\jquery-1.10.2.js" />
+    <Content Include="Scripts\jquery-1.10.2.min.js" />
+    <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.mobile-1.4.4.js" />
+    <Content Include="Scripts\jquery.mobile-1.4.4.min.js" />
+    <Content Include="Scripts\jquery.validate.js" />
+    <Content Include="Scripts\jquery.validate.min.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.js" />
+    <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\modernizr-2.6.2.js" />
+    <Content Include="Scripts\respond.js" />
+    <Content Include="Scripts\respond.min.js" />
+    <Content Include="Scripts\_references.js" />
+    <Content Include="Sounds\benefit_plan\benefitPlan_sound.mp3" />
+    <Content Include="Sounds\benefit_plan\CCH_BenefitPlan_SFX_v10wav.mp3" />
+    <Content Include="Sounds\benefit_plan\cch_button_bop.mp3" />
+    <Content Include="Sounds\benefit_plan\cch_button_pop.mp3" />
+    <Content Include="Sounds\benefit_plan\JustaThought24bit480001_01.mp3" />
+    <Content Include="Sounds\benefit_plan\sfx1.mp3" />
+    <Content Include="Sounds\benefit_plan\sfx2.mp3" />
+    <Content Include="Sounds\benefit_plan\sfx3.mp3" />
+    <Content Include="Sounds\benefit_plan\_100_sound.mp3" />
+    <Content Include="Sounds\benefit_plan\_200_sound.mp3" />
+    <Content Include="Sounds\benefit_plan\_300_coPayNo.mp3" />
+    <Content Include="Sounds\benefit_plan\_300_coPayYes.mp3" />
+    <Content Include="Sounds\benefit_plan\_300_exceeded.mp3" />
+    <Content Include="Sounds\benefit_plan\_300_notExceeded.mp3" />
+    <Content Include="Sounds\benefit_plan\_300_spent.mp3" />
+    <Content Include="Sounds\benefit_plan\_400_sound.mp3" />
+    <Content Include="Sounds\benefit_plan\_500_sound.mp3" />
+    <Content Include="Sounds\savings_alert\all.caesars.mp3" />
+    <Content Include="Sounds\savings_alert\cch_button_bop.mp3" />
+    <Content Include="Sounds\savings_alert\cch_button_pop.mp3" />
+    <Content Include="Sounds\savings_alert_avaya\all.avaya.mp3" />
+    <Content Include="Sounds\savings_alert_avaya\cch_button_bop.mp3" />
+    <Content Include="Sounds\savings_alert_avaya\cch_button_pop.mp3" />
+    <Content Include="source\benefit_plan.flash.js" />
+    <Content Include="source\benefit_plan.flash.min.js" />
+    <Content Include="source\benefit_plan.in.js" />
+    <Content Include="source\benefit_plan.js" />
+    <Content Include="source\benefit_plan.min.js" />
+    <Content Include="source\benefit_plan.properties.js" />
+    <Content Include="source\benefit_plan.properties.min.js" />
+    <Content Include="source\savings_alert.flash.js" />
+    <Content Include="source\savings_alert.flash.min.js" />
+    <Content Include="source\savings_alert.in.js" />
+    <Content Include="source\savings_alert.js" />
+    <Content Include="source\savings_alert.min.js" />
+    <Content Include="source\savings_alert.properties.js" />
+    <Content Include="source\savings_alert.properties.min.js" />
+    <Content Include="source\savings_alert_avaya.flash.js" />
+    <Content Include="source\savings_alert_avaya.flash.min.js" />
+    <Content Include="source\savings_alert_avaya.in.js" />
+    <Content Include="source\savings_alert_avaya.js" />
+    <Content Include="source\savings_alert_avaya.min.js" />
+    <Content Include="source\savings_alert_avaya.properties.js" />
+    <Content Include="source\savings_alert_avaya.properties.min.js" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </Content>
+    <Content Include="Views\Web.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\Error.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\About.cshtml" />
+    <Content Include="Views\Home\Contact.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Shared\_CanvasLayout.cshtml" />
+    <Content Include="Views\Shared\_CanvasLayout.Mobile.cshtml" />
+    <Content Include="Views\Shared\_Layout.Mobile.cshtml" />
+    <Content Include="Views\Shared\_ViewSwitcher.cshtml" />
+    <Content Include="Views\Home\About.Mobile.cshtml" />
+    <Content Include="Views\Home\Dynamic.cshtml" />
+    <Content Include="Views\Home\Dynamic.Mobile.cshtml" />
+    <Content Include="Views\Home\Index.Mobile.cshtml" />
+    <Content Include="Views\Home\Oops.cshtml" />
+    <Content Include="Views\Home\Oops.Mobile.cshtml" />
+    <Content Include="Views\Home\Private.cshtml" />
+    <Content Include="Views\Home\Private.Mobile.cshtml" />
+    <Content Include="Views\Home\SignIn.cshtml" />
+    <Content Include="Views\Home\SignIn.Mobile.cshtml" />
+    <Content Include="Views\Home\Survey.cshtml" />
+    <Content Include="Views\Home\Survey.Mobile.cshtml" />
+    <Content Include="Views\Home\Helpful.cshtml" />
+    <Content Include="Views\Home\Helpful.Mobile.cshtml" />
+    <Content Include="Views\Home\Benefit_Plan.cshtml" />
+    <Content Include="Views\Home\Savings_Alert.cshtml" />
+    <Content Include="Views\Home\Benefit_Plan.Mobile.cshtml" />
+    <Content Include="Views\Home\Savings_Alert.Mobile.cshtml" />
+    <Content Include="Sounds\savings_alert\cch_button_bop.ogg" />
+    <Content Include="Sounds\savings_alert\cch_button_pop.ogg" />
+    <Content Include="Views\Home\Savings_Alert_Avaya.cshtml" />
+    <Content Include="Views\Home\Savings_Alert_Avaya.Mobile.cshtml" />
+    <Content Include="Sounds\savings_alert\all.caesars.ogg" />
+    <Content Include="Sounds\savings_alert_avaya\all.avaya.ogg" />
+    <Content Include="Sounds\savings_alert_avaya\cch_button_bop.ogg" />
+    <Content Include="Sounds\savings_alert_avaya\cch_button_pop.ogg" />
+    <Content Include="Views\Card\Index.cshtml" />
+    <Content Include="Views\Card\Med_Cigna_Caesars_Front.cshtml" />
+    <Content Include="Views\Card\Med_Cigna_Caesars_Back.cshtml" />
+    <Content Include="Views\Card\Med_Cigna_Caesars_Full_Front.cshtml" />
+    <Content Include="Views\Card\Med_Cigna_Caesars_Full_Back.cshtml" />
+    <Content Include="Views\Card\Dental_MetLife_Caesars_Front.cshtml" />
+    <Content Include="Views\Card\Dental_MetLife_Caesars_Full_Front.cshtml" />
+    <Content Include="Views\Card\Dental_MetLife_Caesars_Back.cshtml" />
+    <Content Include="Views\Card\Dental_MetLife_Caesars_Full_Back.cshtml" />
+    <Content Include="Views\Card\Vision_EyeMed_Caesars_Front.cshtml" />
+    <Content Include="Views\Card\Vision_EyeMed_Caesars_Full_Front.cshtml" />
+    <Content Include="Views\Card\Vision_EyeMed_Caesars_Back.cshtml" />
+    <Content Include="Views\Card\Vision_EyeMed_Caesars_Full_Back.cshtml" />
+    <Content Include="Views\Card\RX_ESI_Caesars_Front.cshtml" />
+    <Content Include="Views\Card\RX_ESI_Caesars_Back.cshtml" />
+    <Content Include="Views\Card\RX_ESI_Caesars_Full_Front.cshtml" />
+    <Content Include="Views\Card\RX_ESI_Caesars_Full_Back.cshtml" />
+    <Content Include="Views\Card\Med_Humana_HMO_Front.cshtml" />
+    <Content Include="Views\Card\Med_Humana_HMO_Back.cshtml" />
+    <Content Include="Views\Card\Med_Humana_HMO_Full_Front.cshtml" />
+    <Content Include="Views\Card\Med_Humana_HMO_Full_Back.cshtml" />
+    <Content Include="Views\Card\Med_Humana_POS_Front.cshtml" />
+    <Content Include="Views\Card\Med_Humana_POS_Back.cshtml" />
+    <Content Include="Views\Card\Med_Humana_POS_Full_Front.cshtml" />
+    <Content Include="Views\Card\Med_Humana_POS_Full_Back.cshtml" />
+    <Content Include="Views\Card\Med_Horizon_Caesars_Front.cshtml" />
+    <Content Include="Views\Card\Med_Horizon_Caesars_Back.cshtml" />
+    <Content Include="Views\Card\Med_Horizon_Caesars_Full_Front.cshtml" />
+    <Content Include="Views\Card\Med_Horizon_Caesars_Full_Back.cshtml" />
+    <Content Include="Views\Card\Dental_Generic_Caesars_Front.cshtml" />
+    <Content Include="Views\Card\Dental_Generic_Caesars_Back.cshtml" />
+    <Content Include="Views\Card\Dental_Generic_Caesars_Full_Front.cshtml" />
+    <Content Include="Views\Card\Dental_Generic_Caesars_Full_Back.cshtml" />
+    <Content Include="Views\Card\RX_Generic_Caesars_Front.cshtml" />
+    <Content Include="Views\Card\RX_Generic_Caesars_Back.cshtml" />
+    <Content Include="Views\Card\RX_Generic_Caesars_Full_Front.cshtml" />
+    <Content Include="Views\Card\RX_Generic_Caesars_Full_Back.cshtml" />
+    <Content Include="Views\Card\Med_Generic_Humana_HMO_Front.cshtml" />
+    <Content Include="Views\Card\Med_Generic_Humana_HMO_Full_Front.cshtml" />
+    <Content Include="Views\Card\Med_Generic_Humana_HMO_Back.cshtml" />
+    <Content Include="Views\Card\Med_Generic_Humana_HMO_Full_Back.cshtml" />
+    <Content Include="Views\Card\Med_Generic_Humana_POS_Front.cshtml" />
+    <Content Include="Views\Card\Med_Generic_Humana_POS_Full_Front.cshtml" />
+    <Content Include="Views\Card\Med_Generic_Humana_POS_Back.cshtml" />
+    <Content Include="Views\Card\Med_Generic_Humana_POS_Full_Back.cshtml" />
+    <Content Include="Views\Card\Dental_MetLife_ABCState_Back.cshtml" />
+    <Content Include="Views\Card\Dental_MetLife_ABCState_Front.cshtml" />
+    <Content Include="Views\Card\Dental_MetLife_ABCState_Full_Back.cshtml" />
+    <Content Include="Views\Card\Dental_MetLife_ABCState_Full_Front %281%29.cshtml" />
+    <Content Include="Views\Card\Med_Cigna_ABCState_Back.cshtml" />
+    <Content Include="Views\Card\Med_Cigna_ABCState_Front.cshtml" />
+    <Content Include="Views\Card\Med_Cigna_ABCState_Full_Back.cshtml" />
+    <Content Include="Views\Card\Med_Cigna_ABCState_Full_Front.cshtml" />
+    <Content Include="Views\Card\RX_ESI_ABCState_Back.cshtml" />
+    <Content Include="Views\Card\RX_ESI_ABCState_Front.cshtml" />
+    <Content Include="Views\Card\RX_ESI_ABCState_Full_Back.cshtml" />
+    <Content Include="Views\Card\RX_ESI_ABCState_Full_Front.cshtml" />
+    <Content Include="Views\Card\Vision_EyeMed_ABCState_Back.cshtml" />
+    <Content Include="Views\Card\Vision_EyeMed_ABCState_Front.cshtml" />
+    <Content Include="Views\Card\Vision_EyeMed_ABCState_Full_Back.cshtml" />
+    <Content Include="Views\Card\Vision_EyeMed_ABCState_Full_Front.cshtml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="packages.config" />
+    <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <Target Name="MvcBuildViews" AfterTargets="AfterBuild" Condition="'$(MvcBuildViews)'=='true'">
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(WebProjectOutputDir)" />
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>58439</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:58439/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets" Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" />
+  <Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition="'$(BclBuildImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
+    <Error Condition="Exists('..\packages\Microsoft.Bcl.Build.1.0.14\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
+  </Target>
+  <Import Project="..\packages\Microsoft.ApplicationInsights.0.11.1-build00694\tools\net40\Microsoft.ApplicationInsights.targets" Condition="Exists('..\packages\Microsoft.ApplicationInsights.0.11.1-build00694\tools\net40\Microsoft.ApplicationInsights.targets')" />
+  <Target Name="EnsureApplicationInsightsImported" BeforeTargets="BeforeBuild" Condition="'$(ApplicationInsightsImported)' == ''">
+    <Error Condition="!Exists('..\packages\Microsoft.ApplicationInsights.0.11.1-build00694\tools\net40\Microsoft.ApplicationInsights.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." />
+    <Error Condition="Exists('..\packages\Microsoft.ApplicationInsights.0.11.1-build00694\tools\net40\Microsoft.ApplicationInsights.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target> -->
+</Project>

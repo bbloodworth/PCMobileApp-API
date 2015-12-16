@@ -1,0 +1,202 @@
+﻿@{
+    ViewBag.Title = "Benefit_Plan";
+    ViewBag.IsMobile = "1";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="x-ua-compatible" content="IE=edge" />
+    <meta charset="UTF-8" />
+    <title>Animation</title>
+
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r;
+            i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date();
+            a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0];
+            a.async = 1;
+            a.src = g;
+            m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-34081191-2', 'auto');
+        ga('send', 'pageview');
+
+    </script>
+
+    <!-- STYLE SRC FILE INCLUDES -->
+    <!--[if !(IE 8)]><!-->
+    <link href="../css/MainTimeline.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../css/Player.css" rel="stylesheet" type="text/css" media="all" />
+    <!--<![endif]-->
+
+    <!--[if IE 8]>
+        <link href="../css/Player.css" rel="stylesheet" type="text/css" media="all"/>
+        <link href="../css/Player.ie8.css" rel="stylesheet" type="text/css" media="all"/>
+        <link href="../css/FlashMainTimeline.css" rel="stylesheet" type="text/css" media="all"/>
+    <![endif]-->
+
+    <!-- VARIABLE SETUP -->
+    <!--[if IE 8]>
+        <script type="text/javascript">
+            var anzovinmod, Player;
+        </script>
+    <![endif]-->
+
+    <!--[if !(IE 8)]><!-->
+    <script type="text/javascript">
+        var anzovinmod, Player, createjs;
+    </script>
+    <!--<![endif]-->
+
+    <!-- IE VERSION DETECTION FOR LIBRARY -->
+    <!--[if IE 8]>
+        <script type="text/javascript">
+            anzovinmod = anzovinmod || {};
+            anzovinmod.instance = anzovinmod.instance || {};
+            anzovinmod.instance.IsIE8 = true;
+        </script>
+    <![endif]-->
+
+    <!--[if IE 9]>
+        <script type="text/javascript">
+            anzovinmod = anzovinmod || {};
+            anzovinmod.instance = anzovinmod.instance || {};
+            anzovinmod.instance.IsIE9 = true;
+        </script>
+    <![endif]-->
+
+    <!-- FUNCTIONS -->
+
+    <script type="text/javascript">
+        // function called when the page body is loaded
+        function bodyOnload() {
+
+        };
+
+        // initialize the main player to have a loading image state, and replace the
+        // in-body preloader image placeholder
+        function initPlayerLoading() {
+            var preloader = document.getElementById("anzovinmod-preloader");
+            anzovinmod.Logging.setLogLevel(anzovinmod.Logging.LOG_INFO);
+            var replacementContainer = new anzovinmod.ReplacementVariableContainer();
+            initReplacementContainer(replacementContainer);
+            Player = new anzovinmod.Player(document.body, replacementContainer);
+            Player.resize();
+            if (preloader != null) {
+                preloader.parentNode.removeChild(preloader);
+            }
+        };
+
+        // initialize the replacement container with standardized content
+        function initReplacementContainer(replacementContainer) {
+            replacementContainer.add("benefit_plan-MemberContentData",
+                decodeURIComponent("@ViewBag.MemberContentData"),
+                decodeURIComponent("%40ViewBag.MemberContentData")
+            );
+            replacementContainer.add("PosterImageURL",
+                "@ViewBag.PosterImageURL",
+                decodeURIComponent("%40ViewBag.PosterImageURL")
+            );
+            replacementContainer.add("EventLogURL",
+                "@ViewBag.EventLogURL",
+                decodeURIComponent("%40ViewBag.EventLogURL")
+            );
+            replacementContainer.add("AuthHash",
+                "@ViewBag.AuthHash",
+                decodeURIComponent("%40ViewBag.AuthHash")
+            );
+            replacementContainer.add("ApiKey",
+                "@ViewBag.ApiKey",
+                decodeURIComponent("%40ViewBag.ApiKey")
+            );
+            replacementContainer.add("EmployerId",
+                "@ViewBag.EmployerId",
+                decodeURIComponent("%40ViewBag.EmployerId")
+            );
+            replacementContainer.add("ExperienceUserId",
+                "@ViewBag.ExperienceUserId",
+                decodeURIComponent("%40ViewBag.ExperienceUserId")
+            );
+            replacementContainer.add("IsMobile",
+                "@ViewBag.IsMobile",
+                decodeURIComponent("%40ViewBag.IsMobile")
+            );
+            replacementContainer.defWindowHash(window.location.hash);
+            return replacementContainer;
+        };
+    </script>
+
+    <style>
+        body {
+            margin: 0px;
+            padding: 0px;
+        }
+    </style>
+
+</head>
+<body onload=" bodyOnload(); " style="background-color: #D4D4D4">
+
+    <div class="anzovinmod-preloader" id="anzovinmod-preloader">
+        <div class="image">
+            <img src="../images/loading-size-s.gif" />
+        </div>
+        <div class="text">Loading</div>
+    </div>
+
+    <!-- FINAL LOADING -->
+    <!--[if !(IE 8)]><!-->
+    <script src="../libs/createjs/all.min.js"></script>
+    <script src="../libs/jquery/rangeslider.1.2.1.custom.nojquery.min.js"></script>
+    <script src="../libs/anzovinmod/all.min.js"></script>
+<!--<![endif]-->
+
+    <!--[if IE 8]>
+        <script src="../libs/jquery/rangeslider.1.2.1.custom.nojquery.min.js"></script>
+        <script src="../libs/anzovinmod/all.flash.min.js"></script>
+    <![endif]-->
+
+
+    <script type="text/javascript">
+        initPlayerLoading();
+    </script>
+
+    <!--[if !(IE 8)]><!-->
+    <script src="../source/benefit_plan.properties.min.js"></script>
+<!--<![endif]-->
+
+    <!--[if IE 8]>
+        <script src="../source/benefit_plan.flash.min.js"></script>
+    <![endif]-->
+
+
+    <script type="text/javascript">
+        Player.attachScene("benefit_plan");
+    </script>
+
+    <!--[if !(IE 8)]><!-->
+    <script type="text/javascript">
+        Player.startManifestLoading();
+    </script>
+    <script type="text/javascript">
+        (function () {
+            var s = document.createElement("script");
+            s.async = false;
+            s.src = "../source/benefit_plan.min.js";
+            document.body.appendChild(s);
+        }());
+    </script>
+<!--<![endif]-->
+
+
+    <script type="text/javascript">
+        Player.startStage();
+    </script>
+
+</body>
+</html>

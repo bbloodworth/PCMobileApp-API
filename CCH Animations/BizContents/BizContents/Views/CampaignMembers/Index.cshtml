@@ -1,0 +1,69 @@
+﻿@model IEnumerable<BizContents.CampaignMember>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Campaign Members</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CampaignID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Campaign.CampaignDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CCHID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Savings)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Score)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.YourCostSavingsAmt)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CampaignID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Campaign.CampaignDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CCHID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Savings)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Score)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.YourCostSavingsAmt)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { campaignId = item.CampaignID, cchId = item.CCHID }) |
+            @Html.ActionLink("Details", "Details", new { campaignId = item.CampaignID, cchId = item.CCHID }) |
+            @Html.ActionLink("Delete", "Delete", new { campaignId = item.CampaignID, cchId = item.CCHID })
+        </td>
+    </tr>
+}
+
+</table>

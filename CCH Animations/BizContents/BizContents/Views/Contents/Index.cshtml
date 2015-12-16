@@ -1,0 +1,51 @@
+﻿@model IEnumerable<BizContents.Content>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Contents</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ContentID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContentType.ContentTypeDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ContentTranslations.FirstOrDefault().ContentTitle)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContentID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContentType.ContentTypeDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ContentTranslations.FirstOrDefault().ContentTitle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.ContentID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.ContentID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.ContentID })
+        </td>
+    </tr>
+}
+
+</table>

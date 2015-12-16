@@ -1,0 +1,553 @@
+﻿@model BizContents.Enrollment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Enrollment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CCHID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CCHID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmployeeID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EmployeeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MemberMedicalID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MemberMedicalID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MemberRXID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MemberRXID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubscriberMedicalID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubscriberMedicalID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubscriberRXID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubscriberRXID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.FirstName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Middle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Middle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfBirth)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateOfBirth)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Gender)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Gender)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RelationshipCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RelationshipCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address1)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address1)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Address2)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Address2)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.City)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.State)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Zipcode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Zipcode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Longitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Longitude)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Latitude)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Latitude)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UnRegisteredID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UnRegisteredID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptInIncentiveProgram)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptInIncentiveProgram)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Insurer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Insurer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RXProvider)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RXProvider)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HealthPlanType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HealthPlanType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MedicalPlanType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MedicalPlanType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RXPlanType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RXPlanType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptInEmailAlerts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptInEmailAlerts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptInTextMsgAlerts)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptInTextMsgAlerts)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MobilePhone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MobilePhone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OptInPriceConcierge)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OptInPriceConcierge)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastUpdated)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastUpdated)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UpdateNotes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UpdateNotes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MemberSSN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MemberSSN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SubscriberSSN)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SubscriberSSN)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Referral_CCHID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Referral_CCHID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MemberClassification)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MemberClassification)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subscriber_Email_Home)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscriber_Email_Home)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subscriber_Email_Work)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscriber_Email_Work)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Member_Email_Home)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member_Email_Home)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Member_Email_Work)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member_Email_Work)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subscriber_Phone_Home)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscriber_Phone_Home)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subscriber_Phone_Mobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscriber_Phone_Mobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Member_Phone_Home)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member_Phone_Home)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Member_Phone_Mobile)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member_Phone_Mobile)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Member_Status)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Member_Status)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Interested_In_CCH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Interested_In_CCH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract_Prefix)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contract_Prefix)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract_Suffix)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contract_Suffix)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateAdded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateAdded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subscriber_Coverage_Effective_Dt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscriber_Coverage_Effective_Dt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Subscriber_Coverage_Termination_Dt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Subscriber_Coverage_Termination_Dt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PropertyCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PropertyCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PCP_Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PCP_Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PCP_NPI)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PCP_NPI)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.HearCCH)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HearCCH)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TandCIndicator)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TandCIndicator)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Source_Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Source_Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email_Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email_Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateRegistered_Phone)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateRegistered_Phone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AlternatePlanSource)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AlternatePlanSource)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MemberSSN_Full)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MemberSSN_Full)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PartialGeocode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PartialGeocode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RegistrationType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationType)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Back to List", "Index")
+</p>

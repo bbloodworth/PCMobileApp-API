@@ -1,0 +1,39 @@
+﻿
+@{
+    ViewBag.Title = "Private";
+}
+<input type="hidden" value="@ViewBag.Replayed" id="hidReplayed" />
+<p>
+    <div class="video-content">
+        <div id="video-videojs1" class="video-js vjs-default-skin vjs-playing vjs-fullscreen">
+            <video id="videoplayer" class="vjs-tech"
+                   controls preload="auto" width="auto" height="auto"
+                   data-setup="{}">
+                <source src=@ViewBag.Vid
+                        type='video/mp4' />
+            </video>
+        </div>
+    </div>
+</p>
+
+@*<div class="jumbotron">
+    <video id="videoplayer" class="video-js vjs-default-skin"
+           controls preload="auto" width="auto" height="auto"
+           data-setup="{}">
+        <source src=@ViewBag.Vid type='video/mp4' />
+    </video>
+</div>*@
+
+<script type="text/javascript">
+    VideoJS("videoplayer").ready(function () {
+        this.play();
+        
+        this.addEvent("ended", function () {
+            if ($('#hidReplayed').val() == 1) {
+                window.location.replace("Survey");
+            } else {
+                window.location.replace("Survey?initial=1");
+            }
+        });
+    });
+</script>

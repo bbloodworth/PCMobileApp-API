@@ -1,0 +1,40 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="jumbotron">
+    <p>
+        <div class="video-content">
+            <div id="video-videojs1" class="video-js vjs-default-skin vjs-playing vjs-fullscreen">
+                <video id="videoplayer" class="vjs-tech"
+                       controls preload="auto" width="auto" height="auto"
+                       data-setup="{}">
+                    <source src=@ViewBag.Vid
+                            type='video/mp4' />
+                </video>
+            </div>
+        </div>
+    </p>
+    @*<p>
+        <video id="videoplayer" class="video-js vjs-default-skin"
+                controls preload="auto" width="820" height="528"
+                poster=@ViewBag.Poster data-setup="{}">
+            <source src=@ViewBag.Vid type='video/mp4' />
+            <p class="vjs-no-js">First Name: <input type="text" name="firstName" /> </p>
+        </video>
+    </p>*@
+</div>
+
+<script type="text/javascript">
+    VideoJS("videoplayer").ready(function () {
+        this.play();
+
+        this.addEvent("ended", function () {
+            //this.posterImage.show();
+            //this.bigPlayButton.show();
+            //this.currentTime(0);
+            //$.post("Home", {}, function() {
+            //});
+            window.location.replace("Home/SignIn");
+        });
+    });
+</script>

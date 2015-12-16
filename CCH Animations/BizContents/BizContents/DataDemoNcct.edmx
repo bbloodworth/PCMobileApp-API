@@ -1,0 +1,1273 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CCH_CustomerDemoNCCTModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Campaign">
+          <Key>
+            <PropertyRef Name="CampaignID" />
+          </Key>
+          <Property Name="CampaignID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CampaignDesc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CampaignActiveInd" Type="bit" />
+          <Property Name="TargetPopulationDesc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CampaignPeriodDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="TargetProcedureName" Type="nvarchar" MaxLength="50" />
+          <Property Name="AuthRequiredInd" Type="bit" Nullable="false" />
+          <Property Name="SavingsMonthStartDate" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="CampaignContent">
+          <Key>
+            <PropertyRef Name="CampaignID" />
+            <PropertyRef Name="ContentID" />
+          </Key>
+          <Property Name="CampaignID" Type="int" Nullable="false" />
+          <Property Name="ContentID" Type="int" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ActivationDate" Type="datetime" />
+          <Property Name="ExpirationDate" Type="datetime" />
+          <Property Name="UserContentInd" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="CampaignMember">
+          <Key>
+            <PropertyRef Name="CampaignID" />
+            <PropertyRef Name="CCHID" />
+          </Key>
+          <Property Name="CampaignID" Type="int" Nullable="false" />
+          <Property Name="CCHID" Type="int" Nullable="false" />
+          <Property Name="Savings" Type="money" />
+          <Property Name="Score" Type="float" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="YourCostSavingsAmt" Type="money" />
+        </EntityType>
+        <EntityType Name="ClientConfig">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ConfigKey" Type="varchar" MaxLength="255" />
+          <Property Name="ConfigValue" Type="varchar" MaxLength="255" />
+          <Property Name="Description" Type="varchar" MaxLength="500" />
+          <Property Name="CreateDate" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedDate" Type="datetime" Nullable="false" />
+          <Property Name="ConfigValuePrior" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="Content">
+          <Key>
+            <PropertyRef Name="ContentID" />
+          </Key>
+          <Property Name="ContentID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContentTypeID" Type="int" Nullable="false" />
+          <Property Name="ContentName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ContentSourceDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="ContentImageFileName" Type="nvarchar" MaxLength="100" />
+          <Property Name="ContentFileLocationDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="ContentPointsCount" Type="int" />
+          <Property Name="ContentDurationSecondsCount" Type="int" />
+          <Property Name="IntroContentInd" Type="bit" Nullable="false" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ContentURL" Type="nvarchar" MaxLength="100" />
+          <Property Name="ContentPhoneNum" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="ContentDisplayRule">
+          <Key>
+            <PropertyRef Name="ContentDisplayRuleID" />
+          </Key>
+          <Property Name="ContentDisplayRuleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContentDisplayRuleDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ContentStatus">
+          <Key>
+            <PropertyRef Name="ContentStatusID" />
+          </Key>
+          <Property Name="ContentStatusID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContentStatusDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ContentTranslation">
+          <Key>
+            <PropertyRef Name="ContentID" />
+            <PropertyRef Name="LocaleID" />
+          </Key>
+          <Property Name="ContentID" Type="int" Nullable="false" />
+          <Property Name="LocaleID" Type="int" Nullable="false" />
+          <Property Name="ContentTitle" Type="nvarchar" MaxLength="50" />
+          <Property Name="ContentCaptionText" Type="nvarchar" MaxLength="250" />
+          <Property Name="ContentDesc" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ContentType">
+          <Key>
+            <PropertyRef Name="ContentTypeID" />
+          </Key>
+          <Property Name="ContentTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ContentTypeDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="ContentTypeState">
+          <Key>
+            <PropertyRef Name="ContentTypeID" />
+            <PropertyRef Name="ContentStatusID" />
+          </Key>
+          <Property Name="ContentTypeID" Type="int" Nullable="false" />
+          <Property Name="ContentStatusID" Type="int" Nullable="false" />
+          <Property Name="InitialStateInd" Type="bit" />
+          <Property Name="EndStateInd" Type="bit" />
+          <Property Name="ContentStatusCaptionText" Type="nvarchar" MaxLength="250" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Enrollments">
+          <Key>
+            <PropertyRef Name="CCHID" />
+          </Key>
+          <Property Name="CCHID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeID" Type="varchar" MaxLength="50" />
+          <Property Name="MemberMedicalID" Type="varchar" MaxLength="50" />
+          <Property Name="MemberRXID" Type="varchar" MaxLength="50" />
+          <Property Name="SubscriberMedicalID" Type="varchar" MaxLength="50" />
+          <Property Name="SubscriberRXID" Type="varchar" MaxLength="50" />
+          <Property Name="LastName" Type="varchar" MaxLength="100" />
+          <Property Name="FirstName" Type="varchar" MaxLength="100" />
+          <Property Name="Middle" Type="varchar" MaxLength="25" />
+          <Property Name="DateOfBirth" Type="datetime" />
+          <Property Name="Gender" Type="char" MaxLength="1" />
+          <Property Name="RelationshipCode" Type="varchar" MaxLength="50" />
+          <Property Name="Address1" Type="varchar" MaxLength="100" />
+          <Property Name="Address2" Type="varchar" MaxLength="100" />
+          <Property Name="City" Type="varchar" MaxLength="50" />
+          <Property Name="State" Type="char" MaxLength="2" />
+          <Property Name="Zipcode" Type="varchar" MaxLength="15" />
+          <Property Name="Email" Type="varchar" MaxLength="150" />
+          <Property Name="Longitude" Type="float" />
+          <Property Name="Latitude" Type="float" />
+          <Property Name="UnRegisteredID" Type="varchar" MaxLength="15" />
+          <Property Name="OptInIncentiveProgram" Type="bit" />
+          <Property Name="Insurer" Type="varchar" MaxLength="50" />
+          <Property Name="RXProvider" Type="varchar" MaxLength="50" />
+          <Property Name="HealthPlanType" Type="varchar" MaxLength="50" />
+          <Property Name="MedicalPlanType" Type="varchar" MaxLength="100" />
+          <Property Name="RXPlanType" Type="varchar" MaxLength="50" />
+          <Property Name="Phone" Type="varchar" MaxLength="50" />
+          <Property Name="UserID" Type="uniqueidentifier" />
+          <Property Name="OptInEmailAlerts" Type="bit" />
+          <Property Name="OptInTextMsgAlerts" Type="bit" />
+          <Property Name="MobilePhone" Type="varchar" MaxLength="50" />
+          <Property Name="OptInPriceConcierge" Type="bit" />
+          <Property Name="LastUpdated" Type="datetime" />
+          <Property Name="UpdateNotes" Type="nvarchar" MaxLength="500" />
+          <Property Name="MemberSSN" Type="varchar" MaxLength="4" />
+          <Property Name="SubscriberSSN" Type="varchar" MaxLength="4" />
+          <Property Name="Referral_CCHID" Type="int" />
+          <Property Name="MemberClassification" Type="nvarchar" MaxLength="50" />
+          <Property Name="Subscriber_Email_Home" Type="nvarchar" MaxLength="100" />
+          <Property Name="Subscriber_Email_Work" Type="nvarchar" MaxLength="100" />
+          <Property Name="Member_Email_Home" Type="nvarchar" MaxLength="100" />
+          <Property Name="Member_Email_Work" Type="nvarchar" MaxLength="100" />
+          <Property Name="Subscriber_Phone_Home" Type="varchar" MaxLength="50" />
+          <Property Name="Subscriber_Phone_Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="Member_Phone_Home" Type="varchar" MaxLength="50" />
+          <Property Name="Member_Phone_Mobile" Type="varchar" MaxLength="50" />
+          <Property Name="Member_Status" Type="nvarchar" MaxLength="50" />
+          <Property Name="Interested_In_CCH" Type="varchar" MaxLength="1" />
+          <Property Name="Contract_Prefix" Type="varchar" MaxLength="10" />
+          <Property Name="Contract_Suffix" Type="varchar" MaxLength="20" />
+          <Property Name="DateAdded" Type="datetime" />
+          <Property Name="Subscriber_Coverage_Effective_Dt" Type="datetime" />
+          <Property Name="Subscriber_Coverage_Termination_Dt" Type="datetime" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="PropertyCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="PCP_Name" Type="nvarchar" MaxLength="100" />
+          <Property Name="PCP_NPI" Type="nvarchar" MaxLength="20" />
+          <Property Name="HearCCH" Type="varchar" MaxLength="2600" />
+          <Property Name="TandCIndicator" Type="char" MaxLength="1" />
+          <Property Name="Source_Phone" Type="varchar" MaxLength="100" />
+          <Property Name="Email_Phone" Type="varchar" MaxLength="150" />
+          <Property Name="DateRegistered_Phone" Type="datetime" />
+          <Property Name="AlternatePlanSource" Type="varchar" MaxLength="100" />
+          <Property Name="MemberSSN_Full" Type="varchar" MaxLength="9" />
+          <Property Name="PartialGeocode" Type="bit" />
+          <Property Name="RegistrationType" Type="tinyint" />
+        </EntityType>
+        <EntityType Name="Locale">
+          <Key>
+            <PropertyRef Name="LocaleID" />
+          </Key>
+          <Property Name="LocaleID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LocaleCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="ISOCountryCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="ISOLanguageCode" Type="nvarchar" MaxLength="10" />
+          <Property Name="LocaleDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="DateFormatDesc" Type="nvarchar" MaxLength="100" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="Survey">
+          <Key>
+            <PropertyRef Name="SurveyID" />
+          </Key>
+          <Property Name="SurveyID" Type="int" Nullable="false" />
+          <Property Name="SurveyPassCount" Type="int" />
+          <Property Name="EmbeddedSurveyInd" Type="bit" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="SurveyQuestion">
+          <Key>
+            <PropertyRef Name="SurveyID" />
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="SurveyID" Type="int" Nullable="false" />
+          <Property Name="QuestionID" Type="int" Nullable="false" />
+          <Property Name="QuestionDisplayOrderNum" Type="int" />
+          <Property Name="CreateDate" Type="datetime" />
+        </EntityType>
+        <EntityType Name="UserContent">
+          <Key>
+            <PropertyRef Name="CCHID" />
+            <PropertyRef Name="CampaignID" />
+            <PropertyRef Name="ContentID" />
+          </Key>
+          <Property Name="CCHID" Type="int" Nullable="false" />
+          <Property Name="CampaignID" Type="int" Nullable="false" />
+          <Property Name="ContentID" Type="int" Nullable="false" />
+          <Property Name="ContentStatusChangeDate" Type="datetime" />
+          <Property Name="UserContentCommentText" Type="nvarchar" MaxLength="2000" />
+          <Property Name="NotificationSentDate" Type="datetime" />
+          <Property Name="ContentSavingsAmt" Type="decimal" Precision="8" Scale="2" />
+          <Property Name="MemberContentDataText" Type="nvarchar" MaxLength="2000" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="ContentStatusID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="UserContentPreference">
+          <Key>
+            <PropertyRef Name="CCHID" />
+          </Key>
+          <Property Name="CCHID" Type="int" Nullable="false" />
+          <Property Name="SMSInd" Type="bit" />
+          <Property Name="EmailInd" Type="bit" />
+          <Property Name="OSBasedAlertInd" Type="bit" />
+          <Property Name="LastUpdateDate" Type="datetime" />
+          <Property Name="CreateDate" Type="datetime" />
+          <Property Name="DefaultLocaleID" Type="int" />
+        </EntityType>
+        <Association Name="FK_Campaign_CampaignContent">
+          <End Role="Campaign" Type="Self.Campaign" Multiplicity="1" />
+          <End Role="CampaignContent" Type="Self.CampaignContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campaign">
+              <PropertyRef Name="CampaignID" />
+            </Principal>
+            <Dependent Role="CampaignContent">
+              <PropertyRef Name="CampaignID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Campaign_CampaignMember">
+          <End Role="Campaign" Type="Self.Campaign" Multiplicity="1" />
+          <End Role="CampaignMember" Type="Self.CampaignMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campaign">
+              <PropertyRef Name="CampaignID" />
+            </Principal>
+            <Dependent Role="CampaignMember">
+              <PropertyRef Name="CampaignID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CampaignContent_UserContent">
+          <End Role="CampaignContent" Type="Self.CampaignContent" Multiplicity="1" />
+          <End Role="UserContent" Type="Self.UserContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaignContent">
+              <PropertyRef Name="CampaignID" />
+              <PropertyRef Name="ContentID" />
+            </Principal>
+            <Dependent Role="UserContent">
+              <PropertyRef Name="CampaignID" />
+              <PropertyRef Name="ContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Content_CampaignContent">
+          <End Role="Content" Type="Self.Content" Multiplicity="1" />
+          <End Role="CampaignContent" Type="Self.CampaignContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Content">
+              <PropertyRef Name="ContentID" />
+            </Principal>
+            <Dependent Role="CampaignContent">
+              <PropertyRef Name="ContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Content_ContentTranslation">
+          <End Role="Content" Type="Self.Content" Multiplicity="1" />
+          <End Role="ContentTranslation" Type="Self.ContentTranslation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Content">
+              <PropertyRef Name="ContentID" />
+            </Principal>
+            <Dependent Role="ContentTranslation">
+              <PropertyRef Name="ContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Content_Survey">
+          <End Role="Content" Type="Self.Content" Multiplicity="1" />
+          <End Role="Survey" Type="Self.Survey" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Content">
+              <PropertyRef Name="ContentID" />
+            </Principal>
+            <Dependent Role="Survey">
+              <PropertyRef Name="SurveyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Content_UserContent">
+          <End Role="Content" Type="Self.Content" Multiplicity="1" />
+          <End Role="UserContent" Type="Self.UserContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Content">
+              <PropertyRef Name="ContentID" />
+            </Principal>
+            <Dependent Role="UserContent">
+              <PropertyRef Name="ContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContentStatus_UserContent">
+          <End Role="ContentStatus" Type="Self.ContentStatus" Multiplicity="1" />
+          <End Role="UserContent" Type="Self.UserContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContentStatus">
+              <PropertyRef Name="ContentStatusID" />
+            </Principal>
+            <Dependent Role="UserContent">
+              <PropertyRef Name="ContentStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContentType_Content">
+          <End Role="ContentType" Type="Self.ContentType" Multiplicity="1" />
+          <End Role="Content" Type="Self.Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContentType">
+              <PropertyRef Name="ContentTypeID" />
+            </Principal>
+            <Dependent Role="Content">
+              <PropertyRef Name="ContentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContStatus_ContTypeState">
+          <End Role="ContentStatus" Type="Self.ContentStatus" Multiplicity="1" />
+          <End Role="ContentTypeState" Type="Self.ContentTypeState" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContentStatus">
+              <PropertyRef Name="ContentStatusID" />
+            </Principal>
+            <Dependent Role="ContentTypeState">
+              <PropertyRef Name="ContentStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContType_ContTypeState">
+          <End Role="ContentType" Type="Self.ContentType" Multiplicity="1" />
+          <End Role="ContentTypeState" Type="Self.ContentTypeState" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContentType">
+              <PropertyRef Name="ContentTypeID" />
+            </Principal>
+            <Dependent Role="ContentTypeState">
+              <PropertyRef Name="ContentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Locale_ContentTranslation">
+          <End Role="Locale" Type="Self.Locale" Multiplicity="1" />
+          <End Role="ContentTranslation" Type="Self.ContentTranslation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locale">
+              <PropertyRef Name="LocaleID" />
+            </Principal>
+            <Dependent Role="ContentTranslation">
+              <PropertyRef Name="LocaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Locale_UserContentPreference">
+          <End Role="Locale" Type="Self.Locale" Multiplicity="0..1" />
+          <End Role="UserContentPreference" Type="Self.UserContentPreference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locale">
+              <PropertyRef Name="LocaleID" />
+            </Principal>
+            <Dependent Role="UserContentPreference">
+              <PropertyRef Name="DefaultLocaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CCH_CustomerDemoNCCTModelStoreContainer">
+          <EntitySet Name="Campaign" EntityType="Self.Campaign" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CampaignContent" EntityType="Self.CampaignContent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CampaignMember" EntityType="Self.CampaignMember" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClientConfig" EntityType="Self.ClientConfig" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Content" EntityType="Self.Content" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContentDisplayRule" EntityType="Self.ContentDisplayRule" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContentStatus" EntityType="Self.ContentStatus" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContentTranslation" EntityType="Self.ContentTranslation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContentType" EntityType="Self.ContentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ContentTypeState" EntityType="Self.ContentTypeState" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Enrollments" EntityType="Self.Enrollments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Locale" EntityType="Self.Locale" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Survey" EntityType="Self.Survey" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="SurveyQuestion" EntityType="Self.SurveyQuestion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserContent" EntityType="Self.UserContent" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="UserContentPreference" EntityType="Self.UserContentPreference" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Campaign_CampaignContent" Association="Self.FK_Campaign_CampaignContent">
+            <End Role="Campaign" EntitySet="Campaign" />
+            <End Role="CampaignContent" EntitySet="CampaignContent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Campaign_CampaignMember" Association="Self.FK_Campaign_CampaignMember">
+            <End Role="Campaign" EntitySet="Campaign" />
+            <End Role="CampaignMember" EntitySet="CampaignMember" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CampaignContent_UserContent" Association="Self.FK_CampaignContent_UserContent">
+            <End Role="CampaignContent" EntitySet="CampaignContent" />
+            <End Role="UserContent" EntitySet="UserContent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Content_CampaignContent" Association="Self.FK_Content_CampaignContent">
+            <End Role="Content" EntitySet="Content" />
+            <End Role="CampaignContent" EntitySet="CampaignContent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Content_ContentTranslation" Association="Self.FK_Content_ContentTranslation">
+            <End Role="Content" EntitySet="Content" />
+            <End Role="ContentTranslation" EntitySet="ContentTranslation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Content_Survey" Association="Self.FK_Content_Survey">
+            <End Role="Content" EntitySet="Content" />
+            <End Role="Survey" EntitySet="Survey" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Content_UserContent" Association="Self.FK_Content_UserContent">
+            <End Role="Content" EntitySet="Content" />
+            <End Role="UserContent" EntitySet="UserContent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContentStatus_UserContent" Association="Self.FK_ContentStatus_UserContent">
+            <End Role="ContentStatus" EntitySet="ContentStatus" />
+            <End Role="UserContent" EntitySet="UserContent" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContentType_Content" Association="Self.FK_ContentType_Content">
+            <End Role="ContentType" EntitySet="ContentType" />
+            <End Role="Content" EntitySet="Content" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContStatus_ContTypeState" Association="Self.FK_ContStatus_ContTypeState">
+            <End Role="ContentStatus" EntitySet="ContentStatus" />
+            <End Role="ContentTypeState" EntitySet="ContentTypeState" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContType_ContTypeState" Association="Self.FK_ContType_ContTypeState">
+            <End Role="ContentType" EntitySet="ContentType" />
+            <End Role="ContentTypeState" EntitySet="ContentTypeState" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Locale_ContentTranslation" Association="Self.FK_Locale_ContentTranslation">
+            <End Role="Locale" EntitySet="Locale" />
+            <End Role="ContentTranslation" EntitySet="ContentTranslation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Locale_UserContentPreference" Association="Self.FK_Locale_UserContentPreference">
+            <End Role="Locale" EntitySet="Locale" />
+            <End Role="UserContentPreference" EntitySet="UserContentPreference" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="CCH_CustomerDemoNCCTModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Campaign">
+          <Key>
+            <PropertyRef Name="CampaignID" />
+          </Key>
+          <Property Name="CampaignID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CampaignDesc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CampaignActiveInd" Type="Boolean" />
+          <Property Name="TargetPopulationDesc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CampaignPeriodDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TargetProcedureName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AuthRequiredInd" Type="Boolean" Nullable="false" />
+          <Property Name="SavingsMonthStartDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="CampaignContents" Relationship="Self.FK_Campaign_CampaignContent" FromRole="Campaign" ToRole="CampaignContent" />
+          <NavigationProperty Name="CampaignMembers" Relationship="Self.FK_Campaign_CampaignMember" FromRole="Campaign" ToRole="CampaignMember" />
+        </EntityType>
+        <EntityType Name="CampaignContent">
+          <Key>
+            <PropertyRef Name="CampaignID" />
+            <PropertyRef Name="ContentID" />
+          </Key>
+          <Property Name="CampaignID" Type="Int32" Nullable="false" />
+          <Property Name="ContentID" Type="Int32" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ActivationDate" Type="DateTime" Precision="3" />
+          <Property Name="ExpirationDate" Type="DateTime" Precision="3" />
+          <Property Name="UserContentInd" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Campaign" Relationship="Self.FK_Campaign_CampaignContent" FromRole="CampaignContent" ToRole="Campaign" />
+          <NavigationProperty Name="UserContents" Relationship="Self.FK_CampaignContent_UserContent" FromRole="CampaignContent" ToRole="UserContent" />
+          <NavigationProperty Name="Content" Relationship="Self.FK_Content_CampaignContent" FromRole="CampaignContent" ToRole="Content" />
+        </EntityType>
+        <EntityType Name="CampaignMember">
+          <Key>
+            <PropertyRef Name="CampaignID" />
+            <PropertyRef Name="CCHID" />
+          </Key>
+          <Property Name="CampaignID" Type="Int32" Nullable="false" />
+          <Property Name="CCHID" Type="Int32" Nullable="false" />
+          <Property Name="Savings" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Score" Type="Double" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="YourCostSavingsAmt" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Campaign" Relationship="Self.FK_Campaign_CampaignMember" FromRole="CampaignMember" ToRole="Campaign" />
+        </EntityType>
+        <EntityType Name="ClientConfig">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ConfigKey" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ConfigValue" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ConfigValuePrior" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="Content">
+          <Key>
+            <PropertyRef Name="ContentID" />
+          </Key>
+          <Property Name="ContentID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContentTypeID" Type="Int32" Nullable="false" />
+          <Property Name="ContentName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContentSourceDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContentImageFileName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContentFileLocationDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContentPointsCount" Type="Int32" />
+          <Property Name="ContentDurationSecondsCount" Type="Int32" />
+          <Property Name="IntroContentInd" Type="Boolean" Nullable="false" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ContentURL" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ContentPhoneNum" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="CampaignContents" Relationship="Self.FK_Content_CampaignContent" FromRole="Content" ToRole="CampaignContent" />
+          <NavigationProperty Name="Survey" Relationship="Self.FK_Content_Survey" FromRole="Content" ToRole="Survey" />
+          <NavigationProperty Name="UserContents" Relationship="Self.FK_Content_UserContent" FromRole="Content" ToRole="UserContent" />
+          <NavigationProperty Name="ContentType" Relationship="CCH_CustomerDemoNCCTModel.FK_ContentType_Content" FromRole="Content" ToRole="ContentType" />
+          <NavigationProperty Name="ContentTranslations" Relationship="CCH_CustomerDemoNCCTModel.FK_Content_ContentTranslation" FromRole="Content" ToRole="ContentTranslation" />
+        </EntityType>
+        <EntityType Name="Survey">
+          <Key>
+            <PropertyRef Name="SurveyID" />
+          </Key>
+          <Property Name="SurveyID" Type="Int32" Nullable="false" />
+          <Property Name="SurveyPassCount" Type="Int32" />
+          <Property Name="EmbeddedSurveyInd" Type="Boolean" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Content" Relationship="Self.FK_Content_Survey" FromRole="Survey" ToRole="Content" />
+        </EntityType>
+        <EntityType Name="SurveyQuestion">
+          <Key>
+            <PropertyRef Name="SurveyID" />
+            <PropertyRef Name="QuestionID" />
+          </Key>
+          <Property Name="SurveyID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionID" Type="Int32" Nullable="false" />
+          <Property Name="QuestionDisplayOrderNum" Type="Int32" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="UserContent">
+          <Key>
+            <PropertyRef Name="CCHID" />
+            <PropertyRef Name="CampaignID" />
+            <PropertyRef Name="ContentID" />
+          </Key>
+          <Property Name="CCHID" Type="Int32" Nullable="false" />
+          <Property Name="CampaignID" Type="Int32" Nullable="false" />
+          <Property Name="ContentID" Type="Int32" Nullable="false" />
+          <Property Name="ContentStatusChangeDate" Type="DateTime" Precision="3" />
+          <Property Name="UserContentCommentText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="NotificationSentDate" Type="DateTime" Precision="3" />
+          <Property Name="ContentSavingsAmt" Type="Decimal" Precision="8" Scale="2" />
+          <Property Name="MemberContentDataText" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="ContentStatusID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CampaignContent" Relationship="Self.FK_CampaignContent_UserContent" FromRole="UserContent" ToRole="CampaignContent" />
+          <NavigationProperty Name="Content" Relationship="Self.FK_Content_UserContent" FromRole="UserContent" ToRole="Content" />
+          <NavigationProperty Name="ContentStatu" Relationship="CCH_CustomerDemoNCCTModel.FK_ContentStatus_UserContent" FromRole="UserContent" ToRole="ContentStatu" />
+        </EntityType>
+        <Association Name="FK_Campaign_CampaignContent">
+          <End Role="Campaign" Type="Self.Campaign" Multiplicity="1" />
+          <End Role="CampaignContent" Type="Self.CampaignContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campaign">
+              <PropertyRef Name="CampaignID" />
+            </Principal>
+            <Dependent Role="CampaignContent">
+              <PropertyRef Name="CampaignID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Campaign_CampaignMember">
+          <End Role="Campaign" Type="Self.Campaign" Multiplicity="1" />
+          <End Role="CampaignMember" Type="Self.CampaignMember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Campaign">
+              <PropertyRef Name="CampaignID" />
+            </Principal>
+            <Dependent Role="CampaignMember">
+              <PropertyRef Name="CampaignID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_CampaignContent_UserContent">
+          <End Role="CampaignContent" Type="Self.CampaignContent" Multiplicity="1" />
+          <End Role="UserContent" Type="Self.UserContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CampaignContent">
+              <PropertyRef Name="CampaignID" />
+              <PropertyRef Name="ContentID" />
+            </Principal>
+            <Dependent Role="UserContent">
+              <PropertyRef Name="CampaignID" />
+              <PropertyRef Name="ContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Content_CampaignContent">
+          <End Role="Content" Type="Self.Content" Multiplicity="1" />
+          <End Role="CampaignContent" Type="Self.CampaignContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Content">
+              <PropertyRef Name="ContentID" />
+            </Principal>
+            <Dependent Role="CampaignContent">
+              <PropertyRef Name="ContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Content_Survey">
+          <End Role="Content" Type="Self.Content" Multiplicity="1" />
+          <End Role="Survey" Type="Self.Survey" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Content">
+              <PropertyRef Name="ContentID" />
+            </Principal>
+            <Dependent Role="Survey">
+              <PropertyRef Name="SurveyID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Content_UserContent">
+          <End Role="Content" Type="Self.Content" Multiplicity="1" />
+          <End Role="UserContent" Type="Self.UserContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Content">
+              <PropertyRef Name="ContentID" />
+            </Principal>
+            <Dependent Role="UserContent">
+              <PropertyRef Name="ContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CCH_CustomerDemoNCCTEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Campaigns" EntityType="Self.Campaign" />
+          <EntitySet Name="CampaignContents" EntityType="Self.CampaignContent" />
+          <EntitySet Name="CampaignMembers" EntityType="Self.CampaignMember" />
+          <EntitySet Name="ClientConfigs" EntityType="Self.ClientConfig" />
+          <EntitySet Name="Contents" EntityType="Self.Content" />
+          <EntitySet Name="Surveys" EntityType="Self.Survey" />
+          <EntitySet Name="SurveyQuestions" EntityType="Self.SurveyQuestion" />
+          <EntitySet Name="UserContents" EntityType="Self.UserContent" />
+          <AssociationSet Name="FK_Campaign_CampaignContent" Association="Self.FK_Campaign_CampaignContent">
+            <End Role="Campaign" EntitySet="Campaigns" />
+            <End Role="CampaignContent" EntitySet="CampaignContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Campaign_CampaignMember" Association="Self.FK_Campaign_CampaignMember">
+            <End Role="Campaign" EntitySet="Campaigns" />
+            <End Role="CampaignMember" EntitySet="CampaignMembers" />
+          </AssociationSet>
+          <AssociationSet Name="FK_CampaignContent_UserContent" Association="Self.FK_CampaignContent_UserContent">
+            <End Role="CampaignContent" EntitySet="CampaignContents" />
+            <End Role="UserContent" EntitySet="UserContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Content_CampaignContent" Association="Self.FK_Content_CampaignContent">
+            <End Role="Content" EntitySet="Contents" />
+            <End Role="CampaignContent" EntitySet="CampaignContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Content_Survey" Association="Self.FK_Content_Survey">
+            <End Role="Content" EntitySet="Contents" />
+            <End Role="Survey" EntitySet="Surveys" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Content_UserContent" Association="Self.FK_Content_UserContent">
+            <End Role="Content" EntitySet="Contents" />
+            <End Role="UserContent" EntitySet="UserContents" />
+          </AssociationSet>
+          <EntitySet Name="ContentDisplayRules" EntityType="CCH_CustomerDemoNCCTModel.ContentDisplayRule" />
+          <EntitySet Name="ContentStatus" EntityType="CCH_CustomerDemoNCCTModel.ContentStatu" />
+          <EntitySet Name="ContentTypes" EntityType="CCH_CustomerDemoNCCTModel.ContentType" />
+          <EntitySet Name="ContentTypeStates" EntityType="CCH_CustomerDemoNCCTModel.ContentTypeState" />
+          <EntitySet Name="UserContentPreferences" EntityType="CCH_CustomerDemoNCCTModel.UserContentPreference" />
+          <AssociationSet Name="FK_ContentType_Content" Association="CCH_CustomerDemoNCCTModel.FK_ContentType_Content">
+            <End Role="ContentType" EntitySet="ContentTypes" />
+            <End Role="Content" EntitySet="Contents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContentStatus_UserContent" Association="CCH_CustomerDemoNCCTModel.FK_ContentStatus_UserContent">
+            <End Role="ContentStatu" EntitySet="ContentStatus" />
+            <End Role="UserContent" EntitySet="UserContents" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContStatus_ContTypeState" Association="CCH_CustomerDemoNCCTModel.FK_ContStatus_ContTypeState">
+            <End Role="ContentStatu" EntitySet="ContentStatus" />
+            <End Role="ContentTypeState" EntitySet="ContentTypeStates" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ContType_ContTypeState" Association="CCH_CustomerDemoNCCTModel.FK_ContType_ContTypeState">
+            <End Role="ContentType" EntitySet="ContentTypes" />
+            <End Role="ContentTypeState" EntitySet="ContentTypeStates" />
+          </AssociationSet>
+          <EntitySet Name="Enrollments" EntityType="CCH_CustomerDemoNCCTModel.Enrollment" />
+          <EntitySet Name="ContentTranslations" EntityType="CCH_CustomerDemoNCCTModel.ContentTranslation" />
+          <AssociationSet Name="FK_Content_ContentTranslation" Association="CCH_CustomerDemoNCCTModel.FK_Content_ContentTranslation">
+            <End Role="Content" EntitySet="Contents" />
+            <End Role="ContentTranslation" EntitySet="ContentTranslations" />
+          </AssociationSet>
+          <EntitySet Name="Locales" EntityType="CCH_CustomerDemoNCCTModel.Locale" />
+          <AssociationSet Name="FK_Locale_ContentTranslation" Association="CCH_CustomerDemoNCCTModel.FK_Locale_ContentTranslation">
+            <End Role="Locale" EntitySet="Locales" />
+            <End Role="ContentTranslation" EntitySet="ContentTranslations" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Locale_UserContentPreference" Association="CCH_CustomerDemoNCCTModel.FK_Locale_UserContentPreference">
+            <End Role="Locale" EntitySet="Locales" />
+            <End Role="UserContentPreference" EntitySet="UserContentPreferences" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="ContentDisplayRule">
+          <Key>
+            <PropertyRef Name="ContentDisplayRuleID" />
+          </Key>
+          <Property Name="ContentDisplayRuleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContentDisplayRuleDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="ContentStatu">
+          <Key>
+            <PropertyRef Name="ContentStatusID" />
+          </Key>
+          <Property Name="ContentStatusID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContentStatusDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="UserContents" Relationship="CCH_CustomerDemoNCCTModel.FK_ContentStatus_UserContent" FromRole="ContentStatu" ToRole="UserContent" />
+          <NavigationProperty Name="ContentTypeStates" Relationship="CCH_CustomerDemoNCCTModel.FK_ContStatus_ContTypeState" FromRole="ContentStatu" ToRole="ContentTypeState" />
+        </EntityType>
+        <EntityType Name="ContentType">
+          <Key>
+            <PropertyRef Name="ContentTypeID" />
+          </Key>
+          <Property Name="ContentTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ContentTypeDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Contents" Relationship="CCH_CustomerDemoNCCTModel.FK_ContentType_Content" FromRole="ContentType" ToRole="Content" />
+          <NavigationProperty Name="ContentTypeStates" Relationship="CCH_CustomerDemoNCCTModel.FK_ContType_ContTypeState" FromRole="ContentType" ToRole="ContentTypeState" />
+        </EntityType>
+        <EntityType Name="ContentTypeState">
+          <Key>
+            <PropertyRef Name="ContentTypeID" />
+            <PropertyRef Name="ContentStatusID" />
+          </Key>
+          <Property Name="ContentTypeID" Type="Int32" Nullable="false" />
+          <Property Name="ContentStatusID" Type="Int32" Nullable="false" />
+          <Property Name="InitialStateInd" Type="Boolean" />
+          <Property Name="EndStateInd" Type="Boolean" />
+          <Property Name="ContentStatusCaptionText" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ContentStatu" Relationship="CCH_CustomerDemoNCCTModel.FK_ContStatus_ContTypeState" FromRole="ContentTypeState" ToRole="ContentStatu" />
+          <NavigationProperty Name="ContentType" Relationship="CCH_CustomerDemoNCCTModel.FK_ContType_ContTypeState" FromRole="ContentTypeState" ToRole="ContentType" />
+        </EntityType>
+        <EntityType Name="UserContentPreference">
+          <Key>
+            <PropertyRef Name="CCHID" />
+          </Key>
+          <Property Name="CCHID" Type="Int32" Nullable="false" />
+          <Property Name="SMSInd" Type="Boolean" />
+          <Property Name="EmailInd" Type="Boolean" />
+          <Property Name="OSBasedAlertInd" Type="Boolean" />
+          <Property Name="LastUpdateDate" Type="DateTime" Precision="3" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <Property Name="DefaultLocaleID" Type="Int32" />
+          <NavigationProperty Name="Locale" Relationship="CCH_CustomerDemoNCCTModel.FK_Locale_UserContentPreference" FromRole="UserContentPreference" ToRole="Locale" />
+        </EntityType>
+        <Association Name="FK_ContentType_Content">
+          <End Type="CCH_CustomerDemoNCCTModel.ContentType" Role="ContentType" Multiplicity="1" />
+          <End Type="CCH_CustomerDemoNCCTModel.Content" Role="Content" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContentType">
+              <PropertyRef Name="ContentTypeID" />
+            </Principal>
+            <Dependent Role="Content">
+              <PropertyRef Name="ContentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContentStatus_UserContent">
+          <End Type="CCH_CustomerDemoNCCTModel.ContentStatu" Role="ContentStatu" Multiplicity="1" />
+          <End Type="CCH_CustomerDemoNCCTModel.UserContent" Role="UserContent" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContentStatu">
+              <PropertyRef Name="ContentStatusID" />
+            </Principal>
+            <Dependent Role="UserContent">
+              <PropertyRef Name="ContentStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContStatus_ContTypeState">
+          <End Type="CCH_CustomerDemoNCCTModel.ContentStatu" Role="ContentStatu" Multiplicity="1" />
+          <End Type="CCH_CustomerDemoNCCTModel.ContentTypeState" Role="ContentTypeState" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContentStatu">
+              <PropertyRef Name="ContentStatusID" />
+            </Principal>
+            <Dependent Role="ContentTypeState">
+              <PropertyRef Name="ContentStatusID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ContType_ContTypeState">
+          <End Type="CCH_CustomerDemoNCCTModel.ContentType" Role="ContentType" Multiplicity="1" />
+          <End Type="CCH_CustomerDemoNCCTModel.ContentTypeState" Role="ContentTypeState" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ContentType">
+              <PropertyRef Name="ContentTypeID" />
+            </Principal>
+            <Dependent Role="ContentTypeState">
+              <PropertyRef Name="ContentTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Enrollment">
+          <Key>
+            <PropertyRef Name="CCHID" />
+          </Key>
+          <Property Name="CCHID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MemberMedicalID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MemberRXID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SubscriberMedicalID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SubscriberRXID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="LastName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Middle" Type="String" MaxLength="25" FixedLength="false" Unicode="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Precision="3" />
+          <Property Name="Gender" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="RelationshipCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Address1" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Address2" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" MaxLength="2" FixedLength="true" Unicode="false" />
+          <Property Name="Zipcode" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="Email" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="Longitude" Type="Double" />
+          <Property Name="Latitude" Type="Double" />
+          <Property Name="UnRegisteredID" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="OptInIncentiveProgram" Type="Boolean" />
+          <Property Name="Insurer" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RXProvider" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="HealthPlanType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MedicalPlanType" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="RXPlanType" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="UserID" Type="Guid" />
+          <Property Name="OptInEmailAlerts" Type="Boolean" />
+          <Property Name="OptInTextMsgAlerts" Type="Boolean" />
+          <Property Name="MobilePhone" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="OptInPriceConcierge" Type="Boolean" />
+          <Property Name="LastUpdated" Type="DateTime" Precision="3" />
+          <Property Name="UpdateNotes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MemberSSN" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="SubscriberSSN" Type="String" MaxLength="4" FixedLength="false" Unicode="false" />
+          <Property Name="Referral_CCHID" Type="Int32" />
+          <Property Name="MemberClassification" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Subscriber_Email_Home" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Subscriber_Email_Work" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Member_Email_Home" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Member_Email_Work" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Subscriber_Phone_Home" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Subscriber_Phone_Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Member_Phone_Home" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Member_Phone_Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Member_Status" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Interested_In_CCH" Type="String" MaxLength="1" FixedLength="false" Unicode="false" />
+          <Property Name="Contract_Prefix" Type="String" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Contract_Suffix" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="DateAdded" Type="DateTime" Precision="3" />
+          <Property Name="Subscriber_Coverage_Effective_Dt" Type="DateTime" Precision="3" />
+          <Property Name="Subscriber_Coverage_Termination_Dt" Type="DateTime" Precision="3" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="PropertyCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="PCP_Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="PCP_NPI" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="HearCCH" Type="String" MaxLength="2600" FixedLength="false" Unicode="false" />
+          <Property Name="TandCIndicator" Type="String" MaxLength="1" FixedLength="true" Unicode="false" />
+          <Property Name="Source_Phone" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Email_Phone" Type="String" MaxLength="150" FixedLength="false" Unicode="false" />
+          <Property Name="DateRegistered_Phone" Type="DateTime" Precision="3" />
+          <Property Name="AlternatePlanSource" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MemberSSN_Full" Type="String" MaxLength="9" FixedLength="false" Unicode="false" />
+          <Property Name="PartialGeocode" Type="Boolean" />
+          <Property Name="RegistrationType" Type="Byte" />
+        </EntityType>
+        <EntityType Name="ContentTranslation">
+          <Key>
+            <PropertyRef Name="ContentID" />
+            <PropertyRef Name="LocaleID" />
+          </Key>
+          <Property Name="ContentID" Type="Int32" Nullable="false" />
+          <Property Name="LocaleID" Type="Int32" Nullable="false" />
+          <Property Name="ContentTitle" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ContentCaptionText" Type="String" MaxLength="250" FixedLength="false" Unicode="true" />
+          <Property Name="ContentDesc" Type="String" MaxLength="2000" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="Content" Relationship="CCH_CustomerDemoNCCTModel.FK_Content_ContentTranslation" FromRole="ContentTranslation" ToRole="Content" />
+          <NavigationProperty Name="Locale" Relationship="CCH_CustomerDemoNCCTModel.FK_Locale_ContentTranslation" FromRole="ContentTranslation" ToRole="Locale" />
+        </EntityType>
+        <Association Name="FK_Content_ContentTranslation">
+          <End Type="CCH_CustomerDemoNCCTModel.Content" Role="Content" Multiplicity="1" />
+          <End Type="CCH_CustomerDemoNCCTModel.ContentTranslation" Role="ContentTranslation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Content">
+              <PropertyRef Name="ContentID" />
+            </Principal>
+            <Dependent Role="ContentTranslation">
+              <PropertyRef Name="ContentID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Locale">
+          <Key>
+            <PropertyRef Name="LocaleID" />
+          </Key>
+          <Property Name="LocaleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LocaleCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ISOCountryCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="ISOLanguageCode" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="LocaleDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DateFormatDesc" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="CreateDate" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="ContentTranslations" Relationship="CCH_CustomerDemoNCCTModel.FK_Locale_ContentTranslation" FromRole="Locale" ToRole="ContentTranslation" />
+          <NavigationProperty Name="UserContentPreferences" Relationship="CCH_CustomerDemoNCCTModel.FK_Locale_UserContentPreference" FromRole="Locale" ToRole="UserContentPreference" />
+        </EntityType>
+        <Association Name="FK_Locale_ContentTranslation">
+          <End Type="CCH_CustomerDemoNCCTModel.Locale" Role="Locale" Multiplicity="1" />
+          <End Type="CCH_CustomerDemoNCCTModel.ContentTranslation" Role="ContentTranslation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locale">
+              <PropertyRef Name="LocaleID" />
+            </Principal>
+            <Dependent Role="ContentTranslation">
+              <PropertyRef Name="LocaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Locale_UserContentPreference">
+          <End Type="CCH_CustomerDemoNCCTModel.Locale" Role="Locale" Multiplicity="0..1" />
+          <End Type="CCH_CustomerDemoNCCTModel.UserContentPreference" Role="UserContentPreference" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Locale">
+              <PropertyRef Name="LocaleID" />
+            </Principal>
+            <Dependent Role="UserContentPreference">
+              <PropertyRef Name="DefaultLocaleID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="CCH_CustomerDemoNCCTModelStoreContainer" CdmEntityContainer="CCH_CustomerDemoNCCTEntities">
+          <EntitySetMapping Name="Campaigns">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.Campaign">
+              <MappingFragment StoreEntitySet="Campaign">
+                <ScalarProperty Name="CampaignID" ColumnName="CampaignID" />
+                <ScalarProperty Name="CampaignDesc" ColumnName="CampaignDesc" />
+                <ScalarProperty Name="CampaignActiveInd" ColumnName="CampaignActiveInd" />
+                <ScalarProperty Name="TargetPopulationDesc" ColumnName="TargetPopulationDesc" />
+                <ScalarProperty Name="CampaignPeriodDesc" ColumnName="CampaignPeriodDesc" />
+                <ScalarProperty Name="TargetProcedureName" ColumnName="TargetProcedureName" />
+                <ScalarProperty Name="AuthRequiredInd" ColumnName="AuthRequiredInd" />
+                <ScalarProperty Name="SavingsMonthStartDate" ColumnName="SavingsMonthStartDate" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CampaignContents">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.CampaignContent">
+              <MappingFragment StoreEntitySet="CampaignContent">
+                <ScalarProperty Name="CampaignID" ColumnName="CampaignID" />
+                <ScalarProperty Name="ContentID" ColumnName="ContentID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ActivationDate" ColumnName="ActivationDate" />
+                <ScalarProperty Name="ExpirationDate" ColumnName="ExpirationDate" />
+                <ScalarProperty Name="UserContentInd" ColumnName="UserContentInd" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CampaignMembers">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.CampaignMember">
+              <MappingFragment StoreEntitySet="CampaignMember">
+                <ScalarProperty Name="CampaignID" ColumnName="CampaignID" />
+                <ScalarProperty Name="CCHID" ColumnName="CCHID" />
+                <ScalarProperty Name="Savings" ColumnName="Savings" />
+                <ScalarProperty Name="Score" ColumnName="Score" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="YourCostSavingsAmt" ColumnName="YourCostSavingsAmt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ClientConfigs">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.ClientConfig">
+              <MappingFragment StoreEntitySet="ClientConfig">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="ConfigKey" ColumnName="ConfigKey" />
+                <ScalarProperty Name="ConfigValue" ColumnName="ConfigValue" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ModifiedDate" ColumnName="ModifiedDate" />
+                <ScalarProperty Name="ConfigValuePrior" ColumnName="ConfigValuePrior" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Contents">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.Content">
+              <MappingFragment StoreEntitySet="Content">
+                <ScalarProperty Name="ContentID" ColumnName="ContentID" />
+                <ScalarProperty Name="ContentTypeID" ColumnName="ContentTypeID" />
+                <ScalarProperty Name="ContentName" ColumnName="ContentName" />
+                <ScalarProperty Name="ContentSourceDesc" ColumnName="ContentSourceDesc" />
+                <ScalarProperty Name="ContentImageFileName" ColumnName="ContentImageFileName" />
+                <ScalarProperty Name="ContentFileLocationDesc" ColumnName="ContentFileLocationDesc" />
+                <ScalarProperty Name="ContentPointsCount" ColumnName="ContentPointsCount" />
+                <ScalarProperty Name="ContentDurationSecondsCount" ColumnName="ContentDurationSecondsCount" />
+                <ScalarProperty Name="IntroContentInd" ColumnName="IntroContentInd" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ContentURL" ColumnName="ContentURL" />
+                <ScalarProperty Name="ContentPhoneNum" ColumnName="ContentPhoneNum" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Surveys">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.Survey">
+              <MappingFragment StoreEntitySet="Survey">
+                <ScalarProperty Name="SurveyID" ColumnName="SurveyID" />
+                <ScalarProperty Name="SurveyPassCount" ColumnName="SurveyPassCount" />
+                <ScalarProperty Name="EmbeddedSurveyInd" ColumnName="EmbeddedSurveyInd" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SurveyQuestions">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.SurveyQuestion">
+              <MappingFragment StoreEntitySet="SurveyQuestion">
+                <ScalarProperty Name="SurveyID" ColumnName="SurveyID" />
+                <ScalarProperty Name="QuestionID" ColumnName="QuestionID" />
+                <ScalarProperty Name="QuestionDisplayOrderNum" ColumnName="QuestionDisplayOrderNum" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserContents">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.UserContent">
+              <MappingFragment StoreEntitySet="UserContent">
+                <ScalarProperty Name="CCHID" ColumnName="CCHID" />
+                <ScalarProperty Name="CampaignID" ColumnName="CampaignID" />
+                <ScalarProperty Name="ContentID" ColumnName="ContentID" />
+                <ScalarProperty Name="ContentStatusChangeDate" ColumnName="ContentStatusChangeDate" />
+                <ScalarProperty Name="UserContentCommentText" ColumnName="UserContentCommentText" />
+                <ScalarProperty Name="NotificationSentDate" ColumnName="NotificationSentDate" />
+                <ScalarProperty Name="ContentSavingsAmt" ColumnName="ContentSavingsAmt" />
+                <ScalarProperty Name="MemberContentDataText" ColumnName="MemberContentDataText" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ContentStatusID" ColumnName="ContentStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContentDisplayRules">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.ContentDisplayRule">
+              <MappingFragment StoreEntitySet="ContentDisplayRule">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ContentDisplayRuleDesc" ColumnName="ContentDisplayRuleDesc" />
+                <ScalarProperty Name="ContentDisplayRuleID" ColumnName="ContentDisplayRuleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContentStatus">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.ContentStatu">
+              <MappingFragment StoreEntitySet="ContentStatus">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ContentStatusDesc" ColumnName="ContentStatusDesc" />
+                <ScalarProperty Name="ContentStatusID" ColumnName="ContentStatusID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContentTypes">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.ContentType">
+              <MappingFragment StoreEntitySet="ContentType">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ContentTypeDesc" ColumnName="ContentTypeDesc" />
+                <ScalarProperty Name="ContentTypeID" ColumnName="ContentTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContentTypeStates">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.ContentTypeState">
+              <MappingFragment StoreEntitySet="ContentTypeState">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ContentStatusCaptionText" ColumnName="ContentStatusCaptionText" />
+                <ScalarProperty Name="EndStateInd" ColumnName="EndStateInd" />
+                <ScalarProperty Name="InitialStateInd" ColumnName="InitialStateInd" />
+                <ScalarProperty Name="ContentStatusID" ColumnName="ContentStatusID" />
+                <ScalarProperty Name="ContentTypeID" ColumnName="ContentTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="UserContentPreferences">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.UserContentPreference">
+              <MappingFragment StoreEntitySet="UserContentPreference">
+                <ScalarProperty Name="DefaultLocaleID" ColumnName="DefaultLocaleID" />
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="LastUpdateDate" ColumnName="LastUpdateDate" />
+                <ScalarProperty Name="OSBasedAlertInd" ColumnName="OSBasedAlertInd" />
+                <ScalarProperty Name="EmailInd" ColumnName="EmailInd" />
+                <ScalarProperty Name="SMSInd" ColumnName="SMSInd" />
+                <ScalarProperty Name="CCHID" ColumnName="CCHID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enrollments">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.Enrollment">
+              <MappingFragment StoreEntitySet="Enrollments">
+                <ScalarProperty Name="RegistrationType" ColumnName="RegistrationType" />
+                <ScalarProperty Name="PartialGeocode" ColumnName="PartialGeocode" />
+                <ScalarProperty Name="MemberSSN_Full" ColumnName="MemberSSN_Full" />
+                <ScalarProperty Name="AlternatePlanSource" ColumnName="AlternatePlanSource" />
+                <ScalarProperty Name="DateRegistered_Phone" ColumnName="DateRegistered_Phone" />
+                <ScalarProperty Name="Email_Phone" ColumnName="Email_Phone" />
+                <ScalarProperty Name="Source_Phone" ColumnName="Source_Phone" />
+                <ScalarProperty Name="TandCIndicator" ColumnName="TandCIndicator" />
+                <ScalarProperty Name="HearCCH" ColumnName="HearCCH" />
+                <ScalarProperty Name="PCP_NPI" ColumnName="PCP_NPI" />
+                <ScalarProperty Name="PCP_Name" ColumnName="PCP_Name" />
+                <ScalarProperty Name="PropertyCode" ColumnName="PropertyCode" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Subscriber_Coverage_Termination_Dt" ColumnName="Subscriber_Coverage_Termination_Dt" />
+                <ScalarProperty Name="Subscriber_Coverage_Effective_Dt" ColumnName="Subscriber_Coverage_Effective_Dt" />
+                <ScalarProperty Name="DateAdded" ColumnName="DateAdded" />
+                <ScalarProperty Name="Contract_Suffix" ColumnName="Contract_Suffix" />
+                <ScalarProperty Name="Contract_Prefix" ColumnName="Contract_Prefix" />
+                <ScalarProperty Name="Interested_In_CCH" ColumnName="Interested_In_CCH" />
+                <ScalarProperty Name="Member_Status" ColumnName="Member_Status" />
+                <ScalarProperty Name="Member_Phone_Mobile" ColumnName="Member_Phone_Mobile" />
+                <ScalarProperty Name="Member_Phone_Home" ColumnName="Member_Phone_Home" />
+                <ScalarProperty Name="Subscriber_Phone_Mobile" ColumnName="Subscriber_Phone_Mobile" />
+                <ScalarProperty Name="Subscriber_Phone_Home" ColumnName="Subscriber_Phone_Home" />
+                <ScalarProperty Name="Member_Email_Work" ColumnName="Member_Email_Work" />
+                <ScalarProperty Name="Member_Email_Home" ColumnName="Member_Email_Home" />
+                <ScalarProperty Name="Subscriber_Email_Work" ColumnName="Subscriber_Email_Work" />
+                <ScalarProperty Name="Subscriber_Email_Home" ColumnName="Subscriber_Email_Home" />
+                <ScalarProperty Name="MemberClassification" ColumnName="MemberClassification" />
+                <ScalarProperty Name="Referral_CCHID" ColumnName="Referral_CCHID" />
+                <ScalarProperty Name="SubscriberSSN" ColumnName="SubscriberSSN" />
+                <ScalarProperty Name="MemberSSN" ColumnName="MemberSSN" />
+                <ScalarProperty Name="UpdateNotes" ColumnName="UpdateNotes" />
+                <ScalarProperty Name="LastUpdated" ColumnName="LastUpdated" />
+                <ScalarProperty Name="OptInPriceConcierge" ColumnName="OptInPriceConcierge" />
+                <ScalarProperty Name="MobilePhone" ColumnName="MobilePhone" />
+                <ScalarProperty Name="OptInTextMsgAlerts" ColumnName="OptInTextMsgAlerts" />
+                <ScalarProperty Name="OptInEmailAlerts" ColumnName="OptInEmailAlerts" />
+                <ScalarProperty Name="UserID" ColumnName="UserID" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="RXPlanType" ColumnName="RXPlanType" />
+                <ScalarProperty Name="MedicalPlanType" ColumnName="MedicalPlanType" />
+                <ScalarProperty Name="HealthPlanType" ColumnName="HealthPlanType" />
+                <ScalarProperty Name="RXProvider" ColumnName="RXProvider" />
+                <ScalarProperty Name="Insurer" ColumnName="Insurer" />
+                <ScalarProperty Name="OptInIncentiveProgram" ColumnName="OptInIncentiveProgram" />
+                <ScalarProperty Name="UnRegisteredID" ColumnName="UnRegisteredID" />
+                <ScalarProperty Name="Latitude" ColumnName="Latitude" />
+                <ScalarProperty Name="Longitude" ColumnName="Longitude" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="Zipcode" ColumnName="Zipcode" />
+                <ScalarProperty Name="State" ColumnName="State" />
+                <ScalarProperty Name="City" ColumnName="City" />
+                <ScalarProperty Name="Address2" ColumnName="Address2" />
+                <ScalarProperty Name="Address1" ColumnName="Address1" />
+                <ScalarProperty Name="RelationshipCode" ColumnName="RelationshipCode" />
+                <ScalarProperty Name="Gender" ColumnName="Gender" />
+                <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+                <ScalarProperty Name="Middle" ColumnName="Middle" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="SubscriberRXID" ColumnName="SubscriberRXID" />
+                <ScalarProperty Name="SubscriberMedicalID" ColumnName="SubscriberMedicalID" />
+                <ScalarProperty Name="MemberRXID" ColumnName="MemberRXID" />
+                <ScalarProperty Name="MemberMedicalID" ColumnName="MemberMedicalID" />
+                <ScalarProperty Name="EmployeeID" ColumnName="EmployeeID" />
+                <ScalarProperty Name="CCHID" ColumnName="CCHID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ContentTranslations">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.ContentTranslation">
+              <MappingFragment StoreEntitySet="ContentTranslation">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="ContentDesc" ColumnName="ContentDesc" />
+                <ScalarProperty Name="ContentCaptionText" ColumnName="ContentCaptionText" />
+                <ScalarProperty Name="ContentTitle" ColumnName="ContentTitle" />
+                <ScalarProperty Name="LocaleID" ColumnName="LocaleID" />
+                <ScalarProperty Name="ContentID" ColumnName="ContentID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Locales">
+            <EntityTypeMapping TypeName="CCH_CustomerDemoNCCTModel.Locale">
+              <MappingFragment StoreEntitySet="Locale">
+                <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+                <ScalarProperty Name="DateFormatDesc" ColumnName="DateFormatDesc" />
+                <ScalarProperty Name="LocaleDesc" ColumnName="LocaleDesc" />
+                <ScalarProperty Name="ISOLanguageCode" ColumnName="ISOLanguageCode" />
+                <ScalarProperty Name="ISOCountryCode" ColumnName="ISOCountryCode" />
+                <ScalarProperty Name="LocaleCode" ColumnName="LocaleCode" />
+                <ScalarProperty Name="LocaleID" ColumnName="LocaleID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

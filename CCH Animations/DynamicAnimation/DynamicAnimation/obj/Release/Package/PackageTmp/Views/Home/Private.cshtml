@@ -1,0 +1,28 @@
+﻿
+@{
+    ViewBag.Title = "Private";
+}
+<div class="jumbotron">
+    <p>
+        <div class="video-content">
+            <div id="video-videojs1" class="video-js vjs-default-skin vjs-playing vjs-fullscreen">
+                <video id="videoplayer" class="vjs-tech"
+                       controls preload="auto" width="auto" height="auto"
+                       data-setup="{}">
+                    <source src=@ViewBag.Vid
+                            type='video/mp4' />
+                </video>
+            </div>
+        </div>
+    </p>
+</div>
+
+<script type="text/javascript">
+    VideoJS("videoplayer").ready(function () {
+        this.play();
+
+        this.addEvent("ended", function () {
+            window.location.replace("Survey?initial=1");
+        });
+    });
+</script>

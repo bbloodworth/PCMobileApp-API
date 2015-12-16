@@ -1,0 +1,74 @@
+﻿@model BizContents.CampaignContent
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CampaignContent</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Campaign.CampaignID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Campaign.CampaignID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Campaign.CampaignDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Campaign.CampaignDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Content.ContentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Content.ContentID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Content.ContentTranslations.FirstOrDefault().ContentTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Content.ContentTranslations.FirstOrDefault().ContentTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ActivationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ActivationDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpirationDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExpirationDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { campaignId = @Model.CampaignID, contentId = @Model.ContentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -1,0 +1,80 @@
+﻿@model BizContents.Campaign
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Campaign</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CampaignDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CampaignDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CampaignActiveInd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CampaignActiveInd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TargetPopulationDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TargetPopulationDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CampaignPeriodDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CampaignPeriodDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AuthRequiredInd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AuthRequiredInd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SavingsMonthStartDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SavingsMonthStartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

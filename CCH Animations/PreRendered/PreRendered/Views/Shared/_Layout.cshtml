@@ -1,0 +1,88 @@
+﻿@using PreRendered.Common
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - CCH Personalized Animations</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <script type="text/javascript">
+        document.createElement('video'); document.createElement('audio'); document.createElement('track');
+    </script>
+    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://vjs.zencdn.net/c/video.js"></script>
+
+    <style type="text/css">
+        .video-content {
+            width: 100%;
+            max-width: 1500px;
+            background-color: deepskyblue;
+        }
+        .video-js {
+            padding-top: 56.25%;
+        }
+        .vjs-fullscreen {
+            padding-top: 0;
+        }
+        .navbar-inverse {
+            background-color: white;
+            border-color: #080808;
+        }
+        .btn.btn-default {
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .left-column {
+            float: left;
+            padding-top: 50px;
+            width: 40%;
+        }
+        .right-column {
+            float: left;
+        }
+        .one-third {
+            float: left;
+            width: 33%;
+            text-align: center;
+            padding: 50px;
+        }
+        .full-height {
+            height: 100%;
+        }
+        .third-height {
+            height: 33%;
+        }
+        div.jumbotron {
+            font-size: 16px;
+        }
+        .btn-large {
+            font-size: 21px;
+        }
+    </style>
+    <script type="text/javascript" src="http://ajax.microsoft.com/ajax/jquery/jquery-1.6.2.min.js">
+    </script>
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                @*@Html.ActionLink("ClearCost Health", "Index", "Home", null, new { @class = "navbar-brand" })*@
+                @Html.ImageLink("https://home.clearcosthealth.com",
+                    "CCH-Logo.jpg", "ClearCost Health", "400px", "background-color: Transparent;", false)
+            </div>
+            @*@Html.Partial("_ViewSwitcher")*@
+        </div>
+    </div>
+        @RenderBody()
+    <hr />
+    <footer>
+        <p>&copy; ClearCost Health @DateTime.Now.Year</p>
+    </footer>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,74 @@
+﻿@model BizContents.CampaignMember
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>CampaignMember</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CampaignID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CampaignID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Campaign.CampaignDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Campaign.CampaignDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CCHID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CCHID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Savings)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Savings)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Score)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Score)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.YourCostSavingsAmt)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.YourCostSavingsAmt)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { campaignId = @Model.CampaignID, cchId = @Model.CCHID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

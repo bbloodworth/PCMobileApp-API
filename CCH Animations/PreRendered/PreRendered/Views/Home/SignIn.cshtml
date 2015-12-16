@@ -1,0 +1,90 @@
+﻿@model PreRendered.Models.SignInModel
+
+@{
+    ViewBag.Title = "SignIn";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(model => model.Id)
+
+    @*<h4>
+            The information you are about to see is personalized and is intended only for the recipient of this e-mail.
+            Please confirm your identity by entering the following information:
+        </h4>
+
+        <div class="form-horizontal">
+            <hr />
+            <div class="form-group">
+                @Html.LabelFor(model => model.BirthDate, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.BirthDate)
+                    @Html.ValidationMessageFor(model => model.BirthDate)
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Ssn, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Ssn)
+                    @Html.ValidationMessageFor(model => model.Ssn)
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Sign In" class="btn btn-default" />
+                </div>
+            </div>
+        </div>*@
+
+    <div class="jumbotron">
+        <p>
+            <div class="video-content">
+                <div id="video-videojs1" class="video-js vjs-default-skin vjs-playing">
+                    <video id="videoplayer" class="vjs-tech"
+                           controls preload="auto" width="auto" height="auto"
+                           data-setup="{}">
+                        <source src=@ViewBag.Vid
+                                type='video/mp4' />
+                    </video>
+                </div>
+            </div>
+            <p class="vjs-no-js">
+                The information you are about to see is personalized and is intended only for the recipient of this e-mail.
+                Please confirm your identity by entering the following information:<br />
+
+                <fieldset data-role="fieldcontain">
+                    @Html.LabelFor(model => model.BirthDate)
+                    @Html.EditorFor(model => model.BirthDate)
+                    @Html.ValidationMessageFor(model => model.BirthDate)
+                </fieldset>
+
+                <fieldset data-role="fieldcontain">
+                    @Html.LabelFor(model => model.Ssn)
+                    @Html.EditorFor(model => model.Ssn)
+                    @Html.ValidationMessageFor(model => model.Ssn)
+                </fieldset>
+                <div style="text-align:center">
+                    <input type="submit" value="View Your Personalized Video" class="btn btn-default" />
+                </div>
+                @Html.ActionLink("Back to Intro", "Index", 
+                    routeValues: null, htmlAttributes: new { @style = "clear: both;" })
+            </p>
+        </p>
+    </div>
+}
+<script type="text/javascript">
+    VideoJS("videoplayer").ready(function () {
+        this.bigPlayButton.show();
+        this.currentTime(0);
+    });
+</script>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

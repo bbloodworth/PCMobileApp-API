@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>@ViewBag.Title</title>
+    <meta name="viewport" content="width=device-width" />
+    @Styles.Render("~/Content/Mobile/css", "~/Content/jquerymobile/css")
+    @Scripts.Render("~/bundles/jquery", "~/bundles/jquerymobile")
+    <script>
+        $(document).ready(function () {
+            $.mobile.ajaxEnabled = false;
+        });
+    </script>
+    @*<link rel="stylesheet" href="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.css" />
+        <script src="http://code.jquery.com/jquery-1.11.1.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.4/jquery.mobile-1.4.4.min.js"></script>
+    *@
+
+    <script type="text/javascript">
+        document.createElement('video'); document.createElement('audio'); document.createElement('track');
+    </script>
+    <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet" />
+    <script type="text/javascript" src="http://vjs.zencdn.net/c/video.js"></script>
+
+    <style type="text/css">
+        .video-content {
+            width: 80%;
+            max-width: 1000px;
+            background-color: deepskyblue;
+        }
+        .video-js {
+            padding-top: 56.25%;
+        }
+        .vjs-fullscreen {
+            padding-top: 0px;
+        }
+        .navbar-inverse {
+            background-color: white;
+            border-color: #080808;
+        }
+        span.field-validation-error {
+            color: #b94a48;
+        }
+    </style>
+</head>
+<body>
+
+    <div data-role="page" data-theme="b">
+        @*@Html.Partial("_ViewSwitcher")*@
+
+        <div data-role="header">
+            <div data-role="navbar">
+                <ul>
+                    <li>
+                        <a class="ui-btn-active" style="background-color: white;" href="https://home.clearcosthealth.com">
+                            <img src="~/Images/CCH-Logo.jpg" alt="ClearCost Health" style="width: 70%; height: auto;">
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div data-role="content">
+            @RenderSection("featured", false)
+            @RenderBody()
+        </div>
+
+        <div data-role="footer">
+            &copy; ClearCost Health @DateTime.Now.Year
+        </div>
+    </div>
+
+    @RenderSection("scripts", required: false)
+</body>
+</html>

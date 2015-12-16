@@ -1,0 +1,114 @@
+﻿@model BizContents.Content
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Content</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentType.ContentTypeDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentType.ContentTypeDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentTranslations.FirstOrDefault().ContentTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentTranslations.FirstOrDefault().ContentTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentSourceDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentSourceDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentFileLocationDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentFileLocationDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentPointsCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentPointsCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentDurationSecondsCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentDurationSecondsCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IntroContentInd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IntroContentInd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentURL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentURL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentPhoneNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentPhoneNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Survey.SurveyID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Survey.SurveyID)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ContentID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

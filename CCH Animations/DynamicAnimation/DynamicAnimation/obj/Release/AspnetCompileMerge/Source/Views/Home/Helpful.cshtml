@@ -1,0 +1,43 @@
+﻿@{
+    ViewBag.Title = "Helpful";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <style>
+        #header {
+            padding-top: 3%;
+            padding-bottom: 2%;
+            text-align: center;
+        }
+
+        #footer {
+            clear: both;
+            text-align: center;
+            padding-top: 3%;
+        }
+    </style>
+
+    <div>
+        <div id="header">
+            <h2>
+                Was this information helpful?
+            </h2>
+            <div class="two-buttons">
+                <a href="../Home/Helpful?r=1" class="greenButton">Yes</a>
+                <a href="../Home/Helpful?r=0" class="greenButton">No</a>
+            </div>
+        </div>
+
+        <div id="footer">
+            <input type="submit" value="Replay Animation" class="greenButton" />
+        </div>
+    </div>
+}
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+

@@ -1,0 +1,66 @@
+﻿@model BizContents.ContentTranslation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ContentTranslation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Locale.LocaleDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Locale.LocaleDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentCaptionText)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentCaptionText)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+   </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { contentId = Model.ContentID, localeId = Model.LocaleID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

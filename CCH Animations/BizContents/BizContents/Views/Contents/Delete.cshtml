@@ -1,0 +1,120 @@
+﻿@model BizContents.Content
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Content</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentTypeID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentType.ContentTypeDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentType.ContentTypeDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentTranslations.FirstOrDefault().ContentTitle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentTranslations.FirstOrDefault().ContentTitle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentSourceDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentSourceDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentFileLocationDesc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentFileLocationDesc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentPointsCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentPointsCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentDurationSecondsCount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentDurationSecondsCount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IntroContentInd)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IntroContentInd)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentURL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentURL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentPhoneNum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentPhoneNum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Survey.SurveyID)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Survey.SurveyID)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CreateDate)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

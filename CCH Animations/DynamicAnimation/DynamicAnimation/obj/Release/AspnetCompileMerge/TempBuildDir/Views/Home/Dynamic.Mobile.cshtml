@@ -1,0 +1,39 @@
+﻿@{
+    ViewBag.Title = "Dynamic Video";
+}
+<script src=@ViewBag.AnimationScript></script>
+
+<script>
+    var canvas, OurMainTimeline, MainTimeline, OurScenes, createjs;
+
+    function init() {
+        canvas = document.getElementById("canvas");
+        MainTimeline = new OurMainTimeline(canvas);
+        MainTimeline.attachScene("scene1");
+        MainTimeline.startStage();
+        //stage.enableMouseOver();
+        MainTimeline._stage.scaleX = 0.5;
+        MainTimeline._stage.scaleY = 0.5;
+    }
+
+    function callout() {
+        if (console && console.log) {
+            console.log("calling out");
+        }
+        MainTimeline.setVar("zip", "mock data");
+    }
+
+    function playSound(id, loop) {
+        return createjs.Sound.play(id, createjs.Sound.INTERRUPT_NONE, 0, 0, loop);
+    }
+</script>
+
+<img alt="bannerIMG" width="960" height="200" src=@ViewBag.BannerImage />
+<canvas id="canvas" width="960" height="540" style="background-color:#00CCFF"></canvas>
+<div id="formWrapper">
+    <form>
+        <input id="textInputId" type="text" value="" />
+        <input id="textInputId2" type="text" value="" />
+        <input id="textInputId3" type="text" value="" />
+    </form>
+</div>

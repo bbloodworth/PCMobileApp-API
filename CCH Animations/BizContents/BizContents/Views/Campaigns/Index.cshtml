@@ -1,0 +1,75 @@
+﻿@model IEnumerable<BizContents.Campaign>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Campaigns</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.CampaignID)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CampaignDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CampaignActiveInd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.TargetPopulationDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CampaignPeriodDesc)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.AuthRequiredInd)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.SavingsMonthStartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CreateDate)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.CampaignID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CampaignDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CampaignActiveInd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.TargetPopulationDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CampaignPeriodDesc)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.AuthRequiredInd)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SavingsMonthStartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CreateDate)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.CampaignID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.CampaignID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.CampaignID })
+        </td>
+    </tr>
+}
+
+</table>
