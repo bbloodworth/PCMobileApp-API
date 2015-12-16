@@ -21,6 +21,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <ApplicationInsightsResourceId>/subscriptions/640f218a-cbcc-4606-9cb6-72a315073d5d/resourcegroups/Default-ApplicationInsights-CentralUS/providers/microsoft.insights/components/DynamicAnimation</ApplicationInsightsResourceId>
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -487,6 +488,10 @@
     <Content Include="Views\Card\Vision_EyeMed_ABCState_Front.cshtml" />
     <Content Include="Views\Card\Vision_EyeMed_ABCState_Full_Back.cshtml" />
     <Content Include="Views\Card\Vision_EyeMed_ABCState_Full_Front.cshtml" />
+    <Content Include="Views\Card\RX_Optum_Caesars_Back.cshtml" />
+    <Content Include="Views\Card\RX_Optum_Caesars_Front.cshtml" />
+    <Content Include="Views\Card\RX_Optum_Caesars_Full_Back.cshtml" />
+    <Content Include="Views\Card\RX_Optum_Caesars_Full_Front.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
