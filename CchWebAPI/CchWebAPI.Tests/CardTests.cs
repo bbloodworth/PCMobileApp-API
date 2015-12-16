@@ -16,13 +16,21 @@ namespace CchWebAPI.Tests {
     public class CardTests {
         [TestMethod]
         public void CanEmailIdCard() {
-            var tuple = new CardService().GetMemberCardUrls("en", 11, 171230);
+            //var tuple = new CardService().GetMemberCardUrls("en", 11, 171230);
+
+            var tuple = new CardService().GetMemberCardUrls("en", 11, 239);
 
             Assert.IsNotNull(tuple);
             Assert.AreEqual(true, tuple.Item1);
 
             dynamic memberCardUrls = tuple.Item2;
             Assert.IsNotNull(memberCardUrls);
+
+            List<CardResult> cardResults = memberCardUrls.Results;
+
+            cardResults.ForEach(r => {
+                Debug.WriteLine(r.CardUrl);
+            });
 
             var cardWebRequest = new MemberCardWebRequest() {
                 CardToken = (memberCardUrls.Results as List<CardResult>)[0].SecurityToken,
