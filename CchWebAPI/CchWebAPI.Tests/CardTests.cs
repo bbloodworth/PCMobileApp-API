@@ -1,12 +1,9 @@
-﻿using System; 
+﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Dynamic;
+using System.Diagnostics; 
 using System.Net;
 
-using CchWebAPI.Support;
-using CchWebAPI.Areas.Animation.Models;
-using CchWebAPI.Areas.Animation.Controllers;
+using CchWebAPI.Areas.Animation.Models; 
 using CchWebAPI.Services;
 using ClearCost.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;

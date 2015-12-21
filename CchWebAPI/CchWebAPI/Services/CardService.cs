@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Web;
+using System.Net; 
 using CchWebAPI.Support;
 using System.IO; 
 
@@ -101,9 +98,6 @@ namespace CchWebAPI.Services {
         private string GetMemberCardPdfFile(int employerId, MemberCardWebRequest cardWebRequest) {
             try {
                 // Convert the SVG file into a PNG file
-                var inkscapeArguments = string.Format("--file={0}card_{1}_{2}.svg --export-pdf={0}card_{1}_{2}.pdf",
-                    _cardFilesFolder, employerId, cardWebRequest.CardToken);
-
                 var phantomJsArgs = string.Format("rasterize.js card_{0}_{1}.svg card_{0}_{1}.pdf",
                     employerId, cardWebRequest.CardToken);
 
