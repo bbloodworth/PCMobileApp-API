@@ -16,9 +16,7 @@ namespace CchWebAPI.Tests {
     public class CardTests {
         [TestMethod]
         public void CanEmailIdCard() {
-            //var tuple = new CardService().GetMemberCardUrls("en", 11, 171230);
-
-            var tuple = new CardService().GetMemberCardUrls("en", 11, 239);
+            var tuple = new CardService().GetMemberCardUrls("en", 11, 171230); 
 
             Assert.IsNotNull(tuple);
             Assert.AreEqual(true, tuple.Item1);
@@ -48,8 +46,11 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanUseWapiToEmailIdCard() {
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi, 
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
                 "mary.apptest@cch.com");
+
+            //var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.lawapi,
+            //    "mary.apptest@cch.com");
 
             var memberUrlsResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Card/CardUrls/en");
 
