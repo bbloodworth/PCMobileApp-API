@@ -315,6 +315,7 @@
     <Content Include="fonts\VarelaRound-Regular.ttf" />
     <Content Include="fonts\VarelaRound-Regular.woff" />
     <Content Include="fonts\VarelaRound-Regular.woff2" />
+    <None Include="Properties\PublishProfiles\amedia.pubxml" />
     <None Include="Properties\PublishProfiles\cch-a2media %282%29.pubxml" />
     <None Include="Properties\PublishProfiles\cch-a2media.pubxml" />
     <None Include="Properties\PublishProfiles\cch-amedia.pubxml" />
