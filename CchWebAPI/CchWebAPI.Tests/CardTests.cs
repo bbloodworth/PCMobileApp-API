@@ -43,11 +43,11 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanUseWapiToEmailIdCard() {
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
-                "mary.apptest@cch.com");
-
-            //var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.lawapi,
+            //var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
             //    "mary.apptest@cch.com");
+
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.lawapi,
+                "mary.apptest@cch.com");
 
             var memberUrlsResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Card/CardUrls/en");
 
@@ -63,7 +63,7 @@ namespace CchWebAPI.Tests {
             var emailResult = ApiUtil.PostJson<MemberCardWebRequest>(ctx, "Animation/Card/Email", cardWebRequest);
 
             Assert.IsNotNull(emailResult);
-            Assert.AreEqual(HttpStatusCode.OK, emailResult);
+            Assert.AreEqual(HttpStatusCode.OK, emailResult.Item1);
         }
     }
 }
