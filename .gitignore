@@ -245,3 +245,4 @@ CCH Web Application/Web/Web.config
 CCH Web Application/Web/bin/ClearCost.dll
 CCH Web Application/Web/bin/ClearCost.Data.dll
 
+*.cache
