@@ -323,6 +323,7 @@
     <None Include="Properties\PublishProfiles\cch-dmedia.pubxml" />
     <None Include="Properties\PublishProfiles\CchDynamicAnimation.pubxml" />
     <None Include="Properties\PublishProfiles\CchDynamicAnimationIIS.pubxml" />
+    <None Include="Properties\PublishProfiles\dmedia.pubxml" />
     <None Include="Properties\PublishProfiles\DynamicFileSystem.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
