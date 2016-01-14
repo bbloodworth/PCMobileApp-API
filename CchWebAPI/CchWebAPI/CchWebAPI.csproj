@@ -315,6 +315,7 @@
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <None Include="Properties\PublishProfiles\BuildsDir.pubxml" />
     <None Include="Properties\PublishProfiles\CCH_Web_API.pubxml" />
+    <None Include="Properties\PublishProfiles\dwapi.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
