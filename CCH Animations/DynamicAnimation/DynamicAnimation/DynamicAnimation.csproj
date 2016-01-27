@@ -334,7 +334,9 @@
     <Content Include="fonts\VarelaRound-Regular.ttf" />
     <Content Include="fonts\VarelaRound-Regular.woff" />
     <Content Include="fonts\VarelaRound-Regular.woff2" />
-    <Content Include="NLog.config" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

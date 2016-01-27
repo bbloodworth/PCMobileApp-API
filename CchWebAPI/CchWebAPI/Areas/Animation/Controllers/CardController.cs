@@ -166,17 +166,20 @@ namespace CchWebAPI.Areas.Animation.Controllers
 
         [HttpPost]
         public HttpResponseMessage SendIdCardEmail([FromBody] MemberCardWebRequest cardWebRequest) {
-            HttpResponseMessage hrm = Request.CreateResponse(HttpStatusCode.Unauthorized);
+            var hrm = Request.CreateResponse(HttpStatusCode.Unauthorized);
+            var employerId = Request.EmployerID();
             dynamic data = new ExpandoObject();
-            int employerId = Request.EmployerID();
 
             try {
+
                 var cardService = new CardService();
                 var result = cardService.SendIdCardEmail(employerId, cardWebRequest);
+
                 if (result.Item1)
                     hrm = Request.CreateResponse(HttpStatusCode.OK, (object)result.Item2);
                 else
                     hrm = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, result.Item3);
+
             }
             catch (Exception exc) {
                 hrm = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, exc.Message);
