@@ -13,6 +13,8 @@ using CchWebAPI.Services;
 using CchWebAPI.Support;
 using Newtonsoft.Json;
 
+using ClearCost.IO.Log;
+
 namespace CchWebAPI.Areas.Animation.Controllers
 {
     public class CardController : ApiController
@@ -126,6 +128,7 @@ namespace CchWebAPI.Areas.Animation.Controllers
         [HttpGet]
         public HttpResponseMessage GetCardUrl(string localeCode)
         {
+            LogUtil.Log("TestCodeException", new InvalidOperationException("This should never get called"));
             string nani = localeCode;
 
             HttpResponseMessage hrm = Request.CreateResponse(HttpStatusCode.NoContent);
@@ -158,52 +161,6 @@ namespace CchWebAPI.Areas.Animation.Controllers
             data.TotalCount = 8;
 
             hrm = Request.CreateResponse(HttpStatusCode.OK, (object) data);
-            return hrm;
-        }
-
-        [HttpPost]
-        public HttpResponseMessage SendIdCardEmailOld([FromBody] MemberCardWebRequest cardWebRequest)
-        {
-            HttpResponseMessage hrm = Request.CreateResponse(HttpStatusCode.Unauthorized);
-            
-            dynamic data = new ExpandoObject();
-            int employerId = Request.EmployerID();
-
-            try
-            {
-                // Retrieve the web request stream from the Media website and convert it into an SVG file
-                data.SvgResponse = GetMemberCardWebRequest(employerId, cardWebRequest);
-
-                // Convert the SVG file into a PNG file
-                string cardPdfFile = GetMemberCardPdfFile(employerId, cardWebRequest);
-
-                string subject = string.IsNullOrEmpty(cardWebRequest.Subject)
-                    ? "Member ID Card"
-                    : cardWebRequest.Subject;
-
-                string message = string.IsNullOrEmpty(cardWebRequest.Message) ? 
-                    "Please see the attached PDF to view or print my ID card." : 
-                    cardWebRequest.Message;
-
-                bool useInternalServer = "Email.UseInternalServer".GetConfigurationValue().Equals("true");
-
-                // Send PDF file as an email attachment to designated recipient
-                EmailMessenger.Send(to: cardWebRequest.ToEmail, cc: cardWebRequest.CcEmail, 
-                    subject: subject, message: message,
-                    isHtml: false, attachmentPath: cardPdfFile, isInternalServer: useInternalServer);
-
-                bool deleteWorkFiles = "Email.DeleteWorkFiles".GetConfigurationValue().Equals("true");
-                if (deleteWorkFiles)
-                {
-                    data.ResidualFiles = DeleteResourceFiles(employerId, cardWebRequest);
-                }
-
-                hrm = Request.CreateResponse(HttpStatusCode.OK, (object) data);
-            }
-            catch (Exception exc)
-            {
-                hrm = Request.CreateErrorResponse(HttpStatusCode.PreconditionFailed, exc.Message);
-            }
             return hrm;
         }
 
