@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CchWebAPI", "..\CchWebAPI\C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DynamicAnimation", "..\CCH Animations\DynamicAnimation\DynamicAnimation\DynamicAnimation.csproj", "{C0E79067-EC83-4EEC-88D9-B913282D9D47}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClearCost.Web", "..\..\Packages\ClearCost.Web\ClearCost.Web.csproj", "{D6D9FCCD-54D0-4FE4-BFC7-78453D32E094}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{C0E79067-EC83-4EEC-88D9-B913282D9D47}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C0E79067-EC83-4EEC-88D9-B913282D9D47}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C0E79067-EC83-4EEC-88D9-B913282D9D47}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D6D9FCCD-54D0-4FE4-BFC7-78453D32E094}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D6D9FCCD-54D0-4FE4-BFC7-78453D32E094}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D6D9FCCD-54D0-4FE4-BFC7-78453D32E094}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D6D9FCCD-54D0-4FE4-BFC7-78453D32E094}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
