@@ -46,6 +46,10 @@
       <HintPath>..\..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.1.0.1\lib\net451\ClearCost.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="ClearCost.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.Web.1.0.1\lib\net451\ClearCost.Web.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.ApplicationInsights">
       <HintPath>..\packages\Microsoft.ApplicationInsights.0.11.1-build00694\lib\net40\Microsoft.ApplicationInsights.dll</HintPath>
     </Reference>

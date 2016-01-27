@@ -1,5 +1,11 @@
-﻿@{
+﻿@using System
+@using ClearCost.IO.Log
+@{
     Layout = null;
+
+    LogUtil.Log(string.Format("ID Cards Catch All Exception: {0} rendered the error page. If this error message " +
+        "is not accompanied with a more verbose notification, a completely unhangled exception has occured.",
+        HttpContext.Current.Request.UserHostName), new Exception("ID Cards Catch All Exception."));
 }
 <!-- Generator: Adobe Illustrator 18.1.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
 <!DOCTYPE SVG PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
