@@ -45,7 +45,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ClearCost.UnitTesting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.UnitTesting.1.0.0\lib\net451\ClearCost.UnitTesting.dll</HintPath>
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.UnitTesting.1.0.1\lib\net451\ClearCost.UnitTesting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">

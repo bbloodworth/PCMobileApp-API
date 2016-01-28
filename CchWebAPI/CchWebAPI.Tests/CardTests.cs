@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics; 
+using System.Diagnostics;
 using System.Net;
 
-using CchWebAPI.Areas.Animation.Models; 
+using CchWebAPI.Areas.Animation.Models;
 using CchWebAPI.Services;
 using ClearCost.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Newtonsoft.Json;
 
 namespace CchWebAPI.Tests {
     [TestClass]
@@ -69,6 +70,35 @@ namespace CchWebAPI.Tests {
 
             Assert.IsNotNull(emailResult);
             Assert.AreEqual(HttpStatusCode.OK, emailResult.Item1);
+        }
+
+        [TestMethod]
+        public void CanUseWapiToViewIdCard() {
+            //var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            //    "mary.apptest@cch.com");
+
+            if (!Debugger.IsAttached)
+                return;
+
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+                "mary.smith@cchcaesars.com");
+
+            dynamic memberUrlsResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Card/CardUrls/en");
+
+            Assert.IsNotNull(memberUrlsResult);
+
+            Assert.IsNotNull(memberUrlsResult.Results);
+            List<CardResult> cardResults = memberUrlsResult.Results.ToObject<List<CardResult>>();
+
+            var authResult = ctx.GetAuthResult();
+
+            cardResults.ForEach(r => { 
+                Debug.WriteLine(r.CardUrl);
+                var result = ApiUtil.GetContentResult(ctx, r.CardUrl, false, string.Empty, authResult);
+
+                Assert.IsFalse(string.IsNullOrEmpty(result));
+                Assert.IsFalse(result.Contains("Something went wrong"));
+            });
         }
     }
 }

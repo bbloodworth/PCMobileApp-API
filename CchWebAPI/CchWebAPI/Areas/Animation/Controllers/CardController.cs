@@ -17,21 +17,15 @@ using ClearCost.IO.Log;
 
 namespace CchWebAPI.Areas.Animation.Controllers
 {
-    public class CardController : ApiController
-    {
-        private const string CardFilesFolder = "C:\\inetpub\\Resources\\";
-        private const string InkScapeExePath = "C:\\Program Files\\Inkscape\\inkscape.exe";
+    public class CardController : ApiController { 
 
         [HttpGet]
-        public HttpResponseMessage GetMemberCardUrls(string localeCode)
-        {
-            HttpResponseMessage hrm = Request.CreateResponse(HttpStatusCode.NoContent);
+        public HttpResponseMessage GetMemberCardUrls(string localeCode) {
+            var hrm = Request.CreateResponse(HttpStatusCode.NoContent);
 
             dynamic data = new ExpandoObject();
-            using (GetEmployerConnString gecs = new GetEmployerConnString(Request.EmployerID()))
-            {
-                using (GetMemberCardTokens gmct = new GetMemberCardTokens())
-                {
+            using (var gecs = new GetEmployerConnString(Request.EmployerID())) {
+                using (var gmct = new GetMemberCardTokens()) {
                     gmct.CchId = Request.CCHID();
                     gmct.LocaleCode = localeCode;
                     gmct.EmployerId = Request.EmployerID();
@@ -41,34 +35,35 @@ namespace CchWebAPI.Areas.Animation.Controllers
                     data.TotalCount = gmct.TotalCount;
                 }
             }
+
             if (data.TotalCount > 0)
-            {
                 hrm = Request.CreateResponse(HttpStatusCode.OK, (object)data);
-            }
+
             return hrm;
         }
 
         [HttpGet]
-        public HttpResponseMessage GetMemberCardData(int employerId, string token)
-        {
-            HttpResponseMessage hrm = Request.CreateResponse(HttpStatusCode.Unauthorized);
-
+        public HttpResponseMessage GetMemberCardData(int employerId, string token) {
+            var hrm = Request.CreateResponse(HttpStatusCode.Unauthorized);
             dynamic data = new ExpandoObject();
-            using (GetEmployerConnString gecs = new GetEmployerConnString(employerId))
-            {
-                using (GetMemberIdCardData gmidcd = new GetMemberIdCardData())
-                {
+
+            using (var gecs = new GetEmployerConnString(employerId)) {
+                using (var gmidcd = new GetMemberIdCardData()) {
                     gmidcd.SecurityToken = token;
                     gmidcd.GetData(gecs.ConnString);
 
                     data.CardTypeFileName = gmidcd.CardTypeFileName;
 
-                    string memberDataText = gmidcd.CardMemberDataText;
-                    MemberCardDataRecord memberCardData =
+                    var memberDataText = gmidcd.CardMemberDataText;
+                    var memberCardData =
                         JsonConvert.DeserializeObject<MemberCardDataRecord>(memberDataText);
 
-                    if (memberCardData != null)
-                    {
+                    if (memberCardData == null) {
+                        LogUtil.Log(string.Format("Unable to resolve token {0} for employer {1}. " +
+                            "Possible session timeout or multi-device login", token, employerId),
+                            new InvalidOperationException("Invalid security token"));
+                    }
+                    else {
                         memberCardData.CardTypeId = gmidcd.CardTypeId;
                         memberCardData.CardViewModeId = gmidcd.CardViewModeId;
 
@@ -113,6 +108,12 @@ namespace CchWebAPI.Areas.Animation.Controllers
                         data.PlanTypeValue = memberCardData.PlanTypeValue;
                         data.CoverageType = memberCardData.CoverageType;
                         data.CoverageTypeValue = memberCardData.CoverageTypeValue;
+                        //TODO: One mismatch - is this a bug or intentional?  
+                        //Rest are one for one match. Why all this mapping noise? 
+                        //Can we just return the object?
+                        //It seems like the XValue is the field and the non XValue
+                        //are the field labels for UI localization purposes.
+                        //so this seems like a bug to me.
                         data.GroupId = memberCardData.GroupIdValue;
                         data.GroupIdValue = memberCardData.GroupIdValue;
                         data.CardIssuedDateValue = memberCardData.CardIssuedDateValue;
@@ -122,6 +123,7 @@ namespace CchWebAPI.Areas.Animation.Controllers
                     }
                 }
             }
+
             return hrm;
         }
 
@@ -182,78 +184,11 @@ namespace CchWebAPI.Areas.Animation.Controllers
 
             }
             catch (Exception exc) {
+                LogUtil.Log("Exception in CardController.SendIdCardEmail", exc);
                 hrm = Request.CreateErrorResponse(HttpStatusCode.InternalServerError, exc.Message);
             }
 
             return hrm;
-        }
-
-        private bool GetMemberCardWebRequest(int employerId, MemberCardWebRequest cardWebRequest)
-        {
-            try {
-                var webClient = new WebClient();
-                var cardBaseAddress = "CardBaseAddress".GetConfigurationValue();
-                var url = string.Format("{0}/?tkn={1}|{2}", cardBaseAddress, employerId, cardWebRequest.CardToken);
-
-                var cardSvgFile = string.Format("{0}card_{1}_{2}.svg",
-                    CardFilesFolder, employerId, cardWebRequest.CardToken);
-
-                webClient.DownloadFile(url, cardSvgFile);
-                return true;
-            }
-            catch (Exception ex) {
-                //TODO: Log error?
-                return false;
-            }
-        }
-
-        private string GetMemberCardPdfFile(int employerId, MemberCardWebRequest cardWebRequest)
-        {
-            // Convert the SVG file into a PNG file
-            string inkscapeArguments = string.Format("--file={0}card_{1}_{2}.svg --export-pdf={0}card_{1}_{2}.pdf",
-                CardFilesFolder, employerId, cardWebRequest.CardToken);
-
-            int timeout = "Email.Timeout".GetConfigurationNumericValue();
-            Thread.Sleep(timeout);
-
-            ProcessStartInfo psi = new ProcessStartInfo(InkScapeExePath, inkscapeArguments);
-            Process inkscapeProcess = Process.Start(psi);
-            if (inkscapeProcess != null)
-                inkscapeProcess.WaitForExit();
-
-            // Send PDF file as an email attachment to designated recipient
-            string cardPdfFile = string.Format("{0}card_{1}_{2}.pdf",
-                CardFilesFolder, employerId, cardWebRequest.CardToken);
-
-            Thread.Sleep(timeout);
-            return cardPdfFile;
-        }
-
-        private List<string> DeleteResourceFiles(int employerId, MemberCardWebRequest cardWebRequest)
-        {
-            string cardSvgFile = string.Format("{0}card_{1}_{2}.svg",
-                CardFilesFolder, employerId, cardWebRequest.CardToken);
-
-            string cardPdfFile = string.Format("{0}card_{1}_{2}.pdf",
-                CardFilesFolder, employerId, cardWebRequest.CardToken);
-
-            try
-            {
-                if (File.Exists(cardSvgFile))
-                {
-                    File.Delete(cardSvgFile);
-                }
-                if (File.Exists(cardPdfFile))
-                {
-                    File.Delete(cardPdfFile);
-                }
-            }
-            catch
-            {
-                // ignored
-            }
-            string[] remainingFiles = Directory.GetFiles(CardFilesFolder);
-            return remainingFiles.ToList();
         }
     }
 }
