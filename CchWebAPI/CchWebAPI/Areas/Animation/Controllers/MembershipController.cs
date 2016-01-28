@@ -13,6 +13,9 @@ using CchWebAPI.Areas.Animation.Models;
 using CchWebAPI.Properties;
 using CchWebAPI.Support;
 
+using ClearCost.IO.Log;
+using NLog;
+
 namespace CchWebAPI.Areas.Animation.Controllers
 {
     public class MembershipController : ApiController
@@ -20,6 +23,8 @@ namespace CchWebAPI.Areas.Animation.Controllers
         //^(0[1-9]|1[012])(0[1-9]|[12][0-9]|3[01])((19|20)\d\d)$
         private static readonly Regex RegDateOfBirth = new Regex(@"^(19|20)\d\d[- /.](0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])$", RegexOptions.None);
         private static readonly Regex RegPhone = new Regex(@"^(?:(?:\+?1\s*(?:[.-]\s*)?)?(?:\(\s*([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9])\s*\)|([2-9]1[02-9]|[2-9][02-8]1|[2-9][02-8][02-9]))\s*(?:[.-]\s*)?)?([2-9]1[02-9]|[2-9][02-9]1|[2-9][02-9]{2})\s*(?:[.-]\s*)?([0-9]{4})(?:\s*(?:#|x\.?|ext\.?|extension)\s*(\d+))?$", RegexOptions.None);
+
+        private static readonly string EMPLOYER_QUERY = "select e.connectionString, up.employerId from userprofile up join employers e on up.employerid = e.employerid where email = @Email";
         /// <summary>
         /// This service Authenticates,  given a user's last name, date of birth, and last 4 of SSN
         /// If authenticated successfully, it returns the User's Authorization Hash Token, which will be used for the 2nd part of the registration
@@ -198,113 +203,108 @@ namespace CchWebAPI.Areas.Animation.Controllers
         /// <param name="hsRequest">Request object containing authentication data</param>
         /// <returns></returns>
         [HttpPost]
-        public HttpResponseMessage Login(String hsId, [FromBody] UserAuthenticationRequest hsRequest)
-        {
-            HttpResponseMessage hrm = Request.CreateErrorResponse(HttpStatusCode.Unauthorized, new Exception("Client Handshake is Not Authorized"));
+        public HttpResponseMessage Login(String hsId, [FromBody] UserAuthenticationRequest hsRequest) {
+            var hrm = Request.CreateErrorResponse(HttpStatusCode.Unauthorized, new Exception("Client Handshake is Not Authorized"));
             var e = new CCHEncrypt();
             dynamic data = new ExpandoObject();
 
-            if (ValidateConsumer.IsValidConsumer(hsId))
-            {
-                hrm = Request.CreateErrorResponse(HttpStatusCode.Unauthorized, new Exception("User Name and Password Do Not Match"));
+            if (!ValidateConsumer.IsValidConsumer(hsId)) {
+                LogUtil.Log(string.Format("Login failed. Inavlid Handshake Id {0}", hsId), LogLevel.Info);
+                return hrm;
+            }
 
-                if (Membership.ValidateUser(hsRequest.UserName, hsRequest.Password))
-                {
-                    const string employerQuery = "select e.connectionString, up.employerId from userprofile up join employers e on up.employerid = e.employerid where email = @Email";
-                    using (DataBase employerDb = new DataBase(employerQuery, true))
-                    {
-                        employerDb.AddParameter("Email", hsRequest.UserName);
-                        employerDb.GetFrontEndData();
+            hrm = Request.CreateErrorResponse(HttpStatusCode.Unauthorized, new Exception("User Name and Password Do Not Match"));
 
-                        hrm = Request.CreateErrorResponse(HttpStatusCode.NotFound, new Exception("User Profile was Not Found"));
+            if (!Membership.ValidateUser(hsRequest.UserName, hsRequest.Password)) {
+                LogUtil.Log(string.Format("Login failed for user {0}.  Credentials failed membership validation.",
+                    hsRequest.UserName), LogLevel.Info);
+                return hrm;
+            }
 
-                        if (employerDb.Tables.Count > 0 && employerDb.Tables[0].Rows.Count > 0)
-                        {
-                            e.Add("EmployerID", employerDb.Tables[0].Rows[0].GetData("employerId"));
+            using (var employerDb = new DataBase(EMPLOYER_QUERY, true)) {
 
-                            using (GetKeyEmployeeInfo gkei = new GetKeyEmployeeInfo())
-                            {
-                                gkei.Email = hsRequest.UserName;
-                                string cnxString = employerDb.Tables[0].Rows[0].GetData("connectionString");
+                employerDb.AddParameter("Email", hsRequest.UserName);
+                employerDb.GetFrontEndData();
 
-                                gkei.GetData(cnxString);
+                hrm = Request.CreateErrorResponse(HttpStatusCode.NotFound, new Exception("User Profile was Not Found"));
 
-                                hrm = Request.CreateErrorResponse(HttpStatusCode.NotFound, new Exception("Employee Info on User Name was Not Found"));
+                if (employerDb.Tables.Count < 1 || employerDb.Tables[0].Rows.Count < 1) {
+                    LogUtil.Log(string.Format("Login failed for user {0}.  User Profile was not found.",
+                    hsRequest.UserName), LogLevel.Info);
+                    return hrm;
+                }
 
-                                if (gkei.Tables.Count > 0 && gkei.Tables[0].Rows.Count > 0)
-                                {
-                                    //UserAccess Check dstrickland 7/7/2015
-                                    using (var cpaa = new CheckPersonApplicationAccess(gkei.CCHID, cnxString))
-                                    {
-                                        if (!cpaa.HasAccess)
-                                            return Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
-                                                new Exception(cpaa.ErrorMessage));
-                                    }
+                e.Add("EmployerID", employerDb.Tables[0].Rows[0].GetData("employerId"));
 
-                                    string firstName = gkei.Tables[0].Rows[0].GetData("FirstName");
-                                    string lastName = gkei.Tables[0].Rows[0].GetData("LastName");
-                                    string fullName = string.Format("{0} {1}", firstName, lastName);
-                                    string mobilePhone = gkei.Tables[0].Rows[0].GetData("MobilePhone");
-                                    string alternatePhone = gkei.Tables[0].Rows[0].GetData("Phone");
+                using (var gkei = new GetKeyEmployeeInfo()) {
 
-                                    using (GetUserContentPreference gucp = new GetUserContentPreference())
-                                    {
-                                        gucp.CCHID = gkei.CCHID;
-                                        gucp.GetData(cnxString);
+                    gkei.Email = hsRequest.UserName;
+                    string cnxString = employerDb.Tables[0].Rows[0].GetData("connectionString");
 
-                                        data.SmsInd = gucp.SmsInd;
-                                        data.EmailInd = gucp.EmailInd;
-                                        data.OsBasedAlertInd = gucp.OsBasedAlertInd;
-                                        data.LocaleCode = gucp.LocaleCode;
-                                        data.PreferredContact = gucp.ContactPhoneNumber;
+                    gkei.GetData(cnxString);
 
-                                        hrm = Request.CreateResponse(HttpStatusCode.OK, (object)data);
-                                    }
+                    hrm = Request.CreateErrorResponse(HttpStatusCode.NotFound, new Exception("Employee Info on User Name was Not Found"));
 
-                                    var membershipUser = Membership.GetUser(hsRequest.UserName);
-                                    if (membershipUser != null)
-                                    {
-                                        if (membershipUser.ProviderUserKey != null)
-                                        {
-                                            e.UserKey = Request.EncryptionKey();
-                                            e.SecretKey = Settings.Default.SecretKey;
-                                            e.Add("UserName", hsRequest.UserName);
-                                            e.Add("CCHID", gkei.CCHID.ToString());
+                    if (gkei.Tables.Count < 1 || gkei.Tables[0].Rows.Count < 1) {
+                        LogUtil.Log(string.Format("Login failed for user {0}.  Employee Info was not found.",
+                        hsRequest.UserName), LogLevel.Info);
+                        return hrm;
+                    }
 
-                                            string aspUserId = membershipUser.ProviderUserKey.ToString();
-                                            e.Add("UserID", aspUserId);
-                                            string authHash = e.ToString();
-
-                                            //string resultset = string.Format("\"AuthHash\":\"{0}\"", authHash);
-                                            //resultset = string.Concat("{", resultset, "}");
-
-                                            //hrm = new HttpResponseMessage()
-                                            //{
-                                            //    RequestMessage = Request,
-                                            //    Content = new StringContent(resultset),
-                                            //    StatusCode = HttpStatusCode.OK
-                                            //};
-                                            data.AuthHash = authHash;
-                                            data.UserName = hsRequest.UserName;
-                                            data.DisplayName = fullName;
-                                            data.MobilePhone = mobilePhone;
-                                            data.AlternatePhone = alternatePhone;
-                                            data.Question = membershipUser.PasswordQuestion;
-
-                                            hrm = Request.CreateResponse(HttpStatusCode.OK, (object)data);
-
-                                            //InsertAuditTrail(gkei.CCHID, aspUserId,
-                                            //    "Animation Login", Request.RequestUri.Host, cnxString);
-
-                                            LogUserLoginHistory(hsRequest.UserName, gkei.CCHID, cnxString);
-                                        }
-                                    }
-                                }
-                            }
+                    //UserAccess Check dstrickland 7/7/2015
+                    using (var cpaa = new CheckPersonApplicationAccess(gkei.CCHID, cnxString)) {
+                        if (!cpaa.HasAccess) {
+                            LogUtil.Log(string.Format("Login failed for user {0}.  User does not have acces to AppId 2.",
+                                hsRequest.UserName), LogLevel.Info);
+                            return Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                                new Exception(cpaa.ErrorMessage));
                         }
+                    }
+
+                    var firstName = gkei.Tables[0].Rows[0].GetData("FirstName");
+                    var lastName = gkei.Tables[0].Rows[0].GetData("LastName");
+                    var fullName = string.Format("{0} {1}", firstName, lastName);
+                    var mobilePhone = gkei.Tables[0].Rows[0].GetData("MobilePhone");
+                    var alternatePhone = gkei.Tables[0].Rows[0].GetData("Phone");
+
+                    using (var gucp = new GetUserContentPreference()) {
+                        gucp.CCHID = gkei.CCHID;
+                        gucp.GetData(cnxString);
+
+                        data.SmsInd = gucp.SmsInd;
+                        data.EmailInd = gucp.EmailInd;
+                        data.OsBasedAlertInd = gucp.OsBasedAlertInd;
+                        data.LocaleCode = gucp.LocaleCode;
+                        data.PreferredContact = gucp.ContactPhoneNumber;
+
+                        hrm = Request.CreateResponse(HttpStatusCode.OK, (object)data);
+                    }
+
+                    var membershipUser = Membership.GetUser(hsRequest.UserName);
+                    if (membershipUser != null && membershipUser.ProviderUserKey != null) {
+                        e.UserKey = Request.EncryptionKey();
+                        e.SecretKey = Settings.Default.SecretKey;
+                        e.Add("UserName", hsRequest.UserName);
+                        e.Add("CCHID", gkei.CCHID.ToString());
+
+                        string aspUserId = membershipUser.ProviderUserKey.ToString();
+                        e.Add("UserID", aspUserId);
+                        string authHash = e.ToString();
+
+                        data.AuthHash = authHash;
+                        data.UserName = hsRequest.UserName;
+                        data.DisplayName = fullName;
+                        data.MobilePhone = mobilePhone;
+                        data.AlternatePhone = alternatePhone;
+                        data.Question = membershipUser.PasswordQuestion;
+
+                        hrm = Request.CreateResponse(HttpStatusCode.OK, (object)data);
+
+                        LogUserLoginHistory(hsRequest.UserName, gkei.CCHID, cnxString);
                     }
                 }
             }
+
             return hrm;
         }
 
