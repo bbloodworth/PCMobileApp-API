@@ -50,10 +50,10 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         public void CanUseWapiToEmailIdCard() {
             //var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
-            //    "mary.apptest@cch.com");
+                //"mary.smith@cchcaesars.com");
 
             var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.lawapi,
-                "mary.apptest@cch.com");
+                "mary.smith@cchcaesars.com");
 
             var memberUrlsResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Card/CardUrls/en");
 

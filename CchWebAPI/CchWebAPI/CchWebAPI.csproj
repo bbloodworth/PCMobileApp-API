@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClearCost, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.1.0.1\lib\net451\ClearCost.dll</HintPath>
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.1.0.2\lib\net451\ClearCost.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
