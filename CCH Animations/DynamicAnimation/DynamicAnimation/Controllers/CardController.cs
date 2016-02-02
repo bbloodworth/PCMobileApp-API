@@ -76,7 +76,8 @@ namespace DynamicAnimation.Controllers
 
                 HelperService.LogAnonEvent(ExperienceEvents.Error, errMessage);
 
-                LogUtil.Log(string.Format("Unable to resolve card data for token {0}.", token), 
+                LogUtil.Log(string.Format("Unable to resolve card data for token {0} for employer {1}.", 
+                    token, employerId), 
                     new InvalidOperationException(errMessage));
 
                 return View();

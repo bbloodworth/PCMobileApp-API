@@ -64,6 +64,9 @@ namespace CchWebAPI.Areas.Animation.Controllers
                             new InvalidOperationException("Invalid security token"));
                     }
                     else {
+                        LogUtil.Trace(string.Format("Resolved token {0} for employer {1}.", 
+                            token, employerId));
+
                         memberCardData.CardTypeId = gmidcd.CardTypeId;
                         memberCardData.CardViewModeId = gmidcd.CardViewModeId;
 

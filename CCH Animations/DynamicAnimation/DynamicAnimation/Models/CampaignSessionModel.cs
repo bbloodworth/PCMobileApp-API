@@ -189,29 +189,28 @@ namespace DynamicAnimation.Models
             }
         }
 
-        public static CampaignSessionModel Current
-        {
-            get
-            {
-                var campaignSession = new CampaignSessionModel
-                {
-                    EmployerId = "DefaultEmployerId".GetConfigurationNumericValue(),
-                    FileType = "mp4",
-                    PublicContainerName = "PublicStorageContainer".GetConfigurationValue(),
-                    PublicContainerUrl = "PublicStorageContainerUrl".GetConfigurationValue(),
-                    PrivateContainerName = "PrivateStorageContainer".GetConfigurationValue(),
-                    PrivateContainerUrl = "PrivateStorageContainerUrl".GetConfigurationValue(),
-                    PosterName = "PosterName".GetConfigurationValue()
-                };
+        public static CampaignSessionModel Current {
+            get {
+                CampaignSessionModel campaignSession = null;
 
-                if (HttpContext.Current.Session["CampaignSession"] != null)
-                {
+                if (HttpContext.Current.Session["CampaignSession"] != null) {
                     campaignSession = (CampaignSessionModel)HttpContext.Current.Session["CampaignSession"];
                 }
+                else {
+                    campaignSession = new CampaignSessionModel {
+                        EmployerId = "DefaultEmployerId".GetConfigurationNumericValue(),
+                        FileType = "mp4",
+                        PublicContainerName = "PublicStorageContainer".GetConfigurationValue(),
+                        PublicContainerUrl = "PublicStorageContainerUrl".GetConfigurationValue(),
+                        PrivateContainerName = "PrivateStorageContainer".GetConfigurationValue(),
+                        PrivateContainerUrl = "PrivateStorageContainerUrl".GetConfigurationValue(),
+                        PosterName = "PosterName".GetConfigurationValue()
+                    };
+                }
+
                 return campaignSession;
             }
-            set
-            {
+            set {
                 HttpContext.Current.Session["CampaignSession"] = value;
             }
         }

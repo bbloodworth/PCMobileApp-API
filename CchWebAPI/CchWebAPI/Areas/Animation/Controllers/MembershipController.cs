@@ -41,7 +41,7 @@ namespace CchWebAPI.Areas.Animation.Controllers
 
             if (ValidateConsumer.IsValidConsumer(hsId))
             {
-                hrm = Request.CreateErrorResponse(HttpStatusCode.NotFound, new Exception("User was Not Found"));
+                hrm = Request.CreateErrorResponse(HttpStatusCode.Unauthorized, new Exception("User was Not Found"));
 
                 if (RegDateOfBirth.IsMatch(hsRequest.DateOfBirth))
                 {
@@ -101,7 +101,7 @@ namespace CchWebAPI.Areas.Animation.Controllers
 
             if (ValidateConsumer.IsValidConsumer(hsId))
             {
-                hrm = Request.CreateErrorResponse(HttpStatusCode.NotFound, new Exception("User was Not Found"));
+                hrm = Request.CreateErrorResponse(HttpStatusCode.Unauthorized, new Exception("User was Not Found"));
 
                 using (GetEmployerConnString gecs = new GetEmployerConnString(Request.EmployerID()))
                 {
@@ -226,7 +226,8 @@ namespace CchWebAPI.Areas.Animation.Controllers
                 employerDb.AddParameter("Email", hsRequest.UserName);
                 employerDb.GetFrontEndData();
 
-                hrm = Request.CreateErrorResponse(HttpStatusCode.NotFound, new Exception("User Profile was Not Found"));
+                hrm = Request.CreateErrorResponse(HttpStatusCode.Unauthorized, 
+                    new Exception("User Profile was Not Found"));
 
                 if (employerDb.Tables.Count < 1 || employerDb.Tables[0].Rows.Count < 1) {
                     LogUtil.Log(string.Format("Login failed for user {0}.  User Profile was not found.",
@@ -243,7 +244,8 @@ namespace CchWebAPI.Areas.Animation.Controllers
 
                     gkei.GetData(cnxString);
 
-                    hrm = Request.CreateErrorResponse(HttpStatusCode.NotFound, new Exception("Employee Info on User Name was Not Found"));
+                    hrm = Request.CreateErrorResponse(HttpStatusCode.Unauthorized, 
+                        new Exception("Employee Info on User Name was Not Found"));
 
                     if (gkei.Tables.Count < 1 || gkei.Tables[0].Rows.Count < 1) {
                         LogUtil.Log(string.Format("Login failed for user {0}.  Employee Info was not found.",
@@ -624,7 +626,8 @@ namespace CchWebAPI.Areas.Animation.Controllers
 
             if (ValidateConsumer.IsValidConsumer(hsId))
             {
-                hrm = Request.CreateErrorResponse(HttpStatusCode.NotFound, new Exception("Member with CCH ID was Not Found"));
+                hrm = Request.CreateErrorResponse(HttpStatusCode.Unauthorized, 
+                    new Exception("Member with CCH ID was Not Found"));
 
                 using (GetEmployerConnString gecs = new GetEmployerConnString(employerId))
                 {
