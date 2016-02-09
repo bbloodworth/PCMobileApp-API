@@ -1,38 +1,30 @@
 ﻿using System;
-using System.Configuration;
 using System.Linq;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
-using DynamicAnimation.Models;
-using Microsoft.ApplicationInsights.Extensibility.Implementation;
+using System.Net.Http; 
+using System.Threading.Tasks; 
+using DynamicAnimation.Models; 
 
 namespace DynamicAnimation.Common
 {
-    public class WebApiService
-    {
-        public static AuthorizationResponse GetAuthorizationByCchId(int employerId, int cchId)
-        {
-            AuthorizationResponse authResponse = new AuthorizationResponse();
+    public class WebApiService {
+        public static AuthorizationResponse GetAuthorizationByCchId(int employerId, int cchId) {
+            var authResponse = new AuthorizationResponse();
 
-            string requestUrl = string.Format("v1/Animation/Membership/LoginById/{0}/{1}/{2}",
+            var requestUrl = string.Format("v1/Animation/Membership/LoginById/{0}/{1}/{2}",
                 employerId, cchId, 
                 "AnzovinHandshakeId".GetConfigurationValue());
 
             var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-            try
-            {
-                HttpResponseMessage response = BaseService.Client.SendAsync(request).Result;
+            try {
+                using (var client = BaseService.GetClient()) {
+                    var response = client.SendAsync(request).Result;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    authResponse = response.Content.ReadAsAsync<AuthorizationResponse>().Result;
+                    if (response.IsSuccessStatusCode) {
+                        authResponse = response.Content.ReadAsAsync<AuthorizationResponse>().Result;
+                    }
                 }
             }
-            catch (Exception exc)
-            {
+            catch (Exception exc) {
                 HelperService.LogAnonEvent(ExperienceEvents.Error,
                     exc.InnerException == null
                         ? exc.Message
@@ -43,25 +35,23 @@ namespace DynamicAnimation.Common
             return authResponse;
         }
 
-        public static CampaignIntroModel GetCampaignIntro(int employerId, int campaignId)
-        {
+        public static CampaignIntroModel GetCampaignIntro(int employerId, int campaignId) {
             var campaignIntro = new CampaignIntroModel();
 
-            string requestUrl = string.Format("v1/Animation/Campaign/Intro/{0}/{1}/{2}",
+            var requestUrl = string.Format("v1/Animation/Campaign/Intro/{0}/{1}/{2}",
                 employerId, campaignId, "AnzovinHandshakeId".GetConfigurationValue());
 
             var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-            try
-            {
-                HttpResponseMessage response = BaseService.Client.SendAsync(request).Result;
+            try {
+                using (var client = BaseService.GetClient()) {
+                    var response = client.SendAsync(request).Result;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    campaignIntro = response.Content.ReadAsAsync<CampaignIntroModel>().Result;
+                    if (response.IsSuccessStatusCode) {
+                        campaignIntro = response.Content.ReadAsAsync<CampaignIntroModel>().Result;
+                    }
                 }
             }
-            catch (Exception exc)
-            {
+            catch (Exception exc) {
                 HelperService.LogAnonEvent(ExperienceEvents.Error,
                     exc.InnerException == null ?
                     exc.Message :
@@ -71,45 +61,40 @@ namespace DynamicAnimation.Common
             return campaignIntro ?? new CampaignIntroModel();
         }
 
-        public static CampaignSessionModel GetCampaignSession(CampaignSessionModel campaignSession)
-        {
-            UserContentRecord userContent = new UserContentRecord();
-            UserContentResponse contentResponse = new UserContentResponse();
+        public static CampaignSessionModel GetCampaignSession(CampaignSessionModel campaignSession) {
+            var userContent = new UserContentRecord();
+            var contentResponse = new UserContentResponse();
             /// Call new p_GetCampaignIntro 
             /// and new p_GetCampaignContents
             
-            string requestUrl = string.Format("v1/Animation/UserContent/UserContent/1/{0}",
+            var requestUrl = string.Format("v1/Animation/UserContent/UserContent/1/{0}",
                 campaignSession.CampaignContentId);
 
             var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-            try
-            {
-                if (BaseService.Client.DefaultRequestHeaders.Contains("AuthHash"))
-                {
-                    BaseService.Client.DefaultRequestHeaders.Remove("AuthHash");
-                }
-                BaseService.Client.DefaultRequestHeaders.Add("AuthHash", campaignSession.AuthorizationHash);
+            try {
+                using (var client = BaseService.GetClient()) {
+                    if (client.DefaultRequestHeaders.Contains("AuthHash")) {
+                        client.DefaultRequestHeaders.Remove("AuthHash");
+                    }
 
-                HttpResponseMessage response = BaseService.Client.SendAsync(request).Result;
+                    client.DefaultRequestHeaders.Add("AuthHash", campaignSession.AuthorizationHash);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    //campaignIntro = response.Content.ReadAsAsync<CampaignIntroModel>().Result;
-                    //campaignSession.IntroAnimationName = campaignIntro.ContentName;
-                    contentResponse = response.Content.ReadAsAsync<UserContentResponse>().Result;
-                    userContent = contentResponse.Results.FirstOrDefault();
+                    var response = client.SendAsync(request).Result;
 
-                    if (userContent != null)
-                    {
-                        campaignSession.AnimationTopic = userContent.ContentName;
-                        campaignSession.JavaScriptFileName = userContent.ContentFileLocation;
-                        campaignSession.BannerImageName = userContent.ContentImageFileName;
-                        campaignSession.MemberContentData = userContent.MemberContentData;
+                    if (response.IsSuccessStatusCode) {
+                        contentResponse = response.Content.ReadAsAsync<UserContentResponse>().Result;
+                        userContent = contentResponse.Results.FirstOrDefault();
+
+                        if (userContent != null) {
+                            campaignSession.AnimationTopic = userContent.ContentName;
+                            campaignSession.JavaScriptFileName = userContent.ContentFileLocation;
+                            campaignSession.BannerImageName = userContent.ContentImageFileName;
+                            campaignSession.MemberContentData = userContent.MemberContentData;
+                        }
                     }
                 }
             }
-            catch (Exception exc)
-            {
+            catch (Exception exc) {
                 HelperService.LogAnonEvent(ExperienceEvents.Error,
                     exc.InnerException == null ?
                     exc.Message :
@@ -119,14 +104,11 @@ namespace DynamicAnimation.Common
             return campaignSession ?? new CampaignSessionModel();
         }
 
-        public static AuthorizationResponse GetAuthorization(string lastName, string dateOfBirth, string lastFour)
-        {
-            AuthorizationResponse authResponse = new AuthorizationResponse();
+        public static AuthorizationResponse GetAuthorization(string lastName, string dateOfBirth, string lastFour) {
+            var authResponse = new AuthorizationResponse();
             lastName = lastName.Replace(" ", "_");
 
-            // var campaignSession = CampaignSessionModel.Current;
-            AuthMemberDataRequest request = new AuthMemberDataRequest
-            {
+            var request = new AuthMemberDataRequest {
                 LastName = lastName,
                 DateOfBirth = dateOfBirth,
                 LastFourSsn = lastFour
@@ -135,17 +117,16 @@ namespace DynamicAnimation.Common
             string requestUrl = string.Format("v1/Animation/Membership/Register1/{0}",
                 "AnzovinHandshakeId".GetConfigurationValue());
 
-            try
-            {
-                HttpResponseMessage response = BaseService.Client.PostAsJsonAsync(requestUrl, request).Result;
+            try {
+                using (var client = BaseService.GetClient()) {
+                    var response = client.PostAsJsonAsync(requestUrl, request).Result;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    authResponse = response.Content.ReadAsAsync<AuthorizationResponse>().Result;
+                    if (response.IsSuccessStatusCode) {
+                        authResponse = response.Content.ReadAsAsync<AuthorizationResponse>().Result;
+                    }
                 }
             }
-            catch (Exception exc)
-            {
+            catch (Exception exc) {
                 HelperService.LogAnonEvent(ExperienceEvents.Error,
                     exc.InnerException == null ?
                     exc.Message :
@@ -153,58 +134,28 @@ namespace DynamicAnimation.Common
                     exc.InnerException.Message : exc.InnerException.InnerException.Message);
             }
             return authResponse;
-
-
-            //string requestUrl = string.Format("v1/Animation/Campaign/Intro/{0}/{1}/{2}",
-            //    employerId, campaignId, "HandshakeId".GetConfigurationValue());
-
-            //var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-            //request.Headers.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes(string.Format("{0}:{1}", email, password))));
-
-            //try
-            //{
-            //    HttpResponseMessage response = BaseService.Client.SendAsync(request).Result;
-
-            //    if (response.IsSuccessStatusCode)
-            //    {
-            //        campaignIntro = response.Content.ReadAsAsync<CampaignIntroModel>().Result;
-            //        AuthorizationResponse authResponse = response.Content.ReadAsAsync<AuthorizationResponse>().Result;
-            //        UserContext.Initialize(email, authResponse);
-            //        isSuccess = true;
-            //    }
-            //}
-            //catch (Exception exc)
-            //{
-            //    HelperService.LogAnonEvent(ExperienceEvents.Error,
-            //        exc.InnerException == null ?
-            //        exc.Message :
-            //        exc.InnerException.InnerException == null ?
-            //        exc.InnerException.Message : exc.InnerException.InnerException.Message);
-            //}
         }
 
         public static VideoCampaignModel GetVideoCampaign
-            (int campaignId, int employerId)
-        {
+            (int campaignId, int employerId) {
             var videoCampaign = new VideoCampaignModel();
 
-            string requestUrl = string.Format("v1/PComm/VideoCampaign/{0}/{1}/{2}",
+            var requestUrl = string.Format("v1/PComm/VideoCampaign/{0}/{1}/{2}",
                 "HandshakeId".GetConfigurationValue(),
                 employerId, campaignId);
 
             var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
             // request.Content = null;
-            try
-            {
-                HttpResponseMessage response = BaseService.Client.SendAsync(request).Result;
+            try {
+                using (var client = BaseService.GetClient()) {
+                    var response = client.SendAsync(request).Result;
 
-                if (response.IsSuccessStatusCode)
-                {
-                    videoCampaign = response.Content.ReadAsAsync<VideoCampaignModel>().Result;
+                    if (response.IsSuccessStatusCode) {
+                        videoCampaign = response.Content.ReadAsAsync<VideoCampaignModel>().Result;
+                    }
                 }
             }
-            catch (Exception exc)
-            {
+            catch (Exception exc) {
                 HelperService.LogAnonEvent(ExperienceEvents.Error, 
                     exc.InnerException == null ? 
                     exc.Message : 
@@ -214,33 +165,30 @@ namespace DynamicAnimation.Common
             return videoCampaign ?? new VideoCampaignModel();
         }
 
-        public static VideoCampaignMemberModel GetVideoCampaignMemberData
-            (string videoCampaignMemberId, int employerId)
-        {
+        public static VideoCampaignMemberModel GetVideoCampaignMemberData 
+            (string videoCampaignMemberId, int employerId) {
             var videoCampaignMember = new VideoCampaignMemberModel();
 
-            string requestUrl = string.Format("v1/PComm/VideoCampaign/MemberInfo/{0}/{1}/{2}",
+            var requestUrl = string.Format("v1/PComm/VideoCampaign/MemberInfo/{0}/{1}/{2}",
                 "HandshakeId".GetConfigurationValue(),
                 employerId, videoCampaignMemberId);
 
             var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
 
-            HttpResponseMessage response = BaseService.Client.SendAsync(request).Result;
+            using (var client = BaseService.GetClient()) {
+                var response = client.SendAsync(request).Result;
 
-            if (response.IsSuccessStatusCode)
-            {
-                videoCampaignMember = response.Content.ReadAsAsync<VideoCampaignMemberModel>().Result;
+                if (response.IsSuccessStatusCode) {
+                    videoCampaignMember = response.Content.ReadAsAsync<VideoCampaignMemberModel>().Result;
+                }
             }
             return videoCampaignMember;
         }
 
-        public static UserSessionVideoModel GetUserSessionVideoData(string videoCampaignMemberId, int employerId)
-        {
-            VideoCampaignMemberModel videoCampaignMember = 
-                GetVideoCampaignMemberData(videoCampaignMemberId, employerId);
+        public static UserSessionVideoModel GetUserSessionVideoData(string videoCampaignMemberId, int employerId) {
+            var videoCampaignMember = GetVideoCampaignMemberData(videoCampaignMemberId, employerId);
 
-            var userSessionVideo = new UserSessionVideoModel
-            {
+            var userSessionVideo = new UserSessionVideoModel {
                 VideoCampaignMemberId = videoCampaignMemberId,
                 EmployerId = employerId,
                 CchEmployerLink = videoCampaignMember.CchEmployerLink,
@@ -271,8 +219,7 @@ namespace DynamicAnimation.Common
             };
 
             if (!(string.IsNullOrEmpty(userSessionVideo.PrivateContainerName) ||
-                  string.IsNullOrEmpty(userSessionVideo.VideoCampaignFileId)))
-            {
+                  string.IsNullOrEmpty(userSessionVideo.VideoCampaignFileId))) {
                 userSessionVideo.VideoWithSignedAccessSignature =
                     AzureBlobManager.GetBlobSasUrl(userSessionVideo.PrivateContainerName,
                         userSessionVideo.VideoCampaignFileId);
@@ -280,58 +227,48 @@ namespace DynamicAnimation.Common
             return userSessionVideo;
         }
 
-        public static async Task LogAnonEvent(ExperienceLogRequest experienceLog)
-        {
-            string requestUrl = string.Format("v1/Animation/Experience/LogAnonEvent/{0}",
+        public static async Task LogAnonEvent(ExperienceLogRequest experienceLog) {
+            var requestUrl = string.Format("v1/Animation/Experience/LogAnonEvent/{0}",
                 "AnzovinHandshakeId".GetConfigurationValue());
 
-            HttpResponseMessage response = await BaseService.Client.PostAsJsonAsync(
-                requestUrl, experienceLog);
-
-            if (response.IsSuccessStatusCode)
-            {
+            using (var client = BaseService.GetClient()) {
+                var response = await client.PostAsJsonAsync(
+                    requestUrl, experienceLog);
             }
         }
 
-        public static async Task LogUserEvent(ExperienceLogRequest experienceLog, string authHash)
-        {
-            string requestUrl = string.Format("v1/Animation/Experience/LogUserEvent/{0}",
+        public static async Task LogUserEvent(ExperienceLogRequest experienceLog, string authHash) {
+            var requestUrl = string.Format("v1/Animation/Experience/LogUserEvent/{0}",
                 "AnzovinHandshakeId".GetConfigurationValue());
 
-            if (!BaseService.Client.DefaultRequestHeaders.Contains("AuthHash"))
-            {
-                BaseService.Client.DefaultRequestHeaders.Add("AuthHash", authHash);
-            }
-            HttpResponseMessage response = await BaseService.Client.PostAsJsonAsync(
-                requestUrl, experienceLog);
-
-            if (response.IsSuccessStatusCode)
-            {
+            using (var client = BaseService.GetClient()) {
+                if (!client.DefaultRequestHeaders.Contains("AuthHash")) {
+                    client.DefaultRequestHeaders.Add("AuthHash", authHash);
+                }
+                var response = await client.PostAsJsonAsync(
+                    requestUrl, experienceLog);
             }
         }
 
-        public static ExperienceLogResponse LogInitialEvent(int employerId)
-        {
-            ExperienceLogResponse experienceResponse = new ExperienceLogResponse();
-            ExperienceLogRequest experienceLog = new ExperienceLogRequest()
-            {
+        public static ExperienceLogResponse LogInitialEvent(int employerId) {
+            var experienceResponse = new ExperienceLogResponse();
+            var experienceLog = new ExperienceLogRequest() {
                 EmployerId = employerId,
                 EventName = "StartWebsite",
                 LogComment = string.Format("Animations Website launched ")
             };
 
-            string requestUrl = string.Format("v1/Animation/Experience/LogInitial/{0}",
+            var requestUrl = string.Format("v1/Animation/Experience/LogInitial/{0}",
                 "AnzovinHandshakeId".GetConfigurationValue());
-            try
-            {
-                var response = BaseService.Client.PostAsJsonAsync(requestUrl, experienceLog).Result;
-                if (response.IsSuccessStatusCode)
-                {
-                    experienceResponse = response.Content.ReadAsAsync<ExperienceLogResponse>().Result;
+            try {
+                using (var client = BaseService.GetClient()) {
+                    var response = client.PostAsJsonAsync(requestUrl, experienceLog).Result;
+                    if (response.IsSuccessStatusCode) {
+                        experienceResponse = response.Content.ReadAsAsync<ExperienceLogResponse>().Result;
+                    }
                 }
             }
-            catch (Exception exc)
-            {
+            catch (Exception exc) {
                 HelperService.LogAnonEvent(ExperienceEvents.Error,
                     exc.InnerException == null ?
                     exc.Message :
@@ -342,36 +279,22 @@ namespace DynamicAnimation.Common
             return experienceResponse;
         }
 
-        public static async Task<MemberCardDataModel> GetMemberCardData(int employerId, string token)
-        {
-            MemberCardDataModel memberData = new MemberCardDataModel();
+        public static async Task<MemberCardDataModel> GetMemberCardData(int employerId, string token) {
+            var memberData = new MemberCardDataModel();
 
-            string requestUrl = string.Format("v1/Animation/Card/MemberData/{0}/{1}",
+            var requestUrl = string.Format("v1/Animation/Card/MemberData/{0}/{1}",
                 employerId, token);
 
             var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
-            try
-            {
-                //HttpResponseMessage response = BaseService.Client.SendAsync(request).Result;
-
-                ////throw new Exception("Error Test in GetMemberCardData");
-
-                //if (response.IsSuccessStatusCode)
-                //{
-                //    memberData = response.Content.ReadAsAsync<MemberCardDataModel>().Result;
-                //}
-
-                await BaseService.Client.SendAsync(request).ContinueWith(t =>
-                {
-                    HttpResponseMessage response = t.Result;
-                    if (response.IsSuccessStatusCode)
-                    {
+            try {
+                using (var client = BaseService.GetClient()) {
+                    var response = await client.SendAsync(request);
+                    if (response.IsSuccessStatusCode) {
                         memberData = response.Content.ReadAsAsync<MemberCardDataModel>().Result;
                     }
-                }).ConfigureAwait(false);
+                }
             }
-            catch (Exception exc)
-            {
+            catch (Exception exc) {
                 HelperService.LogAnonEvent(ExperienceEvents.Error,
                     exc.InnerException == null ?
                     exc.Message :

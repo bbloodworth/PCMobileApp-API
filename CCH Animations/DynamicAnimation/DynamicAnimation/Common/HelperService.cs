@@ -127,26 +127,27 @@ namespace DynamicAnimation.Common
                     experienceLog.LogComment = string.Format("Invalid Action");
                     break;
             }
-            Task.Run(() => WebApiService.LogAnonEvent(experienceLog));
+            try {
+                Task.Run(() => WebApiService.LogAnonEvent(experienceLog));
+            } catch (Exception ex) {
+                throw new Exception(string.Format("Error in LogAnonEvent.  ExperienceLogRequest values {0}",
+                    experienceLog.GetValuesFoLog()), ex);
+            }
         }
 
-        public static void LogUserEvent(ExperienceEvents experienceEvent)
-        {
+        public static void LogUserEvent(ExperienceEvents experienceEvent) {
             LogUserEvent(experienceEvent, string.Empty);
         }
 
-        public static void LogUserEvent(ExperienceEvents experienceEvent, string message)
-        {
-            var experienceLog = new ExperienceLogRequest
-            {
+        public static void LogUserEvent(ExperienceEvents experienceEvent, string message) {
+            var experienceLog = new ExperienceLogRequest {
                 EventId = Convert.ToInt32(experienceEvent),
                 EmployerId = CampaignSessionModel.Current.EmployerId,
                 ExperienceUserId = CampaignSessionModel.Current.ExperienceUserId,
                 CchId = CampaignSessionModel.Current.CchId
             };
 
-            switch (experienceEvent)
-            {
+            switch (experienceEvent) {
                 case ExperienceEvents.AuthenticationSuccess:
                     experienceLog.LogComment = string.Format("Authentication for {0} successful",
                         message);
@@ -198,8 +199,13 @@ namespace DynamicAnimation.Common
                     experienceLog.LogComment = string.Format("Invalid Action");
                     break;
             }
-            string authHash = CampaignSessionModel.Current.AuthorizationHash;
-            Task.Run(() => WebApiService.LogUserEvent(experienceLog, authHash));
+            var authHash = CampaignSessionModel.Current.AuthorizationHash;
+            try {
+                Task.Run(() => WebApiService.LogUserEvent(experienceLog, authHash));
+            } catch (Exception ex) {
+                throw new Exception(string.Format("Error in LogUserEvent.  ExperienceLogRequest values {0}", 
+                    experienceLog.GetValuesFoLog()), ex);
+            }
         }
 
         public static ExperienceLogResponse LogInitialEvent(int employerId)

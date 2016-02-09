@@ -1,4 +1,6 @@
-﻿namespace DynamicAnimation.Models
+﻿using System;
+
+namespace DynamicAnimation.Models
 {
     public class ExperienceLogRequest
     {
@@ -9,6 +11,12 @@
         public string LogComment { get; set; }
         public int CchId { get; set; }
         public string ContentId { get; set; }
+
+        internal string GetValuesFoLog() {
+            return string.Format("EmployerId:{0}|EventId:{1}|ExperienceUserId:{2}|EventName:{3}|" +
+                "LogComment:{4}|CchId:{5}|ContentId:{6}", EmployerId, EventId, ExperienceUserId,
+                EventName, LogComment, CchId, ContentId);
+        }
     }
 
     public class ExperienceLogResponse
