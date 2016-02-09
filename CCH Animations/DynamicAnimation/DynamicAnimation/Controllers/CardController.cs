@@ -11,7 +11,7 @@ namespace DynamicAnimation.Controllers
     public class CardController : Controller
     {
         // GET: Card
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
             ViewBag.Message = "Virtual ID Cards";
             Response.ContentType = "image/svg+xml";
@@ -46,8 +46,7 @@ namespace DynamicAnimation.Controllers
 
             CampaignSessionModel.Current = campaignSession;
 
-            Task<MemberCardDataModel> taskCardData = WebApiService.GetMemberCardData(employerId, token);
-            MemberCardDataModel cardData = taskCardData.Result;
+            var cardData = await WebApiService.GetMemberCardData(employerId, token);
                     
             var cardTypeFileName = cardData.CardTypeFileName;
             var cardTypeId = cardData.CardTypeId;
@@ -58,8 +57,7 @@ namespace DynamicAnimation.Controllers
             HelperService.LogAnonEvent(ExperienceEvents.Debug, infoMessage);
 
             if (cardTypeId < 1 || cardViewModeId < 1 || string.IsNullOrEmpty(cardTypeFileName)) {
-                taskCardData = WebApiService.GetMemberCardData(employerId, token);
-                cardData = taskCardData.Result;
+                cardData = await WebApiService.GetMemberCardData(employerId, token);
 
                 cardTypeFileName = cardData.CardTypeFileName;
                 cardTypeId = cardData.CardTypeId;
