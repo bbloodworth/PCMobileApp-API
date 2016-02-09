@@ -74,17 +74,25 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
     <Compile Include="CardTests.cs" />
+    <Compile Include="Media\HelperServiceTests.cs" />
+    <Compile Include="Media\WebApiServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MembershipTests.cs" />
     <Compile Include="AnimationsTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\CCH Animations\DynamicAnimation\DynamicAnimation\DynamicAnimation.csproj">
+      <Project>{c0e79067-ec83-4eec-88d9-b913282d9d47}</Project>
+      <Name>DynamicAnimation</Name>
+    </ProjectReference>
     <ProjectReference Include="..\CchWebAPI\CchWebAPI.csproj">
       <Project>{496a906c-0e46-4c22-b854-84242d8264aa}</Project>
       <Name>CchWebAPI</Name>

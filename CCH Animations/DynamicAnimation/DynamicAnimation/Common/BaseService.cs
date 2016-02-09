@@ -6,23 +6,17 @@ namespace DynamicAnimation.Common
 {
     public class BaseService
     {
-        private static HttpClient _client;
+        public static HttpClient GetClient() {
 
-        public static HttpClient Client
-        {
-            get
-            {
-                if (_client == null)
-                {
-                    _client = new HttpClient();
-                    _client.BaseAddress = new Uri("APIBaseAddress".GetConfigurationValue());
-                    _client.DefaultRequestHeaders.Accept.Clear();
-                    _client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                    _client.DefaultRequestHeaders.Add("ApiKey", "APIClientKey".GetConfigurationValue());
-                    _client.DefaultRequestHeaders.Add("Keep-Alive", "false");
-                }
-                return _client;
-            }
+            var client = new HttpClient();
+            client.BaseAddress = new Uri("APIBaseAddress".GetConfigurationValue());
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            client.DefaultRequestHeaders.Add("ApiKey", "APIClientKey".GetConfigurationValue());
+            client.DefaultRequestHeaders.Add("Keep-Alive", "false");
+
+            return client;
+
         }
     }
 }
