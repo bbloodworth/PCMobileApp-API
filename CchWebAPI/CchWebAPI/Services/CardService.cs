@@ -4,10 +4,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Web;
+using System.Net; 
 using CchWebAPI.Support;
 using System.IO; 
 
@@ -15,7 +12,7 @@ namespace CchWebAPI.Services {
     public class CardService {
         //TODO: Make these configurable
         private readonly static string _cardFilesFolder = "C:\\inetpub\\Resources\\";
-        private readonly static string _inkScapeExePath = "C:\\Program Files\\Inkscape\\inkscape.exe";
+        private readonly static string _phantomJsExePath = "C:\\inetpub\\Resources\\phantomjs.exe";
 
         public Tuple<bool, dynamic> GetMemberCardUrls(string localeCode, int employerId, int cchId) {
             var isSuccess = false;
@@ -46,9 +43,9 @@ namespace CchWebAPI.Services {
 
             try {
                 // Retrieve the web request stream from the Media website and convert it into an SVG file
-                data.SvgSuccess = GetMemberCardWebRequest(employerId, cardWebRequest);
+                data.SvgSuccess = GetMemberCardWebRequest(employerId, cardWebRequest); 
 
-                // Convert the SVG file into a PNG file
+                // Convert the SVG file into a PDF file
                 string cardPdfFile = GetMemberCardPdfFile(employerId, cardWebRequest);
 
                 string subject = string.IsNullOrEmpty(cardWebRequest.Subject)
@@ -101,12 +98,13 @@ namespace CchWebAPI.Services {
         private string GetMemberCardPdfFile(int employerId, MemberCardWebRequest cardWebRequest) {
             try {
                 // Convert the SVG file into a PNG file
-                var inkscapeArguments = string.Format("--file={0}card_{1}_{2}.svg --export-pdf={0}card_{1}_{2}.pdf",
-                    _cardFilesFolder, employerId, cardWebRequest.CardToken);
+                var phantomJsArgs = string.Format("rasterize.js card_{0}_{1}.svg card_{0}_{1}.pdf",
+                    employerId, cardWebRequest.CardToken);
 
                 using (var process = new Process()){
-                    process.StartInfo.FileName = _inkScapeExePath;
-                    process.StartInfo.Arguments = inkscapeArguments;
+                    process.StartInfo.WorkingDirectory = _cardFilesFolder;
+                    process.StartInfo.FileName = _phantomJsExePath;
+                    process.StartInfo.Arguments = phantomJsArgs;
                     process.StartInfo.UseShellExecute = false;
                     process.Start();
                     if (process != null)

@@ -1,5 +1,6 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using DynamicAnimation.Common;
 
 namespace DynamicAnimation
 {
@@ -7,7 +8,7 @@ namespace DynamicAnimation
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
-            filters.Add(new HandleErrorAttribute());
+            filters.Add(new ExceptionFilter());
         }
     }
 }

@@ -7,9 +7,21 @@ using System.Net;
 namespace CchWebAPI.Tests {
     [TestClass]
     public class MembershipTests {
+
+        [TestMethod]
+        public void CanGetWapiAuthResult() {
+            //var authResult = UnitTestContext.Get(ClearCost.UnitTesting.Environment.lawapi, @"mary.smith@cchcaesars.com").GetAuthResult();
+            var authResult = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi, @"mary.smith@cchcaesars.com").GetAuthResult();
+            //var authResult = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi, @"mikew@cchdemo.com").GetAuthResult();
+            //var authResult = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi, @"mary.s@cchdemo.com").GetAuthResult("password1");
+            //var authResult = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi, //@"mary.smith@cchcaesars.com").GetAuthResult();
+            Assert.IsNotNull(authResult);
+            Assert.IsFalse(string.IsNullOrEmpty(authResult.AuthHash));
+        }
+
         [TestMethod]
         public void CanExecuteResetPasswordStep1() {
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.lawapi,
                 "mary.apptest@cch.com");
 
             var payload = new UserAuthenticationRequest() {
@@ -28,7 +40,7 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanExecuteResetPasswordStep2() {
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.lawapi,
                 "mary.apptest@cch.com");
 
             var payload = new UserAuthenticationRequest() {

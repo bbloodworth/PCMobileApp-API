@@ -36,12 +36,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ClearCost, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.1.0.0\lib\net451\ClearCost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ClearCost.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.Data.1.0.0\lib\net451\ClearCost.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ClearCost.UnitTesting, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.UnitTesting.1.0.1\lib\net451\ClearCost.UnitTesting.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Net" />
     <Reference Include="System.Net.Http" />
   </ItemGroup>
@@ -53,27 +74,24 @@
     </When>
     <Otherwise>
       <ItemGroup>
-        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework" />
+        <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework">
+          <Private>False</Private>
+        </Reference>
       </ItemGroup>
     </Otherwise>
   </Choose>
   <ItemGroup>
     <Compile Include="CardTests.cs" />
+    <Compile Include="Media\HelperServiceTests.cs" />
+    <Compile Include="Media\WebApiServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MembershipTests.cs" />
+    <Compile Include="AnimationsTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Packages\ClearCost.Data\ClearCost.Data.csproj">
-      <Project>{5a257ede-6736-4c22-a5ea-465d58cb1516}</Project>
-      <Name>ClearCost.Data</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Packages\ClearCost.UnitTesting\ClearCost.UnitTesting.csproj">
-      <Project>{e6e4d5c7-4ece-4505-8f15-cb14a2ad5ac8}</Project>
-      <Name>ClearCost.UnitTesting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\Packages\ClearCost\ClearCost.csproj">
-      <Project>{66033b1b-b3af-4ee6-aebe-ecacbfe56bdf}</Project>
-      <Name>ClearCost</Name>
+    <ProjectReference Include="..\..\CCH Animations\DynamicAnimation\DynamicAnimation\DynamicAnimation.csproj">
+      <Project>{c0e79067-ec83-4eec-88d9-b913282d9d47}</Project>
+      <Name>DynamicAnimation</Name>
     </ProjectReference>
     <ProjectReference Include="..\CchWebAPI\CchWebAPI.csproj">
       <Project>{496a906c-0e46-4c22-b854-84242d8264aa}</Project>

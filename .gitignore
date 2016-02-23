@@ -68,6 +68,7 @@ artifacts/
 *.pidb
 *.svclog
 *.scc
+*.FileListAbsolute.txt
 
 # Chutzpah Test files
 _Chutzpah*
@@ -230,3 +231,18 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+
+#Project specific
+CCH Animations/DynamicAnimation/DynamicAnimation/bin/DynamicAnimation.dll
+CCH Animations/DynamicAnimation/DynamicAnimation/bin/Debug
+CCH Animations/CCH Animations/bin/CCH Animations.dll
+CCH Animations/CCH Animations/Views/Web.config
+
+CchWebAPI/CchWebAPI/Web.config
+
+CCH Web Application/Web/Web.config
+CCH Web Application/Web/bin/ClearCost.dll
+CCH Web Application/Web/bin/ClearCost.Data.dll
+
+*.cache

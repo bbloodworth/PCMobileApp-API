@@ -4,9 +4,9 @@ using System.Web;
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using System.Web.Mvc;
-using System.Web.Optimization;
-using System.Web.Routing;
 using CchWebAPI.Formatters;
+
+using ClearCost.IO.Log;
 
 namespace CchWebAPI
 {
@@ -37,10 +37,9 @@ namespace CchWebAPI
             GlobalConfiguration.Configuration.Formatters.Insert(0, new JsonpMediaTypeFormatter());
         }
 
-        protected void Application_BeginRequest(object sender, EventArgs e)
-        {
-            string uniqueId = DateTime.Now.Ticks.ToString();
-            string logFile = string.Format("C:\\Inetpub\\Logs\\RequestLogs\\{0}.txt", uniqueId);
+        protected void Application_BeginRequest(object sender, EventArgs e) {
+            string logFile = string.Format("C:\\Inetpub\\Logs\\RequestLogs\\{0}-{1}.txt", 
+                DateTime.Now.Ticks.ToString(), Guid.NewGuid().ToString());
             Request.SaveAs(logFile, true);
         }
 
@@ -75,13 +74,26 @@ namespace CchWebAPI
 
         protected void Application_Error()
         {
-            //Exception error = Server.GetLastError();
+            Exception error = Server.GetLastError();
+            var exceptionChainId = Guid.NewGuid();
+
+            LogUtil.Log(string.Format("Unhandled exception in WAPI.  Exception chain id is {0}",
+                exceptionChainId), error, exceptionChainId);
             Server.ClearError();
 
             Response.ContentType = "text/xml";
-            Response.StatusCode = 404;
+            Response.StatusCode = 500;
 
-            Response.SuppressContent = true;
+            Response.Write(string.Format("Exception chain Id {0}", exceptionChainId));
+
+            var innerError = error.InnerException;
+
+            while(innerError != null) {
+                Response.Write(string.Format("Exception: {0} at {1}", innerError.Message, innerError.StackTrace));
+                LogUtil.Log(string.Format("Unhandled exception in WAPI.  Exception chain id is {0}",
+                    exceptionChainId), innerError);
+                innerError = innerError.InnerException;
+            }
 
             Response.End();
         }

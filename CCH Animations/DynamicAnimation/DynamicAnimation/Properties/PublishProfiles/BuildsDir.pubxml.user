@@ -10,1000 +10,1030 @@ by editing this MSBuild file. In order to learn more about this please visit htt
   </PropertyGroup>
   <ItemGroup>
     <File Include="ApplicationInsights.config">
-      <publishTime>12/08/2015 14:58:46</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="bin/Antlr3.Runtime.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="bin/ApplicationInsights.config">
-      <publishTime>12/08/2015 14:58:46</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="bin/App_global.asax.compiled">
-      <publishTime>12/14/2015 10:40:37</publishTime>
+      <publishTime>02/09/2016 13:28:44</publishTime>
     </File>
     <File Include="bin/App_global.asax.dll">
-      <publishTime>12/14/2015 10:40:37</publishTime>
+      <publishTime>02/09/2016 13:28:44</publishTime>
+    </File>
+    <File Include="bin/ClearCost.dll">
+      <publishTime>02/01/2016 14:55:15</publishTime>
+    </File>
+    <File Include="bin/ClearCost.Web.dll">
+      <publishTime>01/27/2016 15:15:52</publishTime>
     </File>
     <File Include="bin/de/Microsoft.Data.Edm.resources.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/de/Microsoft.Data.OData.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/de/Microsoft.Data.Services.Client.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:13</publishTime>
     </File>
     <File Include="bin/de/System.Spatial.resources.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:15</publishTime>
     </File>
     <File Include="bin/DynamicAnimation.dll">
-      <publishTime>12/14/2015 10:40:28</publishTime>
+      <publishTime>02/09/2016 13:28:33</publishTime>
     </File>
     <File Include="bin/es/Microsoft.Data.Edm.resources.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/es/Microsoft.Data.OData.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/es/Microsoft.Data.Services.Client.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:13</publishTime>
     </File>
     <File Include="bin/es/System.Spatial.resources.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:15</publishTime>
     </File>
     <File Include="bin/fr/Microsoft.Data.Edm.resources.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/fr/Microsoft.Data.OData.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/fr/Microsoft.Data.Services.Client.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:13</publishTime>
     </File>
     <File Include="bin/fr/System.Spatial.resources.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:15</publishTime>
     </File>
     <File Include="bin/it/Microsoft.Data.Edm.resources.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/it/Microsoft.Data.OData.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/it/Microsoft.Data.Services.Client.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:13</publishTime>
     </File>
     <File Include="bin/it/System.Spatial.resources.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:15</publishTime>
     </File>
     <File Include="bin/ja/Microsoft.Data.Edm.resources.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/ja/Microsoft.Data.OData.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/ja/Microsoft.Data.Services.Client.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:13</publishTime>
     </File>
     <File Include="bin/ja/System.Spatial.resources.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:15</publishTime>
     </File>
     <File Include="bin/ko/Microsoft.Data.Edm.resources.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/ko/Microsoft.Data.OData.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/ko/Microsoft.Data.Services.Client.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:13</publishTime>
     </File>
     <File Include="bin/ko/System.Spatial.resources.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:15</publishTime>
     </File>
     <File Include="bin/Microsoft.ApplicationInsights.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="bin/Microsoft.ApplicationInsights.Extensibility.RuntimeTelemetry.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="bin/Microsoft.ApplicationInsights.Extensibility.Web.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="bin/Microsoft.Data.Edm.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/Microsoft.Data.OData.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/Microsoft.Data.Services.Client.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:13</publishTime>
     </File>
     <File Include="bin/Microsoft.Diagnostics.Tracing.EventSource.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:14</publishTime>
     </File>
     <File Include="bin/Microsoft.Threading.Tasks.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:11</publishTime>
     </File>
     <File Include="bin/Microsoft.Threading.Tasks.Extensions.Desktop.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:11</publishTime>
     </File>
     <File Include="bin/Microsoft.Threading.Tasks.Extensions.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:11</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:14</publishTime>
     </File>
     <File Include="bin/Microsoft.WindowsAzure.Common.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:14</publishTime>
     </File>
     <File Include="bin/Microsoft.WindowsAzure.Common.NetFramework.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:14</publishTime>
     </File>
     <File Include="bin/Microsoft.WindowsAzure.Configuration.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:14</publishTime>
     </File>
     <File Include="bin/Microsoft.WindowsAzure.Management.Storage.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:14</publishTime>
     </File>
     <File Include="bin/Microsoft.WindowsAzure.Storage.dll">
-      <publishTime>12/08/2015 14:58:55</publishTime>
+      <publishTime>02/01/2016 15:46:15</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>12/16/2015 07:30:45</publishTime>
+    </File>
+    <File Include="bin/NLog.config">
+      <publishTime>02/01/2016 16:09:43</publishTime>
+    </File>
+    <File Include="bin/NLog.dll">
+      <publishTime>01/26/2016 15:30:31</publishTime>
+    </File>
+    <File Include="bin/NLog.Web.dll">
+      <publishTime>01/27/2016 06:36:49</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.Data.Edm.resources.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.Data.OData.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/ru/Microsoft.Data.Services.Client.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:13</publishTime>
     </File>
     <File Include="bin/ru/System.Spatial.resources.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:15</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Extensions.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:14</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:11</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Primitives.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:14</publishTime>
     </File>
     <File Include="bin/System.Spatial.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:15</publishTime>
     </File>
     <File Include="bin/System.Web.Helpers.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:11</publishTime>
     </File>
     <File Include="bin/System.Web.Http.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:11</publishTime>
     </File>
     <File Include="bin/System.Web.Http.WebHost.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:11</publishTime>
     </File>
     <File Include="bin/System.Web.Mvc.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="bin/System.Web.Optimization.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:11</publishTime>
     </File>
     <File Include="bin/System.Web.Razor.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.Deployment.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:11</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:11</publishTime>
     </File>
     <File Include="bin/System.Web.WebPages.Razor.dll">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>02/01/2016 15:46:11</publishTime>
     </File>
     <File Include="bin/WebGrease.dll">
-      <publishTime>12/08/2015 14:58:55</publishTime>
+      <publishTime>02/01/2016 15:46:15</publishTime>
     </File>
     <File Include="bin/zh-Hans/Microsoft.Data.Edm.resources.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/zh-Hans/Microsoft.Data.OData.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/zh-Hans/Microsoft.Data.Services.Client.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:13</publishTime>
     </File>
     <File Include="bin/zh-Hans/System.Spatial.resources.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:15</publishTime>
     </File>
     <File Include="bin/zh-Hant/Microsoft.Data.Edm.resources.dll">
-      <publishTime>12/08/2015 14:58:52</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/zh-Hant/Microsoft.Data.OData.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:12</publishTime>
     </File>
     <File Include="bin/zh-Hant/Microsoft.Data.Services.Client.resources.dll">
-      <publishTime>12/08/2015 14:58:53</publishTime>
+      <publishTime>02/01/2016 15:46:13</publishTime>
     </File>
     <File Include="bin/zh-Hant/System.Spatial.resources.dll">
-      <publishTime>12/08/2015 14:58:54</publishTime>
+      <publishTime>02/01/2016 15:46:15</publishTime>
     </File>
     <File Include="Content/bootstrap.css">
-      <publishTime>12/08/2015 14:58:46</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="Content/bootstrap.min.css">
-      <publishTime>12/08/2015 14:58:46</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="Content/jquery.mobile-1.4.4.css">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Content/jquery.mobile-1.4.4.min.css">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Content/jquery.mobile.structure-1.4.4.css">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Content/jquery.mobile.structure-1.4.4.min.css">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Content/jquery.mobile.theme-1.4.4.css">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Content/jquery.mobile.theme-1.4.4.min.css">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Content/Site.css">
-      <publishTime>12/08/2015 14:58:46</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Css/FlashMainTimeline.css">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Css/MainTimeline.css">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Css/Player.css">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Css/Player.ie8.css">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="favicon.ico">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="Flash/benefit_plan.swf">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Flash/savings_alert.swf">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Flash/savings_alert_avaya.swf">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="fonts/Lato-Bold.eot">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/Lato-Bold.otf">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/Lato-Bold.svg">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/Lato-Bold.ttf">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/Lato-Bold.woff">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/Lato-Bold.woff2">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/Lato-Regular.eot">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/Lato-Regular.otf">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/Lato-Regular.svg">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/Lato-Regular.ttf">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/Lato-Regular.woff">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/Lato-Regular.woff2">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/VarelaRound-Regular.eot">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/VarelaRound-Regular.otf">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/VarelaRound-Regular.svg">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/VarelaRound-Regular.ttf">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/VarelaRound-Regular.woff">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="fonts/VarelaRound-Regular.woff2">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:11</publishTime>
     </File>
     <File Include="Html/benefit_plan.html">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Html/savings_alert.html">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Html/savings_alert_avaya.html">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/1x1-000000-1.0.png">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/1x1-005ABC-0.6.png">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/1x1-3F414B-0.21.png">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/1x1-3F414B-0.38.png">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/1x1-E9E9E9-1.0.png">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/1x1-FFFFFF-1.0.png">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/1x1.png">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/CCH-Logo.jpg">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/getflash.png">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/loading-size-l.gif">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/loading-size-m.gif">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/loading-size-s.gif">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/posters/savings_alert.mobile.png">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/posters/savings_alert.png">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Images/spritesheet-player.png">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/all.flash.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/all.flash.min.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/all.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/all.min.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/AsyncRequestObject.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/LateEaselLoader.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/Logging.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/MainTimeline.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/MainTimeline_Nodes.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/MainTimeline_Scenes.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/MainTimeline_Size.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/MainTimeline_Sound.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/MainTimeline_Stage.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/MainTimeline_State.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/MainTimeline_Vars.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/Player.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/ReplacementVariableContainer.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/SelfAdjustingTicker.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/SimpleMovingArray.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/TextController.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/TimelineFindChildren.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/AnzovinMod/Utilities.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:07</publishTime>
     </File>
     <File Include="Libs/CreateJs/all.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/all.min.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/easeljs-0.8.0.combined.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/easeljs-0.8.0.min.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/flashaudioplugin-0.6.0.combined.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/flashaudioplugin-0.6.0.min.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/movieclip-0.8.0.combined.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/movieclip-0.8.0.min.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/preloadjs-0.6.0.combined.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/preloadjs-0.6.0.min.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/soundjs-0.6.0.combined.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/soundjs-0.6.0.min.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/tweenjs-0.6.0.combined.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/CreateJs/tweenjs-0.6.0.min.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/jquery/jquery-1.11.2.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/jquery/jquery-1.11.2.min.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/jquery/jquery-2.1.3.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/jquery/jquery-2.1.3.min.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/jquery/rangeslider.1.1.0.custom.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/jquery/rangeslider.1.1.0.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/jquery/rangeslider.1.2.1.custom.js">
-      <publishTime>12/08/2015 14:58:47</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/jquery/rangeslider.1.2.1.custom.nojquery.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/jquery/rangeslider.1.2.1.custom.nojquery.min.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Libs/jquery/rangeslider.1.2.1.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
+    </File>
+    <File Include="NLog.config">
+      <publishTime>02/01/2016 16:09:43</publishTime>
     </File>
     <File Include="packages.config">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>02/01/2016 15:53:49</publishTime>
     </File>
     <File Include="PrecompiledApp.config">
-      <publishTime>12/14/2015 10:40:33</publishTime>
+      <publishTime>02/09/2016 13:28:39</publishTime>
     </File>
     <File Include="Scripts/bootstrap.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Scripts/bootstrap.min.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.min.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="Scripts/jquery-1.10.2.min.map">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Scripts/jquery.mobile-1.4.4.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Scripts/jquery.mobile-1.4.4.min.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.min.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Scripts/jquery.validate.unobtrusive.min.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Scripts/modernizr-2.6.2.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Scripts/respond.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="Scripts/respond.min.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="Scripts/_references.js">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>02/01/2016 15:46:10</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/benefitPlan_sound.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/CCH_BenefitPlan_SFX_v10wav.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/cch_button_bop.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/cch_button_pop.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/JustaThought24bit480001_01.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/sfx1.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/sfx2.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/sfx3.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/_100_sound.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/_200_sound.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/_300_coPayNo.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/_300_coPayYes.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/_300_exceeded.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/_300_notExceeded.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/_300_spent.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/_400_sound.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/benefit_plan/_500_sound.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/savings_alert/all.caesars.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/savings_alert/all.caesars.ogg">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:08</publishTime>
     </File>
     <File Include="Sounds/savings_alert/cch_button_bop.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Sounds/savings_alert/cch_button_bop.ogg">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Sounds/savings_alert/cch_button_pop.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Sounds/savings_alert/cch_button_pop.ogg">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Sounds/savings_alert_avaya/all.avaya.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Sounds/savings_alert_avaya/all.avaya.ogg">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Sounds/savings_alert_avaya/cch_button_bop.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Sounds/savings_alert_avaya/cch_button_bop.ogg">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Sounds/savings_alert_avaya/cch_button_pop.mp3">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Sounds/savings_alert_avaya/cch_button_pop.ogg">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="source/benefit_plan.flash.js">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/benefit_plan.flash.min.js">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/benefit_plan.in.js">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/benefit_plan.js">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/benefit_plan.min.js">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/benefit_plan.properties.js">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/benefit_plan.properties.min.js">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert.flash.js">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert.flash.min.js">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert.in.js">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert.js">
-      <publishTime>12/08/2015 14:58:50</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert.min.js">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert.properties.js">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert.properties.min.js">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert_avaya.flash.js">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert_avaya.flash.min.js">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert_avaya.in.js">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert_avaya.js">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert_avaya.min.js">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert_avaya.properties.js">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="source/savings_alert_avaya.properties.min.js">
-      <publishTime>12/08/2015 14:58:51</publishTime>
+      <publishTime>12/15/2015 19:43:27</publishTime>
     </File>
     <File Include="Views/Card/Dental_Generic_Caesars_Back.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Dental_Generic_Caesars_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Dental_Generic_Caesars_Full_Back.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Dental_Generic_Caesars_Full_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Dental_MetLife_ABCState_Back.cshtml">
-      <publishTime>12/14/2015 10:22:24</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Dental_MetLife_ABCState_Front.cshtml">
-      <publishTime>12/14/2015 10:22:24</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Dental_MetLife_ABCState_Full_Back.cshtml">
-      <publishTime>12/14/2015 10:22:28</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Dental_MetLife_ABCState_Full_Front %281%29.cshtml">
-      <publishTime>12/14/2015 10:22:30</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Dental_MetLife_Caesars_Back.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Dental_MetLife_Caesars_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Dental_MetLife_Caesars_Full_Back.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Dental_MetLife_Caesars_Full_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Index.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>02/01/2016 14:51:25</publishTime>
     </File>
     <File Include="Views/Card/Med_Cigna_ABCState_Back.cshtml">
-      <publishTime>12/14/2015 10:22:32</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Cigna_ABCState_Front.cshtml">
-      <publishTime>12/14/2015 10:22:34</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Cigna_ABCState_Full_Back.cshtml">
-      <publishTime>12/14/2015 10:22:36</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Cigna_ABCState_Full_Front.cshtml">
-      <publishTime>12/14/2015 10:22:37</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Cigna_Caesars_Back.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>01/04/2016 13:36:53</publishTime>
     </File>
     <File Include="Views/Card/Med_Cigna_Caesars_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Cigna_Caesars_Full_Back.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>01/04/2016 13:36:53</publishTime>
     </File>
     <File Include="Views/Card/Med_Cigna_Caesars_Full_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Generic_Humana_HMO_Back.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Generic_Humana_HMO_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Generic_Humana_HMO_Full_Back.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Generic_Humana_HMO_Full_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Generic_Humana_POS_Back.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Generic_Humana_POS_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Generic_Humana_POS_Full_Back.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Generic_Humana_POS_Full_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Horizon_Caesars_Back.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Horizon_Caesars_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Horizon_Caesars_Full_Back.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Horizon_Caesars_Full_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Humana_HMO_Back.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Humana_HMO_Front.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Humana_HMO_Full_Back.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Humana_HMO_Full_Front.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Humana_POS_Back.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Humana_POS_Front.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Humana_POS_Full_Back.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Med_Humana_POS_Full_Front.cshtml">
-      <publishTime>12/08/2015 14:58:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/RX_ESI_ABCState_Back.cshtml">
-      <publishTime>12/14/2015 10:22:48</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/RX_ESI_ABCState_Front.cshtml">
-      <publishTime>12/14/2015 10:22:50</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/RX_ESI_ABCState_Full_Back.cshtml">
-      <publishTime>12/14/2015 10:22:52</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/RX_ESI_ABCState_Full_Front.cshtml">
-      <publishTime>12/14/2015 10:22:54</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/RX_ESI_Caesars_Back.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/RX_ESI_Caesars_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/RX_ESI_Caesars_Full_Back.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/RX_ESI_Caesars_Full_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/RX_Generic_Caesars_Back.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/17/2015 15:39:33</publishTime>
     </File>
     <File Include="Views/Card/RX_Generic_Caesars_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/17/2015 15:39:33</publishTime>
     </File>
     <File Include="Views/Card/RX_Generic_Caesars_Full_Back.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/17/2015 15:39:33</publishTime>
     </File>
     <File Include="Views/Card/RX_Generic_Caesars_Full_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/17/2015 15:39:33</publishTime>
+    </File>
+    <File Include="Views/Card/RX_Optum_Caesars_Back.cshtml">
+      <publishTime>12/17/2015 15:39:33</publishTime>
+    </File>
+    <File Include="Views/Card/RX_Optum_Caesars_Front.cshtml">
+      <publishTime>12/17/2015 15:39:33</publishTime>
+    </File>
+    <File Include="Views/Card/RX_Optum_Caesars_Full_Back.cshtml">
+      <publishTime>12/17/2015 15:39:33</publishTime>
+    </File>
+    <File Include="Views/Card/RX_Optum_Caesars_Full_Front.cshtml">
+      <publishTime>12/17/2015 15:39:33</publishTime>
     </File>
     <File Include="Views/Card/Vision_EyeMed_ABCState_Back.cshtml">
-      <publishTime>12/14/2015 10:22:56</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Vision_EyeMed_ABCState_Front.cshtml">
-      <publishTime>12/14/2015 10:22:58</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Vision_EyeMed_ABCState_Full_Back.cshtml">
-      <publishTime>12/14/2015 10:22:59</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Vision_EyeMed_ABCState_Full_Front.cshtml">
-      <publishTime>12/14/2015 10:23:01</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Vision_EyeMed_Caesars_Back.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Vision_EyeMed_Caesars_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Vision_EyeMed_Caesars_Full_Back.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Card/Vision_EyeMed_Caesars_Full_Front.cshtml">
-      <publishTime>12/14/2015 10:29:44</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Home/About.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Home/About.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:09</publishTime>
     </File>
     <File Include="Views/Home/Benefit_Plan.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Benefit_Plan.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Contact.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Dynamic.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Dynamic.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Helpful.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Helpful.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Index.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Index.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Oops.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Oops.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Private.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Private.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Savings_Alert.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Savings_Alert.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Savings_Alert_Avaya.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Savings_Alert_Avaya.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/SignIn.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/SignIn.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Survey.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Home/Survey.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Shared/Error.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Shared/_CanvasLayout.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Shared/_CanvasLayout.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Shared/_Layout.Mobile.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Shared/_ViewSwitcher.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/Web.config">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Views/_ViewStart.cshtml">
-      <publishTime>12/08/2015 14:58:49</publishTime>
+      <publishTime>12/15/2015 19:43:10</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>12/14/2015 10:40:32</publishTime>
+      <publishTime>02/09/2016 13:28:37</publishTime>
     </File>
   </ItemGroup>
 </Project>
