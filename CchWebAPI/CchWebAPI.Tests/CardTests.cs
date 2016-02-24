@@ -18,37 +18,41 @@ namespace CchWebAPI.Tests {
             //Without significant work, we'd need to setup and instance of the media service
             //on devweb that this can call.
 
+            if (!Debugger.IsAttached)
+                return;
 
-            //var tuple = new CardService().GetMemberCardUrls("en", 11, 171230); 
+            var tuple = new CardService().GetMemberCardUrls("en", 11, 171230);
 
-            //Assert.IsNotNull(tuple);
-            //Assert.AreEqual(true, tuple.Item1);
+            Assert.IsNotNull(tuple);
+            Assert.AreEqual(true, tuple.Item1);
 
-            //dynamic memberCardUrls = tuple.Item2;
-            //Assert.IsNotNull(memberCardUrls);
+            dynamic memberCardUrls = tuple.Item2;
+            Assert.IsNotNull(memberCardUrls);
 
-            //List<CardResult> cardResults = memberCardUrls.Results;
+            List<CardResult> cardResults = memberCardUrls.Results;
 
-            //cardResults.ForEach(r => {
-            //    Debug.WriteLine(r.CardUrl);
-            //});
+            cardResults.ForEach(r => {
+                Debug.WriteLine(r.CardUrl);
+            });
 
-            //var cardWebRequest = new MemberCardWebRequest() {
-            //    CardToken = (memberCardUrls.Results as List<CardResult>)[0].SecurityToken,
-            //    ToEmail = "dstrickland@clearcosthealth.com",
-            //    Subject = "CanEmailIdCard Unit Test",
-            //    Message = "Unit test result"
-            //};
+            var cardWebRequest = new MemberCardWebRequest() {
+                CardToken = (memberCardUrls.Results as List<CardResult>)[0].SecurityToken,
+                ToEmail = "dstrickland@clearcosthealth.com",
+                Subject = "CanEmailIdCard Unit Test",
+                Message = "Unit test result"
+            };
 
-            //var result = new CardService().SendIdCardEmail(11, cardWebRequest);
-            //Assert.IsNotNull(result);
-            //Assert.AreEqual(true, result.Item1);
-            //Assert.IsTrue(result.Item2.SvgSuccess);
-            //Assert.AreEqual(string.Empty, result.Item3);
+            var result = new CardService().SendIdCardEmail(11, cardWebRequest);
+            Assert.IsNotNull(result);
+            Assert.AreEqual(true, result.Item1);
+            Assert.IsTrue(result.Item2.SvgSuccess);
+            Assert.AreEqual(string.Empty, result.Item3);
         }
 
         [TestMethod]
         public void CanUseWapiToEmailIdCard() {
+            if (!Debugger.IsAttached)
+                return;
             //var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
                 //"mary.smith@cchcaesars.com");
 
@@ -80,7 +84,7 @@ namespace CchWebAPI.Tests {
             if (!Debugger.IsAttached)
                 return;
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
                 "mary.smith@cchcaesars.com");
 
             dynamic memberUrlsResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Card/CardUrls/en");
