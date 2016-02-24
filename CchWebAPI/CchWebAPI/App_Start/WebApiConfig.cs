@@ -200,7 +200,7 @@ namespace CchWebAPI
                     new HttpControllerDispatcher(config),
                     AuthenticatedAccountHandlers)
                 );
-#endregion
+            #endregion
 
             #region Animation Membership API Routes
 
@@ -566,6 +566,20 @@ namespace CchWebAPI
                 );
 
             #endregion
+
+            #region PComm PlanInfo Routes
+
+            config.Routes.MapHttpRoute(
+            name: "PCommGetHealthPlanSummary",
+            routeTemplate: "v1/{area}/{controller}",
+            defaults: new { action = "Get" },
+            constraints: new { area = "PComm", controller = "HealthPlanSummary" },
+            handler: HttpClientFactory.CreatePipeline(
+                new HttpControllerDispatcher(config),
+                AuthenticatedAccountHandlers)
+            );
+
+            #endregion 
         }
     }
 }
