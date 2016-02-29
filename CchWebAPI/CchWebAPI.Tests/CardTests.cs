@@ -51,8 +51,6 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanUseWapiToEmailIdCard() {
-            if (!Debugger.IsAttached)
-                return;
             //var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
                 //"mary.smith@cchcaesars.com");
 
