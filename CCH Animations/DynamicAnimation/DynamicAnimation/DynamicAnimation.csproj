@@ -340,6 +340,7 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\a2media.pubxml" />
     <None Include="Properties\PublishProfiles\amedia.pubxml" />
     <None Include="Properties\PublishProfiles\BuildServer.pubxml" />
     <None Include="Properties\PublishProfiles\cch-a2media %282%29.pubxml" />
@@ -350,6 +351,7 @@
     <None Include="Properties\PublishProfiles\CchDynamicAnimationIIS.pubxml" />
     <None Include="Properties\PublishProfiles\dmedia.pubxml" />
     <None Include="Properties\PublishProfiles\DynamicFileSystem.pubxml" />
+    <None Include="Properties\PublishProfiles\media.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
