@@ -1,7 +1,13 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Threading.Tasks;
+using CchWebAPI.Services;
+using ClearCost.Security.JWT;
+using CchWebAPI.Areas.Animation.Models;
 using DynamicAnimation.Common;
 using DynamicAnimation.Models;
+using Newtonsoft.Json;
+using System.Diagnostics;
 
 namespace CchWebAPI.Tests.Media {
     [TestClass]
@@ -102,9 +108,37 @@ namespace CchWebAPI.Tests.Media {
         }
 
         [TestMethod]
-        public void CanGetMemberCardData() {
-            var response = WebApiService.GetMemberCardData(11, Guid.NewGuid().ToString());
+        public void CanGetCardDetailWithValidJwt() {
+            var service = new CardService();
+            var results = service.GetMemberCardUrls("en", 11, 57020);
+
+            var response = WebApiService.GetMemberCardData(11, results.Results[0].SecurityToken);
             Assert.IsNotNull(response);
+        }
+
+        [TestMethod]
+        public async Task CannotGetCardDetailWithExpiredJwt() {
+            var service = new CardService();
+            var cardToken = JwtService.EncryptPayload(JsonConvert.SerializeObject(new CardToken() {
+                Expires = DateTime.UtcNow.AddMinutes(-2),
+                EmployerId = 11
+            }));
+
+            Debug.WriteLine(cardToken);
+            var response = await WebApiService.GetMemberCardData(11, cardToken);
+            Assert.IsTrue(response.Expired);
+        }
+
+        [TestMethod]
+        public async Task CannotGetCardDetailWithMismatchedEmployerId() {
+            var service = new CardService();
+            var cardToken = JwtService.EncryptPayload(JsonConvert.SerializeObject(new CardToken() {
+                Expires = DateTime.UtcNow.AddMinutes(15),
+                EmployerId = 11
+            }));
+
+            var response = await WebApiService.GetMemberCardData(12, cardToken);
+            Assert.IsTrue(response.Invalid);
         }
     }
 }

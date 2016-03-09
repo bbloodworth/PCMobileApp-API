@@ -1,7 +1,10 @@
 ﻿namespace CchWebAPI.Areas.Animation.Models
 {
-    public class MemberCardDataRecord
+    public class CardDetail
     {
+        public bool Expired;
+        public bool Invalid;
+        public string CardTypeFileName;
         public int CardTypeId;
         public int CardViewModeId;
         public string MemberName;
