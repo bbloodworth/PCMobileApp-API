@@ -141,6 +141,7 @@ namespace CchWebAPI.Tests {
                 EmployerId = 11
             }));
 
+            Debug.WriteLine(cardToken);
             var cardDetail = service.GetCardDetail(11, cardToken);
             Assert.IsTrue(cardDetail.Expired);
         }
@@ -153,6 +154,7 @@ namespace CchWebAPI.Tests {
                 EmployerId = 11
             }));
 
+            Debug.WriteLine(cardToken);
             var cardDetail = service.GetCardDetail(12, cardToken);
             Assert.IsTrue(cardDetail.Invalid);
         }

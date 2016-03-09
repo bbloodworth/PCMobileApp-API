@@ -502,16 +502,6 @@ namespace CchWebAPI
             #region Animation Card API Routes
 
             config.Routes.MapHttpRoute(
-                name: "AnimationGetCardUrl",
-                routeTemplate: "v1/{area}/{controller}/CardUrl/{localeCode}",
-                defaults: new { action = "GetCardUrl", localeCode = "en" },
-                constraints: new { area = "Animation", controller = "Card" },
-                handler: HttpClientFactory.CreatePipeline(
-                    new HttpControllerDispatcher(config),
-                    AuthenticatedAccountHandlers)
-                );
-
-            config.Routes.MapHttpRoute(
                 name: "AnimationGetMemberCardData",
                 routeTemplate: "v1/{area}/{controller}/MemberData",
                 defaults: new { action = "GetMemberCardData" },

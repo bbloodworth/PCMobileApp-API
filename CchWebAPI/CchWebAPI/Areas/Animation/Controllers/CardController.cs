@@ -35,46 +35,9 @@ namespace CchWebAPI.Areas.Animation.Controllers
         [HttpGet]
         public HttpResponseMessage GetMemberCardData(int employerId, string token) {
             var service = new CardService();
-            var memberCardData = service.GetCardDetail(employerId, token);
+            var cardDetail = service.GetCardDetail(employerId, token);
 
-            return Request.CreateResponse(HttpStatusCode.OK, memberCardData);
-        }
-
-        [HttpGet]
-        public HttpResponseMessage GetCardUrl(string localeCode) {
-            LogUtil.Log("TestCodeException", new InvalidOperationException("This should never get called"));
-            var nani = localeCode;
-
-            var hrm = Request.CreateResponse(HttpStatusCode.NoContent);
-            dynamic data = new ExpandoObject();
-
-            var employerId = Request.EmployerID();
-            var cchId = Request.CCHID();
-            var cardBaseAddress = "CardBaseAddress".GetConfigurationValue();
-
-            // This is a temporary stub for the Virtual ID Cards development
-            var cardUrl = string.Format("{0}/?vcid={1}|{2}",
-                cardBaseAddress, employerId, cchId);
-
-            cardUrl = "https://reydavid.blob.core.windows.net/cards/MedID_cigna_marySmith.svg";
-
-            // This is a temporary stub for the Virtual ID Cards development
-            var cards = new List<CardResult>();
-
-            cards.Add(new CardResult { CardName = "Medical", ViewMode = "Front", CardUrl = "https://reydavid.blob.core.windows.net/cards/Medical_Front.svg" });
-            cards.Add(new CardResult { CardName = "Medical", ViewMode = "Back", CardUrl = "https://reydavid.blob.core.windows.net/cards/Medical_Back.svg" });
-            cards.Add(new CardResult { CardName = "Medical", ViewMode = "Full", CardUrl = "https://reydavid.blob.core.windows.net/cards/Medical_Full.svg" });
-            cards.Add(new CardResult { CardName = "Medical", ViewMode = "Portrait", CardUrl = "https://reydavid.blob.core.windows.net/cards/Medical_Portrait.svg" });
-            cards.Add(new CardResult { CardName = "RX", ViewMode = "Front", CardUrl = "https://reydavid.blob.core.windows.net/cards/Medical_Front.svg" });
-            cards.Add(new CardResult { CardName = "RX", ViewMode = "Back", CardUrl = "https://reydavid.blob.core.windows.net/cards/Medical_Back.svg" });
-            cards.Add(new CardResult { CardName = "RX", ViewMode = "Full", CardUrl = "https://reydavid.blob.core.windows.net/cards/Medical_Full.svg" });
-            cards.Add(new CardResult { CardName = "RX", ViewMode = "Portrait", CardUrl = "https://reydavid.blob.core.windows.net/cards/Medical_Portrait.svg" });
-
-            data.Results = cards;
-            data.TotalCount = 8;
-
-            hrm = Request.CreateResponse(HttpStatusCode.OK, (object) data);
-            return hrm;
+            return Request.CreateResponse(HttpStatusCode.OK, cardDetail);
         }
 
         [HttpPost]

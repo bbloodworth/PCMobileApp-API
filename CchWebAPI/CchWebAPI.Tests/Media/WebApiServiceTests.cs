@@ -112,7 +112,7 @@ namespace CchWebAPI.Tests.Media {
             var service = new CardService();
             var results = service.GetMemberCardUrls("en", 11, 57020);
 
-            var response = WebApiService.GetMemberCardData(11, results.Results[0].SecurityToken);
+            var response = WebApiService.GetCardDetail(11, results.Results[0].SecurityToken);
             Assert.IsNotNull(response);
         }
 
@@ -125,7 +125,7 @@ namespace CchWebAPI.Tests.Media {
             }));
 
             Debug.WriteLine(cardToken);
-            var response = await WebApiService.GetMemberCardData(11, cardToken);
+            var response = await WebApiService.GetCardDetail(11, cardToken);
             Assert.IsTrue(response.Expired);
         }
 
@@ -137,7 +137,7 @@ namespace CchWebAPI.Tests.Media {
                 EmployerId = 11
             }));
 
-            var response = await WebApiService.GetMemberCardData(12, cardToken);
+            var response = await WebApiService.GetCardDetail(12, cardToken);
             Assert.IsTrue(response.Invalid);
         }
     }
