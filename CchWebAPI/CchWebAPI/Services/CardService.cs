@@ -53,103 +53,64 @@ namespace CchWebAPI.Services {
         }
         #endregion
 
+        #region Business Logic
         public CardUrlResult GetMemberCardUrls(string localeCode, int employerId, int cchId) {
             var message = string.Empty;
             CardUrlResult result = null;
-            
+
             var employer = PlatformDataCache.Employers.FirstOrDefault(e => e.Id.Equals(employerId));
-            
+
             if (employer == null) {
-                message = string.Format("Card url request with employer {0} does not match any known employer", 
+                message = string.Format("Card url request with employer {0} does not match any known employer",
                     employerId);
                 LogUtil.Log(message, LogLevel.Warn);
                 return result;
             }
 
             var resolvedLocaleCode = ResolveLocale(localeCode);
-            using (var ctx = new CardContext(employer)) {
-                var cardResults = ctx.MemberCards
-                    .Join(
-                        ctx.CardTypes,
-                        mc => mc.CardTypeId,
-                        ct => ct.Id,
-                        (mc, ct) => new {
-                            MemberCard = mc,
-                            CardType = ct
-                        }
-                    )
-                    .Join(
-                        ctx.CardTypeTranslations,
-                            mc => new { mc.MemberCard.CardTypeId, mc.MemberCard.LocaleId },
-                            ctt => new { ctt.CardTypeId, ctt.LocaleId },
-                        (mc, ctt) => new {
-                            MemberCard = mc.MemberCard,
-                            CardType = mc.CardType,
-                            CardTypeTranslation = ctt
-                    })
-                    .Join(
-                        ctx.CardViewModes,
-                        mc => mc.MemberCard.CardViewModeId,
-                        cvm => cvm.Id,
-                        (mc, cvm) => new {
-                            MemberCard = mc.MemberCard,
-                            CardType = mc.CardType,
-                            CardTypeTranslation = mc.CardTypeTranslation,
-                            CardViewMode = cvm
-                        }
-                    )
-                    .Join(
-                        ctx.Locales,
-                        mc => mc.MemberCard.LocaleId,
-                        l => l.Id,
-                        (mc, l) => new {
-                            MemberCard = mc.MemberCard,
-                            CardType = mc.CardType,
-                            CardTypeTranslation = mc.CardTypeTranslation,
-                            CardViewMode = mc.CardViewMode,
-                            Locale = l
-                        }
-                    )
-                    .Where(r => r.MemberCard.CchId.Equals(cchId) 
-                        && r.Locale.LocaleCode.Equals(resolvedLocaleCode)).ToList();
+            var cardResults = GetCardResults(cchId, employer, resolvedLocaleCode);
 
-                if (cardResults == null || cardResults.Count() == 0) {
-                    message = string.Format("Unable to resolve member id cards for cchId {0} and localCode {1}", 
-                        cchId, localeCode);
-                    LogUtil.Log(message, LogLevel.Info);
-                }
-                else {
-                    LogUtil.Trace(string.Format("Resolved member id cards {0} for cchId {0} and localCode {1}",
-                        cchId, localeCode));
-
-                    result = new CardUrlResult();
-                    result.Results = new List<CardResult>();
-                    var cardBaseAddress = "CardBaseAddress".GetConfigurationValue();
-
-                    cardResults.ForEach(cr => {
-                        var cardToken = new CardToken() {
-                            EmployerId = employer.Id,
-                            CardDetail = JsonConvert.DeserializeObject<CardDetail>(cr.MemberCard.CardMemberDataText),
-                            Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt16("TimeoutInMinutes".GetConfigurationValue()))
-                        };
-
-                        cardToken.CardDetail.CardTypeFileName = cr.CardType.FileName;
-                        cardToken.CardDetail.CardTypeId = cr.MemberCard.CardTypeId;
-                        cardToken.CardDetail.CardViewModeId = cr.CardViewMode.Id;
-
-                        var jwt = JwtService.EncryptPayload(JsonConvert.SerializeObject(cardToken));
-
-                        var cardResult = new CardResult() {
-                            CardName = cr.CardTypeTranslation.CardTypeName,
-                            ViewMode = cr.CardViewMode.Name,
-                            CardUrl = string.Format("{0}/?tkn={1}|{2}", cardBaseAddress, employer.Id, jwt),
-                            SecurityToken = jwt
-                        };
-
-                        result.Results.Add(cardResult);
-                    });
-                }
+            if (cardResults == null || cardResults.Count() == 0) {
+                message = string.Format("Unable to resolve member id cards for cchId {0} and localCode {1}",
+                    cchId, localeCode);
+                LogUtil.Log(message, LogLevel.Info);
             }
+            else {
+                LogUtil.Trace(string.Format("Resolved member id cards {0} for cchId {0} and localCode {1}",
+                    cchId, localeCode));
+                result = BuildResult(employer, cardResults);
+            }
+
+            return result;
+        }
+
+        private static CardUrlResult BuildResult(Employer employer, List<dynamic> cardResults) {
+            var result = new CardUrlResult();
+            result.Results = new List<CardResult>();
+            var cardBaseAddress = "CardBaseAddress".GetConfigurationValue();
+
+            cardResults.ForEach(cr => {
+                var cardToken = new CardToken() {
+                    EmployerId = employer.Id,
+                    CardDetail = JsonConvert.DeserializeObject<CardDetail>(cr.MemberCard.CardMemberDataText),
+                    Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt16("TimeoutInMinutes".GetConfigurationValue()))
+                };
+
+                cardToken.CardDetail.CardTypeFileName = cr.CardType.FileName;
+                cardToken.CardDetail.CardTypeId = cr.MemberCard.CardTypeId;
+                cardToken.CardDetail.CardViewModeId = cr.CardViewMode.Id;
+
+                var jwt = JwtService.EncryptPayload(JsonConvert.SerializeObject(cardToken));
+
+                var cardResult = new CardResult() {
+                    CardName = cr.CardTypeTranslation.CardTypeName,
+                    ViewMode = cr.CardViewMode.Name,
+                    CardUrl = string.Format("{0}/?tkn={1}|{2}", cardBaseAddress, employer.Id, jwt),
+                    SecurityToken = jwt
+                };
+
+                result.Results.Add(cardResult);
+            });
 
             return result;
         }
@@ -283,8 +244,58 @@ namespace CchWebAPI.Services {
             string[] remainingFiles = Directory.GetFiles(_cardFilesFolder);
             return remainingFiles.ToList();
         }
+        #endregion 
 
         #region Data Access
+        private static List<dynamic> GetCardResults(int cchId, Employer employer, string resolvedLocaleCode) {
+            using (var ctx = new CardContext(employer)) {
+                return ctx.MemberCards
+                    .Join(
+                        ctx.CardTypes,
+                        mc => mc.CardTypeId,
+                        ct => ct.Id,
+                        (mc, ct) => new {
+                            MemberCard = mc,
+                            CardType = ct
+                        }
+                    )
+                    .Join(
+                        ctx.CardTypeTranslations,
+                            mc => new { mc.MemberCard.CardTypeId, mc.MemberCard.LocaleId },
+                            ctt => new { ctt.CardTypeId, ctt.LocaleId },
+                        (mc, ctt) => new {
+                            MemberCard = mc.MemberCard,
+                            CardType = mc.CardType,
+                            CardTypeTranslation = ctt
+                        })
+                    .Join(
+                        ctx.CardViewModes,
+                        mc => mc.MemberCard.CardViewModeId,
+                        cvm => cvm.Id,
+                        (mc, cvm) => new {
+                            MemberCard = mc.MemberCard,
+                            CardType = mc.CardType,
+                            CardTypeTranslation = mc.CardTypeTranslation,
+                            CardViewMode = cvm
+                        }
+                    )
+                    .Join(
+                        ctx.Locales,
+                        mc => mc.MemberCard.LocaleId,
+                        l => l.Id,
+                        (mc, l) => new {
+                            MemberCard = mc.MemberCard,
+                            CardType = mc.CardType,
+                            CardTypeTranslation = mc.CardTypeTranslation,
+                            CardViewMode = mc.CardViewMode,
+                            Locale = l
+                        }
+                    )
+                    .Where(r => r.MemberCard.CchId.Equals(cchId)
+                        && r.Locale.LocaleCode.Equals(resolvedLocaleCode)).ToList<dynamic>();
+            }
+        }
+
         internal class CardContext : ClearCostContext<CardContext> {
             public CardContext(Employer employer) : base(ConnectionFactory.Get(employer.ConnectionString)) {
                 Employer = employer;

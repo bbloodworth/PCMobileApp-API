@@ -109,7 +109,7 @@ namespace CchWebAPI.Tests {
 
             results.Results.ForEach(c => {
                 var cardToken = JsonConvert.DeserializeObject<CardToken>(JwtService.DecryptPayload(c.SecurityToken));
-
+                Debug.WriteLine(c.SecurityToken);
                 Assert.IsNotNull(cardToken);
                 Assert.IsNotNull(cardToken.CardDetail);
                 Assert.IsFalse(string.IsNullOrEmpty(cardToken.CardDetail.CardTypeFileName));
