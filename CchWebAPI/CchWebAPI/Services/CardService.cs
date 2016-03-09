@@ -70,12 +70,22 @@ namespace CchWebAPI.Services {
             using (var ctx = new CardContext(employer)) {
                 var cardResults = ctx.MemberCards
                     .Join(
+                        ctx.CardTypes,
+                        mc => mc.CardTypeId,
+                        ct => ct.Id,
+                        (mc, ct) => new {
+                            MemberCard = mc,
+                            CardType = ct
+                        }
+                    )
+                    .Join(
                         ctx.CardTypeTranslations,
-                            memberCard => new { memberCard.CardTypeId, memberCard.LocaleId },
-                            cardTypeTranslation => new { cardTypeTranslation.CardTypeId, cardTypeTranslation.LocaleId },
-                        (memberCard, cardTypeTranslation) => new {
-                            MemberCard = memberCard,
-                            CardTypeTranslation = cardTypeTranslation
+                            mc => new { mc.MemberCard.CardTypeId, mc.MemberCard.LocaleId },
+                            ctt => new { ctt.CardTypeId, ctt.LocaleId },
+                        (mc, ctt) => new {
+                            MemberCard = mc.MemberCard,
+                            CardType = mc.CardType,
+                            CardTypeTranslation = ctt
                     })
                     .Join(
                         ctx.CardViewModes,
@@ -83,6 +93,7 @@ namespace CchWebAPI.Services {
                         cvm => cvm.Id,
                         (mc, cvm) => new {
                             MemberCard = mc.MemberCard,
+                            CardType = mc.CardType,
                             CardTypeTranslation = mc.CardTypeTranslation,
                             CardViewMode = cvm
                         }
@@ -93,6 +104,7 @@ namespace CchWebAPI.Services {
                         l => l.Id,
                         (mc, l) => new {
                             MemberCard = mc.MemberCard,
+                            CardType = mc.CardType,
                             CardTypeTranslation = mc.CardTypeTranslation,
                             CardViewMode = mc.CardViewMode,
                             Locale = l
@@ -121,7 +133,7 @@ namespace CchWebAPI.Services {
                             Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt16("TimeoutInMinutes".GetConfigurationValue()))
                         };
 
-                        cardToken.CardDetail.CardTypeFileName = cr.CardTypeTranslation.CardTypeName;
+                        cardToken.CardDetail.CardTypeFileName = cr.CardType.FileName;
                         cardToken.CardDetail.CardTypeId = cr.MemberCard.CardTypeId;
                         cardToken.CardDetail.CardViewModeId = cr.CardViewMode.Id;
 
@@ -305,6 +317,7 @@ namespace CchWebAPI.Services {
                     ToTable("CardType");
                     HasKey(u => u.Id);
                     Property(p => p.Id).HasColumnName("CardTypeID");
+                    Property(p => p.FileName).HasColumnName("CardTypeFileName");
                 }
             }
         }

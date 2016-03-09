@@ -78,7 +78,7 @@ namespace CchWebAPI.Tests {
             if (!Debugger.IsAttached)
                 return;
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
                 "mary.smith@cchcaesars.com");
 
             dynamic memberUrlsResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Card/CardUrls/en");
