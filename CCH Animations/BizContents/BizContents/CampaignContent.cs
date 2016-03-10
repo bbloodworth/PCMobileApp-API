@@ -6,7 +6,6 @@
 //     Manual changes to this file will be overwritten if the code is regenerated.
 // </auto-generated>
 //------------------------------------------------------------------------------
-
 using System.ComponentModel.DataAnnotations;
 
 namespace BizContents
@@ -30,6 +29,12 @@ namespace BizContents
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> ExpirationDate { get; set; }
         public bool UserContentInd { get; set; }
+        public bool EmailNotificationInd { get; set; }
+        public bool SMSNotificationInd { get; set; }
+        public bool OSNotificationInd { get; set; }
+        public string OSNotificationStatusDesc { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> OSNotificationSentDate { get; set; }
     
         public virtual Campaign Campaign { get; set; }
         public virtual ICollection<UserContent> UserContents { get; set; }

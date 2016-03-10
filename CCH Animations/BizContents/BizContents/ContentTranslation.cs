@@ -25,6 +25,8 @@ namespace BizContents
         public string ContentDesc { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public string SMSNotificationText { get; set; }
+        public string OSNotificationText { get; set; }
     
         public virtual Content Content { get; set; }
         public virtual Locale Locale { get; set; }

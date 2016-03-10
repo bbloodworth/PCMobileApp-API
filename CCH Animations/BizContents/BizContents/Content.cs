@@ -36,6 +36,7 @@ namespace BizContents
         public Nullable<System.DateTime> CreateDate { get; set; }
         public string ContentURL { get; set; }
         public string ContentPhoneNum { get; set; }
+        public bool AccumulatorsInd { get; set; }
     
         public virtual ICollection<CampaignContent> CampaignContents { get; set; }
         public virtual Survey Survey { get; set; }

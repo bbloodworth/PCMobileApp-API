@@ -21,6 +21,7 @@ namespace BizContents
         public Nullable<System.DateTime> LastUpdateDate { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
         public Nullable<int> DefaultLocaleID { get; set; }
+        public string PreferredContactPhoneNum { get; set; }
     
         public virtual Locale Locale { get; set; }
     }
