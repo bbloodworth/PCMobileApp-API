@@ -118,6 +118,10 @@ namespace CchWebAPI.Tests.Media {
 
         [TestMethod]
         public async Task CannotGetCardDetailWithExpiredJwt() {
+            //This check can be removed after successfull deployment.
+            if (!Debugger.IsAttached)
+                return;
+
             var service = new CardService();
             var cardToken = JwtService.EncryptPayload(JsonConvert.SerializeObject(new CardToken() {
                 Expires = DateTime.UtcNow.AddMinutes(-2),
@@ -131,6 +135,10 @@ namespace CchWebAPI.Tests.Media {
 
         [TestMethod]
         public async Task CannotGetCardDetailWithMismatchedEmployerId() {
+            //This check can be removed after successfull deployment.
+            if (!Debugger.IsAttached)
+                return;
+
             var service = new CardService();
             var cardToken = JwtService.EncryptPayload(JsonConvert.SerializeObject(new CardToken() {
                 Expires = DateTime.UtcNow.AddMinutes(15),
