@@ -141,13 +141,14 @@ namespace CchWebAPI.Services {
             var errorMessage = string.Empty;
 
             try {
+                var fileId = Guid.NewGuid();
                 // Retrieve the web request stream from the Media website and convert it into an SVG file
-                data.SvgSuccess = GetMemberCardWebRequest(employerId, cardWebRequest);
+                data.SvgSuccess = GetCardSvg(employerId, cardWebRequest, fileId);
 
                 // Convert the SVG file into a PDF file
-                string cardPdfFile = GetMemberCardPdfFile(employerId, cardWebRequest);
+                var cardPdfFile = RenderCardPdf(employerId, fileId);
 
-                string subject = string.IsNullOrEmpty(cardWebRequest.Subject)
+                var subject = string.IsNullOrEmpty(cardWebRequest.Subject)
                     ? "Member ID Card"
                     : cardWebRequest.Subject;
 
@@ -155,17 +156,12 @@ namespace CchWebAPI.Services {
                     "Please see the attached PDF to view or print my ID card." :
                     cardWebRequest.Message;
 
-                bool useInternalServer = "Email.UseInternalServer".GetConfigurationValue().Equals("true");
+                var useInternalServer = "Email.UseInternalServer".GetConfigurationValue().Equals("true");
 
                 // Send PDF file as an email attachment to designated recipient
                 EmailMessenger.Send(to: cardWebRequest.ToEmail, cc: cardWebRequest.CcEmail,
                     subject: subject, message: message,
                     isHtml: false, attachmentPath: cardPdfFile, isInternalServer: useInternalServer);
-
-                bool deleteWorkFiles = "Email.DeleteWorkFiles".GetConfigurationValue().Equals("true");
-                if (deleteWorkFiles) {
-                    data.ResidualFiles = DeleteResourceFiles(employerId, cardWebRequest);
-                }
 
                 isSuccess = true;
             }
@@ -176,14 +172,14 @@ namespace CchWebAPI.Services {
             return new Tuple<bool, dynamic, string>(isSuccess, data, errorMessage);
         }
 
-        private bool GetMemberCardWebRequest(int employerId, MemberCardWebRequest cardWebRequest) {
+        private bool GetCardSvg(int employerId, MemberCardWebRequest cardWebRequest, Guid fileId) {
             try {
                 var webClient = new WebClient();
                 var cardBaseAddress = "CardBaseAddress".GetConfigurationValue();
                 var url = string.Format("{0}/?tkn={1}|{2}", cardBaseAddress, employerId, cardWebRequest.CardToken);
 
                 var cardSvgFile = string.Format("{0}card_{1}_{2}.svg",
-                    _cardFilesFolder, employerId, cardWebRequest.CardToken);
+                    _cardFilesFolder, employerId, fileId);
 
                 webClient.DownloadFile(url, cardSvgFile);
                 return true;
@@ -194,11 +190,15 @@ namespace CchWebAPI.Services {
             }
         }
 
-        private string GetMemberCardPdfFile(int employerId, MemberCardWebRequest cardWebRequest) {
+        private string RenderCardPdf(int employerId, Guid fileId) {
+            // Send PDF file as an email attachment to designated recipient
+            var cardPdfFile = string.Format("{0}card_{1}_{2}.pdf",
+                _cardFilesFolder, employerId, fileId);
+
             try {
                 // Convert the SVG file into a PNG file
                 var phantomJsArgs = string.Format("rasterize.js card_{0}_{1}.svg card_{0}_{1}.pdf",
-                    employerId, cardWebRequest.CardToken);
+                    employerId, fileId);
 
                 using (var process = new Process()) {
                     process.StartInfo.WorkingDirectory = _cardFilesFolder;
@@ -210,39 +210,12 @@ namespace CchWebAPI.Services {
                         process.WaitForExit();
                 }
 
-                // Send PDF file as an email attachment to designated recipient
-                var cardPdfFile = string.Format("{0}card_{1}_{2}.pdf",
-                    _cardFilesFolder, employerId, cardWebRequest.CardToken);
-
                 return cardPdfFile;
             }
             catch (Exception ex) {
                 LogUtil.Log("Failure in CardService.GetMemberCardPdfFile", ex, Guid.NewGuid(), "CchWebAPI.Services.CardService");
                 return string.Empty;
             }
-        }
-
-        private List<string> DeleteResourceFiles(int employerId, MemberCardWebRequest cardWebRequest) {
-            string cardSvgFile = string.Format("{0}card_{1}_{2}.svg",
-                _cardFilesFolder, employerId, cardWebRequest.CardToken);
-
-            string cardPdfFile = string.Format("{0}card_{1}_{2}.pdf",
-                _cardFilesFolder, employerId, cardWebRequest.CardToken);
-
-            try {
-                if (File.Exists(cardSvgFile)) {
-                    File.Delete(cardSvgFile);
-                }
-                if (File.Exists(cardPdfFile)) {
-                    File.Delete(cardPdfFile);
-                }
-            }
-            catch (Exception ex) {
-                // ignored
-                Debug.WriteLine(ex.Message);
-            }
-            string[] remainingFiles = Directory.GetFiles(_cardFilesFolder);
-            return remainingFiles.ToList();
         }
         #endregion 
 
