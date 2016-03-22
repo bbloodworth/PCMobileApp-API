@@ -660,7 +660,7 @@ namespace CchWebAPI.Areas.Animation.Controllers
                             //    "Animation CCHID Login", Request.RequestUri.Host, gecs.ConnString);
 
                             string userName = gkeibc.Tables[0].Rows[0].GetData("Email");
-                            LogUserLoginHistory(userName, cchId, gecs.ConnString);
+                            //LogUserLoginHistory(userName, cchId, gecs.ConnString);
                         }
                     }
                 }
