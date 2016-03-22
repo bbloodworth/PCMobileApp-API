@@ -83,7 +83,7 @@ namespace CchWebAPI.Areas.Animation.Controllers
                             ((IDictionary<string, object>) eo)["AuthHash"] = e.ToString();
                             hrm = Request.CreateResponse(HttpStatusCode.OK, (eo as ExpandoObject));
 
-                            LogUserLoginHistory(null, cchid, connString);
+                            //LogUserLoginHistory(null, cchid, connString);
                         }
                     }
                 }
@@ -172,6 +172,7 @@ namespace CchWebAPI.Areas.Animation.Controllers
 
                                         //InsertAuditTrail(Request.CCHID(), aspUserId,
                                         //    "Animation Register", Request.RequestUri.Host, gecs.ConnString);
+                                        LogUserLoginHistory(hsRequest.UserName, Request.CCHID(), gecs.ConnString);
                                     }
                                 }
                             }
