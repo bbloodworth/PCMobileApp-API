@@ -2,6 +2,8 @@
 {
     public class MemberCardDataModel
     {
+        public bool Expired;
+        public bool Invalid;
         public string CardTypeFileName;
         public int CardTypeId;
         public int CardViewModeId;

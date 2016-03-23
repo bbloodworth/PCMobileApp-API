@@ -220,6 +220,7 @@
     <Compile Include="Models\BenefitPlan1210BareModel.cs" />
     <Compile Include="Models\CampaignIntroModel.cs" />
     <Compile Include="Models\CampaignSessionModel.cs" />
+    <Compile Include="Models\CardToken.cs" />
     <Compile Include="Models\MemberCardDataModel.cs" />
     <Compile Include="Models\SignInModel.cs" />
     <Compile Include="Models\UserContentRecord.cs" />
@@ -340,6 +341,7 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\PublishProfiles\a2media.pubxml" />
     <None Include="Properties\PublishProfiles\amedia.pubxml" />
     <None Include="Properties\PublishProfiles\BuildServer.pubxml" />
     <None Include="Properties\PublishProfiles\cch-a2media %282%29.pubxml" />
@@ -350,6 +352,7 @@
     <None Include="Properties\PublishProfiles\CchDynamicAnimationIIS.pubxml" />
     <None Include="Properties\PublishProfiles\dmedia.pubxml" />
     <None Include="Properties\PublishProfiles\DynamicFileSystem.pubxml" />
+    <None Include="Properties\PublishProfiles\media.pubxml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -520,6 +523,8 @@
     <Content Include="Views\Card\RX_Optum_Caesars_Front.cshtml" />
     <Content Include="Views\Card\RX_Optum_Caesars_Full_Back.cshtml" />
     <Content Include="Views\Card\RX_Optum_Caesars_Full_Front.cshtml" />
+    <Content Include="Views\Card\Timeout.cshtml" />
+    <Content Include="Views\Card\InvalidEmployerId.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

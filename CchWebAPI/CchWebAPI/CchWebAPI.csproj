@@ -42,7 +42,23 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClearCost, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.1.0.2\lib\net451\ClearCost.dll</HintPath>
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.1.0.3\lib\net451\ClearCost.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ClearCost.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.Data.1.0.1\lib\net451\ClearCost.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="jose-jwt, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\jose-jwt.1.9.0\lib\4.0\jose-jwt.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -139,13 +155,14 @@
     <Compile Include="Areas\Animation\Controllers\MediaController.cs" />
     <Compile Include="Areas\Animation\Controllers\MembershipController.cs" />
     <Compile Include="Areas\Animation\Controllers\MessagingController.cs" />
+    <Compile Include="Areas\PComm\Controllers\HealthPlanSummaryController.cs" />
     <Compile Include="Areas\Animation\Controllers\SurveyController.cs" />
     <Compile Include="Areas\Animation\Controllers\UserContentController.cs" />
     <Compile Include="Areas\Animation\Models\AnonymousContentRecord.cs" />
     <Compile Include="Areas\Animation\Models\AccountRequest.cs" />
     <Compile Include="Areas\Animation\Models\ExperienceLog.cs" />
-    <Compile Include="Areas\Animation\Models\MemberCardDataRecord.cs" />
-    <Compile Include="Areas\Animation\Models\MemberCardTokenRecord.cs" />
+    <Compile Include="Areas\Animation\Models\CardDetail.cs" />
+    <Compile Include="Areas\Animation\Models\CardResult.cs" />
     <Compile Include="Areas\Animation\Models\MemberCardWebRequest.cs" />
     <Compile Include="Areas\Animation\Models\QuestionsAndAnswers.cs" />
     <Compile Include="Areas\Animation\Models\UserAuthenticationRequest.cs" />
@@ -204,6 +221,8 @@
     <Compile Include="Handlers\TimeoutHandler.cs" />
     <Compile Include="Models\Handshake.cs" />
     <Compile Include="Models\HandshakeRequest.cs" />
+    <Compile Include="Areas\PComm\Models\HealthPlanSummary.cs" />
+    <Compile Include="PreApplicationStart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -212,6 +231,8 @@
     </Compile>
     <Compile Include="RequestManager.cs" />
     <Compile Include="Services\CardService.cs" />
+    <Compile Include="Services\PlanInfoService.cs" />
+    <Compile Include="Services\PlatformDataCache.cs" />
     <Compile Include="Support\CCHEncrypt.cs" />
     <Compile Include="Support\CchExtensions.cs" />
     <Compile Include="Support\CheckPersonApplicationAccess.cs" />
@@ -326,12 +347,16 @@
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="LICENSE" />
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
     <None Include="Properties\PublishProfiles\BuildsDir.pubxml" />
     <None Include="Properties\PublishProfiles\CCH_Web_API.pubxml" />
     <None Include="Properties\PublishProfiles\dwapi.pubxml" />
+    <None Include="Properties\PublishProfiles\la2wapi.pubxml" />
+    <None Include="Properties\PublishProfiles\lawapi.pubxml" />
+    <None Include="Properties\PublishProfiles\wapi.pubxml" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ClearCost.UnitTesting;
 using CchWebAPI.Areas.Animation.Models;
 using System.Net;
+using System.Diagnostics;
 
 namespace CchWebAPI.Tests {
     [TestClass]
@@ -10,6 +11,9 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanGetWapiAuthResult() {
+            if (!Debugger.IsAttached)
+                return;
+
             //var authResult = UnitTestContext.Get(ClearCost.UnitTesting.Environment.lawapi, @"mary.smith@cchcaesars.com").GetAuthResult();
             var authResult = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi, @"mary.smith@cchcaesars.com").GetAuthResult();
             //var authResult = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi, @"mikew@cchdemo.com").GetAuthResult();
@@ -21,12 +25,12 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanExecuteResetPasswordStep1() {
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.lawapi,
-                "mary.apptest@cch.com");
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
+                "mary.smith@cchcaesars.com");
 
             var payload = new UserAuthenticationRequest() {
-                UserName = "mary.apptest@cch.com",
-                FullSsn = "001020304"
+                UserName = "mary.smith@cchcaesars.com",
+                FullSsn = "001024835"
             };
 
             var step1Result = ApiUtil.PostJson<dynamic>(ctx, "Animation/Membership/Password/Reset0", payload);
@@ -40,12 +44,12 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanExecuteResetPasswordStep2() {
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.lawapi,
-                "mary.apptest@cch.com");
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
+                "mary.smith@cchcaesars.com");
 
             var payload = new UserAuthenticationRequest() {
-                UserName = "mary.apptest@cch.com",
-                FullSsn = "001020304"
+                UserName = "mary.smith@cchcaesars.com",
+                FullSsn = "001024835"
             };
 
             var step1Result = ApiUtil.PostJson<dynamic>(ctx, "Animation/Membership/Password/Reset0", payload);

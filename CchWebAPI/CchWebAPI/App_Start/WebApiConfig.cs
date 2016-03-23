@@ -200,7 +200,7 @@ namespace CchWebAPI
                     new HttpControllerDispatcher(config),
                     AuthenticatedAccountHandlers)
                 );
-#endregion
+            #endregion
 
             #region Animation Membership API Routes
 
@@ -502,19 +502,9 @@ namespace CchWebAPI
             #region Animation Card API Routes
 
             config.Routes.MapHttpRoute(
-                name: "AnimationGetCardUrl",
-                routeTemplate: "v1/{area}/{controller}/CardUrl/{localeCode}",
-                defaults: new { action = "GetCardUrl", localeCode = "en" },
-                constraints: new { area = "Animation", controller = "Card" },
-                handler: HttpClientFactory.CreatePipeline(
-                    new HttpControllerDispatcher(config),
-                    AuthenticatedAccountHandlers)
-                );
-
-            config.Routes.MapHttpRoute(
                 name: "AnimationGetMemberCardData",
-                routeTemplate: "v1/{area}/{controller}/MemberData/{employerId}/{token}",
-                defaults: new { action = "GetMemberCardData", employerId = 0 },
+                routeTemplate: "v1/{area}/{controller}/MemberData",
+                defaults: new { action = "GetMemberCardData" },
                 constraints: new { area = "Animation", controller = "Card" },
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config), 
@@ -566,6 +556,20 @@ namespace CchWebAPI
                 );
 
             #endregion
+
+            #region PComm PlanInfo Routes
+
+            config.Routes.MapHttpRoute(
+            name: "PCommGetHealthPlanSummary",
+            routeTemplate: "v1/{area}/{controller}",
+            defaults: new { action = "Get" },
+            constraints: new { area = "PComm", controller = "HealthPlanSummary" },
+            handler: HttpClientFactory.CreatePipeline(
+                new HttpControllerDispatcher(config),
+                AuthenticatedAccountHandlers)
+            );
+
+            #endregion 
         }
     }
 }
