@@ -13,7 +13,7 @@ namespace BizContents
 {
     using System;
     using System.Collections.Generic;
-    
+
     public partial class Campaign
     {
         public Campaign()
@@ -33,6 +33,7 @@ namespace BizContents
         public Nullable<System.DateTime> SavingsMonthStartDate { get; set; }
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> CreateDate { get; set; }
+        public string CampaignURL { get; set; }
     
         public virtual ICollection<CampaignContent> CampaignContents { get; set; }
         public virtual ICollection<CampaignMember> CampaignMembers { get; set; }

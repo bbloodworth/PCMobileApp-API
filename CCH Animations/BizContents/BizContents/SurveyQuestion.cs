@@ -18,5 +18,7 @@ namespace BizContents
         public int QuestionID { get; set; }
         public Nullable<int> QuestionDisplayOrderNum { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
+    
+        public virtual Survey Survey { get; set; }
     }
 }
