@@ -12,10 +12,11 @@ using CchWebAPI.Support;
 using ClearCost.Data;
 using ClearCost.Data.Security;
 using ClearCost.IO.Log;
-using ClearCost.Security.JWT;
+//using ClearCost.Security.JWT;
 using Newtonsoft.Json;
 using NLog;
 using System.Data.Entity;
+using ClearCost.Security;
 
 namespace CchWebAPI.Services {
     public class CardService {
