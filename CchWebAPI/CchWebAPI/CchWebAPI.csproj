@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ClearCost, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.1.0.3\lib\net451\ClearCost.dll</HintPath>
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.1.0.4\lib\net451\ClearCost.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ClearCost.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -141,6 +141,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Animation\Views\Settings\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -155,6 +156,7 @@
     <Compile Include="Areas\Animation\Controllers\MediaController.cs" />
     <Compile Include="Areas\Animation\Controllers\MembershipController.cs" />
     <Compile Include="Areas\Animation\Controllers\MessagingController.cs" />
+    <Compile Include="Areas\Animation\Controllers\SettingsController.cs" />
     <Compile Include="Areas\PComm\Controllers\HealthPlanSummaryController.cs" />
     <Compile Include="Areas\Animation\Controllers\SurveyController.cs" />
     <Compile Include="Areas\Animation\Controllers\UserContentController.cs" />
@@ -231,6 +233,7 @@
     </Compile>
     <Compile Include="RequestManager.cs" />
     <Compile Include="Services\CardService.cs" />
+    <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\PlanInfoService.cs" />
     <Compile Include="Services\PlatformDataCache.cs" />
     <Compile Include="Support\CCHEncrypt.cs" />
