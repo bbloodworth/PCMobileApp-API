@@ -569,7 +569,22 @@ namespace CchWebAPI
                 AuthenticatedAccountHandlers)
             );
 
-            #endregion 
+            #endregion
+
+            #region Settings
+
+            config.Routes.MapHttpRoute(
+                name: "AnimationGetConfigValue",
+                routeTemplate: "v1/{area}/{controller}/{hsId}/{employerId}/ConfigValue",
+                defaults: new { action = "GetConfigurationValue", employerId = 0, hsId = "" },
+                constraints: new { area = "Animation", controller = "Settings" },
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AccountHandlers)
+                );
+
+            #endregion
+
         }
     }
 }
