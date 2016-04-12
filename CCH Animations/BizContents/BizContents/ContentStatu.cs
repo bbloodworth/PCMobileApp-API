@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace BizContents
 {
     using System;
@@ -22,6 +24,7 @@ namespace BizContents
     
         public int ContentStatusID { get; set; }
         public string ContentStatusDesc { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> CreateDate { get; set; }
     
         public virtual ICollection<UserContent> UserContents { get; set; }

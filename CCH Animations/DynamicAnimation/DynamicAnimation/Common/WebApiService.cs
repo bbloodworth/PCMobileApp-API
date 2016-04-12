@@ -279,13 +279,11 @@ namespace DynamicAnimation.Common
             return experienceResponse;
         }
 
-        public static async Task<MemberCardDataModel> GetMemberCardData(int employerId, string token) {
+        public static async Task<MemberCardDataModel> GetCardDetail(int employerId, string token) {
             var memberData = new MemberCardDataModel();
-
-            var requestUrl = string.Format("v1/Animation/Card/MemberData/{0}/{1}",
-                employerId, token);
-
+            var requestUrl = string.Format("v1/Animation/Card/MemberData?employerId={0}&token={1}", employerId, token);
             var request = new HttpRequestMessage(HttpMethod.Get, requestUrl);
+
             try {
                 using (var client = BaseService.GetClient()) {
                     var response = await client.SendAsync(request);

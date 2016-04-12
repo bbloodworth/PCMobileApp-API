@@ -3,6 +3,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ClearCost.UnitTesting;
 using CchWebAPI.Areas.Animation.Models;
 using System.Net;
+using System.Diagnostics;
 
 namespace CchWebAPI.Tests {
     [TestClass]
@@ -10,6 +11,9 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanGetWapiAuthResult() {
+            if (!Debugger.IsAttached)
+                return;
+
             //var authResult = UnitTestContext.Get(ClearCost.UnitTesting.Environment.lawapi, @"mary.smith@cchcaesars.com").GetAuthResult();
             var authResult = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi, @"mary.smith@cchcaesars.com").GetAuthResult();
             //var authResult = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi, @"mikew@cchdemo.com").GetAuthResult();

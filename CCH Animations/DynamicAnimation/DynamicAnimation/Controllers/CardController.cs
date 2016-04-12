@@ -11,33 +11,66 @@ namespace DynamicAnimation.Controllers
     public class CardController : Controller
     {
         // GET: Card
-        public async Task<ActionResult> Index()
-        {
+        public async Task<ActionResult> Index() {
             ViewBag.Message = "Virtual ID Cards";
             Response.ContentType = "image/svg+xml";
 
             if (null == Request.QueryString["tkn"]) {
-                LogUtil.Log("Missing security token in CardController.", 
+                LogUtil.Log("Missing security token in CardController.",
                     new InvalidOperationException("Security Token is required."));
 
                 return View();
             }
 
-            var qparam = Request.QueryString["tkn"];
-            string[] qparams = qparam.Split('|');
+            var tokenSegments = Request.QueryString["tkn"].Split('|');
 
-            if(qparams.Length != 2) {
-                LogUtil.Log("Invalid arguments in CardController.", 
+            if (tokenSegments.Length != 2) {
+                LogUtil.Log("Invalid arguments in CardController.",
                     new InvalidOperationException(
-                        string.Format("QueryString parameters expected 2 but got {0}.", qparam.Length)));
+                        string.Format("QueryString token expected 2 segments but got {0}.",
+                        tokenSegments.Length)));
 
                 return View();
             }
 
+            var employerId = int.Parse(tokenSegments[0]);
+            var jwt = tokenSegments[1];
 
-            var employerId = int.Parse(qparams[0]);
-            var token = qparams[1];
+            HandleCampaignSession(employerId);
 
+            var cardDetail = await WebApiService.GetCardDetail(employerId, jwt);
+
+            HelperService.LogAnonEvent(ExperienceEvents.Debug, FormatInfoMessage(cardDetail));
+
+            if (cardDetail.CardTypeId < 1 || cardDetail.CardViewModeId < 1 || string.IsNullOrEmpty(cardDetail.CardTypeFileName)) {
+                cardDetail = await WebApiService.GetCardDetail(employerId, jwt);
+                HelperService.LogAnonEvent(ExperienceEvents.Debug,
+                    string.Format("Retry - Card Type ID: {0}  View Mode ID: {1}  File Name: {2}",
+                    cardDetail.CardTypeId, cardDetail.CardViewModeId, cardDetail.CardTypeFileName));
+            }
+
+            if (cardDetail.Expired)
+                return View("Timeout");
+
+            if (cardDetail.Invalid)
+                return View("InvalidEmployerId");
+
+            if (cardDetail.CardTypeId < 1 || cardDetail.CardViewModeId < 1 || string.IsNullOrEmpty(cardDetail.CardTypeFileName)) {
+                HelperService.LogAnonEvent(ExperienceEvents.Error, FormatInfoMessage(cardDetail));
+
+                LogUtil.Log(string.Format("Unable to resolve card data for token {0} for employer {1}.",
+                    jwt, employerId),
+                    new InvalidOperationException(FormatInfoMessage(cardDetail)));
+
+                return View();
+            };
+
+            MapViewBag(cardDetail);
+
+            return View(string.Format("{0}_{1}", cardDetail.CardTypeFileName, ResolveViewMode(cardDetail)));
+        }
+
+        private static void HandleCampaignSession(int employerId) {
             var campaignSession = CampaignSessionModel.Current;
             campaignSession.EmployerId = employerId;
 
@@ -45,106 +78,72 @@ namespace DynamicAnimation.Controllers
             campaignSession.ExperienceUserId = logResponse.ExperienceUserId;
 
             CampaignSessionModel.Current = campaignSession;
+        }
 
-            var cardData = await WebApiService.GetMemberCardData(employerId, token);
-                    
-            var cardTypeFileName = cardData.CardTypeFileName;
-            var cardTypeId = cardData.CardTypeId;
-            var cardViewModeId = cardData.CardViewModeId;
+        private void MapViewBag(MemberCardDataModel cardDetail) {
+            ViewBag.EffectiveDate = cardDetail.EffectiveDate;
+            ViewBag.EffectiveDateValue = cardDetail.EffectiveDateValue;
+            ViewBag.EmployeeId = cardDetail.EmployeeId;
+            ViewBag.EmployeeIdValue = cardDetail.EmployeeIdValue;
+            ViewBag.EmployeeName = cardDetail.EmployeeName;
+            ViewBag.EmployeeNameValue = cardDetail.EmployeeNameValue;
+            ViewBag.GroupDesignation = cardDetail.GroupDesignation;
+            ViewBag.GroupDesignationValue = cardDetail.GroupDesignationValue;
+            ViewBag.GroupName = cardDetail.GroupName;
+            ViewBag.GroupNameValue = cardDetail.GroupNameValue;
+            ViewBag.GroupNumber = cardDetail.GroupNumber;
+            ViewBag.GroupNumberValue = cardDetail.GroupNumberValue;
+            ViewBag.GroupId = cardDetail.GroupId;
+            ViewBag.GroupIdValue = cardDetail.GroupIdValue;
+            ViewBag.InNetworkCoinsurance = cardDetail.InNetworkCoinsurance;
+            ViewBag.InNetworkCoinsuranceValue = cardDetail.InNetworkCoinsuranceValue;
+            ViewBag.MemberId = cardDetail.MemberId;
+            ViewBag.MemberIdValue = cardDetail.MemberIdValue;
+            ViewBag.MemberMedicalId = cardDetail.MemberMedicalId;
+            ViewBag.MemberMedicalIdValue = cardDetail.MemberMedicalIdValue;
+            ViewBag.MemberName = cardDetail.MemberName;
+            ViewBag.MemberNameValue = cardDetail.MemberNameValue;
+            ViewBag.NetworkDesignationValue = cardDetail.NetworkDesignationValue;
+            ViewBag.OnPlan = cardDetail.OnPlan;
+            ViewBag.OnPlanValue = cardDetail.OnPlanValue;
+            ViewBag.OutNetworkCoinsurance = cardDetail.OutNetworkCoinsurance;
+            ViewBag.OutNetworkCoinsuranceValue = cardDetail.OutNetworkCoinsuranceValue;
+            ViewBag.PlanName = cardDetail.PlanName;
+            ViewBag.PlanNameValue = cardDetail.PlanNameValue;
+            ViewBag.RxBin = cardDetail.RxBin;
+            ViewBag.RxBinValue = cardDetail.RxBinValue;
+            ViewBag.RxGrp = cardDetail.RxGrp;
+            ViewBag.RxGrpValue = cardDetail.RxGrpValue;
+            ViewBag.RxId = cardDetail.RxId;
+            ViewBag.RxIdValue = cardDetail.RxIdValue;
+            ViewBag.RxPcn = cardDetail.RxPcn;
+            ViewBag.RxPcnValue = cardDetail.RxPcnValue;
+            ViewBag.PlanType = cardDetail.PlanType;
+            ViewBag.PlanTypeValue = cardDetail.PlanTypeValue;
+            ViewBag.CoverageType = cardDetail.CoverageType;
+            ViewBag.CoverageTypeValue = cardDetail.CoverageTypeValue;
+            ViewBag.CardIssuedDateValue = cardDetail.CardIssuedDateValue;
+            ViewBag.PayorIDValue = cardDetail.PayorIdValue;
+        }
 
-            var infoMessage = string.Format("Card Type ID: {0}  View Mode ID: {1}  File Name: {2}",
-                cardTypeId, cardViewModeId, cardTypeFileName);
-            HelperService.LogAnonEvent(ExperienceEvents.Debug, infoMessage);
-
-            if (cardTypeId < 1 || cardViewModeId < 1 || string.IsNullOrEmpty(cardTypeFileName)) {
-                cardData = await WebApiService.GetMemberCardData(employerId, token);
-
-                cardTypeFileName = cardData.CardTypeFileName;
-                cardTypeId = cardData.CardTypeId;
-                cardViewModeId = cardData.CardViewModeId;
-
-                infoMessage = string.Format("Retry - Card Type ID: {0}  View Mode ID: {1}  File Name: {2}",
-                    cardTypeId, cardViewModeId, cardTypeFileName);
-                HelperService.LogAnonEvent(ExperienceEvents.Debug, infoMessage);
-            }
-
-            if (cardTypeId < 1 || cardViewModeId < 1 || string.IsNullOrEmpty(cardTypeFileName)) {
-                var errMessage = string.Format("Card Type ID: {0}  View Mode ID: {1}  File Name: {2}",
-                    cardTypeId, cardViewModeId, cardTypeFileName);
-
-                HelperService.LogAnonEvent(ExperienceEvents.Error, errMessage);
-
-                LogUtil.Log(string.Format("Unable to resolve card data for token {0} for employer {1}.", 
-                    token, employerId), 
-                    new InvalidOperationException(errMessage));
-
-                return View();
-            };
-
-            ViewBag.EffectiveDate = cardData.EffectiveDate;
-            ViewBag.EffectiveDateValue = cardData.EffectiveDateValue;
-            ViewBag.EmployeeId = cardData.EmployeeId;
-            ViewBag.EmployeeIdValue = cardData.EmployeeIdValue;
-            ViewBag.EmployeeName = cardData.EmployeeName;
-            ViewBag.EmployeeNameValue = cardData.EmployeeNameValue;
-            ViewBag.GroupDesignation = cardData.GroupDesignation;
-            ViewBag.GroupDesignationValue = cardData.GroupDesignationValue;
-            ViewBag.GroupName = cardData.GroupName;
-            ViewBag.GroupNameValue = cardData.GroupNameValue;
-            ViewBag.GroupNumber = cardData.GroupNumber;
-            ViewBag.GroupNumberValue = cardData.GroupNumberValue;
-            ViewBag.GroupId = cardData.GroupId;
-            ViewBag.GroupIdValue = cardData.GroupIdValue;
-            ViewBag.InNetworkCoinsurance = cardData.InNetworkCoinsurance;
-            ViewBag.InNetworkCoinsuranceValue = cardData.InNetworkCoinsuranceValue;
-            ViewBag.MemberId = cardData.MemberId;
-            ViewBag.MemberIdValue = cardData.MemberIdValue;
-            ViewBag.MemberMedicalId = cardData.MemberMedicalId;
-            ViewBag.MemberMedicalIdValue = cardData.MemberMedicalIdValue;
-            ViewBag.MemberName = cardData.MemberName;
-            ViewBag.MemberNameValue = cardData.MemberNameValue;
-            ViewBag.NetworkDesignationValue = cardData.NetworkDesignationValue;
-            ViewBag.OnPlan = cardData.OnPlan;
-            ViewBag.OnPlanValue = cardData.OnPlanValue;
-            ViewBag.OutNetworkCoinsurance = cardData.OutNetworkCoinsurance;
-            ViewBag.OutNetworkCoinsuranceValue = cardData.OutNetworkCoinsuranceValue;
-            ViewBag.PlanName = cardData.PlanName;
-            ViewBag.PlanNameValue = cardData.PlanNameValue;
-            ViewBag.RxBin = cardData.RxBin;
-            ViewBag.RxBinValue = cardData.RxBinValue;
-            ViewBag.RxGrp = cardData.RxGrp;
-            ViewBag.RxGrpValue = cardData.RxGrpValue;
-            ViewBag.RxId = cardData.RxId;
-            ViewBag.RxIdValue = cardData.RxIdValue;
-            ViewBag.RxPcn = cardData.RxPcn;
-            ViewBag.RxPcnValue = cardData.RxPcnValue;
-            ViewBag.PlanType = cardData.PlanType;
-            ViewBag.PlanTypeValue = cardData.PlanTypeValue;
-            ViewBag.CoverageType = cardData.CoverageType;
-            ViewBag.CoverageTypeValue = cardData.CoverageTypeValue;
-            ViewBag.CardIssuedDateValue = cardData.CardIssuedDateValue;
-            ViewBag.PayorIDValue = cardData.PayorIdValue;
-                        
-            string viewMode;
-            switch (cardViewModeId) {
+        private string ResolveViewMode(MemberCardDataModel cardDetail) {
+            switch (cardDetail.CardViewModeId) {
                 case 1:
-                    viewMode = "Front";
-                    break;
+                    return "Front";
                 case 2:
-                    viewMode = "Back";
-                    break;
+                    return "Back";
                 case 3:
-                    viewMode = "Full_Front";
-                    break;
+                    return "Full_Front";
                 case 4:
-                    viewMode = "Full_Back";
-                    break;
+                    return "Full_Back";
                 default:
-                    viewMode = "Front";
-                    break;
+                    return "Front";
             }
+        }
 
-            return View(string.Format("{0}_{1}", cardTypeFileName, viewMode));
+        private string FormatInfoMessage(MemberCardDataModel cardDetail) {
+            return string.Format("Card Type ID: {0}  View Mode ID: {1}  File Name: {2}",
+                cardDetail.CardTypeId, cardDetail.CardViewModeId, cardDetail.CardTypeFileName);
         }
     }
 }

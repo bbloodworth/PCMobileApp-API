@@ -7,6 +7,8 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
+using System.ComponentModel.DataAnnotations;
+
 namespace BizContents
 {
     using System;
@@ -17,13 +19,22 @@ namespace BizContents
         public int CCHID { get; set; }
         public int CampaignID { get; set; }
         public int ContentID { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> ContentStatusChangeDate { get; set; }
         public string UserContentCommentText { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> NotificationSentDate { get; set; }
         public Nullable<decimal> ContentSavingsAmt { get; set; }
         public string MemberContentDataText { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public Nullable<System.DateTime> CreateDate { get; set; }
         public int ContentStatusID { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> SMSNotificationSentDate { get; set; }
+        public string SMSNotificationStatusDesc { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public Nullable<System.DateTime> OSNotificationSentDate { get; set; }
+        public string OSNotificationStatusDesc { get; set; }
     
         public virtual CampaignContent CampaignContent { get; set; }
         public virtual Content Content { get; set; }

@@ -14,11 +14,17 @@ namespace BizContents
     
     public partial class Survey
     {
+        public Survey()
+        {
+            this.SurveyQuestions = new HashSet<SurveyQuestion>();
+        }
+    
         public int SurveyID { get; set; }
         public Nullable<int> SurveyPassCount { get; set; }
         public Nullable<bool> EmbeddedSurveyInd { get; set; }
         public Nullable<System.DateTime> CreateDate { get; set; }
     
         public virtual Content Content { get; set; }
+        public virtual ICollection<SurveyQuestion> SurveyQuestions { get; set; }
     }
 }
