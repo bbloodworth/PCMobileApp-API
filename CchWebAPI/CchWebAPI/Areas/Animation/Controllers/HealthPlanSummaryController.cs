@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 using CchWebAPI.Services;
 
-namespace CchWebAPI.Areas.PComm.Controllers
+namespace CchWebAPI.Areas.Animation.Controllers
 {
     public class HealthPlanSummaryController : ApiController
     {
