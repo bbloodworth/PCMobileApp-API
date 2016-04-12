@@ -157,7 +157,7 @@
     <Compile Include="Areas\Animation\Controllers\MembershipController.cs" />
     <Compile Include="Areas\Animation\Controllers\MessagingController.cs" />
     <Compile Include="Areas\Animation\Controllers\SettingsController.cs" />
-    <Compile Include="Areas\PComm\Controllers\HealthPlanSummaryController.cs" />
+    <Compile Include="Areas\Animation\Controllers\HealthPlanSummaryController.cs" />
     <Compile Include="Areas\Animation\Controllers\SurveyController.cs" />
     <Compile Include="Areas\Animation\Controllers\UserContentController.cs" />
     <Compile Include="Areas\Animation\Models\AnonymousContentRecord.cs" />
