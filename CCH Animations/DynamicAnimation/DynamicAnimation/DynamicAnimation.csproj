@@ -374,6 +374,7 @@
     <None Include="Properties\PublishProfiles\cch-dmedia.pubxml" />
     <None Include="Properties\PublishProfiles\CchDynamicAnimation.pubxml" />
     <None Include="Properties\PublishProfiles\CchDynamicAnimationIIS.pubxml" />
+    <None Include="Properties\PublishProfiles\cch_dynamic.pubxml" />
     <None Include="Properties\PublishProfiles\dmedia.pubxml" />
     <None Include="Properties\PublishProfiles\DynamicFileSystem.pubxml" />
     <None Include="Properties\PublishProfiles\media.pubxml" />
