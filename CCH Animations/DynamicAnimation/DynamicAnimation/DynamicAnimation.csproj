@@ -167,6 +167,7 @@
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\..\ClearCost.PCMobileApp.Api\packages\Microsoft.AspNet.Mvc.5.2.3\lib\net45\System.Web.Mvc.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Optimization, Version=1.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -531,7 +532,6 @@
     <Content Include="Views\Card\Dental_MetLife_ABCState_Back.cshtml" />
     <Content Include="Views\Card\Dental_MetLife_ABCState_Front.cshtml" />
     <Content Include="Views\Card\Dental_MetLife_ABCState_Full_Back.cshtml" />
-    <Content Include="Views\Card\Dental_MetLife_ABCState_Full_Front %281%29.cshtml" />
     <Content Include="Views\Card\Med_Cigna_ABCState_Back.cshtml" />
     <Content Include="Views\Card\Med_Cigna_ABCState_Front.cshtml" />
     <Content Include="Views\Card\Med_Cigna_ABCState_Full_Back.cshtml" />
@@ -550,6 +550,7 @@
     <Content Include="Views\Card\RX_Optum_Caesars_Full_Front.cshtml" />
     <Content Include="Views\Card\Timeout.cshtml" />
     <Content Include="Views\Card\InvalidEmployerId.cshtml" />
+    <Content Include="Views\Card\Dental_MetLife_ABCState_Full_Front.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
