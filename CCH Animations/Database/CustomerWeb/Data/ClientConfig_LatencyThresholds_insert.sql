@@ -17,7 +17,7 @@
 
   GO
 
-  UPDATE [dbo].[ClientConfig] SET ConfigValue = '{ ethernet: 2000, wifi: 2000, 4g: 2000, 3g: 5000, 2g: 7000, unknown: 7000, none: 0 }' 
+  UPDATE [dbo].[ClientConfig] SET ConfigValue = '{"ethernet": 5000, "wifi": 5000, "4g": 5000, "3g": 10000, "2g": 15000, "unknown": 15000, "none": 0 }'
   WHERE ConfigKey = 'NetworkLatencyThresholdJson'
 
   GO
