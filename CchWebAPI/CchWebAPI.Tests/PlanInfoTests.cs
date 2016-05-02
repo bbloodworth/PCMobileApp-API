@@ -51,7 +51,7 @@ namespace CchWebAPI.Tests {
             var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
                 "mary.smith@cchcaesars.com");
 
-            var summary = ApiUtil.GetJsonResult<HealthPlanSummary>(ctx, "PComm/HealthPlanSummary");
+            var summary = ApiUtil.GetJsonResult<HealthPlanSummary>(ctx, "Animation/HealthPlanSummary");
 
             Assert.IsNotNull(summary); 
             Assert.IsFalse(string.IsNullOrEmpty(summary.PlanName));

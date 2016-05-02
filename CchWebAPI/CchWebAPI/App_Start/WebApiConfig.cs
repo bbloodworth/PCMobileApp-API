@@ -557,19 +557,34 @@ namespace CchWebAPI
 
             #endregion
 
-            #region PComm PlanInfo Routes
+            #region PlanInfo Routes
 
             config.Routes.MapHttpRoute(
             name: "PCommGetHealthPlanSummary",
             routeTemplate: "v1/{area}/{controller}",
             defaults: new { action = "Get" },
-            constraints: new { area = "PComm", controller = "HealthPlanSummary" },
+            constraints: new { area = "Animation", controller = "HealthPlanSummary" },
             handler: HttpClientFactory.CreatePipeline(
                 new HttpControllerDispatcher(config),
                 AuthenticatedAccountHandlers)
             );
 
-            #endregion 
+            #endregion
+
+            #region Settings
+
+            config.Routes.MapHttpRoute(
+                name: "AnimationGetConfigValue",
+                routeTemplate: "v1/{area}/{controller}/{hsId}/{employerId}/ConfigValue",
+                defaults: new { action = "GetConfigurationValue", employerId = 0, hsId = "" },
+                constraints: new { area = "Animation", controller = "Settings" },
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AccountHandlers)
+                );
+
+            #endregion
+
         }
     }
 }
