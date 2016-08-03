@@ -52,7 +52,7 @@ namespace CchWebAPI
             string appSetting = ConfigurationManager.AppSettings["ClearCost.LogRequestBody"];
             bool logRequestBody = string.IsNullOrWhiteSpace(appSetting) ? false : bool.Parse(appSetting);
             
-            if (Request.HttpMethod.Equals("POST") && logRequestBod)
+            if (Request.HttpMethod.Equals("POST") && logRequestBody)
             {
                 Request.InputStream.Position = 0;
                 byte[] bytes = Request.BinaryRead(Request.TotalBytes);
