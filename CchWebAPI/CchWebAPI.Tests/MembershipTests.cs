@@ -30,7 +30,7 @@ namespace CchWebAPI.Tests {
 
             var payload = new UserAuthenticationRequest() {
                 UserName = "mary.smith@cchcaesars.com",
-                FullSsn = "001024835"
+                FullSsn = "000004835"
             };
 
             var step1Result = ApiUtil.PostJson<dynamic>(ctx, "Animation/Membership/Password/Reset0", payload);
