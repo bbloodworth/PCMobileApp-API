@@ -35,6 +35,8 @@ namespace CchWebAPI
             //GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
             GlobalConfiguration.Configuration.Formatters.Insert(0, new JsonpMediaTypeFormatter());
+
+            MvcHandler.DisableMvcResponseHeader = true;
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e) {
