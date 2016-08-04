@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using CchWebAPI.Formatters;
 
 using ClearCost.IO.Log;
+using System.Configuration;
 
 namespace CchWebAPI
 {
@@ -35,6 +36,8 @@ namespace CchWebAPI
             //GlobalConfiguration.Configuration.Formatters.XmlFormatter.SupportedMediaTypes.Clear();
 
             GlobalConfiguration.Configuration.Formatters.Insert(0, new JsonpMediaTypeFormatter());
+
+            MvcHandler.DisableMvcResponseHeader = true;
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e) {
@@ -45,7 +48,11 @@ namespace CchWebAPI
 
         protected void Application_EndRequest(object sender, EventArgs e)
         {
-            if (Request.HttpMethod.Equals("POST"))
+            
+            string appSetting = ConfigurationManager.AppSettings["ClearCost.LogRequestBody"];
+            bool logRequestBody = string.IsNullOrWhiteSpace(appSetting) ? false : bool.Parse(appSetting);
+            
+            if (Request.HttpMethod.Equals("POST") && logRequestBody)
             {
                 Request.InputStream.Position = 0;
                 byte[] bytes = Request.BinaryRead(Request.TotalBytes);
