@@ -14,6 +14,9 @@ namespace CchWebAPI.Tests.Media {
     public class WebApiServiceTests {
         [TestMethod]
         public void CanGetAuthorizationByCchId() {
+            if (!Debugger.IsAttached)
+                return;
+
             var response = WebApiService.GetAuthorizationByCchId(11, 57020);
             Assert.IsNotNull(response);
             Assert.IsFalse(string.IsNullOrEmpty(response.AuthHash));
@@ -21,13 +24,18 @@ namespace CchWebAPI.Tests.Media {
 
         [TestMethod]
         public void CanGetCampaignIntro() {
+            if (!Debugger.IsAttached)
+                return;
+
             var response = WebApiService.GetCampaignIntro(11, 1);
             Assert.IsNotNull(response);
         }
 
         [TestMethod]
         public void CanGetCampaignSession() {
-            return;
+            if (!Debugger.IsAttached)
+                return;
+
             //This will not work without refactoring away from sessions
             var response = WebApiService.GetCampaignSession(CampaignSessionModel.Current);
             Assert.IsNotNull(response);
@@ -35,30 +43,45 @@ namespace CchWebAPI.Tests.Media {
 
         [TestMethod]
         public void CanGetAuthorization() {
+            if (!Debugger.IsAttached)
+                return;
+
             var response = WebApiService.GetAuthorization("SmithCaesars", "1970/01/01", "4321");
             Assert.IsNotNull(response);
         }
 
         [TestMethod]
         public void CanGetVideoCampaign() {
+            if (!Debugger.IsAttached)
+                return;
+
             var response = WebApiService.GetVideoCampaign(1, 11);
             Assert.IsNotNull(response);
         }
 
         [TestMethod]
         public void CanGetVideoCampaignMemberData() {
+            if (!Debugger.IsAttached)
+                return;
+
             var response = WebApiService.GetVideoCampaignMemberData("57020", 11);
             Assert.IsNotNull(response);
         }
 
         [TestMethod]
         public void CanGetUserSessionVideoData() {
+            if (!Debugger.IsAttached)
+                return;
+
             var response = WebApiService.GetUserSessionVideoData("57020", 11);
             Assert.IsNotNull(response);
         }
 
         [TestMethod]
         public void CanLogAnonEvent() {
+            if (!Debugger.IsAttached)
+                return;
+
             var result = WebApiService.LogAnonEvent(new DynamicAnimation.Models.ExperienceLogRequest() {
                 CchId = 57020,
                 ContentId = "unittest",
@@ -74,6 +97,9 @@ namespace CchWebAPI.Tests.Media {
 
         [TestMethod]
         public void CanLogUserEvent() {
+            if (!Debugger.IsAttached)
+                return;
+
             var response = WebApiService.GetAuthorizationByCchId(11, 57020);
 
             var result = WebApiService.LogUserEvent(new DynamicAnimation.Models.ExperienceLogRequest() {
@@ -92,6 +118,9 @@ namespace CchWebAPI.Tests.Media {
 
         [TestMethod]
         public void CanLogInitialEvent() {
+            if (!Debugger.IsAttached)
+                return;
+
             var response = WebApiService.GetAuthorizationByCchId(11, 57020);
 
             var result = WebApiService.LogUserEvent(new DynamicAnimation.Models.ExperienceLogRequest() {
@@ -109,6 +138,9 @@ namespace CchWebAPI.Tests.Media {
 
         [TestMethod]
         public void CanGetCardDetailWithValidJwt() {
+            if (!Debugger.IsAttached)
+                return;
+
             var service = new CardService();
             var results = service.GetMemberCardUrls("en", 11, 57020);
 
@@ -118,7 +150,6 @@ namespace CchWebAPI.Tests.Media {
 
         [TestMethod]
         public async Task CannotGetCardDetailWithExpiredJwt() {
-            //This check can be removed after successfull deployment.
             if (!Debugger.IsAttached)
                 return;
 
