@@ -25,6 +25,9 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanExecuteResetPasswordStep1() {
+            if (!Debugger.IsAttached)
+                return;
+
             var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
                 "mary.smith@cchcaesars.com");
 
@@ -44,12 +47,15 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanExecuteResetPasswordStep2() {
+            if (!Debugger.IsAttached)
+                return;
+
             var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
                 "mary.smith@cchcaesars.com");
 
             var payload = new UserAuthenticationRequest() {
                 UserName = "mary.smith@cchcaesars.com",
-                FullSsn = "001024835"
+                FullSsn = "000004835"
             };
 
             var step1Result = ApiUtil.PostJson<dynamic>(ctx, "Animation/Membership/Password/Reset0", payload);
