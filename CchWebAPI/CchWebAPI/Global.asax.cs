@@ -38,6 +38,8 @@ namespace CchWebAPI
             GlobalConfiguration.Configuration.Formatters.Insert(0, new JsonpMediaTypeFormatter());
 
             MvcHandler.DisableMvcResponseHeader = true;
+            // Enables stronger encryption protocols.  Without this code, login fails on any server with TLS 1.0 disabled.
+            System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls12;
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e) {
