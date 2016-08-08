@@ -22,6 +22,8 @@ namespace DynamicAnimation
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             MvcHandler.DisableMvcResponseHeader = true;
+            // Enables stronger encryption protocols.  Without this code, login fails on any server with TLS 1.0 disabled.
+            System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls12;
         }
 
         protected void Application_Error(object sender, EventArgs e) {
