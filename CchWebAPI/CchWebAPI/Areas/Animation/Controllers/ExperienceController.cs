@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CchWebAPI.Support;
+using System.Linq;
 
 namespace CchWebAPI.Areas.Animation.Controllers
 {
@@ -20,6 +21,9 @@ namespace CchWebAPI.Areas.Animation.Controllers
 
                 if (eventLogRequest.EmployerId > 0)
                 {
+                    //append ClientVersion from header
+                    eventLogRequest.ClientVersion = Request.Headers.GetValues("X-Client-Version").FirstOrDefault();
+
                     using (GetEmployerConnString gecs = new GetEmployerConnString(eventLogRequest.EmployerId))
                     {
                         try
@@ -35,6 +39,7 @@ namespace CchWebAPI.Areas.Animation.Controllers
                                 iel.ExperienceUserId = elr.ExperienceUserId;
                                 iel.Comment = eventLogRequest.LogComment;
                                 iel.DeviceId = eventLogRequest.DeviceId;
+                                iel.ClientVersion = eventLogRequest.ClientVersion;
 
                                 iel.PostData(gecs.ConnString);
                                 hrm = Request.CreateResponse(HttpStatusCode.OK, elr);
@@ -42,8 +47,7 @@ namespace CchWebAPI.Areas.Animation.Controllers
                         }
                         catch (Exception exc)
                         {
-                            hrm = Request.CreateErrorResponse(HttpStatusCode.NoContent,
-                                "Insert Experience Event Procedure Failed.");
+                            hrm = Request.CreateErrorResponse(HttpStatusCode.NoContent, String.Format("Insert Experience Event Procedure Failed: {0}", exc.Message));
                         }
                     }
                 }

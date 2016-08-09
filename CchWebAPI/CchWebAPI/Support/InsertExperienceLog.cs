@@ -33,6 +33,10 @@ namespace CchWebAPI.Support
         {
             set { Parameters["DeviceID"].Value = value; }
         }
+        public String ClientVersion
+        {
+            set { Parameters["ClientVersion"].Value = value; }
+        }
 
         public InsertExperienceLog()
             : base("p_InsertExperienceLog")
@@ -44,6 +48,7 @@ namespace CchWebAPI.Support
             Parameters.New("ContentID", SqlDbType.Int);
             Parameters.New("Comment", SqlDbType.NVarChar, Size: 250);
             Parameters.New("DeviceID", SqlDbType.NVarChar, Size: 50);
+            Parameters.New("ClientVersion", SqlDbType.NVarChar, Size: 50);
         }
     }
 }
