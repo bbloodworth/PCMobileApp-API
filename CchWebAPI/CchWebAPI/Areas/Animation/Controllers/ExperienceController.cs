@@ -9,6 +9,11 @@ namespace CchWebAPI.Areas.Animation.Controllers
 {
     public class ExperienceController : ApiController
     {
+        private void AppendClientVersion(ExperienceLogRequest request)
+        {
+            request.ClientVersion = Request.Headers.GetValues("X-Client-Version").FirstOrDefault();
+        }
+
         [HttpPost]
         public HttpResponseMessage LogInitialExperience(string hsId, [FromBody] ExperienceLogRequest eventLogRequest)
         {
@@ -21,8 +26,7 @@ namespace CchWebAPI.Areas.Animation.Controllers
 
                 if (eventLogRequest.EmployerId > 0)
                 {
-                    //append ClientVersion from header
-                    eventLogRequest.ClientVersion = Request.Headers.GetValues("X-Client-Version").FirstOrDefault();
+                    AppendClientVersion(eventLogRequest);
 
                     using (GetEmployerConnString gecs = new GetEmployerConnString(eventLogRequest.EmployerId))
                     {
@@ -67,6 +71,8 @@ namespace CchWebAPI.Areas.Animation.Controllers
 
                 if (eventLogRequest.EmployerId > 0)
                 {
+                    AppendClientVersion(eventLogRequest);
+
                     using (GetEmployerConnString gecs = new GetEmployerConnString(eventLogRequest.EmployerId))
                     {
                         using (InsertExperienceLog iel = new InsertExperienceLog())
@@ -96,6 +102,7 @@ namespace CchWebAPI.Areas.Animation.Controllers
                             iel.ExperienceUserId = eventLogRequest.ExperienceUserId;
                             iel.Comment = eventLogRequest.LogComment;
                             iel.DeviceId = eventLogRequest.DeviceId;
+                            iel.ClientVersion = eventLogRequest.ClientVersion;
 
                             iel.PostData(gecs.ConnString);
                             if (iel.PostReturn == 1)
