@@ -1,13 +1,19 @@
-/****** Object:  StoredProcedure [dbo].[p_InsertExperienceLog]     ******/
-IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[dbo].[p_InsertExperienceLog]') AND type in (N'P', N'PC'))
-DROP PROCEDURE [dbo].[p_InsertExperienceLog]
+
+
+If object_id('p_InsertExperienceLog','P') is not null
+Begin
+	DROP PROCEDURE [dbo].[p_InsertExperienceLog];
+End
+
 GO
 
+/****** Object:  StoredProcedure [dbo].[p_InsertExperienceLog]    Script Date: 8/3/2016 8:02:51 PM ******/
 SET ANSI_NULLS ON
 GO
 
 SET QUOTED_IDENTIFIER ON
 GO
+
 
 /*~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Author: AS
@@ -36,6 +42,7 @@ Date        Who      Description
 ----------  ---      -------------------------------------------------------------------------------
 2014-12-17  AS       Created
 2015-09-17  AS       Updated to include optional DeviceID
+2016-08-03  SF		 Added ClientVersion per 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~*/
 
 CREATE PROCEDURE [dbo].[p_InsertExperienceLog] (
@@ -45,7 +52,8 @@ CREATE PROCEDURE [dbo].[p_InsertExperienceLog] (
 	@CCHID int = NULL,
 	@ContentID int = NULL,
 	@Comment nvarchar(250) = NULL,
-	@DeviceID nvarchar(100) = NULL	
+	@DeviceID nvarchar(100) = NULL,
+	@ClientVersion nvarchar(50) = NULL
 )
 as
 
@@ -74,14 +82,16 @@ BEGIN --proc
 			CCHID,
 			ContentID,
 			ExperienceLogCommentText,
-			CreateDate)
+			CreateDate,
+			ClientVersion)
 		VALUES (
 			@ExperienceEventID,
 			@ExperienceUserID,
 			@CCHID,
 			@ContentID,
 			@Comment,
-			getdate())
+			getdate(),
+			@ClientVersion)
 	END--IF
 	ELSE 
 	BEGIN --ELSE
@@ -91,14 +101,16 @@ BEGIN --proc
 			CCHID,
 			ContentID,
 			ExperienceLogCommentText,
-			CreateDate)
+			CreateDate,
+			ClientVersion)
 		SELECT
 			ee.ExperienceEventID,
 			@ExperienceUserID,
 			@CCHID,
 			@ContentID,
 			@Comment,
-			getdate()
+			getdate(),
+			@ClientVersion
 		FROM	
 			dbo.ExperienceEvent ee
 		WHERE
@@ -106,4 +118,7 @@ BEGIN --proc
 	END--ELSE
 END--proc
  
+
 GO
+
+
