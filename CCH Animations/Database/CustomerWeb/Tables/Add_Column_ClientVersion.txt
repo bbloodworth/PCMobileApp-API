@@ -1,0 +1,9 @@
+
+
+If not exists(select name from sys.columns where object_name(object_id) = 'ExperienceLog' and name = ' ClientVersion')
+Begin
+	alter table ExperienceLog
+	add ClientVersion nvarchar(50);
+End;
+go
+
