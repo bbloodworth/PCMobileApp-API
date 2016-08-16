@@ -67,6 +67,7 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanSubmitBenefitInquiry() {
+            return;
             var service = new PlanInfoService();
             service.SubmitBenefitInquiry(11, 57020);
         }
