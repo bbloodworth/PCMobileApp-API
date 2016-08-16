@@ -42,6 +42,7 @@ public class ExperienceLogRequest
     public int CchId { get; set; }
     public string ContentId { get; set; }
     public string DeviceId { get; set; }
+    public string ClientVersion { get; set; }
 }
 
 public class ExperienceLogResponse
