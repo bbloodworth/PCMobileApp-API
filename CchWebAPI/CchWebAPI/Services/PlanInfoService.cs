@@ -22,7 +22,7 @@ namespace CchWebAPI.Services {
                 EmployerId = employerId,
                 CCHID = cchId
             },
-            DataSource.Employer,
+            DataSource.Platform,
             employerId);
         }
     }
