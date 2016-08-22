@@ -11,7 +11,10 @@ namespace CchWebAPI.Areas.Animation.Controllers
     {
         private void AppendClientVersion(ExperienceLogRequest request)
         {
-            request.ClientVersion = Request.Headers.GetValues("X-Client-Version").FirstOrDefault();
+            if (Request.Headers.Contains("X-Client-Version"))
+            {
+                request.ClientVersion = Request.Headers.GetValues("X-Client-Version").FirstOrDefault();
+            }
         }
 
         [HttpPost]
