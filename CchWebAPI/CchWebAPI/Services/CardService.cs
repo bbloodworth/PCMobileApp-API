@@ -17,6 +17,7 @@ using Newtonsoft.Json;
 using NLog;
 using System.Data.Entity;
 using ClearCost.Security;
+using CchWebAPI.Configuration;
 
 namespace CchWebAPI.Services {
     public class CardService {
@@ -157,14 +158,12 @@ namespace CchWebAPI.Services {
                     "Please see the attached PDF to view or print my ID card." :
                     cardWebRequest.Message;
 
-                var useInternalServer = "Email.UseInternalServer".GetConfigurationValue().Equals("true");
+                var useInternalServer = EmailConfiguration.Settings.UseInternalServer;
 
                 // Send PDF file as an email attachment to designated recipient
-                EmailMessenger.Send(to: cardWebRequest.ToEmail, cc: cardWebRequest.CcEmail,
+                isSuccess = EmailMessenger.Send(to: cardWebRequest.ToEmail, cc: cardWebRequest.CcEmail,
                     subject: subject, message: message,
                     isHtml: false, attachmentPath: cardPdfFile, isInternalServer: useInternalServer);
-
-                isSuccess = true;
             }
             catch (Exception exc) {
                 errorMessage = exc.Message;

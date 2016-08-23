@@ -230,6 +230,7 @@
     <Compile Include="Handlers\HashMessageHandler.cs" />
     <Compile Include="Handlers\LogRequestAndResponseHandler.cs" />
     <Compile Include="Handlers\TimeoutHandler.cs" />
+    <Compile Include="Configuration\EmailConfiguration.cs" />
     <Compile Include="Models\Handshake.cs" />
     <Compile Include="Models\HandshakeRequest.cs" />
     <Compile Include="Areas\PComm\Models\HealthPlanSummary.cs" />
