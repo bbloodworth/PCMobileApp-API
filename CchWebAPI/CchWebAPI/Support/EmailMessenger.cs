@@ -3,11 +3,13 @@ using System.Net;
 using System.Net.Mail;
 using System.Net.Mime;
 using System.Text;
+using CchWebAPI.Configuration;
+using NLog;
 
-namespace CchWebAPI.Support
-{
-    public class EmailMessenger
-    {
+namespace CchWebAPI.Support {
+    public class EmailMessenger {
+        private static Logger logger = LogManager.GetCurrentClassLogger();
+
         /// <summary>
         /// Sends the message with attachment via e-mail.
         /// </summary>
@@ -18,23 +20,29 @@ namespace CchWebAPI.Support
         /// <param name="isHtml">if set to <c>true</c> [is HTML].</param>
         /// <param name="attachmentPath">The file system path to the attachment file.</param>
         /// <param name="isInternalServer">if set to <c>true</c> [we use the internal SMTP server of CCH] else [we use the Gmail public server].</param>
-        public static void Send(string to, string cc,
-            string subject, string message, bool isHtml, string attachmentPath, bool isInternalServer)
-        {
-            MailMessage mailMessage = new MailMessage
-            {
-                From = new MailAddress("Email.SenderEmail".GetConfigurationValue(), "Email.SenderName".GetConfigurationValue()),
+        public static bool Send(string to, string cc,
+            string subject, string message, bool isHtml, string attachmentPath, bool isInternalServer) {
+            var sentEmailSuccessfully = true;
+
+            MailMessage mailMessage = new MailMessage {
                 Subject = subject,
                 Body = message,
                 IsBodyHtml = true,
-                Attachments = { new Attachment(attachmentPath, MediaTypeNames.Application.Pdf) }, 
-                BodyEncoding = Encoding.ASCII, 
+                Attachments = { new Attachment(attachmentPath, MediaTypeNames.Application.Pdf) },
+                BodyEncoding = Encoding.ASCII,
                 Priority = MailPriority.High
             };
+
+            if (EmailConfiguration.Settings.UseInternalServer) {
+                mailMessage.From = new MailAddress(EmailConfiguration.InternalServerSettings.From);
+            }
+            else {
+                mailMessage.From = new MailAddress(EmailConfiguration.ExternalServerSettings.From);
+            }
+
             char[] charSeparators = new char[] { ',', ' ' };
             var result = to.Split(charSeparators, StringSplitOptions.RemoveEmptyEntries);
-            foreach (string recipient in result)
-            {
+            foreach (string recipient in result) {
                 mailMessage.To.Add(new MailAddress(recipient));
             }
 
@@ -45,33 +53,35 @@ namespace CchWebAPI.Support
                 }
             }
 
-            string smtpHost = "Email.Smtp".GetConfigurationValue();
-
             SmtpClient smtpClient;
 
-            if (isInternalServer)
-            {
-                smtpClient = new SmtpClient(smtpHost, 25)
-                {
-                    Credentials = new NetworkCredential("SAMB01VMD01@clearcosthealth.com", "pricetransparency"),
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    UseDefaultCredentials = true,
-                    EnableSsl = false
-                };
+            if (isInternalServer) {
+                smtpClient = EmailConfiguration.GetInternalServerSmtpClient();
             }
-            else
-            {
-                smtpClient = new SmtpClient()
-                {
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    //Credentials = new System.Net.NetworkCredential("rdavid@clearcosthealth.com", "chikusho"),
-                    Credentials = new NetworkCredential("SAMB01VMD01@clearcosthealth.com", "pricetransparency"),
-                    DeliveryMethod = SmtpDeliveryMethod.Network,
-                    EnableSsl = true
-                };
+            else {
+                smtpClient = EmailConfiguration.GetExternalServerSmtpClient();
             }
-            smtpClient.Send(mailMessage);
+
+            try {
+                smtpClient.Send(mailMessage);
+            }
+            catch (Exception ex) {
+                sentEmailSuccessfully = false;
+
+                string emailTo;
+
+                if (mailMessage.To.Count > 0) {
+                    emailTo = mailMessage.To[0].Address;
+                }
+                else {
+                    emailTo = "";
+                }
+
+                logger.Error("Failed to send email. from={0}, to={1}, subject={2}, server={3}, exception={4}, innerException={5}, stackTrace = {6}",
+                    mailMessage.From, emailTo, mailMessage.Subject, smtpClient.Host, ex.Message, ex.InnerException, ex.StackTrace);
+            }
+
+            return sentEmailSuccessfully;
         }
     }
 }
