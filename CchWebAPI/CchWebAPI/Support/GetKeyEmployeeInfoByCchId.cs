@@ -7,10 +7,18 @@ namespace CchWebAPI.Support
     {
         public int CchId { set { Parameters["CCHID"].Value = value; } }
 
-        private DataTable EmployeeTable { get { return Tables[0] ?? new DataTable("Empty"); } }
-        private DataRow EmployeeRow { get { return EmployeeTable.Rows[0] ?? EmployeeTable.NewRow(); } }
+        public DataTable EmployeeTable { get { return Tables[0] ?? new DataTable("Empty"); } }
+        public DataRow EmployeeRow { get { return EmployeeTable.Rows[0] ?? EmployeeTable.NewRow(); } }
         public DataTable DependentTable { get { return ( Tables.Count > 1 ? Tables[1] : new DataTable("EmptyTable")); } }
-        private object this[String ColName] { get { return EmployeeRow[ColName]; } }
+
+        public String EmployeeFirstName { get { return EmployeeRow["FirstName"].ToString(); } }
+        public String EmployeeLastname { get { return EmployeeRow["LastName"].ToString(); } }
+        public String EmployeeEmail { get { return EmployeeRow["Email"].ToString(); } }
+        public object this[String ColumnName]
+        {
+            get { return (EmployeeRow.Table.Columns.Contains(ColumnName) ? 
+                    EmployeeRow[ColumnName] : null); }
+        }
 
         public String CnxString { get { return this["ConnectionString"].ToString(); } }
 

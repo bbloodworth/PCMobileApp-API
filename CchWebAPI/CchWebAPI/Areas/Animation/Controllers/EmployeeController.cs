@@ -31,10 +31,27 @@ namespace CchWebAPI.Areas.Animation.Controllers
 
                     if (gkeibc.Tables.Count > 0 && gkeibc.Tables[1].Rows.Count > 0)
                     {
+                        Dependents deps = new Dependents();
+                        Dependent dep = null;
+
+                        if (gkeibc.EmployeeTable.TableName != "Empty" && 
+                            gkeibc.EmployeeTable.Rows.Count > 0)
+                        {
+                            dep = new Dependent();
+
+                            dep.CCHID = int.Parse(gkeibc["CCHID"].ToString());
+                            dep.Email = gkeibc["Email"].ToString();
+                            dep.SubscriberMedicalId = gkeibc["SubscriberMedicalID"].ToString();
+                            dep.FullName = string.Format("{0} {1}", gkeibc["FirstName"].ToString(), gkeibc["LastName"].ToString());
+                            dep.Age = 0;
+                            dep.IsAdult = true;
+                            dep.RelationshipText = "Employee";
+
+                            deps.Add(dep);
+                        }
+
                         if (gkeibc.DependentTable.TableName != "EmptyTable")
                         {
-                            Dependents deps = new Dependents();
-                            Dependent dep = null;
 
                             gkeibc.ForEachDependent(delegate (DataRow dr)
                             {
