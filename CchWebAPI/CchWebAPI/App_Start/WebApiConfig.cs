@@ -571,6 +571,20 @@ namespace CchWebAPI
 
             #endregion
 
+            #region Animation Employee Info API Routes
+
+            config.Routes.MapHttpRoute(
+                name: "AnimationEmployeeDependents",
+                routeTemplate: "v1/{area}/{controller}/Dependents",
+                defaults: new { action = "GetDependents" },
+                constraints: new { area = "Animation", controller = "Employee" },
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+
+            #endregion
+
             #region Settings
 
             config.Routes.MapHttpRoute(
