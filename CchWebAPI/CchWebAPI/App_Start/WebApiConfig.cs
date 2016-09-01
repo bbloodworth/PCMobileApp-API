@@ -513,8 +513,8 @@ namespace CchWebAPI
 
             config.Routes.MapHttpRoute(
                 name: "AnimationGetMemberTokens",
-                routeTemplate: "v1/{area}/{controller}/CardUrls/{localeCode}",
-                defaults: new { action = "GetMemberCardUrls", localeCode = "en" },
+                routeTemplate: "v1/{area}/{controller}/CardUrls/{localeCode}/{cchid}",
+                defaults: new { action = "GetMemberCardUrls", localeCode = "en", cchid = 0 },
                 constraints: new { area = "Animation", controller = "Card" },
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config),
