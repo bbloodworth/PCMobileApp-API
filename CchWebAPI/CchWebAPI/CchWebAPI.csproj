@@ -178,6 +178,7 @@
     <Compile Include="Areas\Animation\Models\CardDetail.cs" />
     <Compile Include="Areas\Animation\Models\CardResult.cs" />
     <Compile Include="Areas\Animation\Models\MemberCardWebRequest.cs" />
+    <Compile Include="Areas\Animation\Models\MemberDetail.cs" />
     <Compile Include="Areas\Animation\Models\QuestionsAndAnswers.cs" />
     <Compile Include="Areas\Animation\Models\UserAuthenticationRequest.cs" />
     <Compile Include="Areas\Animation\Models\UserContentPreferenceRequest.cs" />
@@ -247,6 +248,7 @@
     <Compile Include="RequestManager.cs" />
     <Compile Include="Services\CardService.cs" />
     <Compile Include="Services\ConfigService.cs" />
+    <Compile Include="Services\EmployeeServices.cs" />
     <Compile Include="Services\PlanInfoService.cs" />
     <Compile Include="Services\PlatformDataCache.cs" />
     <Compile Include="Support\CCHEncrypt.cs" />
