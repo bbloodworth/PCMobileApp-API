@@ -92,9 +92,16 @@ namespace CchWebAPI.Services {
             var cardBaseAddress = "CardBaseAddress".GetConfigurationValue();
 
             cardResults.ForEach(cr => {
+
+                var cardMemberData = new CardDetail();
+                try {
+                    cardMemberData = JsonConvert.DeserializeObject<CardDetail>(cr.MemberCard.CardMemberDataText);
+                }
+                catch { }
+
                 var cardToken = new CardToken() {
                     EmployerId = employer.Id,
-                    CardDetail = JsonConvert.DeserializeObject<CardDetail>(cr.MemberCard.CardMemberDataText),
+                    CardDetail = cardMemberData,
                     Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt16("TimeoutInMinutes".GetConfigurationValue()))
                 };
 
