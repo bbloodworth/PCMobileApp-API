@@ -597,9 +597,6 @@ namespace CchWebAPI
                     AccountHandlers)
                 );
 
-            #endregion
-
-            #region Settings
             config.Routes.MapHttpRoute(
                 name: "Settings",
                 routeTemplate: "v1/{area}/{controller}/GetConfigurationValues/{employerId}/{handshakeId}",
@@ -607,20 +604,10 @@ namespace CchWebAPI
                 constraints: new { area = "Animation", controller = "Settings" },
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config),
-                    AuthenticatedHandlers
+                    AccountHandlers
                     )
                 );
             #endregion
-
-            //config.Routes.MapHttpRoute(
-            //    name: "AnimationGetCampaignIntro",
-            //    routeTemplate: "v1/{area}/{controller}/Intro/{employerId}/{campaignId}/{handshakeId}",
-            //    defaults: new { action = "GetCampaignIntro", employerId = "0", campaignId = 0, handshakeId = "" },
-            //    constraints: new { area = "Animation", controller = "Campaign" },
-            //    handler: HttpClientFactory.CreatePipeline(
-            //        new HttpControllerDispatcher(config),
-            //        AccountHandlers)
-            //    );
         }
     }
 }
