@@ -21,7 +21,7 @@ namespace CchWebAPI.Areas.Animation.Controllers
     public class CardController : ApiController { 
 
         [HttpGet]
-        public HttpResponseMessage GetMemberCardUrls(string localeCode, int cchid) {
+        public HttpResponseMessage GetMemberCardUrls(string localeCode, int cchid = 0) {
 
             int inCchId = cchid == 0 ? Request.CCHID() : cchid;
 
