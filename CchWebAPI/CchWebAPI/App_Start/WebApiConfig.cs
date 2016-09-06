@@ -599,6 +599,23 @@ namespace CchWebAPI
 
             #endregion
 
+
+            #region v2 routes
+
+            #region ID Cards
+            config.Routes.MapHttpRoute(
+                name: "V2GetIDCards",
+                routeTemplate: "v2/IdCards/",
+                defaults: new { action = "Get" },
+                constraints: new { area = "v2", controller = "IdCard" },
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+            #endregion
+
+            #endregion
+
         }
     }
 }

@@ -221,6 +221,11 @@
     <Compile Include="Areas\PComm\Models\AuthMemberDataRequest.cs" />
     <Compile Include="Areas\PComm\Models\VideoEventLog.cs" />
     <Compile Include="Areas\PComm\PCommAreaRegistration.cs" />
+    <Compile Include="Areas\v2\Controllers\IdCardsController.cs" />
+    <Compile Include="Areas\v2\IdCards\Data\IIdCardsRepository.cs" />
+    <Compile Include="Areas\v2\IdCards\Dispatchers\IIdCardsDispatcher.cs" />
+    <Compile Include="Areas\v2\IdCards\Data\IdCard.cs" />
+    <Compile Include="Areas\v2\v2AreaRegistration.cs" />
     <Compile Include="Controllers\HandshakeController.cs" />
     <Compile Include="Controllers\PartnerHandshakeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
