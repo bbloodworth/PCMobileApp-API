@@ -180,6 +180,7 @@
     <Compile Include="Areas\Animation\Models\MemberCardWebRequest.cs" />
     <Compile Include="Areas\Animation\Models\MemberDetail.cs" />
     <Compile Include="Areas\Animation\Models\QuestionsAndAnswers.cs" />
+    <Compile Include="Areas\Animation\Models\Settings.cs" />
     <Compile Include="Areas\Animation\Models\UserAuthenticationRequest.cs" />
     <Compile Include="Areas\Animation\Models\UserContentPreferenceRequest.cs" />
     <Compile Include="Areas\Animation\Models\UserContentRecord.cs" />
@@ -221,6 +222,7 @@
     <Compile Include="Areas\PComm\Models\AuthMemberDataRequest.cs" />
     <Compile Include="Areas\PComm\Models\VideoEventLog.cs" />
     <Compile Include="Areas\PComm\PCommAreaRegistration.cs" />
+    <Compile Include="Configuration\SecurityConfiguration.cs" />
     <Compile Include="Controllers\HandshakeController.cs" />
     <Compile Include="Controllers\PartnerHandshakeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
