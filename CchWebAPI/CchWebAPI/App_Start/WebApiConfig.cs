@@ -605,9 +605,9 @@ namespace CchWebAPI
             #region ID Cards
             config.Routes.MapHttpRoute(
                 name: "V2GetIDCards",
-                routeTemplate: "v2/IdCards/",
+                routeTemplate: "v2/IdCards",
                 defaults: new { action = "Get" },
-                constraints: new { area = "v2", controller = "IdCard" },
+                constraints: new { area = "v2", controller = "IdCards" },
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config),
                     AuthenticatedAccountHandlers)

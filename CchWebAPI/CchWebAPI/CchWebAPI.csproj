@@ -46,6 +46,14 @@
       <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Autofac, Version=3.5.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\Autofac.3.5.0\lib\net40\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Autofac.Integration.WebApi, Version=3.4.0.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\Autofac.WebApi2.3.4.0\lib\net45\Autofac.Integration.WebApi.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="ClearCost, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\ClearCost.1.0.3\lib\net451\ClearCost.dll</HintPath>
       <Private>True</Private>
@@ -153,6 +161,7 @@
     <Folder Include="Areas\Animation\Views\Settings\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="App_Start\AutofacConfig.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -224,7 +233,7 @@
     <Compile Include="Areas\v2\Controllers\IdCardsController.cs" />
     <Compile Include="Areas\v2\IdCards\Data\IIdCardsRepository.cs" />
     <Compile Include="Areas\v2\IdCards\Dispatchers\IIdCardsDispatcher.cs" />
-    <Compile Include="Areas\v2\IdCards\Data\IdCard.cs" />
+    <Compile Include="Areas\v2\IdCards\Data\IdCardContext.cs" />
     <Compile Include="Areas\v2\v2AreaRegistration.cs" />
     <Compile Include="Controllers\HandshakeController.cs" />
     <Compile Include="Controllers\PartnerHandshakeController.cs" />

@@ -45,7 +45,7 @@ namespace CchWebAPI.Areas.v2.IdCards.Dispatchers {
                     Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt16(timeout))
                 };
 
-                cardToken.CardDetail.CardTypeFileName = r.FileName;
+                cardToken.CardDetail.CardTypeFileName = r.CardType.FileName;
                 cardToken.CardDetail.CardTypeId = r.TypeId;
                 cardToken.CardDetail.CardViewModeId = r.ViewModeId;
 

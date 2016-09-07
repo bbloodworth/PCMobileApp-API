@@ -13,14 +13,10 @@ namespace CchWebAPI
 {
     public class WebApiApplication : HttpApplication
     {
+        public object AutofacConfig { get; private set; }
+
         protected void Application_Start()
-        {
-            //AreaRegistration.RegisterAllAreas();
-            //GlobalConfiguration.Configure(WebApiConfig.Register);
-            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            //RouteConfig.RegisterRoutes(RouteTable.Routes);
-            //BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
+        {            
             GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerSelector),
                 new AreaHttpControllerSelector(GlobalConfiguration.Configuration));
 
@@ -28,6 +24,8 @@ namespace CchWebAPI
 
             WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+
+            CchWebAPI.AutofacConfig.ConfigureContainer(GlobalConfiguration.Configuration);
 
             //For Debugging
             //GlobalConfiguration.Configuration.Formatters.JsonFormatter.SupportedMediaTypes.Clear();
