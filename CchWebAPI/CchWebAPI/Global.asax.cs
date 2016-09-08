@@ -7,13 +7,14 @@ using System.Web.Mvc;
 using CchWebAPI.Formatters;
 
 using ClearCost.IO.Log;
+using Swashbuckle.Application;
 using System.Configuration;
+using System.Web.Routing;
 
 namespace CchWebAPI
 {
     public class WebApiApplication : HttpApplication
     {
-        public object AutofacConfig { get; private set; }
 
         protected void Application_Start()
         {            
@@ -22,10 +23,10 @@ namespace CchWebAPI
 
             AreaRegistration.RegisterAllAreas();
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-
-            CchWebAPI.AutofacConfig.ConfigureContainer(GlobalConfiguration.Configuration);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            AutofacConfig.Register(GlobalConfiguration.Configuration);
 
             //For Debugging
             //GlobalConfiguration.Configuration.Formatters.JsonFormatter.SupportedMediaTypes.Clear();

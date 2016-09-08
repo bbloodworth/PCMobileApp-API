@@ -6,10 +6,10 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-using CchWebAPI.Areas.v2.IdCards.Dispatchers;
+using CchWebAPI.IdCards.Dispatchers;
 using CchWebAPI.Services;
 
-namespace CchWebAPI.Areas.v2.Controllers
+namespace CchWebAPI.Controllers
 {
     public class IdCardsController : ApiController {
         IIdCardsDispatcher _dispatcher;
@@ -18,6 +18,7 @@ namespace CchWebAPI.Areas.v2.Controllers
         }
 
         [HttpGet]
+        [Route("v2/IdCards")]
         public async Task<HttpResponseMessage> Get() {
             var result = await _dispatcher.ExecuteAsync(Request.CCHID(),
                 PlatformDataCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())));

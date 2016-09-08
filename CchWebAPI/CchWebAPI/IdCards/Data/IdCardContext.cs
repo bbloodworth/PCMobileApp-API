@@ -3,10 +3,8 @@ using System.Data.Entity.ModelConfiguration;
 using System.Data.SqlClient;
 
 using ClearCost.Data;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace CchWebAPI.Areas.v2.IdCards.Data {
+namespace CchWebAPI.IdCards.Data {
     public class IdCardsContext : ClearCostContext<IdCardsContext> {
         public IdCardsContext(string connectionString) : base(new SqlConnection(connectionString)) { }
 

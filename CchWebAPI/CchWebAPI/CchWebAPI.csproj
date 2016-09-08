@@ -91,6 +91,10 @@
       <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\NLog.Web.4.2.1\lib\net35\NLog.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Swashbuckle.Core, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cd1bb07a5ac7c7bc, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\Swashbuckle.Core.5.4.0\lib\net40\Swashbuckle.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -151,6 +155,10 @@
     <Reference Include="System.Net.Http.WebRequest">
     </Reference>
     <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="WebGrease, Version=1.5.2.14234, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
       <Private>True</Private>
@@ -165,6 +173,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\SwaggerConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="AreaHttpControllerSelector.cs" />
     <Compile Include="Areas\Animation\AnimationAreaRegistration.cs" />
@@ -230,11 +239,10 @@
     <Compile Include="Areas\PComm\Models\AuthMemberDataRequest.cs" />
     <Compile Include="Areas\PComm\Models\VideoEventLog.cs" />
     <Compile Include="Areas\PComm\PCommAreaRegistration.cs" />
-    <Compile Include="Areas\v2\Controllers\IdCardsController.cs" />
-    <Compile Include="Areas\v2\IdCards\Data\IIdCardsRepository.cs" />
-    <Compile Include="Areas\v2\IdCards\Dispatchers\IIdCardsDispatcher.cs" />
-    <Compile Include="Areas\v2\IdCards\Data\IdCardContext.cs" />
-    <Compile Include="Areas\v2\v2AreaRegistration.cs" />
+    <Compile Include="Controllers\IdCardsController.cs" />
+    <Compile Include="IdCards\Data\IIdCardsRepository.cs" />
+    <Compile Include="IdCards\Dispatchers\IIdCardsDispatcher.cs" />
+    <Compile Include="IdCards\Data\IdCardContext.cs" />
     <Compile Include="Controllers\HandshakeController.cs" />
     <Compile Include="Controllers\PartnerHandshakeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

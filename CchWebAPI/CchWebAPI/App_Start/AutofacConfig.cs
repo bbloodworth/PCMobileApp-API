@@ -1,18 +1,19 @@
-﻿using System.Web.Http;
+﻿using System.Reflection;
+using System.Web.Http;
 
 using Autofac;
 using Autofac.Integration.WebApi;
 
-using CchWebAPI.Areas.v2.Controllers;
-using CchWebAPI.Areas.v2.IdCards.Data;
-using CchWebAPI.Areas.v2.IdCards.Dispatchers;
+using CchWebAPI.Controllers;
+using CchWebAPI.IdCards.Data;
+using CchWebAPI.IdCards.Dispatchers;
 
 namespace CchWebAPI {
     public class AutofacConfig {
-        public static void ConfigureContainer(HttpConfiguration config) {
+        public static void Register(HttpConfiguration config) {
             var builder = new ContainerBuilder();
 
-            //Data Providers
+            //Repositories
             builder.RegisterType<IdCardsRepository>().As<IIdCardsRepository>();
 
             //Dispatchers
@@ -20,7 +21,9 @@ namespace CchWebAPI {
                 .UsingConstructor(typeof(IIdCardsRepository));
 
             //Controllers
-            builder.RegisterType<IdCardsController>().UsingConstructor(typeof(IIdCardsDispatcher));
+            builder.RegisterType<IdCardsController>()
+                .UsingConstructor(typeof(IIdCardsDispatcher))
+                .InstancePerRequest();
 
             var container = builder.Build();
 

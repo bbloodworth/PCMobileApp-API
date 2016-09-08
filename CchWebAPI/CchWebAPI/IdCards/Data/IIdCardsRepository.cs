@@ -5,7 +5,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CchWebAPI.Areas.v2.IdCards.Data {
+namespace CchWebAPI.IdCards.Data {
     public interface IIdCardsRepository {
         void Initialize(string connectionString);
        Task<List<IdCard>> GetIdCardsByCchIdAsync(int cchId);

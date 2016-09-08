@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using ClearCost.Data.Security;
-using CchWebAPI.Areas.v2.IdCards.Data;
+using CchWebAPI.IdCards.Data;
 using CchWebAPI.Areas.Animation.Models;
 using ClearCost.Security.JWT;
 using CchWebAPI.Support;
 using Newtonsoft.Json;
 
-namespace CchWebAPI.Areas.v2.IdCards.Dispatchers {
+namespace CchWebAPI.IdCards.Dispatchers {
     public interface IIdCardsDispatcher {
         Task<List<IdCard>> ExecuteAsync(int cchId, Employer employer);
     }
