@@ -161,6 +161,7 @@
     <Compile Include="Areas\Animation\AnimationAreaRegistration.cs" />
     <Compile Include="Areas\Animation\Controllers\CampaignController.cs" />
     <Compile Include="Areas\Animation\Controllers\CardController.cs" />
+    <Compile Include="Areas\Animation\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\Animation\Controllers\ExperienceController.cs" />
     <Compile Include="Areas\Animation\Controllers\MediaController.cs" />
     <Compile Include="Areas\Animation\Controllers\MembershipController.cs" />
@@ -171,11 +172,15 @@
     <Compile Include="Areas\Animation\Controllers\UserContentController.cs" />
     <Compile Include="Areas\Animation\Models\AnonymousContentRecord.cs" />
     <Compile Include="Areas\Animation\Models\AccountRequest.cs" />
+    <Compile Include="Areas\Animation\Models\Dependent.cs" />
+    <Compile Include="Areas\Animation\Models\Dependents.cs" />
     <Compile Include="Areas\Animation\Models\ExperienceLog.cs" />
     <Compile Include="Areas\Animation\Models\CardDetail.cs" />
     <Compile Include="Areas\Animation\Models\CardResult.cs" />
     <Compile Include="Areas\Animation\Models\MemberCardWebRequest.cs" />
+    <Compile Include="Areas\Animation\Models\MemberDetail.cs" />
     <Compile Include="Areas\Animation\Models\QuestionsAndAnswers.cs" />
+    <Compile Include="Areas\Animation\Models\Settings.cs" />
     <Compile Include="Areas\Animation\Models\UserAuthenticationRequest.cs" />
     <Compile Include="Areas\Animation\Models\UserContentPreferenceRequest.cs" />
     <Compile Include="Areas\Animation\Models\UserContentRecord.cs" />
@@ -217,6 +222,7 @@
     <Compile Include="Areas\PComm\Models\AuthMemberDataRequest.cs" />
     <Compile Include="Areas\PComm\Models\VideoEventLog.cs" />
     <Compile Include="Areas\PComm\PCommAreaRegistration.cs" />
+    <Compile Include="Configuration\SecurityConfiguration.cs" />
     <Compile Include="Controllers\HandshakeController.cs" />
     <Compile Include="Controllers\PartnerHandshakeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -244,6 +250,7 @@
     <Compile Include="RequestManager.cs" />
     <Compile Include="Services\CardService.cs" />
     <Compile Include="Services\ConfigService.cs" />
+    <Compile Include="Services\EmployeeServices.cs" />
     <Compile Include="Services\PlanInfoService.cs" />
     <Compile Include="Services\PlatformDataCache.cs" />
     <Compile Include="Support\CCHEncrypt.cs" />
