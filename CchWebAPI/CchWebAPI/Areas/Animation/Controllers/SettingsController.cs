@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Dynamic;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using CchWebAPI.Support;
-using CchWebAPI.Services;
+using ClearCost.Platform;
 
 namespace CchWebAPI.Areas.Animation.Controllers
 {
@@ -17,9 +18,8 @@ namespace CchWebAPI.Areas.Animation.Controllers
 
             if (ValidateConsumer.IsValidConsumer(hsId))
             {
-                ConfigService configService = new ConfigService(employerId);
-
-                string configValue = configService.GetValue(configKey);
+                var configValue = ClientSettingCache.Settings(employerId)
+                    .FirstOrDefault(s => s.Key.Equals(configKey));
 
                 dynamic data = new ExpandoObject();
                 data.Results = configValue;

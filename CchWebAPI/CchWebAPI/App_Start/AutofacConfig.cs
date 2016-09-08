@@ -5,6 +5,7 @@ using Autofac;
 using Autofac.Integration.WebApi;
 
 using CchWebAPI.Controllers;
+using CchWebAPI.Filters;
 using CchWebAPI.IdCards.Data;
 using CchWebAPI.IdCards.Dispatchers;
 
@@ -24,6 +25,12 @@ namespace CchWebAPI {
             builder.RegisterType<IdCardsController>()
                 .UsingConstructor(typeof(IIdCardsDispatcher))
                 .InstancePerRequest();
+
+            //Filters
+            builder.RegisterWebApiFilterProvider(config);
+
+            builder.Register(c => new V2AuthenticatedAuthorizationFilter())
+                .AsWebApiAuthorizationFilterFor<IdCardsController>().InstancePerRequest();
 
             var container = builder.Build();
 

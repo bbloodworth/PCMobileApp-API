@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Dynamic;
-using System.IO;
-using System.Linq;
 using System.Net;
 using System.Net.Http;
-using System.Threading;
 using System.Web.Http;
 using CchWebAPI.Areas.Animation.Models;
 using CchWebAPI.Services;
-using CchWebAPI.Support;
-using Newtonsoft.Json;
 
 using ClearCost.IO.Log;
-using ClearCost.Security.JWT;
 
 namespace CchWebAPI.Areas.Animation.Controllers
 {

@@ -55,11 +55,23 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="ClearCost, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\ClearCost.1.0.3\lib\net451\ClearCost.dll</HintPath>
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.1.0.5\lib\net451\ClearCost.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="ClearCost.Data, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\ClearCost.Data.1.0.1\lib\net451\ClearCost.Data.dll</HintPath>
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.Data.1.0.4\lib\net451\ClearCost.Data.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ClearCost.Platform, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.Platform.1.0.1\lib\net452\ClearCost.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ClearCost.Security, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.Security.1.0.0\lib\net461\ClearCost.Security.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="ClearCost.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.Web.1.0.2\lib\net451\ClearCost.Web.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
@@ -70,8 +82,8 @@
       <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="jose-jwt, Version=1.9.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\jose-jwt.1.9.0\lib\4.0\jose-jwt.dll</HintPath>
+    <Reference Include="jose-jwt, Version=1.9.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\jose-jwt.1.9.2\lib\4.0\jose-jwt.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
@@ -240,6 +252,7 @@
     <Compile Include="Areas\PComm\Models\VideoEventLog.cs" />
     <Compile Include="Areas\PComm\PCommAreaRegistration.cs" />
     <Compile Include="Controllers\IdCardsController.cs" />
+    <Compile Include="Filters\V2AuthenticatedAuthorizationFilter.cs" />
     <Compile Include="IdCards\Data\IIdCardsRepository.cs" />
     <Compile Include="IdCards\Dispatchers\IIdCardsDispatcher.cs" />
     <Compile Include="IdCards\Data\IdCardContext.cs" />
@@ -257,6 +270,8 @@
     <Compile Include="Handlers\LogRequestAndResponseHandler.cs" />
     <Compile Include="Handlers\TimeoutHandler.cs" />
     <Compile Include="Configuration\EmailConfiguration.cs" />
+    <Compile Include="IdCards\Models\CardDetail.cs" />
+    <Compile Include="IdCards\Models\CardToken.cs" />
     <Compile Include="Models\Handshake.cs" />
     <Compile Include="Models\HandshakeRequest.cs" />
     <Compile Include="Areas\PComm\Models\HealthPlanSummary.cs" />
@@ -269,10 +284,8 @@
     </Compile>
     <Compile Include="RequestManager.cs" />
     <Compile Include="Services\CardService.cs" />
-    <Compile Include="Services\ConfigService.cs" />
     <Compile Include="Services\EmployeeServices.cs" />
     <Compile Include="Services\PlanInfoService.cs" />
-    <Compile Include="Services\PlatformDataCache.cs" />
     <Compile Include="Support\CCHEncrypt.cs" />
     <Compile Include="Support\CchExtensions.cs" />
     <Compile Include="Support\CheckPersonApplicationAccess.cs" />
@@ -371,7 +384,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="packages.config" />
-    <Content Include="LICENSE" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />

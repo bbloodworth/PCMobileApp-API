@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using ClearCost.Data.Security;
 using CchWebAPI.IdCards.Data;
-using CchWebAPI.Areas.Animation.Models;
-using ClearCost.Security.JWT;
+using ClearCost.Platform;
+using ClearCost.Security;
+using CchWebAPI.IdCards.Models;
 using CchWebAPI.Support;
 using Newtonsoft.Json;
 
