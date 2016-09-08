@@ -28,8 +28,7 @@ where cchid = 63846;
 
 -- add jim jones as a dependent to mary.s
 update cch_customerdemoncct.dbo.enrollments
-set		membermedicalid = 'TEST123456d', 
-		EmployeeID = 'TEST123456d'
+set		membermedicalid = 'TEST123456d'
 where cchid = 63880;
 
 
