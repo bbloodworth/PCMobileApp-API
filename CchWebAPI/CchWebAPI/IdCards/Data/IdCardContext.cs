@@ -42,7 +42,7 @@ namespace CchWebAPI.IdCards.Data {
                 Property(p => p.Detail).HasColumnName("CardMemberDataText");
                 Ignore(p => p.MemberId);
                 Ignore(p => p.Url);
-                HasRequired(p => p.CardType);
+                HasRequired(p => p.CardType).WithMany().HasForeignKey(k => k.TypeId);
             }
         }
     }

@@ -41,6 +41,7 @@ namespace CchWebAPI.IdCards.Data {
                 var parm = new SqlParameter("@cchid", cchId);
                 //Load records for any dependents
                 var enrollments = await itx.Database.SqlQuery<Enrollment>(dependentsQuery, parm).ToListAsync();
+                var enrollmentIds = enrollments.Select(e => e.CchId);
 
                 var employee = enrollments.FirstOrDefault(e => e.RelationshipCode.Equals("20") 
                     || string.IsNullOrEmpty(e.RelationshipCode));
@@ -58,8 +59,7 @@ namespace CchWebAPI.IdCards.Data {
                     results = await itx.IdCards
                         .Include(p => p.CardType)
                         .Where(id => 
-                            enrollments.Select(e => e.CchId).ToList()
-                                .Contains(id.CchId)).ToListAsync();
+                            enrollmentIds.Contains(id.CchId)).ToListAsync();
 
                 results.ForEach(r => {
                     r.MemberId = cchId;
