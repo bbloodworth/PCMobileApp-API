@@ -70,6 +70,8 @@ namespace CchWebAPI
 
         public static void Register(HttpConfiguration config)
         {
+            config.EnableCors();
+
             #region Old PComm API Routes
 
             config.Routes.MapHttpRoute(
