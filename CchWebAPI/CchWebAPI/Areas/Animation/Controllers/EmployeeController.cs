@@ -12,14 +12,12 @@ using NLog;
 using System.Dynamic;
 using System.Data;
 using CchWebAPI.Services;
-using System.Web.Http.Cors;
 
 namespace CchWebAPI.Areas.Animation.Controllers
 {
     public class EmployeeController : ApiController
     {
         [HttpGet]
-        [EnableCors(origins: "https://dev.hrinfoapp.com,https://alpha.hrinfoapp.com,https://alpha2.hrinfoapp.com", headers: "*", methods: "get")]
         public HttpResponseMessage GetDependents()
         {
             HttpResponseMessage hrm = Request.CreateResponse(HttpStatusCode.NoContent);
