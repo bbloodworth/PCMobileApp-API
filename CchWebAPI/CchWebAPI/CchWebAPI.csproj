@@ -70,10 +70,6 @@
       <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.Security.1.0.0\lib\net461\ClearCost.Security.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="ClearCost.Web, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\ClearCost.Web.1.0.2\lib\net451\ClearCost.Web.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -252,6 +248,7 @@
     <Compile Include="Areas\PComm\Models\VideoEventLog.cs" />
     <Compile Include="Areas\PComm\PCommAreaRegistration.cs" />
     <Compile Include="Controllers\IdCardsController.cs" />
+    <Compile Include="Extensions\ApiControllerExt.cs" />
     <Compile Include="Filters\V2AuthenticatedAuthorizationFilter.cs" />
     <Compile Include="IdCards\Data\IIdCardsRepository.cs" />
     <Compile Include="IdCards\Dispatchers\IIdCardsDispatcher.cs" />

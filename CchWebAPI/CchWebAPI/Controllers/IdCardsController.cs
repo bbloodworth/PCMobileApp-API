@@ -15,6 +15,8 @@ namespace CchWebAPI.Controllers
             _dispatcher = dispatcher;
         }
 
+        public IdCardsController() { }
+
         [HttpGet]
         [Route("v2/IdCards")]
         public async Task<HttpResponseMessage> Get() {

@@ -1,32 +1,88 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.Controllers;
 
+using Autofac.Integration.WebApi;
 using ClearCost.IO.Log;
 using ClearCost.Platform;
-using ClearCost.Web.Http;
+using CchWebAPI.Extensions;
 using CchWebAPI.Support;
 using System.Web.Security;
 
 namespace CchWebAPI.Filters {
-    public class V2AuthenticatedAuthorizationFilter {
+    public class V2AuthenticatedAuthorizationFilter : IAutofacAuthorizationFilter {
         //TODO: this may need to get more comprehensive in matching requesting Consumer against
         //the domain associated with this ApiKey, but that would require db work.
         public void OnAuthorization(HttpActionContext context) {
-            if (!ProcessAuthHash(context))
+            if (!IsApiKeyValid(context))
                 return;
 
-            if (!IsApiKeyValid(context))
+            if (!ProcessAuthHash(context))
                 return;
 
             if (!ExtendSession(context))
                 return;
 
             return;
+        }
+
+        private bool IsApiKeyValid(HttpActionContext context) {
+            if (context.Request.Headers == null || context.Request.Headers.Count() < 1) {
+                LogUtil.Trace(string.Format("ApiKey missing for {0} from host {1}",
+                    context.ActionDescriptor.ActionName,
+                    ((ApiController)context.ControllerContext.Controller).Host()));
+
+                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                    "Authorization required.");
+
+                return false;
+            }
+
+            if (context.Request.Headers.Count(h => h.Key.ToLower().Equals("apikey")) < 1) {
+                LogUtil.Trace(string.Format("ApiKey missing for {0} from host {1}",
+                    context.ActionDescriptor.ActionName,
+                    ((ApiController)context.ControllerContext.Controller).Host()));
+
+                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                    "Authorization required.");
+
+                return false;
+            }
+
+            var apiKey = context.Request.Headers
+                .FirstOrDefault(h => h.Key.ToLower().Equals("apikey")).Value.FirstOrDefault();
+
+            if (string.IsNullOrEmpty(apiKey)) {
+                LogUtil.Trace(string.Format("ApiKey blank for {0} from host {1}",
+                    context.ActionDescriptor.ActionName,
+                    ((ApiController)context.ControllerContext.Controller).Host()));
+
+                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                    "Authorization required.");
+
+                return false;
+            }
+
+            var apiConsumer = ApiConsumerCache.ApiConsumers.FirstOrDefault(ac => ac.ApiKey.Equals(Guid.Parse(apiKey)) && ac.IsActive);
+            if (apiConsumer == null) {
+                LogUtil.Trace(string.Format("ApiKey invalid for {0} from host {1}.  Key was {2}",
+                    context.ActionDescriptor.ActionName,
+                    ((ApiController)context.ControllerContext.Controller).Host(),
+                    apiKey));
+
+                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                    "Credentials invalid.");
+
+                return false;
+            }
+
+            context.Request.EncryptionKey(apiConsumer.Encryptor.ToString());
+            context.Request.IsPartner(apiConsumer.IsPartner);
+
+            return true;
         }
 
         private bool ProcessAuthHash(HttpActionContext context) {
@@ -78,59 +134,13 @@ namespace CchWebAPI.Filters {
             return true;
         }
 
-        private bool IsApiKeyValid(HttpActionContext context) {
-            if (context.Request.Headers == null || context.Request.Headers.Count() < 1) {
-                LogUtil.Trace(string.Format("ApiKey missing for {0} from host {1}",
-                    context.ActionDescriptor.ActionName,
-                    ((ApiController)context.ControllerContext.Controller).Host()));
-
-                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
-                    "Authorization required.");
-
-                return false;
-            }
-
-            if (context.Request.Headers.Count(h => h.Key.Equals("ApiKey")) < 1) {
-                LogUtil.Trace(string.Format("ApiKey missing for {0} from host {1}",
-                    context.ActionDescriptor.ActionName,
-                    ((ApiController)context.ControllerContext.Controller).Host()));
-
-                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
-                    "Authorization required.");
-
-                return false;
-            }
-
-            var apiKey = context.Request.Headers
-                .FirstOrDefault(h => h.Key.Equals("ApiKey")).Value.FirstOrDefault();
-
-            if (string.IsNullOrEmpty(apiKey)) {
-                LogUtil.Trace(string.Format("ApiKey blank for {0} from host {1}",
-                    context.ActionDescriptor.ActionName,
-                    ((ApiController)context.ControllerContext.Controller).Host()));
-
-                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
-                    "Authorization required.");
-
-                return false;
-            }
-
-            if (ApiConsumerCache.ApiConsumers.Count(ac => ac.ApiKey.Equals(Guid.Parse(apiKey)) && ac.IsActive) < 1) {
-                LogUtil.Trace(string.Format("ApiKey invalid for {0} from host {1}.  Key was {2}",
-                    context.ActionDescriptor.ActionName,
-                    ((ApiController)context.ControllerContext.Controller).Host(),
-                    apiKey));
-
-                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
-                    "Credentials invalid.");
-
-                return false;
-            }
-
-            return true;
-        }
-
         private bool ExtendSession(HttpActionContext context) {
+            if(string.IsNullOrEmpty(context.Request.UserID())) {
+                context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
+                    "User is invalid.");
+                return false;
+            }
+
             //Get an instance of the user sent in
             var user = Membership.GetUser(
                 new Guid(context.Request.UserID()));

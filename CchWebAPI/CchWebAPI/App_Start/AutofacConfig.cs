@@ -13,7 +13,6 @@ namespace CchWebAPI {
     public class AutofacConfig {
         public static void Register(HttpConfiguration config) {
             var builder = new ContainerBuilder();
-
             //Repositories
             builder.RegisterType<IdCardsRepository>().As<IIdCardsRepository>();
 
