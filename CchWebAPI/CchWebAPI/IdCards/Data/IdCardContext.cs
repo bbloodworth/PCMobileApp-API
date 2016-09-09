@@ -49,7 +49,6 @@ namespace CchWebAPI.IdCards.Data {
 
     public class IdCardType {
         public int Id { get; set; }
-        public string Description { get; set; }
         public string FileName { get; set; }
 
         public class IdCardTypeConfiguration : EntityTypeConfiguration<IdCardType> {
@@ -57,7 +56,6 @@ namespace CchWebAPI.IdCards.Data {
                 ToTable("CardType");
                 HasKey(k => k.Id);
                 Property(p => p.Id).HasColumnName("CardTypeID");
-                Property(p => p.Description).HasColumnName("CardTypeDesc");
                 Property(p => p.FileName).HasColumnName("CardTypeFileName");
             }
         }
