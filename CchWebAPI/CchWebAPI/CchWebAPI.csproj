@@ -266,7 +266,7 @@
     <Compile Include="Handlers\HashMessageHandler.cs" />
     <Compile Include="Handlers\LogRequestAndResponseHandler.cs" />
     <Compile Include="Handlers\TimeoutHandler.cs" />
-    <Compile Include="Configuration\EmailConfiguration.cs" />
+    <Compile Include="Content\Configuration\EmailConfiguration.cs" />
     <Compile Include="IdCards\Models\CardDetail.cs" />
     <Compile Include="IdCards\Models\CardToken.cs" />
     <Compile Include="Models\Handshake.cs" />

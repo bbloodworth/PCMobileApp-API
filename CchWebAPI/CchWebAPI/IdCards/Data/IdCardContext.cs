@@ -18,7 +18,7 @@ namespace CchWebAPI.IdCards.Data {
     }
 
     public class IdCard {
-        public int CchId { get; set; }
+        public int MemberId { get; set; }
 
         public int TypeId { get; set; }
 
@@ -32,15 +32,19 @@ namespace CchWebAPI.IdCards.Data {
 
         public string Url { get; set; }
 
-        public int MemberId { get; set; }
+        //CCHID of person who made the request so the client can compare to the card and see if the 
+        //card is for this member or for a dependent.
+        public int RequestContextMemberId { get; set; }
+
         public class IdCardConfiguration : EntityTypeConfiguration<IdCard> {
             public IdCardConfiguration() {
                 ToTable("MemberIDCard");
-                HasKey(k => new { k.CchId, k.TypeId, k.LocaleId, k.ViewModeId });
+                HasKey(k => new { k.MemberId, k.TypeId, k.LocaleId, k.ViewModeId });
+                Property(p => p.MemberId).HasColumnName("CCHID");
                 Property(p => p.TypeId).HasColumnName("CardTypeId");
                 Property(p => p.ViewModeId).HasColumnName("CardViewModeId");
                 Property(p => p.Detail).HasColumnName("CardMemberDataText");
-                Ignore(p => p.MemberId);
+                Ignore(p => p.RequestContextMemberId);
                 Ignore(p => p.Url);
                 HasRequired(p => p.CardType).WithMany().HasForeignKey(k => k.TypeId);
             }

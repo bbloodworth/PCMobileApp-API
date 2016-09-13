@@ -1,11 +1,12 @@
-﻿using System.Linq;
-using System.Net;
-using System.Net.Http;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
 using CchWebAPI.IdCards.Dispatchers;
+using CchWebAPI.IdCards.Data;
 using ClearCost.Platform;
+using ClearCost.Net;
 
 namespace CchWebAPI.Controllers
 {
@@ -19,11 +20,11 @@ namespace CchWebAPI.Controllers
 
         [HttpGet]
         [Route("v2/IdCards")]
-        public async Task<HttpResponseMessage> Get() {
+        public async Task<ApiResult<List<IdCard>>> Get() {
             var result = await _dispatcher.ExecuteAsync(Request.CCHID(),
                 EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())));
 
-            return Request.CreateResponse(HttpStatusCode.OK, result);
+            return ApiResult<List<IdCard>>.ValidResult(result, string.Empty);
         }
     }
 }

@@ -31,7 +31,7 @@ namespace CchWebAPI.IdCards.Data {
                 //This is not the final production code. It's illustrative at this point pending 
                 //the final data structures.
 
-                var dependentsQuery = @"SELECT CCHID, RelationshipCode
+                var enrollmentsQuery = @"SELECT CCHID, RelationshipCode
                     FROM Enrollments
                     WHERE SubscriberMedicalID IN
                     (SELECT SubscriberMedicalID 
@@ -40,10 +40,10 @@ namespace CchWebAPI.IdCards.Data {
 
                 var parm = new SqlParameter("@cchid", cchId);
                 //Load records for any dependents
-                var enrollments = await itx.Database.SqlQuery<Enrollment>(dependentsQuery, parm).ToListAsync();
-                var enrollmentIds = enrollments.Select(e => e.CchId);
+                var familyEnrollments = await itx.Database.SqlQuery<Enrollment>(enrollmentsQuery, parm).ToListAsync();
+                var familyEnrollmentIds = familyEnrollments.Select(e => e.CchId);
 
-                var employee = enrollments.FirstOrDefault(e => e.RelationshipCode.Equals("20") 
+                var employee = familyEnrollments.FirstOrDefault(e => e.RelationshipCode.Equals("20") 
                     || string.IsNullOrEmpty(e.RelationshipCode));
 
                 if (employee == null)
@@ -54,15 +54,15 @@ namespace CchWebAPI.IdCards.Data {
                 if(!employee.CchId.Equals(cchId))
                     results = await itx.IdCards
                         .Include(p => p.CardType)
-                        .Where(id => id.CchId.Equals(cchId)).ToListAsync();
+                        .Where(id => id.MemberId.Equals(cchId)).ToListAsync();
                 else //get employee and dependents
                     results = await itx.IdCards
                         .Include(p => p.CardType)
                         .Where(id => 
-                            enrollmentIds.Contains(id.CchId)).ToListAsync();
+                            familyEnrollmentIds.Contains(id.MemberId)).ToListAsync();
 
                 results.ForEach(r => {
-                    r.MemberId = cchId;
+                    r.RequestContextMemberId = cchId;
                 });
 
                 return results;

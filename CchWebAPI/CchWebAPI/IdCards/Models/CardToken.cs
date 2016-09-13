@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 
+//MUST REMAIN BACKWARD COMPATIBLE
 namespace CchWebAPI.IdCards.Models {
     public class CardToken {
         public int EmployerId { get; set; }
