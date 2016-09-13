@@ -69,7 +69,7 @@ namespace CchWebAPI
         #endregion
 
         public static void Register(HttpConfiguration config)
-        {
+        { 
             #region Old PComm API Routes
 
             config.Routes.MapHttpRoute(
