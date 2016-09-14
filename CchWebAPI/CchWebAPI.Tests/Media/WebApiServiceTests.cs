@@ -2,7 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Threading.Tasks;
 using CchWebAPI.Services;
-using ClearCost.Security.JWT;
+using ClearCost.Security;
 using CchWebAPI.Areas.Animation.Models;
 using DynamicAnimation.Common;
 using DynamicAnimation.Models;

@@ -7,27 +7,26 @@ using System.Web.Mvc;
 using CchWebAPI.Formatters;
 
 using ClearCost.IO.Log;
+using Swashbuckle.Application;
 using System.Configuration;
+using System.Web.Routing;
 
 namespace CchWebAPI
 {
     public class WebApiApplication : HttpApplication
     {
+
         protected void Application_Start()
-        {
-            //AreaRegistration.RegisterAllAreas();
-            //GlobalConfiguration.Configure(WebApiConfig.Register);
-            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            //RouteConfig.RegisterRoutes(RouteTable.Routes);
-            //BundleConfig.RegisterBundles(BundleTable.Bundles);
-            
+        {            
             GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerSelector),
                 new AreaHttpControllerSelector(GlobalConfiguration.Configuration));
 
             AreaRegistration.RegisterAllAreas();
 
-            WebApiConfig.Register(GlobalConfiguration.Configuration);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            RouteConfig.RegisterRoutes(RouteTable.Routes);
+            AutofacConfig.Register(GlobalConfiguration.Configuration);
 
             //For Debugging
             //GlobalConfiguration.Configuration.Formatters.JsonFormatter.SupportedMediaTypes.Clear();

@@ -5,7 +5,7 @@ using System.Net;
 
 using CchWebAPI.Areas.Animation.Models;
 using CchWebAPI.Services;
-using ClearCost.Security.JWT;
+using ClearCost.Security;
 using ClearCost.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
