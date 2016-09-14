@@ -7,26 +7,28 @@ using System.Web.Mvc;
 using CchWebAPI.Formatters;
 
 using ClearCost.IO.Log;
-using Swashbuckle.Application;
 using System.Configuration;
-using System.Web.Routing;
+using CchWebAPI.Core.Mappings;
 
 namespace CchWebAPI
 {
     public class WebApiApplication : HttpApplication
     {
-
         protected void Application_Start()
-        {            
+        {
+            //AreaRegistration.RegisterAllAreas();
+            //GlobalConfiguration.Configure(WebApiConfig.Register);
+            //FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            //RouteConfig.RegisterRoutes(RouteTable.Routes);
+            //BundleConfig.RegisterBundles(BundleTable.Bundles);
+            
             GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerSelector),
                 new AreaHttpControllerSelector(GlobalConfiguration.Configuration));
 
             AreaRegistration.RegisterAllAreas();
 
-            GlobalConfiguration.Configure(WebApiConfig.Register);
+            WebApiConfig.Register(GlobalConfiguration.Configuration);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
-            RouteConfig.RegisterRoutes(RouteTable.Routes);
-            AutofacConfig.Register(GlobalConfiguration.Configuration);
 
             //For Debugging
             //GlobalConfiguration.Configuration.Formatters.JsonFormatter.SupportedMediaTypes.Clear();
@@ -39,6 +41,8 @@ namespace CchWebAPI
             MvcHandler.DisableMvcResponseHeader = true;
             // Enables stronger encryption protocols.  Without this code, login fails on any server with TLS 1.0 disabled.
             System.Net.ServicePointManager.SecurityProtocol |= System.Net.SecurityProtocolType.Tls11 | System.Net.SecurityProtocolType.Tls12;
+
+            AutoMapperExtensions.RegisterConfigurations();
         }
 
         protected void Application_BeginRequest(object sender, EventArgs e) {
