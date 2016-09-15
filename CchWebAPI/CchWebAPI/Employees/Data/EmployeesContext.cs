@@ -1,4 +1,5 @@
 ﻿using ClearCost.Data;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using System.Data.SqlClient;
@@ -16,9 +17,11 @@ namespace CchWebAPI.Employees.Data {
 
     public class Employee {
         public int MemberId { get; set; }
+        [NotMapped]
         public int EmployerId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [NotMapped]
         public string JobTitle { get; set; }
 
         public class EmployeeConfiguration : EntityTypeConfiguration<Employee> {

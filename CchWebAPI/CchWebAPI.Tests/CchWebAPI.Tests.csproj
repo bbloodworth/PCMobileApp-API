@@ -120,6 +120,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CardTests.cs" />
+    <Compile Include="EmployeesTests.cs" />
     <Compile Include="IdCardsTests.cs" />
     <Compile Include="Media\WebApiServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

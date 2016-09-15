@@ -20,7 +20,8 @@ namespace CchWebAPI.Employees.Data {
         }
 
         public async Task<Employee> GetEmployeeAsync(int cchId) {
-            Contract.Requires<InvalidOperationException>(!string.IsNullOrEmpty(_connectionString), "Failed to initialize repository.");
+            if (string.IsNullOrEmpty(_connectionString))
+                throw new InvalidOperationException("Failed to initialized repository");
 
             Employee employee = null;
 

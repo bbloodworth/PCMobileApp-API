@@ -1,15 +1,12 @@
-﻿using CchWebAPI.Core.Entities;
-using CchWebAPI.Employees.Data;
+﻿using CchWebAPI.Employees.Data;
+using ClearCost.Platform;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace CchWebAPI.Employees.Dispatchers {
     public interface IEmployeesDispatcher {
-        TaskEventHandler<Employee> ExecuteAsync(int cchId, Employer employer);
+        Task<Employee> ExecuteAsync(int cchId, Employer employer);
     }
 
     public class EmployeesDispatcher : IEmployeesDispatcher {
@@ -18,14 +15,16 @@ namespace CchWebAPI.Employees.Dispatchers {
             _repository = repository;
         }
 
-        public async Task<Employee> ExecuteAsync(int cchid, Employer employer) {
-            Contract.Requires<InvalidOperationException>(cchid > 1, "Invalid member context.");
-            Contract.Requires<InvalidOperationException>(employer != null 
-                || !string.IsNullOrEmpty(employer.ConnectionString), "Invalid employer context.");
+        public async Task<Employee> ExecuteAsync(int cchId, Employer employer) {
+            if (cchId < 1)
+                throw new InvalidOperationException("Invalid member context.");
+
+            if (employer == null || string.IsNullOrEmpty(employer.ConnectionString))
+                throw new InvalidOperationException("Invalid employer context.");
 
             _repository.Initialize(employer.ConnectionString);
 
-            var result = await _repository.GetEmployeeAsync(cchid);
+            var result = await _repository.GetEmployeeAsync(cchId);
 
             return result;
         }
