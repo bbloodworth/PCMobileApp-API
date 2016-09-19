@@ -11,6 +11,8 @@ using ClearCost.Platform;
 using CchWebAPI.Extensions;
 using CchWebAPI.Support;
 using System.Web.Security;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CchWebAPI.Filters {
     public class V2AuthenticatedAuthorizationFilter : IAutofacAuthorizationFilter {
@@ -27,6 +29,9 @@ namespace CchWebAPI.Filters {
                 return;
 
             return;
+        }
+        public Task OnAuthorizationAsync(HttpActionContext actionContext, CancellationToken cancellationToken) {
+            throw new NotImplementedException();
         }
 
         private bool IsApiKeyValid(HttpActionContext context) {
@@ -171,5 +176,7 @@ namespace CchWebAPI.Filters {
 
             return true;
         }
+
+        
     }
 }

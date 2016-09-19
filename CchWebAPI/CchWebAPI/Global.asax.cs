@@ -7,7 +7,6 @@ using System.Web.Mvc;
 using CchWebAPI.Formatters;
 
 using ClearCost.IO.Log;
-using Swashbuckle.Application;
 using System.Configuration;
 using System.Web.Routing;
 
@@ -15,11 +14,10 @@ namespace CchWebAPI
 {
     public class WebApiApplication : HttpApplication
     {
-
         protected void Application_Start()
-        {            
+        {
             GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerSelector),
-                new AreaHttpControllerSelector(GlobalConfiguration.Configuration));
+               new AreaHttpControllerSelector(GlobalConfiguration.Configuration));
 
             AreaRegistration.RegisterAllAreas();
 
