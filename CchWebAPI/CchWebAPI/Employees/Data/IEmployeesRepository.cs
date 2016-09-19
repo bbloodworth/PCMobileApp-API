@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Diagnostics.Contracts;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Web;
 
 namespace CchWebAPI.Employees.Data {
     public interface IEmployeesRepository {

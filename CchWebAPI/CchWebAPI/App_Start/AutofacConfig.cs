@@ -40,7 +40,8 @@ namespace CchWebAPI {
             builder.Register(c => new V2AuthenticatedAuthorizationFilter())
                 .AsWebApiAuthorizationFilterFor<IdCardsController>().InstancePerRequest();
             builder.Register(c => new V2AuthenticatedAuthorizationFilter())
-                .AsWebApiActionFilterFor<EmployeesController>().InstancePerRequest();
+                .AsWebApiAuthorizationFilterFor<EmployeesController>().InstancePerRequest();
+
 
             var container = builder.Build();
 
