@@ -39,7 +39,7 @@ namespace CchWebAPI.IdCards.Dispatchers {
                 //May require an interface break/ v2 in media as well.
                 var cardToken = new CardToken() {
                     EmployerId = employer.Id,
-                    CardDetail = JsonConvert.DeserializeObject<CardDetail>(r.Detail),
+                    CardDetail = JsonConvert.DeserializeObject<CardDetail>(r.DetailText),
                     Expires = DateTime.UtcNow.AddMinutes(Convert.ToInt16(timeout))
                 };
 
@@ -50,6 +50,8 @@ namespace CchWebAPI.IdCards.Dispatchers {
                 var jwt = JwtService.EncryptPayload(JsonConvert.SerializeObject(cardToken));
 
                 r.Url = string.Format("{0}/?tkn={1}|{2}", cardBaseAddress, employer.Id, jwt);
+                r.SecurityToken = jwt;
+                r.Detail = JsonConvert.DeserializeObject<CardDetail>(r.DetailText);
             });
 
             return result;
