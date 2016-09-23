@@ -61,7 +61,13 @@ namespace CchWebAPI.IdCards.Data {
                         .Where(id => 
                             familyEnrollmentIds.Contains(id.MemberId)).ToListAsync();
 
+                var cardTypeIds = results.Select(r => r.CardType.Id).Distinct();
+
+                var translations = await itx.IdCardTypeTranslations
+                    .Where(t => t.LocaleId.Equals(1) && cardTypeIds.Contains(t.Id)).ToListAsync();
+
                 results.ForEach(r => {
+                    r.CardType.Translation = translations.FirstOrDefault(t => t.Id.Equals(r.CardType.Id)).CardTypeName;
                     r.RequestContextMemberId = cchId;
                 });
 
