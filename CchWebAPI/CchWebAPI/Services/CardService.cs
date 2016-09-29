@@ -270,7 +270,8 @@ namespace CchWebAPI.Services {
                         }
                     )
                     .Where(r => r.MemberCard.CchId.Equals(cchId)
-                        && r.Locale.LocaleCode.Equals(resolvedLocaleCode)).ToList<dynamic>();
+                        && r.Locale.LocaleCode.Equals(resolvedLocaleCode)
+                        && !string.IsNullOrEmpty(r.MemberCard.CardMemberDataText)).ToList<dynamic>();
             }
         }
 
