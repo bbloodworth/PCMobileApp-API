@@ -54,12 +54,15 @@ namespace CchWebAPI.IdCards.Data {
                 if(!employee.CchId.Equals(cchId))
                     results = await itx.IdCards
                         .Include(p => p.CardType)
-                        .Where(id => id.MemberId.Equals(cchId)).ToListAsync();
+                        .Where(id => id.MemberId.Equals(cchId)
+                            && id.LocaleId.Equals(1) //Only support English at this time
+                            && !string.IsNullOrEmpty(id.DetailText)).ToListAsync();
                 else //get employee and dependents
                     results = await itx.IdCards
                         .Include(p => p.CardType)
-                        .Where(id => 
-                            familyEnrollmentIds.Contains(id.MemberId)).ToListAsync();
+                        .Where(id =>id.LocaleId.Equals(1)
+                            && !string.IsNullOrEmpty(id.DetailText)
+                            && familyEnrollmentIds.Contains(id.MemberId)).ToListAsync();
 
                 var cardTypeIds = results.Select(r => r.CardType.Id).Distinct();
 
