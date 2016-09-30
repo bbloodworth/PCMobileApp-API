@@ -5,14 +5,12 @@ using System.Diagnostics;
 using System.Dynamic;
 using System.Linq;
 using System.Net;
-using System.IO;
 
 using CchWebAPI.Areas.Animation.Models;
+using ClearCost.Platform;
 using CchWebAPI.Support;
 using ClearCost.Data;
-using ClearCost.Data.Security;
 using ClearCost.IO.Log;
-using ClearCost.Security.JWT;
 using Newtonsoft.Json;
 using NLog;
 using System.Data.Entity;
@@ -60,7 +58,7 @@ namespace CchWebAPI.Services {
             var message = string.Empty;
             CardUrlResult result = null;
 
-            var employer = PlatformDataCache.Employers.FirstOrDefault(e => e.Id.Equals(employerId));
+            var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(employerId));
 
             if (employer == null) {
                 message = string.Format("Card url request with employer {0} does not match any known employer",
@@ -109,7 +107,7 @@ namespace CchWebAPI.Services {
                 cardToken.CardDetail.CardTypeId = cr.MemberCard.CardTypeId;
                 cardToken.CardDetail.CardViewModeId = cr.CardViewMode.Id;
 
-                var jwt = JwtService.EncryptPayload(JsonConvert.SerializeObject(cardToken));
+                var jwt = ClearCost.Security.JwtService.EncryptPayload(JsonConvert.SerializeObject(cardToken));
 
                 var cardResult = new CardResult() {
                     CardName = cr.CardTypeTranslation.CardTypeName,
@@ -272,7 +270,8 @@ namespace CchWebAPI.Services {
                         }
                     )
                     .Where(r => r.MemberCard.CchId.Equals(cchId)
-                        && r.Locale.LocaleCode.Equals(resolvedLocaleCode)).ToList<dynamic>();
+                        && r.Locale.LocaleCode.Equals(resolvedLocaleCode)
+                        && !string.IsNullOrEmpty(r.MemberCard.CardMemberDataText)).ToList<dynamic>();
             }
         }
 

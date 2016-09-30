@@ -5,8 +5,7 @@ using CchWebAPI.Handlers;
 
 namespace CchWebAPI
 {
-    public static class WebApiConfig
-    {
+    public static class WebApiConfig {
         #region Delegating Handlers
 
         //Setup private arrays of handlers in heirarchal order for easier management
@@ -68,8 +67,9 @@ namespace CchWebAPI
         }
         #endregion
 
-        public static void Register(HttpConfiguration config)
-        { 
+        public static void Register(HttpConfiguration config) {
+            config.MapHttpAttributeRoutes();
+
             #region Old PComm API Routes
 
             config.Routes.MapHttpRoute(
