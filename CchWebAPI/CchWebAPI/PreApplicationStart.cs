@@ -6,8 +6,6 @@ namespace CchWebAPI {
     public class PreApplicationStart {
         public static void Start() {
             SqlMapper.SetTypeMap(typeof(HealthPlanSummary), new ColumnAttributeTypeMapper<HealthPlanSummary>());
-
-            SqlMapper.SetTypeMap(typeof(ConfigEntry), new ColumnAttributeTypeMapper<ConfigEntry>());
         }
     }
 }
