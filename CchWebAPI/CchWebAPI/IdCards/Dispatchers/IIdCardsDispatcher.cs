@@ -34,7 +34,7 @@ namespace CchWebAPI.IdCards.Dispatchers {
             var timeout = "TimeoutInMinutes".GetConfigurationValue();
 
             result.ForEach(r => {
-
+                System.Diagnostics.Debug.Write(r.DetailText);
                 //This whole section may have to be rethought depending on new data structures. 
                 //May require an interface break/ v2 in media as well.
                 var cardToken = new CardToken() {
