@@ -69,7 +69,7 @@ namespace CchWebAPI
         #endregion
 
         public static void Register(HttpConfiguration config)
-        {
+        { 
             #region Old PComm API Routes
 
             config.Routes.MapHttpRoute(
@@ -571,6 +571,20 @@ namespace CchWebAPI
 
             #endregion
 
+            #region Animation Employee Info API Routes
+
+            config.Routes.MapHttpRoute(
+                name: "AnimationEmployeeDependents",
+                routeTemplate: "v1/{area}/{controller}/Dependents",
+                defaults: new { action = "GetDependents" },
+                constraints: new { area = "Animation", controller = "Employee" },
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+
+            #endregion
+
             #region Settings
 
             config.Routes.MapHttpRoute(
@@ -583,8 +597,17 @@ namespace CchWebAPI
                     AccountHandlers)
                 );
 
+            config.Routes.MapHttpRoute(
+                name: "Settings",
+                routeTemplate: "v1/{area}/{controller}/GetConfigurationValues/{employerId}/{handshakeId}",
+                defaults: new { action = "GetConfigurationValues", employerId = "0", handshakeId = "" },
+                constraints: new { area = "Animation", controller = "Settings" },
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AccountHandlers
+                    )
+                );
             #endregion
-
         }
     }
 }

@@ -72,7 +72,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\Newtonsoft.Json.7.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
@@ -88,7 +88,7 @@
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Net.Http.Formatting, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\Microsoft.AspNet.WebApi.Client.5.2.2\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.DynamicData" />
@@ -103,11 +103,11 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\Microsoft.AspNet.WebApi.Core.5.2.2\lib\net45\System.Web.Http.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Http.WebHost, Version=5.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\..\ClearCost.PCMobileApp.Api\Packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <HintPath>..\..\ClearCost.PCMobileApp.Api\packages\Microsoft.AspNet.WebApi.WebHost.5.2.2\lib\net45\System.Web.Http.WebHost.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -161,6 +161,7 @@
     <Compile Include="Areas\Animation\AnimationAreaRegistration.cs" />
     <Compile Include="Areas\Animation\Controllers\CampaignController.cs" />
     <Compile Include="Areas\Animation\Controllers\CardController.cs" />
+    <Compile Include="Areas\Animation\Controllers\EmployeeController.cs" />
     <Compile Include="Areas\Animation\Controllers\ExperienceController.cs" />
     <Compile Include="Areas\Animation\Controllers\MediaController.cs" />
     <Compile Include="Areas\Animation\Controllers\MembershipController.cs" />
@@ -171,11 +172,15 @@
     <Compile Include="Areas\Animation\Controllers\UserContentController.cs" />
     <Compile Include="Areas\Animation\Models\AnonymousContentRecord.cs" />
     <Compile Include="Areas\Animation\Models\AccountRequest.cs" />
+    <Compile Include="Areas\Animation\Models\Dependent.cs" />
+    <Compile Include="Areas\Animation\Models\Dependents.cs" />
     <Compile Include="Areas\Animation\Models\ExperienceLog.cs" />
     <Compile Include="Areas\Animation\Models\CardDetail.cs" />
     <Compile Include="Areas\Animation\Models\CardResult.cs" />
     <Compile Include="Areas\Animation\Models\MemberCardWebRequest.cs" />
+    <Compile Include="Areas\Animation\Models\MemberDetail.cs" />
     <Compile Include="Areas\Animation\Models\QuestionsAndAnswers.cs" />
+    <Compile Include="Areas\Animation\Models\Settings.cs" />
     <Compile Include="Areas\Animation\Models\UserAuthenticationRequest.cs" />
     <Compile Include="Areas\Animation\Models\UserContentPreferenceRequest.cs" />
     <Compile Include="Areas\Animation\Models\UserContentRecord.cs" />
@@ -217,6 +222,7 @@
     <Compile Include="Areas\PComm\Models\AuthMemberDataRequest.cs" />
     <Compile Include="Areas\PComm\Models\VideoEventLog.cs" />
     <Compile Include="Areas\PComm\PCommAreaRegistration.cs" />
+    <Compile Include="Configuration\SecurityConfiguration.cs" />
     <Compile Include="Controllers\HandshakeController.cs" />
     <Compile Include="Controllers\PartnerHandshakeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
@@ -244,6 +250,7 @@
     <Compile Include="RequestManager.cs" />
     <Compile Include="Services\CardService.cs" />
     <Compile Include="Services\ConfigService.cs" />
+    <Compile Include="Services\EmployeeServices.cs" />
     <Compile Include="Services\PlanInfoService.cs" />
     <Compile Include="Services\PlatformDataCache.cs" />
     <Compile Include="Support\CCHEncrypt.cs" />
