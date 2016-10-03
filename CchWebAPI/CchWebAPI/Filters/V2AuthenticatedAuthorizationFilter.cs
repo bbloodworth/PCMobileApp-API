@@ -13,12 +13,46 @@ using CchWebAPI.Support;
 using System.Web.Security;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Collections.Generic;
 
 namespace CchWebAPI.Filters {
     public class V2AuthenticatedAuthorizationFilter : IAutofacAuthorizationFilter {
+
+        const string Origin = "Origin";
+        const string AccessControlRequestMethod = "Access-Control-Request-Method";
+        const string AccessControlRequestHeaders = "Access-Control-Request-Headers";
+        const string AccessControlAllowOrigin = "Access-Control-Allow-Origin";
+        const string AccessControlAllowMethods = "Access-Control-Allow-Methods";
+        const string AccessControlAllowHeaders = "Access-Control-Allow-Headers";
+        private List<String> AllowedOrigins
+        {
+            get
+            {
+                return Properties.Settings.Default.AllowedOrigins.Split('|').ToList<String>();
+            }
+        }
+
+        private string FormatHeaders(HttpRequestMessage request)
+        {
+            var headers = new List<string>();
+            request.Headers.ToList().ForEach(h => {
+                headers.Add(string.Format("{0}:{1}", h.Key, string.Join("|", h.Value)));
+            });
+
+            return string.Join(" | ", headers);
+        }
+
+        private string FormatOrigins()
+        {
+            return string.Join(" | ", AllowedOrigins);
+        }
+
         //TODO: this may need to get more comprehensive in matching requesting Consumer against
         //the domain associated with this ApiKey, but that would require db work.
         public void OnAuthorization(HttpActionContext context) {
+            if (!isOriginAllowed(context.Request))
+                return;
+
             if (!IsApiKeyValid(context))
                 return;
 
@@ -34,7 +68,39 @@ namespace CchWebAPI.Filters {
             throw new NotImplementedException();
         }
 
+        private bool isOriginAllowed(HttpRequestMessage request) {
+            bool isCORSRequest = request.Headers.Contains(Origin);
+            bool isPreflightRequest = request.Method == HttpMethod.Options;
+
+            if (isCORSRequest)
+            {
+                if (AllowedOrigins.Contains("*") || AllowedOrigins.Contains(request.Headers.GetValues(Origin).First()))
+                {
+                    // This CORS request is allowed
+                    LogUtil.Trace(string.Format("CORS request allowed. Wildcard origins is {0}.  " +
+                        "Request origin is {1}", AllowedOrigins.Contains("*"),
+                        request.Headers.GetValues(Origin).First()));
+
+                    return true;
+                }
+                else
+                {
+                    LogUtil.Trace(string.Format("CORS request blocked.  Allowed Origins are {0}.  Headers were:  {0}.",
+                        FormatOrigins(), FormatHeaders(request)));
+
+                    request.CreateResponse(HttpStatusCode.Forbidden);
+
+                    return false;
+                }
+            }
+            else
+            {
+                return true;
+            }
+        }
+
         private bool IsApiKeyValid(HttpActionContext context) {
+
             if (context.Request.Headers == null || context.Request.Headers.Count() < 1) {
                 LogUtil.Trace(string.Format("ApiKey missing for {0} from host {1}",
                     context.ActionDescriptor.ActionName,
