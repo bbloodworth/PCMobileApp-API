@@ -711,6 +711,7 @@ namespace CchWebAPI.Areas.Animation.Controllers {
                     ges.GetData(gecs.ConnString);
 
                     data.CchId = Request.CCHID();
+                    data.EmployerId = Request.EmployerID();
                     data.Segment = ges.PropertyCode;
                     data.HealthPlan = ges.Insurer;
                     data.BirthYear = ges.BirthYear;
