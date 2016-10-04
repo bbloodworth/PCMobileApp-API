@@ -64,8 +64,8 @@ namespace CchWebAPI.Handlers
                 else {
                     LogUtil.Trace("Is Standard Request");
                     return base.SendAsync(request, cancellationToken).ContinueWith<HttpResponseMessage>(t => {
-                            HttpResponseMessage resp = t.Result;
-                            resp.Headers.Add(AccessControlAllowOrigin, request.Headers.GetValues(Origin).First());
+                        HttpResponseMessage resp = t.Result;
+                        resp.Headers.Add(AccessControlAllowOrigin, request.Headers.GetValues(Origin).First());
                             return resp;
                         });
                 }

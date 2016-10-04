@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 
 namespace CchWebAPI.Controllers {
-    [RoutePrefix("v2")]
+    //[RoutePrefix("v2")]
     public class EmployeesController : ApiController {
         IEmployeesDispatcher _dispatcher;
         public EmployeesController(IEmployeesDispatcher dispatcher) {
@@ -16,7 +16,7 @@ namespace CchWebAPI.Controllers {
         public EmployeesController() { }
 
         [HttpGet]
-        [Route("employees/{employerId}/{cchId}")]
+        //[Route("employees/{employerId}/{cchId}")]
         public async Task<ApiResult<Employee>> GetEmployee(int employerId, int cchId) {
             var result = await _dispatcher.ExecuteAsync(cchId,
                 EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(employerId)));
