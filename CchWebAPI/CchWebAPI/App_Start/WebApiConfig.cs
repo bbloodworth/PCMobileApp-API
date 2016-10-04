@@ -608,6 +608,29 @@ namespace CchWebAPI
                     )
                 );
             #endregion
+
+            #region v2
+
+            config.Routes.MapHttpRoute(
+                name: "EmployeesV2",
+                routeTemplate: "v2/{controller}/{employerId}/{cchId}",
+                defaults: new { employerId = "0", cchId = "0" },
+                constraints: new { controller = "Employees" },
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+
+            config.Routes.MapHttpRoute(
+                name: "IdCardsV2",
+                routeTemplate: "v2/{controller}",
+                defaults: new { },
+                constraints: new { controller = "IdCards" },
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+            #endregion v2
         }
     }
 }

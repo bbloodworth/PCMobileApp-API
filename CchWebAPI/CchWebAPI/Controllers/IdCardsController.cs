@@ -10,6 +10,7 @@ using ClearCost.Net;
 
 namespace CchWebAPI.Controllers
 {
+    //[RoutePrefix("v2/IdCards")]
     public class IdCardsController : ApiController {
         IIdCardsDispatcher _dispatcher;
         public IdCardsController(IIdCardsDispatcher dispatcher) {
@@ -19,7 +20,7 @@ namespace CchWebAPI.Controllers
         public IdCardsController() { }
 
         [HttpGet]
-        [Route("v2/IdCards")]
+        //[Route("")]
         public async Task<ApiResult<List<IdCard>>> Get() {
             var result = await _dispatcher.ExecuteAsync(Request.CCHID(),
                 EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())));
