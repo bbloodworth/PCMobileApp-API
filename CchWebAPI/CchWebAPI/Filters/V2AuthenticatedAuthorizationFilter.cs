@@ -50,8 +50,6 @@ namespace CchWebAPI.Filters {
         //TODO: this may need to get more comprehensive in matching requesting Consumer against
         //the domain associated with this ApiKey, but that would require db work.
         public void OnAuthorization(HttpActionContext context) {
-            if (!isOriginAllowed(context.Request))
-                return;
 
             if (!IsApiKeyValid(context))
                 return;
@@ -65,37 +63,60 @@ namespace CchWebAPI.Filters {
             return;
         }
         public Task OnAuthorizationAsync(HttpActionContext actionContext, CancellationToken cancellationToken) {
-            throw new NotImplementedException();
-        }
-
-        private bool isOriginAllowed(HttpRequestMessage request) {
-            bool isCORSRequest = request.Headers.Contains(Origin);
-            bool isPreflightRequest = request.Method == HttpMethod.Options;
+            bool isCORSRequest = actionContext.Request.Headers.Contains(Origin);
+            bool isPreflightRequest = actionContext.Request.Method == HttpMethod.Options;
 
             if (isCORSRequest)
             {
-                if (AllowedOrigins.Contains("*") || AllowedOrigins.Contains(request.Headers.GetValues(Origin).First()))
+                if (AllowedOrigins.Contains("*") || AllowedOrigins.Contains(actionContext.Request.Headers.GetValues(Origin).First()))
                 {
                     // This CORS request is allowed
                     LogUtil.Trace(string.Format("CORS request allowed. Wildcard origins is {0}.  " +
                         "Request origin is {1}", AllowedOrigins.Contains("*"),
-                        request.Headers.GetValues(Origin).First()));
-
-                    return true;
+                        actionContext.Request.Headers.GetValues(Origin).First()));
                 }
                 else
                 {
                     LogUtil.Trace(string.Format("CORS request blocked.  Allowed Origins are {0}.  Headers were:  {0}.",
-                        FormatOrigins(), FormatHeaders(request)));
+                        FormatOrigins(), FormatHeaders(actionContext.Request)));
 
-                    request.CreateResponse(HttpStatusCode.Forbidden);
+                    var badResp = new HttpResponseMessage(HttpStatusCode.Forbidden);
+                    TaskCompletionSource<HttpResponseMessage> tsc = new TaskCompletionSource<HttpResponseMessage>();
+                    tsc.SetResult(badResp);
+                    return tsc.Task;
+                }
 
-                    return false;
+                if (isPreflightRequest)
+                {
+                    LogUtil.Trace("Is Preflight Request");
+                    return Task.Factory.StartNew<HttpResponseMessage>(() => {
+                        HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                        response.Headers.Add(AccessControlAllowOrigin, actionContext.Request.Headers.GetValues(Origin).First());
+
+                        string accessControlRequestMethod = actionContext.Request.Headers.GetValues(AccessControlRequestMethod).FirstOrDefault();
+                        if (accessControlRequestMethod != null)
+                            response.Headers.Add(AccessControlAllowMethods, accessControlRequestMethod);
+
+                        string requestedHeaders = string.Join(",", actionContext.Request.Headers.GetValues(AccessControlRequestHeaders));
+                        if (!string.IsNullOrEmpty(requestedHeaders))
+                            response.Headers.Add(AccessControlAllowHeaders, requestedHeaders);
+
+                        return response;
+                    }, cancellationToken);
+                }
+                else
+                {
+                    LogUtil.Trace("Is Standard Request");
+                    return OnAuthorizationAsync(actionContext, cancellationToken).ContinueWith<HttpResponseMessage>(t => {
+                        HttpResponseMessage resp = new HttpResponseMessage(HttpStatusCode.OK);
+                        resp.Headers.Add(AccessControlAllowOrigin, actionContext.Request.Headers.GetValues(Origin).First());
+                        return resp;
+                    });
                 }
             }
             else
             {
-                return true;
+                return OnAuthorizationAsync(actionContext, cancellationToken);
             }
         }
 
