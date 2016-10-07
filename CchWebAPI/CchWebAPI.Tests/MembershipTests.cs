@@ -4,12 +4,15 @@ using ClearCost.UnitTesting;
 using CchWebAPI.Areas.Animation.Models;
 using System.Net;
 using System.Diagnostics;
+using System.Dynamic;
+using System.Net.Http;
 
 namespace CchWebAPI.Tests {
     [TestClass]
     public class MembershipTests {
 
         [TestMethod]
+        [TestCategory("Membership")]
         public void CanGetWapiAuthResult() {
             if (!Debugger.IsAttached)
                 return;
@@ -24,6 +27,7 @@ namespace CchWebAPI.Tests {
         }
 
         [TestMethod]
+        [TestCategory("Membership")]
         public void CanExecuteResetPasswordStep1() {
             if (!Debugger.IsAttached)
                 return;
@@ -46,6 +50,7 @@ namespace CchWebAPI.Tests {
         }
 
         [TestMethod]
+        [TestCategory("Membership")]
         public void CanExecuteResetPasswordStep2() {
             if (!Debugger.IsAttached)
                 return;
@@ -73,6 +78,47 @@ namespace CchWebAPI.Tests {
             Assert.IsNotNull(step2Result);
             Assert.AreEqual(HttpStatusCode.OK, step2Result.Item1);
             Assert.IsNotNull(step2Result.Item2);
+        }
+        [TestMethod]
+        [TestCategory("Membership")]
+        [TestCategory("Integration Tests")]
+        public void CanLogin() {
+            if (!Debugger.IsAttached)
+                return;
+
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
+                "mary.smith@cchcaesars.com");
+
+            dynamic payload = new ExpandoObject();
+            payload.username = "mary.smith@cchcaesars.com";
+            payload.password = "dem0-User";
+
+            var urlResults = ApiUtil.PostJson<dynamic>(ctx,
+                "Animation/Membership/Login/182E533E-4488-4917-83B1-DB112DA71739",
+                payload);
+
+            Assert.IsNotNull(urlResults);
+            Assert.AreEqual(HttpStatusCode.OK, urlResults.Item1);
+        }
+        [TestMethod]
+        [TestCategory("Membership")]
+        public void LoginRequiresHandshakeId() {
+            if (!Debugger.IsAttached)
+                return;
+
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
+                "mary.smith@cchcaesars.com");
+
+            dynamic payload = new ExpandoObject();
+            payload.username = "mary.smith@cchcaesars.com";
+            payload.password = "dem0-User";
+
+            var urlResults = ApiUtil.PostJson<dynamic>(ctx,
+                "Animation/Membership/Login/",
+                payload);
+
+            Assert.IsNotNull(urlResults);
+            Assert.AreEqual(HttpStatusCode.Unauthorized, urlResults.Item1);
         }
     }
 }
