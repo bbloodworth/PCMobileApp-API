@@ -94,7 +94,7 @@ namespace CchWebAPI.Tests {
             payload.password = "dem0-User";
 
             var urlResults = ApiUtil.PostJson<dynamic>(ctx,
-                "Animation/Membership/Login/182E533E-4488-4917-83B1-DB112DA71739",
+                String.Format("Animation/Membership/Login/{0}", ctx.Employer.HandshakeId),
                 payload);
 
             Assert.IsNotNull(urlResults);
