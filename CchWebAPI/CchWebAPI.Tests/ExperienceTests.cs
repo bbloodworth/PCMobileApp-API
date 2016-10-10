@@ -72,7 +72,7 @@ namespace CchWebAPI.Tests {
             };
 
             var urlResult = ApiUtil.PostJson<HttpResponseMessage>(ctx,
-                "Animation/Experience/LogInitial/182E533E-4488-4917-83B1-DB112DA71739", 
+                String.Format("Animation/Experience/LogInitial/{0}", ctx.Employer.HandshakeId), 
                 experienceLogRequest);
 
             Assert.IsNotNull(urlResult);
