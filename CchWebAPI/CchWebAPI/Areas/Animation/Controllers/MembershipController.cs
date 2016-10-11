@@ -199,8 +199,17 @@ namespace CchWebAPI.Areas.Animation.Controllers {
             hrm = Request.CreateErrorResponse(HttpStatusCode.Unauthorized, new Exception("User Name and Password Do Not Match"));
 
             if (!Membership.ValidateUser(hsRequest.UserName, hsRequest.Password)) {
-                LogUtil.Log(string.Format("Login failed for user {0}.  Credentials failed membership validation.",
-                    hsRequest.UserName), LogLevel.Info);
+                // This can also happen if the account is locked.  Check to see if it is locked
+                // and return an appropriate error message.
+                if (IsUserLocked(hsRequest.UserName)) {
+                    LogUtil.Log(string.Format("Login failed for user {0}.  Account is locked.",
+                        hsRequest.UserName), LogLevel.Info);
+                    hrm = Request.CreateErrorResponse(HttpStatusCode.Forbidden, new Exception("Account locked"));
+                }
+                else {
+                    LogUtil.Log(string.Format("Login failed for user {0}.  Credentials failed membership validation.",
+                        hsRequest.UserName), LogLevel.Info);
+                }
                 return hrm;
             }
 
@@ -819,6 +828,23 @@ namespace CchWebAPI.Areas.Animation.Controllers {
                 iat.Domain = domain;
                 iat.PostData(connection);
             }
+        }
+        /// <summary>
+        /// Retrieves MembershipUser from membership and returns whether or not the account is locked.
+        /// </summary>
+        /// <param name="username">The username of the membership to retrieve.</param>
+        /// <returns></returns>
+        private bool IsUserLocked(string username) {
+            bool isLockedOut = false;
+            var membershipUser = Membership.GetUser(username);
+
+            if (membershipUser != null) {
+                if (membershipUser.IsLockedOut) {
+                    isLockedOut = true;
+                }
+            }
+
+            return isLockedOut;
         }
     }
 }

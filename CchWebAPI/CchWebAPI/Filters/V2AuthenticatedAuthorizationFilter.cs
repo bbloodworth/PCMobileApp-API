@@ -50,8 +50,9 @@ namespace CchWebAPI.Filters {
         //TODO: this may need to get more comprehensive in matching requesting Consumer against
         //the domain associated with this ApiKey, but that would require db work.
         public void OnAuthorization(HttpActionContext context) {
-            if (!isOriginAllowed(context.Request))
-                return;
+
+            //if (!IsOriginValid(context))
+            //    return;
 
             if (!IsApiKeyValid(context))
                 return;
@@ -65,36 +66,113 @@ namespace CchWebAPI.Filters {
             return;
         }
         public Task OnAuthorizationAsync(HttpActionContext actionContext, CancellationToken cancellationToken) {
-            throw new NotImplementedException();
-        }
-
-        private bool isOriginAllowed(HttpRequestMessage request) {
-            bool isCORSRequest = request.Headers.Contains(Origin);
-            bool isPreflightRequest = request.Method == HttpMethod.Options;
+            bool isCORSRequest = actionContext.Request.Headers.Contains(Origin);
+            bool isPreflightRequest = actionContext.Request.Method == HttpMethod.Options;
 
             if (isCORSRequest)
             {
-                if (AllowedOrigins.Contains("*") || AllowedOrigins.Contains(request.Headers.GetValues(Origin).First()))
+                if (AllowedOrigins.Contains("*") || AllowedOrigins.Contains(actionContext.Request.Headers.GetValues(Origin).First()))
                 {
                     // This CORS request is allowed
                     LogUtil.Trace(string.Format("CORS request allowed. Wildcard origins is {0}.  " +
                         "Request origin is {1}", AllowedOrigins.Contains("*"),
-                        request.Headers.GetValues(Origin).First()));
-
-                    return true;
+                        actionContext.Request.Headers.GetValues(Origin).First()));
                 }
                 else
                 {
                     LogUtil.Trace(string.Format("CORS request blocked.  Allowed Origins are {0}.  Headers were:  {0}.",
-                        FormatOrigins(), FormatHeaders(request)));
+                        FormatOrigins(), FormatHeaders(actionContext.Request)));
 
-                    request.CreateResponse(HttpStatusCode.Forbidden);
+                    var badResp = new HttpResponseMessage(HttpStatusCode.Forbidden);
+                    TaskCompletionSource<HttpResponseMessage> tsc = new TaskCompletionSource<HttpResponseMessage>();
+                    tsc.SetResult(badResp);
+                    return tsc.Task;
+                }
 
-                    return false;
+                if (isPreflightRequest)
+                {
+                    LogUtil.Trace("Is Preflight Request");
+                    return Task.Factory.StartNew<HttpResponseMessage>(() => {
+                        HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.OK);
+                        response.Headers.Add(AccessControlAllowOrigin, actionContext.Request.Headers.GetValues(Origin).First());
+
+                        string accessControlRequestMethod = actionContext.Request.Headers.GetValues(AccessControlRequestMethod).FirstOrDefault();
+                        if (accessControlRequestMethod != null)
+                            response.Headers.Add(AccessControlAllowMethods, accessControlRequestMethod);
+
+                        string requestedHeaders = string.Join(",", actionContext.Request.Headers.GetValues(AccessControlRequestHeaders));
+                        if (!string.IsNullOrEmpty(requestedHeaders))
+                            response.Headers.Add(AccessControlAllowHeaders, requestedHeaders);
+
+                        return response;
+                    }, cancellationToken);
+                }
+                else
+                {
+                    LogUtil.Trace("Is Standard Request");
+                    return OnAuthorizationAsync(actionContext, cancellationToken).ContinueWith<HttpResponseMessage>(t => {
+                        HttpResponseMessage resp = new HttpResponseMessage(HttpStatusCode.OK);
+                        resp.Headers.Add(AccessControlAllowOrigin, actionContext.Request.Headers.GetValues(Origin).First());
+                        return resp;
+                    });
                 }
             }
             else
             {
+                return OnAuthorizationAsync(actionContext, cancellationToken);
+            }
+        }
+
+        private bool IsOriginValid(HttpActionContext context)
+        {
+            bool isCORSRequest = context.Request.Headers.Contains(Origin);
+            bool isPreflightRequest = context.Request.Method == HttpMethod.Options;
+
+            if (isCORSRequest)
+            {
+                if (AllowedOrigins.Contains("*") || AllowedOrigins.Contains(context.Request.Headers.GetValues(Origin).First()))
+                {
+                    // This CORS request is allowed
+                    LogUtil.Trace(string.Format("CORS request allowed. Wildcard origins is {0}.  " +
+                        "Request origin is {1}", AllowedOrigins.Contains("*"),
+                        context.Request.Headers.GetValues(Origin).First()));
+                }
+                else
+                {
+                    LogUtil.Trace(string.Format("CORS request blocked.  Allowed Origins are {0}.  Headers were:  {0}.",
+                        FormatOrigins(), FormatHeaders(context.Request)));
+
+                    return false;
+                }
+
+                if (isPreflightRequest)
+                {
+                    LogUtil.Trace("Is Preflight Request");
+
+                    context.Response = context.Request.CreateResponse(HttpStatusCode.OK);
+                    context.Response.Headers.Add(AccessControlAllowOrigin, context.Request.Headers.GetValues(Origin).First());
+
+                    string accessControlRequestMethod = context.Request.Headers.GetValues(AccessControlRequestMethod).FirstOrDefault();
+                    if (accessControlRequestMethod != null)
+                        context.Response.Headers.Add(AccessControlAllowMethods, accessControlRequestMethod);
+
+                    string requestedHeaders = string.Join(",", context.Request.Headers.GetValues(AccessControlRequestHeaders));
+                    if (!string.IsNullOrEmpty(requestedHeaders))
+                        context.Response.Headers.Add(AccessControlAllowHeaders, requestedHeaders);
+                }
+                else
+                {
+                    LogUtil.Trace("Is Standard Request");
+
+                    context.Response = context.Request.CreateResponse(HttpStatusCode.OK);
+                    context.Response.Headers.Add(AccessControlAllowOrigin, context.Request.Headers.GetValues(Origin).First());
+                }
+
+                return true;
+            }
+            else
+            {
+                //return OnAuthorizationAsync(actionContext, cancellationToken);
                 return true;
             }
         }
@@ -206,15 +284,18 @@ namespace CchWebAPI.Filters {
         }
 
         private bool ExtendSession(HttpActionContext context) {
-            if(string.IsNullOrEmpty(context.Request.UserID())) {
+            //var userId = context.Request.UserID();
+            var username = context.Request.UserID();
+            if (string.IsNullOrEmpty(username)) {
                 context.Response = context.Request.CreateErrorResponse(HttpStatusCode.Unauthorized,
                     "User is invalid.");
                 return false;
             }
 
+
             //Get an instance of the user sent in
-            var user = Membership.GetUser(
-                new Guid(context.Request.UserID()));
+            //var user = Membership.GetUser(new Guid(userId)); //exception from casting email address as GUID
+            var user = Membership.GetUser(username);
 
             //cancel the request if the user is invalid or the User ID wasn't sent
             if (null == user) {
@@ -237,7 +318,7 @@ namespace CchWebAPI.Filters {
 
             //Update the user's timestamp so that they don't timeout prematurely
             Membership.GetUser(
-                new Guid(context.Request.UserID()),
+                new Guid(user.ProviderUserKey.ToString()),
                 true);
 
             return true;
