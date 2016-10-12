@@ -124,6 +124,7 @@
     <Compile Include="ExperienceTests.cs" />
     <Compile Include="IdCardsTests.cs" />
     <Compile Include="Media\WebApiServiceTests.cs" />
+    <Compile Include="MessagingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MembershipTests.cs" />
     <Compile Include="PlanInfoTests.cs" />
