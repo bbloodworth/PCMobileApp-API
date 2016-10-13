@@ -120,5 +120,19 @@ namespace CchWebAPI.Tests {
             Assert.IsNotNull(urlResults);
             Assert.AreEqual(HttpStatusCode.Unauthorized, urlResults.Item1);
         }
+        [TestMethod]
+        [TestCategory("MPM-1673")]
+        [TestCategory("Integration Tests")]
+        public void CanGetGoogleSegment() {
+            if (!Debugger.IsAttached)
+                return;
+
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
+                "mary.smith@cchcaesars.com");
+
+            var urlResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Membership/Google/Segment");
+
+            Assert.IsNotNull(urlResult);
+        }
     }
 }
