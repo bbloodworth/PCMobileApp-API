@@ -4,6 +4,7 @@ using ClearCost.UnitTesting;
 using CchWebAPI.Areas.Animation.Models;
 using System.Net;
 using System.Diagnostics;
+using System.Net.Http;
 
 namespace CchWebAPI.Tests {
     [TestClass]
@@ -73,6 +74,20 @@ namespace CchWebAPI.Tests {
             Assert.IsNotNull(step2Result);
             Assert.AreEqual(HttpStatusCode.OK, step2Result.Item1);
             Assert.IsNotNull(step2Result.Item2);
+        }
+        [TestMethod]
+        [TestCategory("MPM-1673")]
+        [TestCategory("Integration Tests")]
+        public void CanGetGoogleSegment() {
+            if (!Debugger.IsAttached)
+                return;
+
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
+                "mary.smith@cchcaesars.com");
+
+            var urlResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Membership/Google/Segment");
+
+            Assert.IsNotNull(urlResult);
         }
     }
 }
