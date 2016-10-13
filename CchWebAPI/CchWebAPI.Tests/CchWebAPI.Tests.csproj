@@ -128,6 +128,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="MembershipTests.cs" />
     <Compile Include="PlanInfoTests.cs" />
+    <Compile Include="UserContentTests.cs" />
     <Compile Include="SettingsTests.cs" />
   </ItemGroup>
   <ItemGroup>
