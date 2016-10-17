@@ -162,6 +162,7 @@
     <Compile Include="EmployeesTests.cs" />
     <Compile Include="ExperienceTests.cs" />
     <Compile Include="IdCardsTests.cs" />
+    <Compile Include="MediaTests.cs" />
     <Compile Include="Media\WebApiServiceTests.cs" />
     <Compile Include="MessagingTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
