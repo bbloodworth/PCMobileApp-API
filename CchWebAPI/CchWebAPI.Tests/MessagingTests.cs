@@ -99,5 +99,24 @@ namespace CchWebAPI.Tests {
             Assert.IsNotNull(result);
             Assert.IsNotNull(result.PromptStatus);
         }
+        [TestMethod]
+        [TestCategory("Messaging")]
+        public void CanUpdateEmailAddress() {
+            if (!Debugger.IsAttached)
+                return;
+
+            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+                "mary.smith@cchcaesars.com");
+
+            dynamic payload = new ExpandoObject();
+            payload.NewEmail = "mary.smith@cchcaesars.com";
+
+            var result = ApiUtil.PostJson<dynamic>(ctx,
+                "Animation/Membership/Email",
+                payload);
+
+            Assert.IsNotNull(result);
+            Assert.AreEqual(HttpStatusCode.OK, result.Item1);
+        }
     }
 }
