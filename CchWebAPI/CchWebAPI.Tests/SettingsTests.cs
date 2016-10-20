@@ -61,8 +61,6 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Settings Tests")]
         public void CanGetConfigurationValue() {
-            if (!Debugger.IsAttached)
-                return;
 
             var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
                 "mary.smith@cchcaesars.com");
@@ -77,8 +75,6 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Settings Tests")]
         public void CanGetConfigurationValues() {
-            if (!Debugger.IsAttached)
-                return;
 
             var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
                 "mary.smith@cchcaesars.com");

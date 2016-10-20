@@ -57,8 +57,6 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Media Tests")]
         public void CanGetMediaUrl() {
-            if (!Debugger.IsAttached)
-                return;
 
             var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
                 "mary.smith@cchcaesars.com");

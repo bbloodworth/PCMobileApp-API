@@ -58,8 +58,6 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanLogInitialExperience() {
-            if (!Debugger.IsAttached)
-                return;
 
             var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
                 "mary.smith@cchcaesars.com");

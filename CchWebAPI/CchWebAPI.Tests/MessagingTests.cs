@@ -60,8 +60,6 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Messaging")]
         public void CanUpdatePushPromptStatus() {
-            if (!Debugger.IsAttached)
-                return;
 
             var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
                 "mary.smith@cchcaesars.com");
@@ -83,8 +81,6 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Messaging")]
         public void CanGetPushPromptStatus() {
-            if (!Debugger.IsAttached)
-                return;
 
             var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
                 "mary.smith@cchcaesars.com");
@@ -102,8 +98,6 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Messaging")]
         public void CanUpdateEmailAddress() {
-            if (!Debugger.IsAttached)
-                return;
 
             var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
                 "mary.smith@cchcaesars.com");
