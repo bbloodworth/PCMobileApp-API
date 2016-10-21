@@ -15,7 +15,7 @@ namespace CchWebAPI.Tests {
         }
         private void InitTestAccounts() {
             Accounts = new List<TestAccount>();
-            Accounts.Add(new TestAccount("mary.smith@cchcaesars.com", "dem0-User", "000004835", "crazytown"));
+            Accounts.Add(new TestAccount("mary.smith@cchcaesars.com", "dem0-User", "000004835", "crazytown", "6176668888"));
             //Accounts.Add(new TestAccount("mary.s@cchdemo.com", "password1", "999993333", ""));  //UnitTestContext throws an exception on this account.
         }
     }
@@ -24,13 +24,15 @@ namespace CchWebAPI.Tests {
         public string Password { get; set; }
         public string FullSsn { get; set; }
         public string SecretAnswer { get; set; }
+        public string Phone { get; set; }
 
         public TestAccount() { }
-        public TestAccount(string username, string password, string fullSsn, string secretAnswer) {
+        public TestAccount(string username, string password, string fullSsn, string secretAnswer, string phone) {
             Username = username;
             Password = password;
             FullSsn = fullSsn;
             SecretAnswer = secretAnswer;
+            Phone = phone;
         }
     }
 }

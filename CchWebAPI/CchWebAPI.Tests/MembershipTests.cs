@@ -167,5 +167,22 @@ namespace CchWebAPI.Tests {
                 Assert.IsNotNull(result);
             }
         }
+        [TestMethod]
+        [TestCategory("Membership Tests")]
+        public void CanUpdatePhone() {
+            foreach(var testUser in new TestAccounts().Accounts) {
+                var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
+                    testUser.Username);
+
+                var payload = new AccountRequest();
+                payload.NewAlternatePhone = testUser.Phone;
+
+                var result = ApiUtil.PostJson<dynamic>(ctx,
+                    "Animation/Membership/Phone/Alt", payload, testUser.Password);
+
+                Assert.IsNotNull(result);
+                Assert.AreEqual(HttpStatusCode.OK, result.Item1);
+            }
+        }
     }
 }
