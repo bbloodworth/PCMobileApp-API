@@ -40,8 +40,8 @@ namespace CchWebAPI.Employees.Data
         public string State { get; set; }
         public string ZipCode { get; set; }
         public string Email { get; set; }
-        public decimal Longitude { get; set; }
-        public decimal Latitude { get; set; }
+        public double Longitude { get; set; }
+        public double Latitude { get; set; }
         public string HealthPlanType { get; set; }
         public string MedicalPlanType { get; set; }
         public string RXPlanType { get; set; }
