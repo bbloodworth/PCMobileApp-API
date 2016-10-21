@@ -93,12 +93,12 @@ namespace CchWebAPI.Tests {
                 payload.username = testUser.Username;
                 payload.password = testUser.Password;
 
-                var urlResults = ApiUtil.PostJson<dynamic>(ctx,
+                var results = ApiUtil.PostJson<dynamic>(ctx,
                     String.Format("Animation/Membership/Login/{0}", ctx.Employer.HandshakeId),
                     payload);
 
-                Assert.IsNotNull(urlResults);
-                Assert.AreEqual(HttpStatusCode.OK, urlResults.Item1);
+                Assert.IsNotNull(results);
+                Assert.AreEqual(HttpStatusCode.OK, results.Item1);
             }
         }
         [TestMethod]
@@ -113,12 +113,12 @@ namespace CchWebAPI.Tests {
                 payload.username = testUser.Username;
                 payload.password = testUser.Password;
 
-                var urlResults = ApiUtil.PostJson<dynamic>(ctx,
+                var results = ApiUtil.PostJson<dynamic>(ctx,
                     "Animation/Membership/Login/",
                     payload);
 
-                Assert.IsNotNull(urlResults);
-                Assert.AreEqual(HttpStatusCode.Unauthorized, urlResults.Item1);
+                Assert.IsNotNull(results);
+                Assert.AreEqual(HttpStatusCode.Unauthorized, results.Item1);
             }
         }
         [TestMethod]
@@ -131,9 +131,9 @@ namespace CchWebAPI.Tests {
                 var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                     testUser.Username);
 
-                var urlResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Membership/Google/Segment");
+                var result = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Membership/Google/Segment");
 
-                Assert.IsNotNull(urlResult);
+                Assert.IsNotNull(result);
             }
         }
         [TestMethod]
@@ -148,11 +148,23 @@ namespace CchWebAPI.Tests {
                 payload.Password = testUser.Password;
                 payload.NewPassword = testUser.Password;
 
-                var urlResult = ApiUtil.PostJson<dynamic>(ctx, "Animation/Membership/Password",
+                var result = ApiUtil.PostJson<dynamic>(ctx, "Animation/Membership/Password",
                     payload, testUser.Password);
 
-                Assert.IsNotNull(urlResult);
-                Assert.AreEqual(HttpStatusCode.OK, urlResult.Item1);
+                Assert.IsNotNull(result);
+                Assert.AreEqual(HttpStatusCode.OK, result.Item1);
+            }
+        }
+        [TestMethod]
+        [TestCategory("Membership Tests")]
+        public void CanGetMobilePhone() {
+            foreach(var testUser in new TestAccounts().Accounts) {
+                var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
+                    testUser.Username);
+
+                var result = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Membership/Phone/Mobile");
+
+                Assert.IsNotNull(result);
             }
         }
     }
