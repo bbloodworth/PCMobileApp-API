@@ -58,7 +58,7 @@ namespace CchWebAPI.Tests {
         [TestCategory("Media Tests")]
         public void CanGetMediaUrl() {
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                 "mary.smith@cchcaesars.com");
 
             // This needs to be made dynamic somehow.  Also, the api returns a string even if

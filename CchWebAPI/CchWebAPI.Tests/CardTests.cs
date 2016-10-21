@@ -51,7 +51,7 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         public void CanUseWapiToEmailIdCard() {
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                 "mary.smith@cchcaesars.com");
 
             var memberUrlsResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Card/CardUrls/en");
@@ -74,7 +74,7 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         public void CanUseWapiToViewIdCard() {
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                 "mary.smith@cchcaesars.com");
 
             dynamic memberUrlsResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Card/CardUrls/en");

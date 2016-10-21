@@ -59,7 +59,7 @@ namespace CchWebAPI.Tests {
         [TestCategory("UserContent")]
         public void CanGetUserContentLocale() {
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi, "mary.smith@cchcaesars.com");
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(), "mary.smith@cchcaesars.com");
             string result = null;
 
             using (var webClient = new WebClient()) {

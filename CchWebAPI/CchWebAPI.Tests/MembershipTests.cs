@@ -19,7 +19,7 @@ namespace CchWebAPI.Tests {
             //var authResult = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(), @"mary.smith@cchcaesars.com").GetAuthResult();
             //var authResult = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(), @"mikew@cchdemo.com").GetAuthResult();
             //var authResult = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(), @"mary.s@cchdemo.com").GetAuthResult("password1");
-            //var authResult = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi, @"mary.smith@cchcaesars.com").GetAuthResult();
+            //var authResult = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(), @"mary.smith@cchcaesars.com").GetAuthResult();
 
             foreach (var testUser in new TestAccounts().Accounts) {
                 var authResult = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(), testUser.Username).GetAuthResult();
