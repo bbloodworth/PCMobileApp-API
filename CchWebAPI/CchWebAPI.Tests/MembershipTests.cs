@@ -184,5 +184,24 @@ namespace CchWebAPI.Tests {
                 Assert.AreEqual(HttpStatusCode.OK, result.Item1);
             }
         }
+        [TestMethod]
+        [TestCategory("Membership Tests")]
+        public void CanUpdateSecretAnswer() {
+            foreach(var testUser in new TestAccounts().Accounts) {
+                var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
+                    testUser.Username);
+
+                var payload = new UserAuthenticationRequest {
+                    Password = testUser.Password,
+                    SecretAnswer = testUser.SecretAnswer
+                };
+
+                var result = ApiUtil.PostJson<dynamic>(ctx,
+                    "Animation/Membership/SecurityAnswer", payload, testUser.Password);
+
+                Assert.IsNotNull(result);
+                Assert.AreEqual(HttpStatusCode.OK, result.Item1);
+            }
+        }
     }
 }
