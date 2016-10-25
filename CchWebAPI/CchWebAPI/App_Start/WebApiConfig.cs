@@ -630,6 +630,16 @@ namespace CchWebAPI
                     new HttpControllerDispatcher(config),
                     AuthenticatedAccountHandlers)
                 );
+
+            config.Routes.MapHttpRoute(
+                name: "BenefitContributionsV2",
+                routeTemplate: "v2/{controller}/{cchId}",
+                defaults: new { cchId = "0" },
+                constraints: new { controller = "Contributions" },
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
             #endregion v2
         }
     }
