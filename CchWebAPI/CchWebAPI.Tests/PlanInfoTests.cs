@@ -44,11 +44,9 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanGetPlanInfoFromWapi() {
-            if (!Debugger.IsAttached)
-                return;
 
             SqlMapper.SetTypeMap(typeof(HealthPlanSummary), new ColumnAttributeTypeMapper<HealthPlanSummary>());
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                 "mary.smith@cchcaesars.com");
 
             var summary = ApiUtil.GetJsonResult<HealthPlanSummary>(ctx, "Animation/HealthPlanSummary");

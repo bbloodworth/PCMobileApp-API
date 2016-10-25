@@ -60,10 +60,8 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Messaging")]
         public void CanUpdatePushPromptStatus() {
-            if (!Debugger.IsAttached)
-                return;
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                 "mary.smith@cchcaesars.com");
 
             dynamic payload = new ExpandoObject();
@@ -83,10 +81,8 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Messaging")]
         public void CanGetPushPromptStatus() {
-            if (!Debugger.IsAttached)
-                return;
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                 "mary.smith@cchcaesars.com");
 
             var result = ApiUtil.GetJsonResult<dynamic>(ctx,
@@ -102,10 +98,8 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Messaging")]
         public void CanUpdateEmailAddress() {
-            if (!Debugger.IsAttached)
-                return;
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                 "mary.smith@cchcaesars.com");
 
             dynamic payload = new ExpandoObject();
