@@ -13,7 +13,8 @@ namespace CchWebAPI.BenefitContributions.Dispatchers
 {
     public interface IContributionsDispatcher
     {
-        //Task<List<BenefitContribution>> ExecuteAsync(int cchId, Employer employer);
+        //Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid);
+        Task<List<BenefitContribution>> ExecuteAsync(int cchId, Employer employer);
 
         List<BenefitContribution> Execute(int cchId, Employer employer);
     }
@@ -26,15 +27,15 @@ namespace CchWebAPI.BenefitContributions.Dispatchers
         {
             _repository = repository;
         }
+        
+        public async Task<List<BenefitContribution>> ExecuteAsync(int cchId, Employer employer)
+        {
+            _repository.Initialize(employer.ConnectionString);
 
-        //public async Task<List<BenefitContribution>> ExecuteAsync(int cchId, Employer employer)
-        //{
-        //    _repository.Initialize(employer.ConnectionString);
+            var result = await _repository.GetContributionsByCchIdAsync(cchId);
 
-        //    var result = await _repository.GetContributionsByCchIdAsync(cchId);
-
-        //    return result;
-        //}
+            return result;
+        }
 
         public List<BenefitContribution> Execute(int cchId, Employer employer)
         {

@@ -12,7 +12,7 @@ namespace CchWebAPI.BenefitContributions.Data
     {
         void Initialize(string connectionString);
         List<BenefitContribution> GetContributionsByCchId(int cchid);
-        //Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid);
+        Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid);
     }
 
     public class ContributionsRepository: IContributionsRepository
@@ -22,54 +22,55 @@ namespace CchWebAPI.BenefitContributions.Data
         public void Initialize(string connectionString)
         {
             _connectionString = connectionString;
+            _connectionString = "Data Source=KERMITDB\\MSPIGGY;Initial Catalog=CCH_DemoDWH;Trusted_Connection=true;Asynchronous Processing=True; MultipleActiveResultSets=true";
         }
 
-        //public async Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid)
-        //{
-        //    if (string.IsNullOrEmpty(_connectionString))
-        //    {
-        //        throw new InvalidOperationException("Failed to initialize Benefit Contributions repository");
-        //    }
-        //    if (cchid < 0)
-        //    {
-        //        throw new InvalidOperationException("Invalid CCHID");
-        //    }
+        public async Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid)
+        {
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                throw new InvalidOperationException("Failed to initialize Benefit Contributions repository");
+            }
+            if (cchid < 0)
+            {
+                throw new InvalidOperationException("Invalid CCHID");
+            }
 
-        //    //List<BenefitContribution> contributions = new List<BenefitContribution>();
+            //List<BenefitContribution> contributions = new List<BenefitContribution>();
 
-        //    string sqlQuery = @"SELECT
-        //        e.CCHID
-        //        ,e.EmployeeFirstName
-        //        ,e.EmployeeLastName
-        //        ,d.FullDate as AsOfDate
-        //        ,pa.DWCreateDate
-        //        ,pm.PayrollCategoryName
-        //        ,pm.PayrollMetricName
-        //        ,pm.PreTaxInd
-        //        ,ct.ContributionTypeCode
-        //        ,ct.ContributionTypeName
-        //        ,f.PerPeriodAmt
-        //        ,f.YTDAmt
-        //        FROM
-        //        Payroll_f f
-        //        INNER JOIN Date_d d on f.PayDateKey = d.DateKey
-        //        INNER JOIN Employee_d e on f.EmployeeKey = e.EmployeeKey
-        //        INNER JOIN DeliveryMethod_d dm on f.DeliveryMethodKey = dm.DeliveryMethodKey
-        //        INNER JOIN ContributionType_d ct on f.ContributionTypeKey = ct.ContributionTypeKey
-        //        INNER JOIN PayrollMetric_d pm on f.PayrollMetricKey = pm.PayrollMetricKey
-        //        INNER JOIN PayrollAudit_d pa on f.PayrollAuditKey = pa.PayrollAuditKey
-        //        WHERE
-        //        CCHID = 63841
-        //        AND pm.ReportingCategoryCode = '401K'
-        //        AND f.CurrentPayPeriodInd = 1";
+            string sqlQuery = @"SELECT
+                e.CCHID
+                ,e.EmployeeFirstName
+                ,e.EmployeeLastName
+                ,d.FullDate as AsOfDate
+                ,pa.DWCreateDate
+                ,pm.PayrollCategoryName
+                ,pm.PayrollMetricName
+                ,pm.PreTaxInd
+                ,ct.ContributionTypeCode
+                ,ct.ContributionTypeName
+                ,f.PerPeriodAmt
+                ,f.YTDAmt
+                FROM
+                Payroll_f f
+                INNER JOIN Date_d d on f.PayDateKey = d.DateKey
+                INNER JOIN Employee_d e on f.EmployeeKey = e.EmployeeKey
+                INNER JOIN DeliveryMethod_d dm on f.DeliveryMethodKey = dm.DeliveryMethodKey
+                INNER JOIN ContributionType_d ct on f.ContributionTypeKey = ct.ContributionTypeKey
+                INNER JOIN PayrollMetric_d pm on f.PayrollMetricKey = pm.PayrollMetricKey
+                INNER JOIN PayrollAudit_d pa on f.PayrollAuditKey = pa.PayrollAuditKey
+                WHERE
+                CCHID = 63841
+                AND pm.ReportingCategoryCode = '401K'
+                AND f.CurrentPayPeriodInd = 1";
 
-        //    using (var context = new ContributionsContext(_connectionString))
-        //    {
-        //        var contributions = await context.Database.SqlQuery<BenefitContribution>(sqlQuery).ToListAsync();
+            using (var context = new ContributionsContext(_connectionString))
+            {
+                var contributions = await context.Database.SqlQuery<BenefitContribution>(sqlQuery).ToListAsync();
 
-        //        return contributions;
-        //    }
-        //}
+                return contributions;
+            }
+        }
 
         public List<BenefitContribution> GetContributionsByCchId(int cchid)
         {
