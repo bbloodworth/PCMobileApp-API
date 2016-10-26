@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Data.Entity;
-using System.Data.SqlClient;
 using System.Threading.Tasks;
 using CchWebAPI.BenefitContributions.Models;
 
@@ -11,7 +9,6 @@ namespace CchWebAPI.BenefitContributions.Data
     public interface IContributionsRepository
     {
         void Initialize(string connectionString);
-        List<BenefitContribution> GetContributionsByCchId(int cchid);
         Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid, string categoryCode);
     }
 
@@ -36,6 +33,7 @@ namespace CchWebAPI.BenefitContributions.Data
                 throw new InvalidOperationException("Invalid CCHID");
             }
 
+            // for reference only
             string sqlQuery = @"SELECT
                 e.CCHID
                 ,e.EmployeeFirstName
@@ -201,92 +199,6 @@ namespace CchWebAPI.BenefitContributions.Data
                 return contributions.ToList();
             }
         }
-
-        public List<BenefitContribution> GetContributionsByCchId(int cchid)
-        {
-            if (string.IsNullOrEmpty(_connectionString))
-            {
-                throw new InvalidOperationException("Failed to initialize Benefit Contributions repository");
-            }
-            if (cchid < 1)
-            {
-                throw new InvalidOperationException("Invalid CCHID");
-            }
-
-            List<BenefitContribution> benefitContributions = new List<BenefitContribution>();
-
-            using (var context = new ContributionsContext(_connectionString))
-            {
-                benefitContributions.Add(
-                    new BenefitContribution
-                    {
-                        CCHID = 63841,
-                        AsOfDate = DateTime.Now,
-                        ContributionTypeCode = "EE",
-                        ContributionTypeName = "Employee",
-                        DWCreateDate = DateTime.Now,
-                        EmployeeFirstName = "MARY",
-                        EmployeeLastName = "SMITH",
-                        PayrollCategoryName = "Deduction",
-                        PayrollMetricName = "Roth 401K",
-                        PerPeriodAmt = 440.2m,
-                        PreTaxInd = true,
-                        YTDAmt = 1660.8m,
-                        ReportingCategoryCode = "401K",
-                        CurrentPayPeriodInd = true
-                    });
-            }
-            return benefitContributions;
-        }
     }
 }
 
-//        public async Task<List<IdCard>> GetIdCardsByCchIdAsync(int cchId)
-//        {
-//            if (string.IsNullOrEmpty(_connectionString))
-//                throw new InvalidOperationException("Failed to initialized repository");
-
-//            using (var itx = new IdCardsContext(_connectionString))
-//            {
-//                //This is not the final production code. It's illustrative at this point pending 
-//                //the final data structures.
-
-//                var enrollmentsQuery = @"SELECT CCHID, RelationshipCode
-//                    FROM Enrollments
-//                    WHERE SubscriberMedicalID IN
-//                    (SELECT SubscriberMedicalID 
-//	                    FROM Enrollments 
-//	                    WHERE CCHID = @cchid)";
-
-
-//                List<IdCard> results;
-//                //if dependent only get dependent cards
-//                if (!employee.CchId.Equals(cchId))
-//                    results = await itx.IdCards
-//                        .Include(p => p.CardType)
-//                        .Where(id => id.MemberId.Equals(cchId)
-//                            && id.LocaleId.Equals(1) //Only support English at this time
-//                            && !string.IsNullOrEmpty(id.DetailText)).ToListAsync();
-//                else //get employee and dependents
-//                    results = await itx.IdCards
-//                        .Include(p => p.CardType)
-//                        .Where(id => id.LocaleId.Equals(1)
-//                            && !string.IsNullOrEmpty(id.DetailText)
-//                            && familyEnrollmentIds.Contains(id.MemberId)).ToListAsync();
-
-//                var cardTypeIds = results.Select(r => r.CardType.Id).Distinct();
-
-//                var translations = await itx.IdCardTypeTranslations
-//                    .Where(t => t.LocaleId.Equals(1) && cardTypeIds.Contains(t.Id)).ToListAsync();
-
-//                results.ForEach(r => {
-//                    r.CardType.Translation = translations.FirstOrDefault(t => t.Id.Equals(r.CardType.Id)).CardTypeName;
-//                    r.RequestContextMemberId = cchId;
-//                });
-
-//                return results;
-//            }
-//        }
-
-//    }
-//}

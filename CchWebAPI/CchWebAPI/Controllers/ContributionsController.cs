@@ -29,15 +29,5 @@ namespace CchWebAPI.Controllers
 
             return ApiResult<List<BenefitContribution>>.ValidResult(result, string.Empty);
         }
-
-        //[HttpGet]
-        //public ApiResult<List<BenefitContribution>> GetContribution(int cchid)
-        //{
-        //    var result = _dispatcher.Execute(
-        //        cchid,
-        //        EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())));
-
-        //    return ApiResult<List<BenefitContribution>>.ValidResult(result, string.Empty);
-        //}
     }
 }
