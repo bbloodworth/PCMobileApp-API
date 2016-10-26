@@ -20,28 +20,24 @@ namespace CchWebAPI.Controllers
         public ContributionsController() { }
 
         [HttpGet]
-        //public async Task<ApiResult<List<BenefitContribution>>> GetContributions(int cchid)
-        public async Task<ApiResult<List<BenefitContribution>>> GetContributions(int cchid)
+        public async Task<ApiResult<List<BenefitContribution>>> GetContributions(int cchid, string categoryCode)
         {
-            int inCchId = cchid > 0 ? cchid : Request.CCHID();
-
-            int employerId = Request.EmployerID();
-
-            Employer employer = EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID()));
-
-            var result = await _dispatcher.ExecuteAsync(
-                inCchId,
-                EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())));
-
-            //var result = _testDispatcher.Execute(
-            //    inCchId,
-            //    EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())));
-
-            //var result = _dispatcher.Execute(
-            //    inCchId,
-            //    EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())));
+            var result = await _dispatcher.GetContributionsByCchIdAsync(
+                cchid,
+                EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())),
+                categoryCode);
 
             return ApiResult<List<BenefitContribution>>.ValidResult(result, string.Empty);
         }
+
+        //[HttpGet]
+        //public ApiResult<List<BenefitContribution>> GetContribution(int cchid)
+        //{
+        //    var result = _dispatcher.Execute(
+        //        cchid,
+        //        EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())));
+
+        //    return ApiResult<List<BenefitContribution>>.ValidResult(result, string.Empty);
+        //}
     }
 }

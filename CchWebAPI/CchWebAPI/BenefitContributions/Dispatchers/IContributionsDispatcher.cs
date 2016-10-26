@@ -14,7 +14,7 @@ namespace CchWebAPI.BenefitContributions.Dispatchers
     public interface IContributionsDispatcher
     {
         //Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid);
-        Task<List<BenefitContribution>> ExecuteAsync(int cchId, Employer employer);
+        Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchId, Employer employer, string categoryCode);
 
         List<BenefitContribution> Execute(int cchId, Employer employer);
     }
@@ -28,11 +28,11 @@ namespace CchWebAPI.BenefitContributions.Dispatchers
             _repository = repository;
         }
         
-        public async Task<List<BenefitContribution>> ExecuteAsync(int cchId, Employer employer)
+        public async Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchId, Employer employer, string categoryCode)
         {
             _repository.Initialize(employer.ConnectionString);
 
-            var result = await _repository.GetContributionsByCchIdAsync(cchId);
+            var result = await _repository.GetContributionsByCchIdAsync(cchId, categoryCode);
 
             return result;
         }
@@ -47,11 +47,9 @@ namespace CchWebAPI.BenefitContributions.Dispatchers
             {
                 throw new InvalidOperationException("Invalid Employer Context");
             }
+            //string dwhConnectionString = "Data Source=KERMITDB\\MSPIGGY;Initial Catalog=CCH_DemoDWH;Trusted_Connection=true;Asynchronous Processing=True; MultipleActiveResultSets=true";
 
-            string dwhConnectionString = "Data Source=KERMITDB\\MSPIGGY;Initial Catalog=CCH_DemoDWH;Trusted_Connection=true;Asynchronous Processing=True; MultipleActiveResultSets=true";
-
-            //_repository.Initialize(employer.ConnectionString);
-            _repository.Initialize(dwhConnectionString);
+            _repository.Initialize(employer.ConnectionString);
 
             var result = _repository.GetContributionsByCchId(cchId);
 

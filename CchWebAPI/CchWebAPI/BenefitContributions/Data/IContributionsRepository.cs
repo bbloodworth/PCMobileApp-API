@@ -12,7 +12,7 @@ namespace CchWebAPI.BenefitContributions.Data
     {
         void Initialize(string connectionString);
         List<BenefitContribution> GetContributionsByCchId(int cchid);
-        Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid);
+        Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid, string categoryCode);
     }
 
     public class ContributionsRepository: IContributionsRepository
@@ -25,18 +25,16 @@ namespace CchWebAPI.BenefitContributions.Data
             _connectionString = "Data Source=KERMITDB\\MSPIGGY;Initial Catalog=CCH_DemoDWH;Trusted_Connection=true;Asynchronous Processing=True; MultipleActiveResultSets=true";
         }
 
-        public async Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid)
+        public async Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid, string categoryCode)
         {
             if (string.IsNullOrEmpty(_connectionString))
             {
                 throw new InvalidOperationException("Failed to initialize Benefit Contributions repository");
             }
-            if (cchid < 0)
+            if (cchid < 1)
             {
                 throw new InvalidOperationException("Invalid CCHID");
             }
-
-            //List<BenefitContribution> contributions = new List<BenefitContribution>();
 
             string sqlQuery = @"SELECT
                 e.CCHID
@@ -64,11 +62,143 @@ namespace CchWebAPI.BenefitContributions.Data
                 AND pm.ReportingCategoryCode = '401K'
                 AND f.CurrentPayPeriodInd = 1";
 
+            //var contributions = await context.Database.SqlQuery<BenefitContribution>(sqlQuery).ToListAsync();
+
             using (var context = new ContributionsContext(_connectionString))
             {
-                var contributions = await context.Database.SqlQuery<BenefitContribution>(sqlQuery).ToListAsync();
+                IQueryable<BenefitContribution> contributions =
+                    context.Payroll
+                    .Join(
+                        context.Dates, 
+                        p => p.PayDateKey, d => d.DateKey, (p, d) => new 
+                        {
+                            p.EmployeeKey,
+                            p.PayDateKey,
+                            p.DeliveryMethodKey,
+                            p.ContributionTypeKey,
+                            p.PayrollMetricKey,
+                            p.PayrollAuditKey,
+                            p.PerPeriodAmt,
+                            p.YTDAmt,
+                            p.CurrentPayPeriodInd,
+                            d.DateKey,
+                            d.FullDate
+                        }).Join(
+                            context.EmployeeMembers, 
+                            p => p.EmployeeKey, e => e.EmployeeKey, 
+                            (p, e) => new 
+                            {
+                                e.CCHID,
+                                e.EmployeeFirstName,
+                                e.EmployeeLastName,
+                                p.EmployeeKey,
+                                p.PayDateKey,
+                                p.DeliveryMethodKey,
+                                p.ContributionTypeKey,
+                                p.PayrollMetricKey,
+                                p.PayrollAuditKey,
+                                p.PerPeriodAmt,
+                                p.YTDAmt,
+                                p.CurrentPayPeriodInd,
+                                p.DateKey,
+                                p.FullDate
+                            })
+                            .Join(
+                                context.DeliveryMethods, 
+                                p => p.DeliveryMethodKey, dm => dm.DeliveryMethodKey, 
+                                (p, dm) => new 
+                                {
+                                    p.CCHID,
+                                    p.EmployeeFirstName,
+                                    p.EmployeeLastName,
+                                    p.EmployeeKey,
+                                    p.PayDateKey,
+                                    p.DeliveryMethodKey,
+                                    p.ContributionTypeKey,
+                                    p.PayrollMetricKey,
+                                    p.PayrollAuditKey,
+                                    p.PerPeriodAmt,
+                                    p.YTDAmt,
+                                    p.CurrentPayPeriodInd,
+                                    p.DateKey,
+                                    p.FullDate,
+                                    dm.DeliveryMethodName
+                                })
+                                .Join(context.ContributionTypes, 
+                                    p => p.ContributionTypeKey, ct => ct.ContributionTypeKey, 
+                                    (p, ct) => new
+                                    {
+                                        p.CCHID,
+                                        p.EmployeeFirstName,
+                                        p.EmployeeLastName,
+                                        p.EmployeeKey,
+                                        p.PayDateKey,
+                                        p.DeliveryMethodKey,
+                                        p.ContributionTypeKey,
+                                        p.PayrollMetricKey,
+                                        p.PayrollAuditKey,
+                                        p.PerPeriodAmt,
+                                        p.YTDAmt,
+                                        p.CurrentPayPeriodInd,
+                                        p.DateKey,
+                                        p.FullDate,
+                                        p.DeliveryMethodName,
+                                        ct.ContributionTypeCode,
+                                        ct.ContributionTypeName
+                                    })
+                                    .Join(context.PayrollMetrics, 
+                                        p => p.PayrollMetricKey, pm => pm.PayrollMetricKey, 
+                                        (p, pm) => new 
+                                        {
+                                            p.CCHID,
+                                            p.EmployeeFirstName,
+                                            p.EmployeeLastName,
+                                            p.EmployeeKey,
+                                            p.PayDateKey,
+                                            p.DeliveryMethodKey,
+                                            p.ContributionTypeKey,
+                                            p.PayrollMetricKey,
+                                            p.PayrollAuditKey,
+                                            p.PerPeriodAmt,
+                                            p.YTDAmt,
+                                            p.CurrentPayPeriodInd,
+                                            p.DateKey,
+                                            p.FullDate,
+                                            p.DeliveryMethodName,
+                                            p.ContributionTypeCode,
+                                            p.ContributionTypeName,
+                                            pm.PayrollMetricCode,
+                                            pm.PayrollMetricName,
+                                            pm.PayrollCategoryName,
+                                            pm.ReportingCategoryCode,
+                                            pm.PreTaxInd
+                                        })
+                                        .Join(context.PayrollAudits, 
+                                            p => p.PayrollAuditKey, pa => pa.PayrollAuditKey,
+                                            (p, pa) => new BenefitContribution
+                                            {
+                                                CCHID = p.CCHID,
+                                                AsOfDate = p.FullDate,
+                                                ContributionTypeCode = p.ContributionTypeCode,
+                                                ContributionTypeName = p.ContributionTypeName,
+                                                DWCreateDate = pa.DWCreateDate,
+                                                EmployeeFirstName = p.EmployeeFirstName,
+                                                EmployeeLastName = p.EmployeeLastName,
+                                                PayrollCategoryName = p.PayrollCategoryName,
+                                                PayrollMetricName = p.PayrollMetricName,
+                                                PerPeriodAmt = p.PerPeriodAmt,
+                                                PreTaxInd = p.PreTaxInd,
+                                                YTDAmt = p.YTDAmt,
+                                                ReportingCategoryCode = p.ReportingCategoryCode,
+                                                CurrentPayPeriodInd = p.CurrentPayPeriodInd
+                                            }
+                        ).Where(p => p.CCHID == cchid && 
+                                ( categoryCode.Equals(string.Empty) || 
+                                  p.ReportingCategoryCode.Equals(categoryCode) ) && 
+                                p.CurrentPayPeriodInd)
+                    ;
 
-                return contributions;
+                return contributions.ToList();
             }
         }
 
@@ -78,7 +208,7 @@ namespace CchWebAPI.BenefitContributions.Data
             {
                 throw new InvalidOperationException("Failed to initialize Benefit Contributions repository");
             }
-            if (cchid < 0)
+            if (cchid < 1)
             {
                 throw new InvalidOperationException("Invalid CCHID");
             }
@@ -100,8 +230,10 @@ namespace CchWebAPI.BenefitContributions.Data
                         PayrollCategoryName = "Deduction",
                         PayrollMetricName = "Roth 401K",
                         PerPeriodAmt = 440.2m,
-                        PreTaxInd =true,
-                        YTDAmt = 1660.8m
+                        PreTaxInd = true,
+                        YTDAmt = 1660.8m,
+                        ReportingCategoryCode = "401K",
+                        CurrentPayPeriodInd = true
                     });
             }
             return benefitContributions;

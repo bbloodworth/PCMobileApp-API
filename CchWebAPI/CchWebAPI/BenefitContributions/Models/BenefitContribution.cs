@@ -17,7 +17,9 @@ namespace CchWebAPI.BenefitContributions.Models
         public bool PreTaxInd;
         public string ContributionTypeCode;
         public string ContributionTypeName;
-        public decimal PerPeriodAmt;
-        public decimal YTDAmt;
+        public decimal? PerPeriodAmt;
+        public decimal? YTDAmt;
+        public string ReportingCategoryCode;
+        public bool CurrentPayPeriodInd;
     }
 }

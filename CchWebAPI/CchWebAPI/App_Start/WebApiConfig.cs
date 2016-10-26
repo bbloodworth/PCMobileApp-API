@@ -633,8 +633,8 @@ namespace CchWebAPI
 
             config.Routes.MapHttpRoute(
                 name: "BenefitContributionsV2",
-                routeTemplate: "v2/{controller}/{cchId}",
-                defaults: new { cchId = "0" },
+                routeTemplate: "v2/{controller}/{cchId}/{categoryCode}",
+                defaults: new { cchId = "0", categoryCode = "" },
                 constraints: new { controller = "Contributions" },
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config),
