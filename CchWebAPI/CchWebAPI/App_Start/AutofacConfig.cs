@@ -13,6 +13,8 @@ using CchWebAPI.Employees.Dispatchers;
 using CchWebAPI.BenefitContributions.Data;
 using CchWebAPI.BenefitContributions.Dispatchers;
 using System.Web.Mvc;
+using CchWebAPI.EmployeeDW.Data;
+using CchWebAPI.EmployeeDW.Dispatchers;
 
 namespace CchWebAPI {
     public class AutofacConfig {
@@ -21,6 +23,7 @@ namespace CchWebAPI {
             //Repositories
             builder.RegisterType<IdCardsRepository>().As<IIdCardsRepository>();
             builder.RegisterType<EmployeesRepository>().As<IEmployeesRepository>();
+            builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
             builder.RegisterType<ContributionsRepository>().As<IContributionsRepository>();
 
             //Dispatchers
@@ -28,6 +31,8 @@ namespace CchWebAPI {
                 .UsingConstructor(typeof(IIdCardsRepository));
             builder.RegisterType<EmployeesDispatcher>().As<IEmployeesDispatcher>()
                 .UsingConstructor(typeof(IEmployeesRepository));
+            builder.RegisterType<EmployeeDispatcher>().As<IEmployeeDispatcher>()
+                .UsingConstructor(typeof(IEmployeeRepository));
             builder.RegisterType<ContributionsDispatcher>().As<IContributionsDispatcher>()
                 .UsingConstructor(typeof(IContributionsRepository));
 
@@ -37,6 +42,9 @@ namespace CchWebAPI {
                 .InstancePerRequest();
             builder.RegisterType<EmployeesController>()
                 .UsingConstructor(typeof(IEmployeesDispatcher))
+                .InstancePerRequest();
+            builder.RegisterType<EmployeesController>()
+                .UsingConstructor(typeof(IEmployeeDispatcher))
                 .InstancePerRequest();
             builder.RegisterType<ContributionsController>()
                 .UsingConstructor(typeof(IContributionsDispatcher))

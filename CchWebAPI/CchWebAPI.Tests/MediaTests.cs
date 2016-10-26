@@ -57,10 +57,8 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Media Tests")]
         public void CanGetMediaUrl() {
-            if (!Debugger.IsAttached)
-                return;
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                 "mary.smith@cchcaesars.com");
 
             // This needs to be made dynamic somehow.  Also, the api returns a string even if

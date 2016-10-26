@@ -61,10 +61,8 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Settings Tests")]
         public void CanGetConfigurationValue() {
-            if (!Debugger.IsAttached)
-                return;
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                 "mary.smith@cchcaesars.com");
 
             var urlResults = ApiUtil.GetJsonResult<dynamic>(ctx,
@@ -77,10 +75,8 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Settings Tests")]
         public void CanGetConfigurationValues() {
-            if (!Debugger.IsAttached)
-                return;
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                 "mary.smith@cchcaesars.com");
 
             var urlResults = ApiUtil.GetJsonResult<dynamic>(ctx,
