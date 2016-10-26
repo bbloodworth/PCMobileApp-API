@@ -19,7 +19,7 @@ namespace CchWebAPI.BenefitContributions.Data
         public void Initialize(string connectionString)
         {
             _connectionString = connectionString;
-            _connectionString = "Data Source=KERMITDB\\MSPIGGY;Initial Catalog=CCH_DemoDWH;Trusted_Connection=true;Asynchronous Processing=True; MultipleActiveResultSets=true";
+            //_connectionString = "Data Source=KERMITDB\\MSPIGGY;Initial Catalog=CCH_DemoDWH;Trusted_Connection=true;Asynchronous Processing=True; MultipleActiveResultSets=true";
         }
 
         public async Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid, string categoryCode)

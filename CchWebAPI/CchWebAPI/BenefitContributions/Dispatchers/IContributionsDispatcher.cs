@@ -32,7 +32,12 @@ namespace CchWebAPI.BenefitContributions.Dispatchers
                 throw new InvalidOperationException("Invalid Employer Context");
             }
 
-            _repository.Initialize(employer.ConnectionString);
+            string employerConnectionString = 
+                DataWarehouse.GetEmployerConnectionString(employer.Id).Equals(string.Empty) ? 
+                employer.ConnectionString : 
+                DataWarehouse.GetEmployerConnectionString(employer.Id);
+
+            _repository.Initialize(employerConnectionString);
 
             var result = await _repository.GetContributionsByCchIdAsync(cchId, categoryCode);
 
