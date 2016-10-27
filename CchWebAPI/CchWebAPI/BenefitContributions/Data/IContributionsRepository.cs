@@ -191,7 +191,7 @@ namespace CchWebAPI.BenefitContributions.Data
                                                 CurrentPayPeriodInd = p.CurrentPayPeriodInd
                                             }
                         ).Where(p => p.CCHID == cchid && 
-                                ( categoryCode.Equals(string.Empty) || 
+                                ( string.IsNullOrEmpty(categoryCode) || 
                                   p.ReportingCategoryCode.Equals(categoryCode) ) && 
                                 p.CurrentPayPeriodInd)
                     ;
