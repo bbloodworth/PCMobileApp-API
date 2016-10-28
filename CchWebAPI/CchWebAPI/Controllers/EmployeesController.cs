@@ -143,7 +143,7 @@ namespace CchWebAPI.Controllers {
             HealthPlanType = employee.HealthPlanType;
             MedicalPlanType = employee.MedicalPlanType;
             RxPlanType = employee.RXPlanType;
-    }
+        }
         public void MapProperties(EmployeeDW.Data.Employee employee) {
             if (employee == null)
                 return;
@@ -168,7 +168,7 @@ namespace CchWebAPI.Controllers {
                 employee.OrgLevel5ValueCode, employee.OrgLevel5ValueName));
             PrimaryWorkLocation.Code = employee.PrimaryWorkLocationCode;
             PrimaryWorkLocation.Name = employee.PrimaryWorkLocationName;
-                SeniorityDate = employee.SeniorityDate.Value;
+            SeniorityDate = employee.SeniorityDate.Value;
             LastHireDate = employee.LastHireDate;
             Job.Code = employee.JobCode;
             Job.Name = employee.JobName;
