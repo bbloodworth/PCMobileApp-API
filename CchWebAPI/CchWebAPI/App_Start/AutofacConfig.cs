@@ -10,6 +10,8 @@ using CchWebAPI.IdCards.Data;
 using CchWebAPI.IdCards.Dispatchers;
 using CchWebAPI.Employees.Data;
 using CchWebAPI.Employees.Dispatchers;
+using CchWebAPI.BenefitContributions.Data;
+using CchWebAPI.BenefitContributions.Dispatchers;
 using System.Web.Mvc;
 using CchWebAPI.EmployeeDW.Data;
 using CchWebAPI.EmployeeDW.Dispatchers;
@@ -25,6 +27,7 @@ namespace CchWebAPI {
             builder.RegisterType<EmployeesRepository>().As<IEmployeesRepository>();
             builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
             builder.RegisterType<PayrollRepository>().As<IPayrollRepository>();
+            builder.RegisterType<ContributionsRepository>().As<IContributionsRepository>();
 
             //Dispatchers
             builder.RegisterType<IdCardsDispatcher>().As<IIdCardsDispatcher>()
@@ -35,6 +38,8 @@ namespace CchWebAPI {
                 .UsingConstructor(typeof(IEmployeeRepository));
             builder.RegisterType<PayrollDispatcher>().As<IPayrollDispatcher>()
                 .UsingConstructor(typeof(IPayrollRepository));
+            builder.RegisterType<ContributionsDispatcher>().As<IContributionsDispatcher>()
+                .UsingConstructor(typeof(IContributionsRepository));
 
             //Controllers
             builder.RegisterType<IdCardsController>()
@@ -49,6 +54,9 @@ namespace CchWebAPI {
             builder.RegisterType<PayrollController>()
                 .UsingConstructor(typeof(IPayrollDispatcher))
                 .InstancePerRequest();
+            builder.RegisterType<ContributionsController>()
+                .UsingConstructor(typeof(IContributionsDispatcher))
+                .InstancePerRequest();
 
             //Filters
             builder.RegisterWebApiFilterProvider(config);
@@ -57,7 +65,8 @@ namespace CchWebAPI {
                 .AsWebApiAuthorizationFilterFor<IdCardsController>().InstancePerRequest();
             builder.Register(c => new V2AuthenticatedAuthorizationFilter())
                 .AsWebApiAuthorizationFilterFor<EmployeesController>().InstancePerRequest();
-
+            builder.Register(c => new V2AuthenticatedAuthorizationFilter())
+                .AsWebApiAuthorizationFilterFor<ContributionsController>().InstancePerRequest();
 
             var container = builder.Build();
 
