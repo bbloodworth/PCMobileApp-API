@@ -633,8 +633,8 @@ namespace CchWebAPI
 
             config.Routes.MapHttpRoute(
                 name: "PayrollV2",
-                routeTemplate: "v2/{controller}/{employerId}/{cchId}",
-                defaults: new { employerId = "0", cchId = "0" },
+                routeTemplate: "v2/{controller}/{employerId}/{cchId}/dates-paid",
+                defaults: new { action = "GetDatesPaidAsync", employerId = "0", cchId = "0" },
                 constraints: new { controller = "Payroll" },
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config),
