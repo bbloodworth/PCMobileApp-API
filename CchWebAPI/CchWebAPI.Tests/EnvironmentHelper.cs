@@ -30,5 +30,8 @@ namespace CchWebAPI.Tests {
                     throw new NotImplementedException(String.Format("There's no mapping for the apiBaseAddress: {0}", apiBaseAddress));
             }
         }
+        public static string GetApiBaseAddress() {
+            return ConfigurationManager.AppSettings["APIBaseAddress"].ToString();
+        }
     }
 }
