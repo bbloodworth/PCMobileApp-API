@@ -21,7 +21,7 @@ namespace CchWebAPI.Tests {
             //var authResult = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(), @"mary.s@cchdemo.com").GetAuthResult("password1");
             //var authResult = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(), @"mary.smith@cchcaesars.com").GetAuthResult();
 
-            foreach (var testUser in new TestAccounts().Accounts) {
+            foreach (var testUser in TestAccounts.Accounts) {
                 var authResult = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(), testUser.Username).GetAuthResult();
                 Assert.IsNotNull(authResult);
                 Assert.IsFalse(string.IsNullOrEmpty(authResult.AuthHash));
@@ -32,7 +32,7 @@ namespace CchWebAPI.Tests {
         [TestCategory("Membership Tests")]
         public void CanExecuteResetPasswordStep1() {
 
-            foreach (var testUser in new TestAccounts().Accounts) {
+            foreach (var testUser in TestAccounts.Accounts) {
                 var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                     testUser.Username);
 
@@ -54,7 +54,7 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Membership Tests")]
         public void CanExecuteResetPasswordStep2() {
-            foreach (var testUser in new TestAccounts().Accounts) {
+            foreach (var testUser in TestAccounts.Accounts) {
                 var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                     testUser.Username);
 
@@ -85,7 +85,7 @@ namespace CchWebAPI.Tests {
         //[TestCategory("Integration Tests")]
         public void CanLogin() {
 
-            foreach (var testUser in new TestAccounts().Accounts) {
+            foreach (var testUser in TestAccounts.Accounts) {
                 var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                     testUser.Username);
 
@@ -105,7 +105,7 @@ namespace CchWebAPI.Tests {
         [TestCategory("Membership Tests")]
         public void LoginRequiresHandshakeId() {
 
-            foreach (var testUser in new TestAccounts().Accounts) {
+            foreach (var testUser in TestAccounts.Accounts) {
                 var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                     testUser.Username);
 
@@ -127,7 +127,7 @@ namespace CchWebAPI.Tests {
         [TestCategory("Membership Tests")]
         public void CanGetGoogleSegment() {
 
-            foreach (var testUser in new TestAccounts().Accounts) {
+            foreach (var testUser in TestAccounts.Accounts) {
                 var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                     testUser.Username);
 
@@ -140,7 +140,7 @@ namespace CchWebAPI.Tests {
         [TestCategory("Membership Tests")]
         public void CanChangePassword() {
 
-            foreach(var testUser in new TestAccounts().Accounts) {
+            foreach(var testUser in TestAccounts.Accounts) {
                 var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                     testUser.Username);
 
@@ -158,7 +158,7 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Membership Tests")]
         public void CanGetMobilePhone() {
-            foreach(var testUser in new TestAccounts().Accounts) {
+            foreach(var testUser in TestAccounts.Accounts) {
                 var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                     testUser.Username);
 
@@ -170,7 +170,7 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Membership Tests")]
         public void CanUpdatePhone() {
-            foreach(var testUser in new TestAccounts().Accounts) {
+            foreach(var testUser in TestAccounts.Accounts) {
                 var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                     testUser.Username);
 
@@ -187,7 +187,7 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         [TestCategory("Membership Tests")]
         public void CanUpdateSecretAnswer() {
-            foreach(var testUser in new TestAccounts().Accounts) {
+            foreach(var testUser in TestAccounts.Accounts) {
                 var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                     testUser.Username);
 
