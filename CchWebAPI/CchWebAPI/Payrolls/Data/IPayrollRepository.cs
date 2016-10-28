@@ -1,4 +1,4 @@
-﻿using CchWebAPI.EmployeeDW.Models;
+﻿using CchWebAPI.Payrolls.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -20,7 +20,7 @@ namespace CchWebAPI.Payrolls.Data {
 
         public async Task<List<DatePaid>> GetDatesPaidAsync(int cchId) {
             if (string.IsNullOrEmpty(_connectionString))
-                throw new InvalidOperationException("Failed to initialized repository");
+                throw new InvalidOperationException("Failed to initialize repository");
 
             using (var ctx = new PayrollContext(_connectionString)) {
                 List<DatePaid> payroll = await (
@@ -38,6 +38,25 @@ namespace CchWebAPI.Payrolls.Data {
 
                 return payroll;
             }
+        }
+
+        public async Task<Paycheck> GetPaycheck(int documentId) {
+            if (string.IsNullOrEmpty(_connectionString))
+                throw new InvalidOperationException("Failed to initialize repository");
+
+            using (var ctx = new PayrollContext(_connectionString)) {
+                var query = await (
+                    from payrolls in ctx.Payrolls
+                    join dates in ctx.Dates on payrolls.PayDateKey equals dates.DateKey
+                    );
+            }
+
+            //Payroll_f f
+            //INNER JOIN Date_d d on f.PayDateKey = d.DateKey
+            //INNER JOIN Employee_d e on f.EmployeeKey = e.EmployeeKey
+            //INNER JOIN DeliveryMethod_d dm on f.DeliveryMethodKey = dm.DeliveryMethodKey
+            //INNER JOIN ContributionType_d ct on f.ContributionTypeKey = ct.ContributionTypeKey
+            //INNER JOIN PayrollMetric_d pm on f.PayrollMetricKey = pm.PayrollMetricKey
         }
     }
 }

@@ -176,8 +176,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Animation\Views\Settings\" />
+    <Folder Include="EmployeeDW\Models\" />
     <Folder Include="Employees\Models\" />
-    <Folder Include="Payrolls\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
@@ -254,7 +254,7 @@
     <Compile Include="Controllers\IdCardsController.cs" />
     <Compile Include="Controllers\PayrollController.cs" />
     <Compile Include="DataWarehouse.cs" />
-    <Compile Include="EmployeeDW\Models\DatePaid.cs" />
+    <Compile Include="Payrolls\Models\DatePaid.cs" />
     <Compile Include="Payrolls\Data\PayrollContext.cs" />
     <Compile Include="Payrolls\Data\IPayrollRepository.cs" />
     <Compile Include="Payrolls\Dispatchers\IPayrollDispatcher.cs" />
@@ -291,6 +291,8 @@
     <Compile Include="Models\Handshake.cs" />
     <Compile Include="Models\HandshakeRequest.cs" />
     <Compile Include="Areas\PComm\Models\HealthPlanSummary.cs" />
+    <Compile Include="Payrolls\Models\Paycheck.cs" />
+    <Compile Include="Payrolls\Models\PayrollMetric.cs" />
     <Compile Include="PreApplicationStart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">

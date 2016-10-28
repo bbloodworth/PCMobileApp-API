@@ -1,4 +1,4 @@
-﻿using CchWebAPI.EmployeeDW.Models;
+﻿using CchWebAPI.Payrolls.Models;
 using CchWebAPI.Payrolls.Data;
 using CchWebAPI.Payrolls.Dispatchers;
 using ClearCost.Net;
