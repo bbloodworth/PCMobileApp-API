@@ -632,9 +632,19 @@ namespace CchWebAPI
                 );
 
             config.Routes.MapHttpRoute(
-                name: "PayrollV2",
+                name: "PayrollV2_DatesPaid",
                 routeTemplate: "v2/{controller}/{employerId}/{cchId}/dates-paid",
                 defaults: new { action = "GetDatesPaidAsync", employerId = "0", cchId = "0" },
+                constraints: new { controller = "Payroll" },
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+
+            config.Routes.MapHttpRoute(
+                name: "PayrollV2_Paycheck",
+                routeTemplate: "v2/{controller}/{employerId}/paycheck/{documentId}",
+                defaults: new { action = "GetPaycheck", employerId = "0", documentId = "" },
                 constraints: new { controller = "Payroll" },
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config),

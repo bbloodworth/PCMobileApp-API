@@ -76,6 +76,7 @@ namespace CchWebAPI.Tests {
         public string AuthHash { get; set; }
         public int EmployerId { get; set; }
         public int CchId { get; set; }
+        public string PaycheckDocumentId { get; set; }
 
         public Account() { }
         //public Account(string username, string password, string fullSsn, string secretAnswer, string phone) {
@@ -120,7 +121,8 @@ namespace CchWebAPI.Tests {
                 ApiKey = "DB366C62-88B6-402D-BCB7-E3FC384776E1",
                 AuthHash = "631B756ADC1A2347E1815DD719BB59E1A032C345AE8C6539C22C568CC5DCBBF0D55A0BF28C3A0AC638D7C399E469A0658CB2E028517F521B98DE3D6192BA5AB08D52BF36035C6FB812F53F89F1EB83BF5BEDC6688BEDACFAB657C15673335CA64FD7BF1C1334354B89E41E025E8479D0",
                 EmployerId = 21,
-                CchId = 63841
+                CchId = 63841,
+                PaycheckDocumentId = "123"
             };
         }
     }

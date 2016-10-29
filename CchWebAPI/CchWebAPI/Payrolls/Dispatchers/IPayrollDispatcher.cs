@@ -1,6 +1,7 @@
 ﻿using CchWebAPI.Payrolls.Models;
 using CchWebAPI.Payrolls.Data;
 using ClearCost.Platform;
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
@@ -8,7 +9,8 @@ using System.Threading.Tasks;
 
 namespace CchWebAPI.Payrolls.Dispatchers {
     public interface IPayrollDispatcher {
-        Task<List<DatePaid>> ExecuteAsync(Employer employer, int cchId);
+        Task<List<DatePaid>> GetDatePaidAsync(Employer employer, int cchId);
+        Task<Paycheck> GetPaycheckAsync(Employer employer, string documentId);
     }
 
     public class PayrollDispatcher : IPayrollDispatcher {
@@ -17,19 +19,37 @@ namespace CchWebAPI.Payrolls.Dispatchers {
             _repository = repository;
         }
 
-        public async Task<List<DatePaid>> ExecuteAsync(Employer employer, int cchId) {
+        public async Task<List<DatePaid>> GetDatePaidAsync(Employer employer, int cchId) {
             if (cchId < 1)
                 throw new InvalidOperationException("Invalid member context.");
 
-            if (employer == null || string.IsNullOrEmpty(employer.ConnectionString))
+            if (employer == null || string.IsNullOrWhiteSpace(employer.ConnectionString))
                 throw new InvalidOperationException("Invalid employer context.");
 
-            //_repository.Initialize(employer.ConnectionString);
             _repository.Initialize(DataWarehouse.GetEmployerConnectionString(employer.Id));
 
             var result = await _repository.GetDatesPaidAsync(cchId);
 
             return result;
+        }
+        public async Task<Paycheck> GetPaycheckAsync(Employer employer, string documentId) {
+            if (String.IsNullOrWhiteSpace(documentId))
+                throw new InvalidOperationException("Invalid documentId.");
+
+            if (employer == null || string.IsNullOrWhiteSpace(employer.ConnectionString))
+                throw new InvalidOperationException("Invalid employer context.");
+
+            _repository.Initialize(DataWarehouse.GetEmployerConnectionString(employer.Id));
+
+            var result = await _repository.GetPaycheckAsync(documentId);
+
+            Paycheck paycheck = null;
+
+            if (result != null) {
+                paycheck = new Paycheck(result);
+            }
+
+            return paycheck;
         }
     }
 }

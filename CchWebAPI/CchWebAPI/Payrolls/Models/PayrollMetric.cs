@@ -9,10 +9,10 @@ namespace CchWebAPI.Payrolls.Models {
         public string Name { get; set; }
         public bool PreTaxIndicator { get; set; }
         public string ContributionTypeCode { get; set; }
-        public decimal Rate { get; set; }
-        public decimal PeriodQuantity { get; set; }
-        public decimal PeriodAmount { get; set; }
-        public decimal YtdQuantity { get; set; }
-        public decimal YtdAmount { get; set; }
+        public decimal? Rate { get; set; }
+        public decimal? PeriodQuantity { get; set; }
+        public decimal? PeriodAmount { get; set; }
+        public decimal? YtdQuantity { get; set; }
+        public decimal? YtdAmount { get; set; }
     }
 }
