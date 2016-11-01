@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using CchWebAPI.EmployeeDW.Models;
 
 namespace CchWebAPI.Controllers {
     //[RoutePrefix("v2")]
@@ -50,11 +51,24 @@ namespace CchWebAPI.Controllers {
                     InitDispatcherDW();
                 }
 
-                var employeeResult = await _dispatcherDW.ExecuteAsync(cchId, employer);
+                var employeeResult = await _dispatcherDW.GetEmployeeAsync(employer, cchId);
                 employee.MapProperties(employeeResult);
             }
 
             return ApiResult<Employee>.ValidResult(employee, string.Empty);
+        }
+
+        [HttpGet]
+        public async Task<ApiResult<List<PlanMember>>> GetEmployeeBenefitPlanMembers(int employerId, int cchId, int planId) {
+            var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == employerId);
+
+            if (_dispatcherDW == null) {
+                InitDispatcherDW();
+            }
+
+            var planMembers = await _dispatcherDW.GetEmployeeBenefitPlanMembersAsync(employer, cchId, planId);
+
+            return ApiResult<List<PlanMember>>.ValidResult(planMembers, string.Empty);
         }
 
     }

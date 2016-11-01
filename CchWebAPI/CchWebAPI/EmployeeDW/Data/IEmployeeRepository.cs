@@ -1,5 +1,8 @@
-﻿using System;
+﻿using CchWebAPI.EmployeeDW.Models;
+using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace CchWebAPI.EmployeeDW.Data {
@@ -7,6 +10,7 @@ namespace CchWebAPI.EmployeeDW.Data {
         void Initialize(string connectionString);
         Task<Employee> GetEmployeeByKeyAsync(int employeeKey);
         Task<Employee> GetEmployeeByCchIdAsync(int cchId);
+        Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId);
     }
 
     public class EmployeeRepository : IEmployeeRepository {
@@ -40,6 +44,40 @@ namespace CchWebAPI.EmployeeDW.Data {
             }
 
             return employee;
+        }
+
+        public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId) {
+            if (string.IsNullOrEmpty(_connectionString))
+                throw new InvalidOperationException("Failed to initialized repository");
+
+            //var employee = await GetEmployeeAsync(cchId);
+
+            //if (employee == null)
+            //    throw new ArgumentException("Invalid cchId");
+
+            List<PlanMember> planMembers = new List<PlanMember>();
+
+            using (var ctx = new EmployeeContext(_connectionString)) {
+                planMembers = await (
+                    from benefitEnrollment in ctx.BenefitEnrollments
+                        join employee in ctx.Members
+                            on benefitEnrollment.SubscriberMemberKey equals employee.MemberKey
+                        join dependent in ctx.Members
+                            on benefitEnrollment.EnrolledMemberKey equals dependent.MemberKey
+                    where
+                        employee.CCHID == cchId
+                        && benefitEnrollment.BenefitPlanOptionKey == planId
+                        // Needs to be added after data is present.
+                        //&& benefitEnrollment.CurrentRecordInd == true
+                    select new PlanMember {
+                        // the employee data is also returned in the dependent join.
+                        CchId = dependent.CCHID,
+                        FirstName = dependent.MemberFirstName,
+                        LastName = dependent.MemberLastName
+                    }).ToListAsync();
+            }
+
+            return planMembers;
         }
     }
 }

@@ -1,12 +1,15 @@
 ﻿using CchWebAPI.EmployeeDW.Data;
+using CchWebAPI.EmployeeDW.Models;
 using ClearCost.Platform;
 using System;
+using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
 
 namespace CchWebAPI.EmployeeDW.Dispatchers {
     public interface IEmployeeDispatcher {
-        Task<Employee> ExecuteAsync(int cchId, Employer employer);
+        Task<Employee> GetEmployeeAsync(Employer employer, int cchId);
+        Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(Employer employer, int cchId, int planId);
     }
 
     public class EmployeeDispatcher : IEmployeeDispatcher {
@@ -15,17 +18,30 @@ namespace CchWebAPI.EmployeeDW.Dispatchers {
             _repository = repository;
         }
 
-        public async Task<Employee> ExecuteAsync(int cchId, Employer employer) {
+        public async Task<Employee> GetEmployeeAsync(Employer employer, int cchId) {
             if (cchId < 1)
-                throw new InvalidOperationException("Invalid member context.");
+                throw new ArgumentException("Invalid member context.");
 
             if (employer == null || string.IsNullOrEmpty(employer.ConnectionString))
-                throw new InvalidOperationException("Invalid employer context.");
+                throw new ArgumentException("Invalid employer context.");
 
-            //_repository.Initialize(employer.ConnectionString);
             _repository.Initialize(DataWarehouse.GetEmployerConnectionString(employer.Id));
 
             var result = await _repository.GetEmployeeByCchIdAsync(cchId);
+
+            return result;
+        }
+
+        public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(Employer employer, int cchId, int planId) {
+            if (cchId < 1)
+                throw new ArgumentException("Invalid member context.");
+
+            if (employer == null || string.IsNullOrEmpty(employer.ConnectionString))
+                throw new ArgumentException("Invalid employer context.");
+
+            _repository.Initialize(DataWarehouse.GetEmployerConnectionString(employer.Id));
+
+            var result = await _repository.GetEmployeeBenefitPlanMembersAsync(cchId, planId);
 
             return result;
         }
