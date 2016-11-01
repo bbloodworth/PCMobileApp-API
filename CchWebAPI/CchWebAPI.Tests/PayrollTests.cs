@@ -5,7 +5,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ClearCost.UnitTesting;
 using System.Net;
 using ClearCost.Net;
-using CchWebAPI.EmployeeDW.Models;
 using CchWebAPI.Controllers;
 using CchWebAPI.Payrolls.Dispatchers;
 using CchWebAPI.Payrolls.Data;
@@ -70,6 +69,21 @@ namespace CchWebAPI.Tests {
                 var controller = new PayrollController(dispatcher);
 
                 var result = await controller.GetDatesPaidAsync(testAccount.EmployerId, testAccount.CchId);
+
+                Assert.IsNotNull(result);
+                Assert.IsTrue(result.IsSuccess);
+            }
+        }
+        [TestMethod]
+        public async Task CanGetPaycheck() {
+            foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
+                var repository = new PayrollRepository();
+                repository.Initialize(DataWarehouse.GetEmployerConnectionString(testAccount.EmployerId));
+
+                var dispatcher = new PayrollDispatcher(repository);
+                var controller = new PayrollController(dispatcher);
+
+                var result = await controller.GetPaycheck(testAccount.EmployerId, testAccount.PaycheckDocumentId);
 
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.IsSuccess);
