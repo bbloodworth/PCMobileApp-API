@@ -1,5 +1,5 @@
 ﻿//MUST REMAIN BACKWARD COMPATIBLE
-namespace CchWebAPI.IdCards.Models {
+namespace CchWebAPI.IdCard.Models {
     public class CardDetail {
         public bool Expired;
         public bool Invalid;

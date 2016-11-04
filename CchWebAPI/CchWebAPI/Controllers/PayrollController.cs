@@ -1,6 +1,6 @@
-﻿using CchWebAPI.Payrolls.Models;
-using CchWebAPI.Payrolls.Data;
-using CchWebAPI.Payrolls.Dispatchers;
+﻿using CchWebAPI.Payroll.Models;
+using CchWebAPI.Payroll.Data;
+using CchWebAPI.Payroll.Dispatchers;
 using ClearCost.Net;
 using ClearCost.Platform;
 using System;
@@ -23,7 +23,7 @@ namespace CchWebAPI.Controllers {
         }
         [HttpGet]
         public async Task<ApiResult<List<DatePaid>>> GetDatesPaidAsync(int employerId, int cchId) {
-            if (String.IsNullOrWhiteSpace(DataWarehouse.GetEmployerConnectionString(employerId))) {
+            if (string.IsNullOrWhiteSpace(DataWarehouse.GetEmployerConnectionString(employerId))) {
                 return ApiResult<List<DatePaid>>.InvalidResult(string.Empty,
                     "This feature is not configured for the specified employerId.");
             }
@@ -36,7 +36,7 @@ namespace CchWebAPI.Controllers {
         }
 
         public async Task<ApiResult<Paycheck>> GetPaycheck(int employerId, string documentId) {
-            if (String.IsNullOrWhiteSpace(DataWarehouse.GetEmployerConnectionString(employerId))) {
+            if (string.IsNullOrWhiteSpace(DataWarehouse.GetEmployerConnectionString(employerId))) {
                 return ApiResult<Paycheck>.InvalidResult(string.Empty,
                     "This feature is not configured for the specified employerId.");
             }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CchWebAPI.Payrolls.Models {
+namespace CchWebAPI.Payroll.Models {
     public class Paycheck {
         public List<PayrollMetric> Earnings { get; set; }
         public List<PayrollMetric> Deductions { get; set; }
@@ -24,7 +24,7 @@ namespace CchWebAPI.Payrolls.Models {
             InitProperties();
         }
 
-        public Paycheck(List<PaycheckDetailsQueryResult> query) {
+        public Paycheck(List<PaycheckDetails> query) {
             InitProperties();
             Merge(query);
         }
@@ -35,7 +35,7 @@ namespace CchWebAPI.Payrolls.Models {
             Taxes = new List<PayrollMetric>();
         }
 
-        private void Merge(List<PaycheckDetailsQueryResult> query) {
+        private void Merge(List<PaycheckDetails> query) {
             if (query.Count > 0) {
                 CchId = query[0].CchId;
                 FirstName = query[0].FirstName;
@@ -54,7 +54,7 @@ namespace CchWebAPI.Payrolls.Models {
             Taxes = MapPayrollMetricByCategory(query, "Tax");
         }
 
-        private List<Models.PayrollMetric> MapPayrollMetricByCategory(List<PaycheckDetailsQueryResult> query, string category) {
+        private List<Models.PayrollMetric> MapPayrollMetricByCategory(List<PaycheckDetails> query, string category) {
             List<Models.PayrollMetric> payrollMetrics = new List<Models.PayrollMetric>();
 
             foreach (var payrollMetric in query.Where(p => p.PayrollCategoryName == category)) {

@@ -4,7 +4,7 @@ using System.Data.SqlClient;
 using ClearCost.Data;
 using Newtonsoft.Json;
 
-namespace CchWebAPI.IdCards.Data {
+namespace CchWebAPI.IdCard.Data {
     public class IdCardsContext : ClearCostContext<IdCardsContext> {
         public IdCardsContext(string connectionString) : base(new SqlConnection(connectionString)) { }
 

@@ -6,7 +6,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using System.Data.SqlClient;
 
-namespace CchWebAPI.EmployeeDW.Data
+namespace CchWebAPI.Employee.Data
 {
     public class EmployeeContext : ClearCostContext<EmployeeContext>
     {

@@ -3,8 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
 
-using CchWebAPI.IdCards.Dispatchers;
-using CchWebAPI.IdCards.Data;
+using CchWebAPI.IdCard.Dispatchers;
 using ClearCost.Platform;
 using ClearCost.Net;
 
@@ -21,11 +20,11 @@ namespace CchWebAPI.Controllers
 
         [HttpGet]
         //[Route("")]
-        public async Task<ApiResult<List<IdCard>>> Get() {
+        public async Task<ApiResult<List<IdCard.Data.IdCard>>> Get() {
             var result = await _dispatcher.ExecuteAsync(Request.CCHID(),
                 EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())));
 
-            return ApiResult<List<IdCard>>.ValidResult(result, string.Empty);
+            return ApiResult<List<IdCard.Data.IdCard>>.ValidResult(result, string.Empty);
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using CchWebAPI.Payrolls.Models;
-using CchWebAPI.Payrolls.Data;
+﻿using CchWebAPI.Payroll.Models;
+using CchWebAPI.Payroll.Data;
 using ClearCost.Platform;
 using System.Linq;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
 
-namespace CchWebAPI.Payrolls.Dispatchers {
+namespace CchWebAPI.Payroll.Dispatchers {
     public interface IPayrollDispatcher {
         Task<List<DatePaid>> GetDatePaidAsync(Employer employer, int cchId);
         Task<Paycheck> GetPaycheckAsync(Employer employer, string documentId);

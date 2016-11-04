@@ -2,7 +2,7 @@
 using System.Data.SqlClient;
 using ClearCost.Data;
 using CchWebAPI.BenefitContributions.Models;
-using CchWebAPI.EmployeeDW.Data;
+//using CchWebAPI.Employee.Data;
 
 namespace CchWebAPI.BenefitContributions.Data
 {
@@ -13,8 +13,8 @@ namespace CchWebAPI.BenefitContributions.Data
 
         public override void ConfigureModel(DbModelBuilder builder)
         {
-            builder.Configurations.Add(new Payroll.PayrollConfiguration());
-            builder.Configurations.Add(new Employee.EmployeeConfiguration());
+            builder.Configurations.Add(new Models.Payroll.PayrollConfiguration());
+            builder.Configurations.Add(new Employee.Data.Employee.EmployeeConfiguration());
             builder.Configurations.Add(new Dates.DatesConfiguration());
             builder.Configurations.Add(new DeliveryMethod.DeliveryMethodConfiguration());
             builder.Configurations.Add(new ContributionType.ConfigurationTypeConfiguration());
@@ -22,8 +22,8 @@ namespace CchWebAPI.BenefitContributions.Data
             builder.Configurations.Add(new PayrollAudit.PayrollAuditConfiguration());
         }
 
-        public DbSet<Payroll> Payroll { get; set; }
-        public DbSet<Employee> EmployeeMembers { get; set; }
+        public DbSet<Models.Payroll> Payroll { get; set; }
+        public DbSet<Employee.Data.Employee> EmployeeMembers { get; set; }
         public DbSet<Dates> Dates { get; set; }
         public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
         public DbSet<ContributionType> ContributionTypes { get; set; }

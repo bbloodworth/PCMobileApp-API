@@ -1,14 +1,14 @@
-﻿using CchWebAPI.EmployeeDW.Data;
-using CchWebAPI.EmployeeDW.Models;
+﻿using CchWebAPI.Employee.Data;
+using CchWebAPI.Employee.Models;
 using ClearCost.Platform;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.Contracts;
 using System.Threading.Tasks;
 
-namespace CchWebAPI.EmployeeDW.Dispatchers {
+namespace CchWebAPI.Employee.Dispatchers {
     public interface IEmployeeDispatcher {
-        Task<Employee> GetEmployeeAsync(Employer employer, int cchId);
+        Task<Data.Employee> GetEmployeeAsync(Employer employer, int cchId);
         Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(Employer employer, int cchId, int planId);
     }
 
@@ -18,7 +18,7 @@ namespace CchWebAPI.EmployeeDW.Dispatchers {
             _repository = repository;
         }
 
-        public async Task<Employee> GetEmployeeAsync(Employer employer, int cchId) {
+        public async Task<Data.Employee> GetEmployeeAsync(Employer employer, int cchId) {
             if (cchId < 1)
                 throw new ArgumentException("Invalid member context.");
 

@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using CchWebAPI.IdCards.Data;
+using CchWebAPI.IdCard.Data;
 using ClearCost.Platform;
 using ClearCost.Security;
-using CchWebAPI.IdCards.Models;
+using CchWebAPI.IdCard.Models;
 using CchWebAPI.Support;
 using Newtonsoft.Json;
 
-namespace CchWebAPI.IdCards.Dispatchers {
+namespace CchWebAPI.IdCard.Dispatchers {
     public interface IIdCardsDispatcher {
-        Task<List<IdCard>> ExecuteAsync(int cchId, Employer employer);
+        Task<List<Data.IdCard>> ExecuteAsync(int cchId, Employer employer);
     }
 
     public class IdCardsDispatcher : IIdCardsDispatcher {
@@ -19,7 +19,7 @@ namespace CchWebAPI.IdCards.Dispatchers {
             _repository = repository;
         }
 
-        public async Task<List<IdCard>> ExecuteAsync(int cchId, Employer employer) {
+        public async Task<List<Data.IdCard>> ExecuteAsync(int cchId, Employer employer) {
             if (cchId < 1)
                 throw new InvalidOperationException("Invalid member context.");
 

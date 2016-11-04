@@ -6,17 +6,17 @@ using Autofac.Integration.WebApi;
 
 using CchWebAPI.Controllers;
 using CchWebAPI.Filters;
-using CchWebAPI.IdCards.Data;
-using CchWebAPI.IdCards.Dispatchers;
+using CchWebAPI.IdCard.Data;
+using CchWebAPI.IdCard.Dispatchers;
 using CchWebAPI.Employees.Data;
 using CchWebAPI.Employees.Dispatchers;
 using CchWebAPI.BenefitContributions.Data;
 using CchWebAPI.BenefitContributions.Dispatchers;
 using System.Web.Mvc;
-using CchWebAPI.EmployeeDW.Data;
-using CchWebAPI.EmployeeDW.Dispatchers;
-using CchWebAPI.Payrolls.Data;
-using CchWebAPI.Payrolls.Dispatchers;
+using CchWebAPI.Employee.Data;
+using CchWebAPI.Employee.Dispatchers;
+using CchWebAPI.Payroll.Data;
+using CchWebAPI.Payroll.Dispatchers;
 
 namespace CchWebAPI {
     public class AutofacConfig {

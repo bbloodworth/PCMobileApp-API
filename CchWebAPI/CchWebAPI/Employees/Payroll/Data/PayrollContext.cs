@@ -7,7 +7,7 @@ using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration;
 using System.Data.SqlClient;
 
-namespace CchWebAPI.Payrolls.Data
+namespace CchWebAPI.Payroll.Data
 {
     public class PayrollContext : ClearCostContext<PayrollContext>
     {

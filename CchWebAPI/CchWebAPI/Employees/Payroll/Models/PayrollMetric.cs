@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-namespace CchWebAPI.Payrolls.Models {
+namespace CchWebAPI.Payroll.Models {
     public class PayrollMetric {
         public string Category { get; set; }
         public string Name { get; set; }
