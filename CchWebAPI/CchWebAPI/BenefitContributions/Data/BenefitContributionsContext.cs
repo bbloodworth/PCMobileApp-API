@@ -6,9 +6,9 @@ using CchWebAPI.EmployeeDW.Data;
 
 namespace CchWebAPI.BenefitContributions.Data
 {
-    public class ContributionsContext: ClearCostContext<ContributionsContext>
+    public class BenefitContributionsContext: ClearCostContext<BenefitContributionsContext>
     {
-        public ContributionsContext(string connectionString) : 
+        public BenefitContributionsContext(string connectionString) : 
             base(new SqlConnection(connectionString)) { }
 
         public override void ConfigureModel(DbModelBuilder builder)
@@ -20,6 +20,10 @@ namespace CchWebAPI.BenefitContributions.Data
             builder.Configurations.Add(new ContributionType.ConfigurationTypeConfiguration());
             builder.Configurations.Add(new PayrollMetric.PayrollMetricConfiguration());
             builder.Configurations.Add(new PayrollAudit.PayrollAuditConfiguration());
+            builder.Configurations.Add(new BenefitEnrollment.BenefitEnrollmentConfiguration());
+            builder.Configurations.Add(new Member.MemberConfiguration());
+            builder.Configurations.Add(new BenefitPlanOption.BenefitPlanOptionConfiguration());
+            
         }
 
         public DbSet<Payroll> Payroll { get; set; }
@@ -29,5 +33,8 @@ namespace CchWebAPI.BenefitContributions.Data
         public DbSet<ContributionType> ContributionTypes { get; set; }
         public DbSet<PayrollMetric> PayrollMetrics { get; set; }
         public DbSet<PayrollAudit> PayrollAudits { get; set; }
+        public DbSet<BenefitEnrollment> BenefitEnrollments { get; set; }
+        public DbSet<Member> Members { get; set; }
+        public DbSet<BenefitPlanOption> BenefitPlanOptions { get; set; }
     }
 }

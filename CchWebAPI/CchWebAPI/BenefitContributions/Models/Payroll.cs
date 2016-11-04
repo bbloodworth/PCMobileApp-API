@@ -14,6 +14,7 @@ namespace CchWebAPI.BenefitContributions.Models
         public int PayrollAuditKey { get; set; }
         public string DocumentID { get; set; }
         public DateTime PayDate { get; set; }
+        public DateTime PayPeriodEndDate { get; set; }
         public bool CurrentPayPeriodInd { get; set; }
         public decimal PerPeriodQty { get; set; }
         public decimal PerPeriodAmt { get; set; }

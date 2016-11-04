@@ -610,7 +610,7 @@ namespace CchWebAPI
             #endregion
 
             #region v2
-
+            // TODO TAKE OUT EMPLOYERID/CCHID
             config.Routes.MapHttpRoute(
                 name: "EmployeesV2",
                 routeTemplate: "v2/{controller}/{employerId}/{cchId}",
@@ -631,6 +631,7 @@ namespace CchWebAPI
                     AuthenticatedAccountHandlers)
                 );
 
+            // TODO TAKE OUT EMPLOYERID/CCHID
             config.Routes.MapHttpRoute(
                 name: "PayrollV2",
                 routeTemplate: "v2/{controller}/{employerId}/{cchId}/dates-paid",
@@ -643,13 +644,14 @@ namespace CchWebAPI
 
             config.Routes.MapHttpRoute(
                 name: "BenefitContributionsV2",
-                routeTemplate: "v2/{controller}/{cchId}/{categoryCode}",
-                defaults: new { cchId = "0", categoryCode = "" },
-                constraints: new { controller = "Contributions" },
+                routeTemplate: "v2/{controller}/{categoryCode}",
+                defaults: new { action = "Get", categoryCode = "" },
+                constraints: new { controller = "BenefitContributions" },
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config),
                     AuthenticatedAccountHandlers)
                 );
+
             #endregion v2
         }
     }
