@@ -23,6 +23,10 @@ namespace CchWebAPI.Payrolls.Data
         public DbSet<Payroll> Payrolls { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<DateOfInterest> Dates { get; set; }
+
+        public DbSet<DeliveryMethod> DeliveryMethods { get; set; }
+        public DbSet<ContributionType> ContributionTypes { get; set; }
+        public DbSet<PayrollMetric> PayrollMetrics { get; set; }
     }
 
     [Table("Payroll_f")]
@@ -93,6 +97,7 @@ namespace CchWebAPI.Payrolls.Data
 
         }
     }
+
     [Table("Employee_d")]
     public class Employee {
         [Key]
@@ -275,56 +280,50 @@ namespace CchWebAPI.Payrolls.Data
             }
         }
     }
+
     [Table("Date_d")]
     public class DateOfInterest {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int DateKey { get; set; }
 
-        public DateTime FullDate { get; set; }
+        public DateTime? FullDate { get; set; }
 
-        [StringLength(50)]
+        [StringLength(10)]
         public string DayOfWeekName { get; set; }
 
-        [StringLength(20)]
-        public string DayOfWeekNum { get; set; }
+        public int? DayOfWeekNum { get; set; }
 
-        [StringLength(20)]
-        public string DayInMonthNum { get; set; }
+        public int? DayInMonthNum { get; set; }
 
-        [StringLength(20)]
-        public string JulianDayNum { get; set; }
+        public int? JulianDayNum { get; set; }
 
-        [StringLength(20)]
-        public string WeekInYearNum { get; set; }
+        public int? WeekInYearNum { get; set; }
 
-        [StringLength(50)]
+        [StringLength(10)]
         public string MonthName { get; set; }
 
-        [StringLength(20)]
-        public string MonthInYearNum { get; set; }
+        public int? MonthInYearNum { get; set; }
 
-        [StringLength(50)]
+        [StringLength(10)]
         public string QuarterName { get; set; }
 
-        [StringLength(20)]
-        public string QuarterInYearNum { get; set; }
+        public int? QuarterInYearNum { get; set; }
 
-        [StringLength(50)]
+        [StringLength(4)]
         public string CalendarYearName { get; set; }
 
-        [StringLength(20)]
-        public string CalendarYearNum { get; set; }
+        public int? CalendarYearNum { get; set; }
 
-        public bool WeekdayInd { get; set; }
+        public bool? WeekdayInd { get; set; }
 
-        public bool LastDayInMonthInd { get; set; }
+        public bool? LastDayInMonthInd { get; set; }
 
-        [StringLength(20)]
+        [Required]
+        [StringLength(6)]
         public string DWCreateUserID { get; set; }
 
-        public DateTime? DWCreateDate { get; set; }
-
-        public int? ETLControlID { get; set; }
+        public DateTime DWCreateDate { get; set; }
 
         public class DateOfInterestConfiguration : EntityTypeConfiguration<DateOfInterest> {
             public DateOfInterestConfiguration() {
@@ -332,5 +331,99 @@ namespace CchWebAPI.Payrolls.Data
                 HasKey(k => k.DateKey);
             }
         }
+    }
+
+    [Table("DeliveryMethod_d")]
+    public partial class DeliveryMethod {
+        [Key]
+        public int DeliveryMethodKey { get; set; }
+
+        [StringLength(10)]
+        public string DeliveryMethodCode { get; set; }
+
+        [StringLength(50)]
+        public string DeliveryMethodName { get; set; }
+
+        [StringLength(20)]
+        public string DWCreateUserID { get; set; }
+
+        public DateTime? DWCreateDate { get; set; }
+
+        [StringLength(20)]
+        public string DWUpdateUserID { get; set; }
+
+        public DateTime? DWUpdateDate { get; set; }
+
+        public int? ETLControlID { get; set; }
+    }
+
+    [Table("ContributionType_d")]
+    public partial class ContributionType {
+        [Key]
+        public int ContributionTypeKey { get; set; }
+
+        [Required]
+        [StringLength(10)]
+        public string ContributionTypeCode { get; set; }
+
+        [StringLength(50)]
+        public string ContributionTypeName { get; set; }
+
+        [StringLength(20)]
+        public string DWCreateUserID { get; set; }
+
+        public DateTime? DWCreateDate { get; set; }
+
+        [StringLength(20)]
+        public string DWUpdateUserID { get; set; }
+
+        public DateTime? DWUpdateDate { get; set; }
+
+        public int? ETLControlID { get; set; }
+    }
+
+    [Table("PayrollMetric_d")]
+    public partial class PayrollMetric {
+        [Key]
+        public int PayrollMetricKey { get; set; }
+
+        [StringLength(10)]
+        public string PayrollMetricCode { get; set; }
+
+        [StringLength(50)]
+        public string PayrollMetricName { get; set; }
+
+        [StringLength(100)]
+        public string PayrollMetricDesc { get; set; }
+
+        [StringLength(50)]
+        public string PayrollCategoryName { get; set; }
+
+        [StringLength(10)]
+        public string ReportingCategoryCode { get; set; }
+
+        public bool PreTaxInd { get; set; }
+
+        [StringLength(20)]
+        public string SourceCreateUserID { get; set; }
+
+        public DateTime? SourceCreateDate { get; set; }
+
+        [StringLength(20)]
+        public string SourceUpdateUserID { get; set; }
+
+        public DateTime? SourceUpdateDate { get; set; }
+
+        [StringLength(20)]
+        public string DWCreateUserID { get; set; }
+
+        public DateTime? DWCreateDate { get; set; }
+
+        [StringLength(20)]
+        public string DWUpdateUserID { get; set; }
+
+        public DateTime? DWUpdateDate { get; set; }
+
+        public int? ETLControlID { get; set; }
     }
 }

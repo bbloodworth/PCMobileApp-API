@@ -1,4 +1,4 @@
-﻿using CchWebAPI.EmployeeDW.Models;
+﻿using CchWebAPI.Payrolls.Models;
 using CchWebAPI.Payrolls.Data;
 using CchWebAPI.Payrolls.Dispatchers;
 using ClearCost.Net;
@@ -30,9 +30,22 @@ namespace CchWebAPI.Controllers {
 
             var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == employerId);
 
-            var result = await _dispatcher.ExecuteAsync(employer, cchId);
+            var result = await _dispatcher.GetDatePaidAsync(employer, cchId);
 
             return ApiResult<List<DatePaid>>.ValidResult(result, string.Empty);
+        }
+
+        public async Task<ApiResult<Paycheck>> GetPaycheck(int employerId, string documentId) {
+            if (String.IsNullOrWhiteSpace(DataWarehouse.GetEmployerConnectionString(employerId))) {
+                return ApiResult<Paycheck>.InvalidResult(string.Empty,
+                    "This feature is not configured for the specified employerId.");
+            }
+
+            var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == employerId);
+
+            var result = await _dispatcher.GetPaycheckAsync(employer, documentId);
+
+            return ApiResult<Paycheck>.ValidResult(result, string.Empty);
         }
     }
 }
