@@ -40,7 +40,7 @@ namespace CchWebAPI.Employee.Data {
             Employee employee = null;
 
             using (var ctx = new EmployeeContext(_connectionString)) {
-                employee = await ctx.Employees.FirstOrDefaultAsync(p => p.CCHID.Equals(cchId) && p.CurrentRecordInd.Value);
+                employee = await ctx.Employees.FirstOrDefaultAsync(p => p.Cchid.Equals(cchId) && p.CurrentRecordInd.Value);
             }
 
             return employee;
@@ -72,13 +72,13 @@ namespace CchWebAPI.Employee.Data {
                             Dependent = dependent
                         })
                     .Where(
-                        p => p.Dependent.CCHID.Equals(cchId)
+                        p => p.Dependent.Cchid.Equals(cchId)
                         && p.BenefitEnrollment.BenefitPlanOptionKey.Equals(planId)
                         //&& p.CurrentRecordInd
                     )
                     .Select(
                         p => new PlanMember {
-                            CchId = p.Dependent.CCHID,
+                            CchId = p.Dependent.Cchid,
                             FirstName = p.Dependent.MemberFirstName,
                             LastName = p.Dependent.MemberLastName
                         }

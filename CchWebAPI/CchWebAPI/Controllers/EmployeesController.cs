@@ -162,7 +162,7 @@ namespace CchWebAPI.Controllers {
             if (employee == null)
                 return;
 
-            CchId = employee.CCHID;
+            CchId = employee.Cchid;
             FirstName = employee.EmployeeFirstName;
             PreferredFirstName = employee.EmployeePreferredFirstName;
             LastName = employee.EmployeeLastName;

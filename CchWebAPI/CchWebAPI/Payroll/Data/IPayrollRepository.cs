@@ -45,13 +45,13 @@ namespace CchWebAPI.Payroll.Data {
                             Date = date
                         })
                     .Where(
-                        p => p.Employee.CCHID.Equals(cchId)
+                        p => p.Employee.Cchid.Equals(cchId)
                     )
                     .Select(
                         p => new DatePaid {
-                            CchId = p.Employee.CCHID,
+                            CchId = p.Employee.Cchid,
                             PaycheckDate = p.Date.FullDate.Value,
-                            DocumentId = p.Payroll.DocumentID
+                            DocumentId = p.Payroll.DocumentId
                         })
                     .Distinct()
                     .ToListAsync();
@@ -119,11 +119,11 @@ namespace CchWebAPI.Payroll.Data {
                             PayrollMetric = payrollMetric
                         })
                     .Where(
-                        p => p.Payroll.DocumentID == documentId
+                        p => p.Payroll.DocumentId == documentId
                     )
                     .Select(
                         p => new PaycheckDetails {
-                            CchId = p.Employee.CCHID,
+                            CchId = p.Employee.Cchid,
                             FirstName = p.Employee.EmployeeFirstName,
                             LastName = p.Employee.EmployeeLastName,
                             PrimaryWorkLocationCode = p.Employee.PrimaryWorkLocationCode,
@@ -131,7 +131,7 @@ namespace CchWebAPI.Payroll.Data {
                             StateOfWorkElectionCode = p.Employee.StateOfWorkElectionCode,
                             StateOfResidenceElectionCode = p.Employee.StateOfResidenceElectionCode,
                             PayDate = p.Date.FullDate,
-                            DocumentId = p.Payroll.DocumentID,
+                            DocumentId = p.Payroll.DocumentId,
                             DeliveryMethodCode = p.DeliveryMethod.DeliveryMethodCode,
                             PayrollCategoryName = p.PayrollMetric.PayrollCategoryName,
                             PayrollMetricName = p.PayrollMetric.PayrollMetricName,
@@ -140,8 +140,8 @@ namespace CchWebAPI.Payroll.Data {
                             PayrollMetricRate = p.Payroll.PayrollMetricRate,
                             PerPeriodQty = p.Payroll.PerPeriodQty,
                             PerPeriodAmt = p.Payroll.PerPeriodAmt,
-                            YTDQty = p.Payroll.YTDQty,
-                            YTDAmt = p.Payroll.YTDAmt
+                            YearToDateQuantity = p.Payroll.YtdQty,
+                            YearToDateAmount = p.Payroll.YtdAmt
                         }
                     )
                     .ToListAsync();

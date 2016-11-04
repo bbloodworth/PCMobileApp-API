@@ -22,7 +22,7 @@ namespace CchWebAPI.Payroll.Models {
         public decimal? PayrollMetricRate { get; set; }
         public decimal? PerPeriodQty { get; set; }
         public decimal? PerPeriodAmt { get; set; }
-        public decimal? YTDQty { get; set; }
-        public decimal? YTDAmt { get; set; }
+        public decimal? YearToDateQuantity { get; set; }
+        public decimal? YearToDateAmount { get; set; }
     }
 }

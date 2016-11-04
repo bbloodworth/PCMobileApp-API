@@ -160,10 +160,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="CardTests.cs" />
-    <Compile Include="EmployeesTests.cs" />
+    <Compile Include="EmployeeTests.cs" />
     <Compile Include="EnvironmentHelper.cs" />
     <Compile Include="ExperienceTests.cs" />
-    <Compile Include="IdCardsTests.cs" />
+    <Compile Include="IdCardTests.cs" />
     <Compile Include="MediaTests.cs" />
     <Compile Include="Media\WebApiServiceTests.cs" />
     <Compile Include="MessagingTests.cs" />
@@ -173,7 +173,7 @@
     <Compile Include="PlanInfoTests.cs" />
     <Compile Include="TestAccounts.cs" />
     <Compile Include="UserContentTests.cs" />
-    <Compile Include="SettingsTests.cs" />
+    <Compile Include="SettingTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\CCH Animations\DynamicAnimation\DynamicAnimation\DynamicAnimation.csproj">

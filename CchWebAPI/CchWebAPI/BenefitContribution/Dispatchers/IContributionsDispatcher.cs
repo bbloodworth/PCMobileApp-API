@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using ClearCost.Platform;
-using CchWebAPI.BenefitContributions.Models;
-using CchWebAPI.BenefitContributions.Data;
+using CchWebAPI.BenefitContribution.Models;
+using CchWebAPI.BenefitContribution.Data;
 
-namespace CchWebAPI.BenefitContributions.Dispatchers
+namespace CchWebAPI.BenefitContribution.Dispatchers
 {
     public interface IContributionsDispatcher
     {
-        Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchId, Employer employer, string categoryCode);
+        Task<List<Models.BenefitContribution>> GetContributionsByCchIdAsync(int cchId, Employer employer, string categoryCode);
     }
 
     public class ContributionsDispatcher: IContributionsDispatcher
@@ -21,7 +21,7 @@ namespace CchWebAPI.BenefitContributions.Dispatchers
             _repository = repository;
         }
         
-        public async Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchId, Employer employer, string categoryCode)
+        public async Task<List<Models.BenefitContribution>> GetContributionsByCchIdAsync(int cchId, Employer employer, string categoryCode)
         {
             if (cchId < 1)
             {

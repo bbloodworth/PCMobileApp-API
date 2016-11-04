@@ -1,6 +1,6 @@
 ﻿using CchWebAPI.Controllers;
-using CchWebAPI.EmployeeDW.Data;
-using CchWebAPI.EmployeeDW.Dispatchers;
+using CchWebAPI.Employee.Data;
+using CchWebAPI.Employee.Dispatchers;
 using CchWebAPI.Employees.Data;
 using CchWebAPI.Employees.Dispatchers;
 using ClearCost.Platform;

@@ -8,8 +8,8 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using ClearCost.Net;
 using ClearCost.Platform;
 using ClearCost.UnitTesting;
-using CchWebAPI.IdCards.Data;
-using CchWebAPI.IdCards.Dispatchers;
+using CchWebAPI.IdCard.Data;
+using CchWebAPI.IdCard.Dispatchers;
 
 
 namespace CchWebAPI.Tests {
@@ -39,7 +39,7 @@ namespace CchWebAPI.Tests {
 
             var ctx = UnitTestContext.Get(Environment.LocalWapi, "mary.smith@cchcaesars.com");
 
-            var result = ApiUtil.GetJsonResult<ApiResult<List<IdCard>>>(ctx, @"v2/IdCards");
+            var result = ApiUtil.GetJsonResult<ApiResult<List<IdCard.Data.IdCard>>>(ctx, @"v2/IdCards");
 
             Assert.IsNotNull(result);
         }

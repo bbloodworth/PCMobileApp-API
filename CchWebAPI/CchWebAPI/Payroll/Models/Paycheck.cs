@@ -66,8 +66,8 @@ namespace CchWebAPI.Payroll.Models {
                     Rate = payrollMetric.PayrollMetricRate,
                     PeriodQuantity = payrollMetric.PerPeriodQty,
                     PeriodAmount = payrollMetric.PerPeriodAmt,
-                    YtdQuantity = payrollMetric.YTDQty,
-                    YtdAmount = payrollMetric.YTDAmt
+                    YtdQuantity = payrollMetric.YearToDateQuantity,
+                    YtdAmount = payrollMetric.YearToDateAmount
                 });
             }
 

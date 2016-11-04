@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using CchWebAPI.BenefitContributions.Models;
+using CchWebAPI.BenefitContribution.Models;
 
-namespace CchWebAPI.BenefitContributions.Data
+namespace CchWebAPI.BenefitContribution.Data
 {
     public interface IContributionsRepository
     {
         void Initialize(string connectionString);
-        Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid, string categoryCode);
+        Task<List<Models.BenefitContribution>> GetContributionsByCchIdAsync(int cchid, string categoryCode);
     }
 
     public class ContributionsRepository: IContributionsRepository
@@ -22,7 +22,7 @@ namespace CchWebAPI.BenefitContributions.Data
             //_connectionString = "Data Source=KERMITDB\\MSPIGGY;Initial Catalog=CCH_DemoDWH;Trusted_Connection=true;Asynchronous Processing=True; MultipleActiveResultSets=true";
         }
 
-        public async Task<List<BenefitContribution>> GetContributionsByCchIdAsync(int cchid, string categoryCode)
+        public async Task<List<Models.BenefitContribution>> GetContributionsByCchIdAsync(int cchid, string categoryCode)
         {
             if (string.IsNullOrEmpty(_connectionString))
             {
@@ -64,10 +64,10 @@ namespace CchWebAPI.BenefitContributions.Data
 
             using (var context = new ContributionsContext(_connectionString))
             {
-                IQueryable<BenefitContribution> contributions =
-                    context.Payroll
+                IQueryable<Models.BenefitContribution> contributions =
+                    context.Payrolls
                     .Join(
-                        context.Dates, 
+                        context.DatesOfInterest, 
                         p => p.PayDateKey, d => d.DateKey, (p, d) => new 
                         {
                             p.EmployeeKey,
@@ -86,7 +86,7 @@ namespace CchWebAPI.BenefitContributions.Data
                             p => p.EmployeeKey, e => e.EmployeeKey, 
                             (p, e) => new 
                             {
-                                e.CCHID,
+                                e.Cchid,
                                 e.EmployeeFirstName,
                                 e.EmployeeLastName,
                                 p.EmployeeKey,
@@ -106,7 +106,7 @@ namespace CchWebAPI.BenefitContributions.Data
                                 p => p.DeliveryMethodKey, dm => dm.DeliveryMethodKey, 
                                 (p, dm) => new 
                                 {
-                                    p.CCHID,
+                                    p.Cchid,
                                     p.EmployeeFirstName,
                                     p.EmployeeLastName,
                                     p.EmployeeKey,
@@ -126,7 +126,7 @@ namespace CchWebAPI.BenefitContributions.Data
                                     p => p.ContributionTypeKey, ct => ct.ContributionTypeKey, 
                                     (p, ct) => new
                                     {
-                                        p.CCHID,
+                                        p.Cchid,
                                         p.EmployeeFirstName,
                                         p.EmployeeLastName,
                                         p.EmployeeKey,
@@ -148,7 +148,7 @@ namespace CchWebAPI.BenefitContributions.Data
                                         p => p.PayrollMetricKey, pm => pm.PayrollMetricKey, 
                                         (p, pm) => new 
                                         {
-                                            p.CCHID,
+                                            p.Cchid,
                                             p.EmployeeFirstName,
                                             p.EmployeeLastName,
                                             p.EmployeeKey,
@@ -173,9 +173,9 @@ namespace CchWebAPI.BenefitContributions.Data
                                         })
                                         .Join(context.PayrollAudits, 
                                             p => p.PayrollAuditKey, pa => pa.PayrollAuditKey,
-                                            (p, pa) => new BenefitContribution
+                                            (p, pa) => new Models.BenefitContribution
                                             {
-                                                CCHID = p.CCHID,
+                                                CCHID = p.Cchid,
                                                 AsOfDate = p.FullDate,
                                                 ContributionTypeCode = p.ContributionTypeCode,
                                                 ContributionTypeName = p.ContributionTypeName,
