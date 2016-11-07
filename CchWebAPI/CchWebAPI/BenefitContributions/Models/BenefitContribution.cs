@@ -15,7 +15,8 @@ namespace CchWebAPI.BenefitContributions.Models
 
     public class BenefitContributionDetail
     {
-        public int MemberId;
+        [JsonProperty("EmployeeId")]
+        public int CCHID;
         public string EmployeeFirstName;
         public string EmployeeLastName;
         public DateTime AsOfDate;
@@ -35,7 +36,7 @@ namespace CchWebAPI.BenefitContributions.Models
         public class BenefitContributionDetailConfiguration : EntityTypeConfiguration<BenefitContributionDetail> {
             public BenefitContributionDetailConfiguration() {
                 // TODO rename properties to more "client facing" names
-                Property(p => p.MemberId).HasColumnName("CCHID");
+               
             }
         }
     }

@@ -48,8 +48,8 @@ namespace CchWebAPI.BenefitContributions.Data
                         CCHID = a.CCHID
                     }).Where(
                         a => 
-                        a.CCHID == cchid
-                        && a.BenefitPlanTypeCode == categoryCode
+                        a.CCHID.Equals(cchid)
+                        && a.BenefitPlanTypeCode.Equals(categoryCode)
                     ).FirstOrDefault();
 
 
