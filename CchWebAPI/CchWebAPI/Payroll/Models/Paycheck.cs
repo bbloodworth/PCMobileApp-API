@@ -24,9 +24,9 @@ namespace CchWebAPI.Payroll.Models {
             InitProperties();
         }
 
-        public Paycheck(List<PaycheckDetails> query) {
+        public Paycheck(List<PaycheckDetails> list) {
             InitProperties();
-            Merge(query);
+            Merge(list);
         }
 
         private void InitProperties() {
@@ -35,41 +35,43 @@ namespace CchWebAPI.Payroll.Models {
             Taxes = new List<PayrollMetric>();
         }
 
-        private void Merge(List<PaycheckDetails> query) {
-            if (query.Count > 0) {
-                CchId = query[0].CchId;
-                FirstName = query[0].FirstName;
-                LastName = query[0].LastName;
-                PrimaryWorkLocationCode = query[0].PrimaryWorkLocationCode;
-                FederalTaxElectionCode = query[0].FederalTaxElectionCode;
-                StateOfWorkElectionCode = query[0].StateOfWorkElectionCode;
-                StateOfResidenceElectionCode = query[0].StateOfResidenceElectionCode;
-                PayDate = query[0].PayDate;
-                DocumentId = query[0].DocumentId;
-                DeliveryMethodCode = query[0].DeliveryMethodCode;
+        private void Merge(List<PaycheckDetails> list) {
+            if (list == null || list.Count == 0) {
+                return;
             }
-            
-            Earnings = MapPayrollMetricByCategory(query, "Earning");
-            Deductions = MapPayrollMetricByCategory(query, "Deduction");
-            Taxes = MapPayrollMetricByCategory(query, "Tax");
+
+            CchId = list[0].CchId;
+            FirstName = list[0].FirstName;
+            LastName = list[0].LastName;
+            PrimaryWorkLocationCode = list[0].PrimaryWorkLocationCode;
+            FederalTaxElectionCode = list[0].FederalTaxElectionCode;
+            StateOfWorkElectionCode = list[0].StateOfWorkElectionCode;
+            StateOfResidenceElectionCode = list[0].StateOfResidenceElectionCode;
+            PayDate = list[0].PayDate;
+            DocumentId = list[0].DocumentId;
+            DeliveryMethodCode = list[0].DeliveryMethodCode;
+
+            Earnings = MapPayrollMetricByCategory(list, "Earning");
+            Deductions = MapPayrollMetricByCategory(list, "Deduction");
+            Taxes = MapPayrollMetricByCategory(list, "Tax");
         }
 
-        private List<Models.PayrollMetric> MapPayrollMetricByCategory(List<PaycheckDetails> query, string category) {
-            List<Models.PayrollMetric> payrollMetrics = new List<Models.PayrollMetric>();
+        private List<Models.PayrollMetric> MapPayrollMetricByCategory(List<PaycheckDetails> list, string category) {
+            var payrollMetrics = new List<Models.PayrollMetric>();
 
-            foreach (var payrollMetric in query.Where(p => p.PayrollCategoryName == category)) {
+            list.Where(p => p.PayrollCategoryName == category).ToList().ForEach(p =>
                 payrollMetrics.Add(new Models.PayrollMetric {
-                    Category = payrollMetric.PayrollCategoryName,
-                    Name = payrollMetric.PayrollMetricName,
-                    PreTaxIndicator = payrollMetric.PreTaxInd,
-                    ContributionTypeCode = payrollMetric.ContributionTypeCode,
-                    Rate = payrollMetric.PayrollMetricRate,
-                    PeriodQuantity = payrollMetric.PerPeriodQty,
-                    PeriodAmount = payrollMetric.PerPeriodAmt,
-                    YtdQuantity = payrollMetric.YearToDateQuantity,
-                    YtdAmount = payrollMetric.YearToDateAmount
-                });
-            }
+                    Category = p.PayrollCategoryName,
+                    Name = p.PayrollMetricName,
+                    PreTaxIndicator = p.PreTaxInd,
+                    ContributionTypeCode = p.ContributionTypeCode,
+                    Rate = p.PayrollMetricRate,
+                    PeriodQuantity = p.PerPeriodQty,
+                    PeriodAmount = p.PerPeriodAmt,
+                    YtdQuantity = p.YearToDateQuantity,
+                    YtdAmount = p.YearToDateAmount
+                })
+            );
 
             return payrollMetrics;
         }

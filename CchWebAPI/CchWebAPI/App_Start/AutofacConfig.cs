@@ -17,6 +17,8 @@ using CchWebAPI.Employee.Data;
 using CchWebAPI.Employee.Dispatchers;
 using CchWebAPI.Payroll.Data;
 using CchWebAPI.Payroll.Dispatchers;
+using CchWebAPI.MedicalPlan.Data;
+using CchWebAPI.MedicalPlan.Dispatchers;
 
 namespace CchWebAPI {
     public class AutofacConfig {
@@ -28,6 +30,7 @@ namespace CchWebAPI {
             builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
             builder.RegisterType<PayrollRepository>().As<IPayrollRepository>();
             builder.RegisterType<ContributionsRepository>().As<IContributionsRepository>();
+            builder.RegisterType<MedicalPlanRepository>().As<IMedicalPlanRepository>();
 
             //Dispatchers
             builder.RegisterType<IdCardsDispatcher>().As<IIdCardsDispatcher>()
@@ -40,6 +43,8 @@ namespace CchWebAPI {
                 .UsingConstructor(typeof(IPayrollRepository));
             builder.RegisterType<ContributionsDispatcher>().As<IContributionsDispatcher>()
                 .UsingConstructor(typeof(IContributionsRepository));
+            builder.RegisterType<MedicalPlanDispatcher>().As<IMedicalPlanDispatcher>()
+                .UsingConstructor(typeof(IMedicalPlanRepository));
 
             //Controllers
             builder.RegisterType<IdCardsController>()
@@ -57,6 +62,9 @@ namespace CchWebAPI {
             builder.RegisterType<ContributionsController>()
                 .UsingConstructor(typeof(IContributionsDispatcher))
                 .InstancePerRequest();
+            builder.RegisterType<MedicalPlansController>()
+                .UsingConstructor(typeof(IMedicalPlanDispatcher))
+                .InstancePerRequest();
 
             //Filters
             builder.RegisterWebApiFilterProvider(config);
@@ -67,6 +75,8 @@ namespace CchWebAPI {
                 .AsWebApiAuthorizationFilterFor<EmployeesController>().InstancePerRequest();
             builder.Register(c => new V2AuthenticatedAuthorizationFilter())
                 .AsWebApiAuthorizationFilterFor<ContributionsController>().InstancePerRequest();
+            builder.Register(c => new V2AuthenticatedAuthorizationFilter())
+                .AsWebApiAuthorizationFilterFor<MedicalPlansController>().InstancePerRequest();
 
             var container = builder.Build();
 

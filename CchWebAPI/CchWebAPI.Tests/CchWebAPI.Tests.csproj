@@ -172,6 +172,7 @@
     <Compile Include="MembershipTests.cs" />
     <Compile Include="PlanInfoTests.cs" />
     <Compile Include="TestAccounts.cs" />
+    <Compile Include="MedicalPlanTests.cs" />
     <Compile Include="UserContentTests.cs" />
     <Compile Include="SettingTests.cs" />
   </ItemGroup>
