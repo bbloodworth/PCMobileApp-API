@@ -1,6 +1,6 @@
 ﻿using System.Data.Entity.ModelConfiguration;
 
-namespace CchWebAPI.BenefitContributions.Models {
+namespace CchWebAPI.BenefitContribution.Models {
     public class Member {
         public int MemberKey { get; set; }
         public int CCHID { get; set; }

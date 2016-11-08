@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity.ModelConfiguration;
 
-namespace CchWebAPI.BenefitContributions.Models
+namespace CchWebAPI.BenefitContribution.Models
 {
     public class Payroll
     {

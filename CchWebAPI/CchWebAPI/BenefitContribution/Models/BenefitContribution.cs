@@ -1,4 +1,4 @@
-﻿using Newtonsoft.Json;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration;
@@ -16,7 +16,7 @@ namespace CchWebAPI.BenefitContribution.Models
     public class BenefitContributionDetail
     {
         [JsonProperty("EmployeeId")]
-        public int CCHID;
+        public int CchId;
         public string EmployeeFirstName;
         public string EmployeeLastName;
         public DateTime AsOfDate;

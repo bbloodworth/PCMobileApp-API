@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Data.Entity.ModelConfiguration;
 
-namespace CchWebAPI.BenefitContributions.Models {
+namespace CchWebAPI.BenefitContribution.Models {
     public class BenefitPlanOption {
         public int BenefitPlanOptionKey { get; set; }
         public string BenefitPlanOptionName { get; set; }

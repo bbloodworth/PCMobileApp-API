@@ -9,7 +9,7 @@ namespace CchWebAPI.BenefitContribution.Dispatchers
 {
     public interface IBenefitContributionsDispatcher
     {
-        Task<BenefitContribution> GetContributionsByCchIdAsync(int cchId, Employer employer, string categoryCode);
+        Task<Models.BenefitContribution> GetContributionsByCchIdAsync(int cchId, Employer employer, string categoryCode);
     }
 
     public class ContributionsDispatcher: IBenefitContributionsDispatcher
@@ -21,7 +21,7 @@ namespace CchWebAPI.BenefitContribution.Dispatchers
             _repository = repository;
         }
         
-        public async Task<BenefitContribution> GetContributionsByCchIdAsync(int cchId, Employer employer, string categoryCode)
+        public async Task<Models.BenefitContribution> GetContributionsByCchIdAsync(int cchId, Employer employer, string categoryCode)
         {
             if (cchId < 1)
             {
@@ -41,7 +41,7 @@ namespace CchWebAPI.BenefitContribution.Dispatchers
 
             var benefitContributions = await _repository.GetContributionsByCchIdAsync(cchId, categoryCode);
 
-            var result = new BenefitContribution();
+            var result = new Models.BenefitContribution();
 
             result.BenefitContributions = benefitContributions;
 

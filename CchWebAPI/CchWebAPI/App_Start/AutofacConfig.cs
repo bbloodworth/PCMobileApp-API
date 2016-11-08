@@ -30,7 +30,6 @@ namespace CchWebAPI {
             builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
             builder.RegisterType<PayrollRepository>().As<IPayrollRepository>();
             builder.RegisterType<BenefitContributionsRepository>().As<IBenefitContributionsRepository>();
-            builder.RegisterType<ContributionsRepository>().As<IContributionsRepository>();
             builder.RegisterType<MedicalPlanRepository>().As<IMedicalPlanRepository>();
 
             //Dispatchers
@@ -44,8 +43,6 @@ namespace CchWebAPI {
                 .UsingConstructor(typeof(IPayrollRepository));
             builder.RegisterType<ContributionsDispatcher>().As<IBenefitContributionsDispatcher>()
                 .UsingConstructor(typeof(IBenefitContributionsRepository));
-            builder.RegisterType<ContributionsDispatcher>().As<IContributionsDispatcher>()
-                .UsingConstructor(typeof(IContributionsRepository));
             builder.RegisterType<MedicalPlanDispatcher>().As<IMedicalPlanDispatcher>()
                 .UsingConstructor(typeof(IMedicalPlanRepository));
 
@@ -78,7 +75,6 @@ namespace CchWebAPI {
                 .AsWebApiAuthorizationFilterFor<EmployeesController>().InstancePerRequest();
             builder.Register(c => new V2AuthenticatedAuthorizationFilter())
                 .AsWebApiAuthorizationFilterFor<BenefitContributionsController>().InstancePerRequest();
-                .AsWebApiAuthorizationFilterFor<ContributionsController>().InstancePerRequest();
             builder.Register(c => new V2AuthenticatedAuthorizationFilter())
                 .AsWebApiAuthorizationFilterFor<MedicalPlansController>().InstancePerRequest();
 

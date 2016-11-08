@@ -86,7 +86,7 @@ namespace CchWebAPI.BenefitContribution.Data
                 IQueryable<BenefitContributionDetail> contributions =
                     context.Payroll
                     .Join(
-                        context.DatesOfInterest, 
+                        context.Dates, 
                         p => p.PayDateKey, d => d.DateKey, (p, d) => new 
                         {
                             p.EmployeeKey,
@@ -105,7 +105,7 @@ namespace CchWebAPI.BenefitContribution.Data
                             p => p.EmployeeKey, e => e.EmployeeKey, 
                             (p, e) => new 
                             {
-                                e.Cchid,
+                                e.CchId,
                                 e.EmployeeFirstName,
                                 e.EmployeeLastName,
                                 p.EmployeeKey,
@@ -125,7 +125,7 @@ namespace CchWebAPI.BenefitContribution.Data
                                 p => p.DeliveryMethodKey, dm => dm.DeliveryMethodKey, 
                                 (p, dm) => new 
                                 {
-                                    p.Cchid,
+                                    p.CchId,
                                     p.EmployeeFirstName,
                                     p.EmployeeLastName,
                                     p.EmployeeKey,
@@ -145,7 +145,7 @@ namespace CchWebAPI.BenefitContribution.Data
                                     p => p.ContributionTypeKey, ct => ct.ContributionTypeKey, 
                                     (p, ct) => new
                                     {
-                                        p.Cchid,
+                                        p.CchId,
                                         p.EmployeeFirstName,
                                         p.EmployeeLastName,
                                         p.EmployeeKey,
@@ -167,7 +167,7 @@ namespace CchWebAPI.BenefitContribution.Data
                                         p => p.PayrollMetricKey, pm => pm.PayrollMetricKey, 
                                         (p, pm) => new 
                                         {
-                                            p.Cchid,
+                                            p.CchId,
                                             p.EmployeeFirstName,
                                             p.EmployeeLastName,
                                             p.EmployeeKey,
@@ -194,7 +194,7 @@ namespace CchWebAPI.BenefitContribution.Data
                                             p => p.PayrollAuditKey, pa => pa.PayrollAuditKey,
                     (p, pa) => new BenefitContributionDetail
                     {
-                        MemberId = p.CCHID,
+                        CchId = p.CchId,
                         AsOfDate = p.FullDate,
                         ContributionTypeCode = p.ContributionTypeCode,
                         ContributionTypeName = p.ContributionTypeName,
@@ -210,7 +210,7 @@ namespace CchWebAPI.BenefitContribution.Data
                         CurrentPayPeriodInd = p.CurrentPayPeriodInd
                                             }
                         ).Where(
-                            p => p.MemberId == cchid 
+                            p => p.CchId == cchid 
                             && ( string.IsNullOrEmpty(categoryCode) || p.ReportingCategoryCode.Equals(categoryCode) ) 
                             && p.CurrentPayPeriodInd
                         )
