@@ -9,6 +9,7 @@ using ClearCost.Security;
 using ClearCost.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using CchWebAPI.Areas.Animation.Controllers;
 
 namespace CchWebAPI.Tests {
     [TestClass]
@@ -60,7 +61,7 @@ namespace CchWebAPI.Tests {
 
             var cardWebRequest = new MemberCardWebRequest() {
                 CardToken = memberUrlsResult.Results[0].SecurityToken,
-                ToEmail = "dstrickland@clearcosthealth.com",
+                ToEmail = "bbloodworth@clearcosthealth.com",
                 Subject = "CanEmailIdCard Unit Test",
                 Message = "Unit test result"
             };
@@ -69,6 +70,22 @@ namespace CchWebAPI.Tests {
 
             Assert.IsNotNull(emailResult);
             Assert.AreEqual(HttpStatusCode.OK, emailResult.Item1);
+
+            //var cardController = new CardController();
+            //dynamic memberUrlsResult = cardController.GetMemberCardUrls("", TestAccounts.CaesarsAccounts.MarySmith.CchId);
+
+            //Assert.IsNotNull(memberUrlsResult);
+
+            //var cardWebRequest = new MemberCardWebRequest() {
+            //    CardToken = memberUrlsResult.Results[0].SecurityToken,
+            //    ToEmail = "dstrickland@clearcosthealth.com",
+            //    Subject = "CanEmailIdCard Unit Test",
+            //    Message = "Unit test result"
+            //};
+
+            //var emailResult = cardController.SendIdCardEmail(cardWebRequest);
+
+            //Assert.IsNotNull(emailResult);
         }
 
         [TestMethod]

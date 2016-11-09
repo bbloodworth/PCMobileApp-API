@@ -104,6 +104,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Drawing" />
@@ -176,7 +177,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Animation\Views\Settings\" />
-    <Folder Include="EmployeeDW\Models\" />
     <Folder Include="Employees\Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -251,36 +251,47 @@
     <Compile Include="Areas\PComm\Models\AuthMemberDataRequest.cs" />
     <Compile Include="Areas\PComm\Models\VideoEventLog.cs" />
     <Compile Include="Areas\PComm\PCommAreaRegistration.cs" />
-    <Compile Include="BenefitContributions\Data\BenefitContributionsContext.cs" />
-    <Compile Include="BenefitContributions\Data\IBenefitContributionsRepository.cs" />
-    <Compile Include="BenefitContributions\Dispatchers\IBenefitContributionsDispatcher.cs" />
-    <Compile Include="BenefitContributions\Models\BenefitContribution.cs" />
-    <Compile Include="BenefitContributions\Models\BenefitPlanOption.cs" />
-    <Compile Include="BenefitContributions\Models\ContributionType.cs" />
-    <Compile Include="BenefitContributions\Models\Dates.cs" />
-    <Compile Include="BenefitContributions\Models\DeliveryMethod.cs" />
-    <Compile Include="BenefitContributions\Models\EmployeeMember.cs" />
-    <Compile Include="BenefitContributions\Models\BenefitEnrollment.cs" />
-    <Compile Include="BenefitContributions\Models\Member.cs" />
-    <Compile Include="BenefitContributions\Models\Payroll.cs" />
-    <Compile Include="BenefitContributions\Models\PayrollAudit.cs" />
-    <Compile Include="BenefitContributions\Models\PayrollMetric.cs" />
+    <Compile Include="BenefitContribution\Data\BenefitContributionsContext.cs" />
+    <Compile Include="BenefitContribution\Data\IBenefitContributionsRepository.cs" />
+    <Compile Include="BenefitContribution\Dispatchers\IBenefitContributionsDispatcher.cs" />
+    <Compile Include="BenefitContribution\Models\BenefitContribution.cs" />
+    <Compile Include="BenefitContribution\Models\BenefitPlanOption.cs" />
+    <Compile Include="BenefitContribution\Models\ContributionType.cs" />
+    <Compile Include="BenefitContribution\Models\Dates.cs" />
+    <Compile Include="BenefitContribution\Models\DeliveryMethod.cs" />
+    <Compile Include="BenefitContribution\Models\EmployeeMember.cs" />
+    <Compile Include="BenefitContribution\Models\BenefitEnrollment.cs" />
+    <Compile Include="BenefitContribution\Models\Member.cs" />
+    <Compile Include="BenefitContribution\Models\Payroll.cs" />
+    <Compile Include="BenefitContribution\Models\PayrollAudit.cs" />
+    <Compile Include="BenefitContribution\Models\PayrollMetric.cs" />
     <Compile Include="Controllers\BenefitContributionsController.cs" />
     <Compile Include="Controllers\IdCardsController.cs" />
+    <Compile Include="Controllers\MedicalPlansController.cs" />
     <Compile Include="Controllers\PayrollController.cs" />
     <Compile Include="DataWarehouse.cs" />
-    <Compile Include="Payrolls\Models\DatePaid.cs" />
-    <Compile Include="Payrolls\Data\PayrollContext.cs" />
-    <Compile Include="Payrolls\Data\IPayrollRepository.cs" />
-    <Compile Include="Payrolls\Dispatchers\IPayrollDispatcher.cs" />
-    <Compile Include="EmployeeDW\Data\EmployeeContext.cs" />
-    <Compile Include="EmployeeDW\Data\IEmployeeRepository.cs" />
-    <Compile Include="EmployeeDW\Dispatchers\IEmployeeDispatcher.cs" />
+    <Compile Include="Employee\Models\PlanMember.cs" />
+    <Compile Include="MedicalPlan\Data\IMedicalPlanRepository.cs" />
+    <Compile Include="MedicalPlan\Data\MedicalPlanContext.cs" />
+    <Compile Include="MedicalPlan\Dispatchers\IMedicalPlanDispatcher.cs" />
+    <Compile Include="MedicalPlan\Models\Deductible.cs" />
+    <Compile Include="MedicalPlan\Models\InsuranceCoverageCategory.cs" />
+    <Compile Include="MedicalPlan\Models\InsuranceNetworkCategory.cs" />
+    <Compile Include="MedicalPlan\Models\MedicalPlan.cs" />
+    <Compile Include="MedicalPlan\Models\MedicalPlanAccumulation.cs" />
+    <Compile Include="MedicalPlan\Models\OutOfPocketMaximum.cs" />
+    <Compile Include="Payroll\Models\DatePaid.cs" />
+    <Compile Include="Payroll\Data\PayrollContext.cs" />
+    <Compile Include="Payroll\Data\IPayrollRepository.cs" />
+    <Compile Include="Payroll\Dispatchers\IPayrollDispatcher.cs" />
+    <Compile Include="Employee\Data\EmployeeContext.cs" />
+    <Compile Include="Employee\Data\IEmployeeRepository.cs" />
+    <Compile Include="Employee\Dispatchers\IEmployeeDispatcher.cs" />
     <Compile Include="Extensions\ApiControllerExt.cs" />
     <Compile Include="Filters\V2AuthenticatedAuthorizationFilter.cs" />
-    <Compile Include="IdCards\Data\IIdCardsRepository.cs" />
-    <Compile Include="IdCards\Dispatchers\IIdCardsDispatcher.cs" />
-    <Compile Include="IdCards\Data\IdCardContext.cs" />
+    <Compile Include="IdCard\Data\IIdCardsRepository.cs" />
+    <Compile Include="IdCard\Dispatchers\IIdCardsDispatcher.cs" />
+    <Compile Include="IdCard\Data\IdCardContext.cs" />
     <Compile Include="Configuration\SecurityConfiguration.cs" />
     <Compile Include="Controllers\HandshakeController.cs" />
     <Compile Include="Controllers\MemberCardController.cs" />
@@ -301,14 +312,14 @@
     <Compile Include="Handlers\LogRequestAndResponseHandler.cs" />
     <Compile Include="Handlers\TimeoutHandler.cs" />
     <Compile Include="Content\Configuration\EmailConfiguration.cs" />
-    <Compile Include="IdCards\Models\CardDetail.cs" />
-    <Compile Include="IdCards\Models\CardToken.cs" />
+    <Compile Include="IdCard\Models\CardDetail.cs" />
+    <Compile Include="IdCard\Models\CardToken.cs" />
     <Compile Include="Models\Handshake.cs" />
     <Compile Include="Models\HandshakeRequest.cs" />
     <Compile Include="Areas\PComm\Models\HealthPlanSummary.cs" />
-    <Compile Include="Payrolls\Models\Paycheck.cs" />
-    <Compile Include="Payrolls\Models\PayrollMetric.cs" />
-    <Compile Include="Payrolls\Models\PaycheckDetailsQueryResult.cs" />
+    <Compile Include="Payroll\Models\Paycheck.cs" />
+    <Compile Include="Payroll\Models\PayrollMetric.cs" />
+    <Compile Include="Payroll\Models\PaycheckDetails.cs" />
     <Compile Include="PreApplicationStart.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -496,6 +507,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Project_Readme.html" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
