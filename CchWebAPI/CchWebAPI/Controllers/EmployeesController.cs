@@ -1,5 +1,5 @@
 ﻿using CchWebAPI.Employees.Dispatchers;
-using CchWebAPI.EmployeeDW.Dispatchers;
+using CchWebAPI.Employee.Dispatchers;
 using ClearCost.Net;
 using ClearCost.Platform;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
-using CchWebAPI.EmployeeDW.Models;
+using CchWebAPI.Employee.Models;
 
 namespace CchWebAPI.Controllers {
     //[RoutePrefix("v2")]
@@ -26,7 +26,7 @@ namespace CchWebAPI.Controllers {
             _dispatcher = new EmployeesDispatcher(new Employees.Data.EmployeesRepository());
         }
         private void InitDispatcherDW() {
-            _dispatcherDW = new EmployeeDispatcher(new EmployeeDW.Data.EmployeeRepository());
+            _dispatcherDW = new EmployeeDispatcher(new CchWebAPI.Employee.Data.EmployeeRepository());
         }
 
         [HttpGet]
@@ -122,7 +122,7 @@ namespace CchWebAPI.Controllers {
                 MapProperties(employee);
             }
         }
-        public Employee(EmployeeDW.Data.Employee employee) {
+        public Employee(CchWebAPI.Employee.Data.Employee employee) {
             OrganizationLevels = new List<OrganizationLevel>();
             PrimaryWorkLocation = new WorkLocation();
             Job = new Job();
@@ -158,11 +158,11 @@ namespace CchWebAPI.Controllers {
             MedicalPlanType = employee.MedicalPlanType;
             RxPlanType = employee.RXPlanType;
         }
-        public void MapProperties(EmployeeDW.Data.Employee employee) {
+        public void MapProperties(CchWebAPI.Employee.Data.Employee employee) {
             if (employee == null)
                 return;
 
-            CchId = employee.CCHID;
+            CchId = employee.Cchid;
             FirstName = employee.EmployeeFirstName;
             PreferredFirstName = employee.EmployeePreferredFirstName;
             LastName = employee.EmployeeLastName;

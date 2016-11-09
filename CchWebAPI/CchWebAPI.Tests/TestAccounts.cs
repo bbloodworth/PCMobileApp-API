@@ -78,15 +78,9 @@ namespace CchWebAPI.Tests {
         public int CchId { get; set; }
         public string PaycheckDocumentId { get; set; }
         public int[] BenefitPlans { get; set; }
+        public int MedicalPlanId { get; set; }
 
         public Account() { }
-        //public Account(string username, string password, string fullSsn, string secretAnswer, string phone) {
-        //    Username = username;
-        //    Password = password;
-        //    FullSsn = fullSsn;
-        //    SecretAnswer = secretAnswer;
-        //    Phone = phone;
-        //}
     }
 
     public class TestAccount {
@@ -124,7 +118,8 @@ namespace CchWebAPI.Tests {
                 EmployerId = 21,
                 CchId = 63841,
                 PaycheckDocumentId = "123",
-                BenefitPlans = new int[] { 49 }
+                BenefitPlans = new int[] { 49 },
+                MedicalPlanId = 45
             };
 
             return account;
