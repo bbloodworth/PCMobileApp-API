@@ -77,15 +77,10 @@ namespace CchWebAPI.Tests {
         public int EmployerId { get; set; }
         public int CchId { get; set; }
         public string PaycheckDocumentId { get; set; }
+        public int[] BenefitPlans { get; set; }
+        public int MedicalPlanId { get; set; }
 
         public Account() { }
-        //public Account(string username, string password, string fullSsn, string secretAnswer, string phone) {
-        //    Username = username;
-        //    Password = password;
-        //    FullSsn = fullSsn;
-        //    SecretAnswer = secretAnswer;
-        //    Phone = phone;
-        //}
     }
 
     public class TestAccount {
@@ -112,7 +107,7 @@ namespace CchWebAPI.Tests {
         }
 
         private Account GetMaryS() {
-            return new Account {
+            var account = new Account {
                 Username = "mary.s@cchdemo.com",
                 Password = "password1",
                 FullSsn = "999993333",
@@ -122,8 +117,12 @@ namespace CchWebAPI.Tests {
                 AuthHash = "631B756ADC1A2347E1815DD719BB59E1A032C345AE8C6539C22C568CC5DCBBF0D55A0BF28C3A0AC638D7C399E469A0658CB2E028517F521B98DE3D6192BA5AB08D52BF36035C6FB812F53F89F1EB83BF5BEDC6688BEDACFAB657C15673335CA64FD7BF1C1334354B89E41E025E8479D0",
                 EmployerId = 21,
                 CchId = 63841,
-                PaycheckDocumentId = "123"
+                PaycheckDocumentId = "123",
+                BenefitPlans = new int[] { 49 },
+                MedicalPlanId = 45
             };
+
+            return account;
         }
     }
     #endregion

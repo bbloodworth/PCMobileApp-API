@@ -2,21 +2,18 @@
 using System.Text;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using ClearCost.UnitTesting;
-using System.Net;
-using ClearCost.Net;
-using CchWebAPI.Controllers;
-using CchWebAPI.Payroll.Dispatchers;
-using CchWebAPI.Payroll.Data;
 using System.Threading.Tasks;
+using CchWebAPI.MedicalPlan.Data;
+using CchWebAPI.MedicalPlan.Dispatchers;
+using CchWebAPI.Controllers;
 
 namespace CchWebAPI.Tests {
     /// <summary>
-    /// Summary description for Payroll
+    /// Summary description for UnitTest1
     /// </summary>
     [TestClass]
-    public class PayrollTests {
-        public PayrollTests() {
+    public class MedicalPlanTests {
+        public MedicalPlanTests() {
             //
             // TODO: Add constructor logic here
             //
@@ -60,30 +57,34 @@ namespace CchWebAPI.Tests {
         #endregion
 
         [TestMethod]
-        public async Task CanGetDatesPaid() {
+        public async Task CanGetMedicalPlan() {
             foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
-                var repository = new PayrollRepository();
+                var repository = new MedicalPlanRepository();
                 repository.Initialize(DataWarehouse.GetEmployerConnectionString(testAccount.EmployerId));
 
-                var dispatcher = new PayrollDispatcher(repository);
-                var controller = new PayrollController(dispatcher);
+                var dispatcher = new MedicalPlanDispatcher(repository);
+                var controller = new MedicalPlansController(dispatcher);
 
-                var result = await controller.GetDatesPaidAsync(testAccount.EmployerId, testAccount.CchId);
+                var result = await controller.GetMedicalPlanAsync(testAccount.EmployerId, testAccount.MedicalPlanId);
 
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.IsSuccess);
             }
         }
         [TestMethod]
-        public async Task CanGetPaycheck() {
+        public async Task CanGetMedicalPlanAccumulation() {
             foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
-                var repository = new PayrollRepository();
+                var repository = new MedicalPlanRepository();
                 repository.Initialize(DataWarehouse.GetEmployerConnectionString(testAccount.EmployerId));
 
-                var dispatcher = new PayrollDispatcher(repository);
-                var controller = new PayrollController(dispatcher);
+                var dispatcher = new MedicalPlanDispatcher(repository);
+                var controller = new MedicalPlansController(dispatcher);
 
-                var result = await controller.GetPaycheck(testAccount.EmployerId, testAccount.PaycheckDocumentId);
+                var result = await controller.GetMedicalPlanAccumulationAsync(
+                    testAccount.EmployerId,
+                    testAccount.CchId,
+                    testAccount.MedicalPlanId,
+                    DateTime.UtcNow.Year);
 
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.IsSuccess);
