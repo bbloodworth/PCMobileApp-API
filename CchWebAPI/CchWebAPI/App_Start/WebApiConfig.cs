@@ -632,16 +632,6 @@ namespace CchWebAPI
                 );
 
             config.Routes.MapHttpRoute(
-                name: "EmployeesV2_GetEmployeeBenefitPlanMembers",
-                routeTemplate: "v2/{controller}/{employerId}/{cchId}/benefit-plans/{planId}/members",
-                defaults: new { action = "GetEmployeeBenefitPlanMembers", employerId = "0", cchId = "0", planId = "0" },
-                constraints: new { controller = "Employees" },
-                handler: HttpClientFactory.CreatePipeline(
-                    new HttpControllerDispatcher(config),
-                    AuthenticatedAccountHandlers)
-                );
-
-            config.Routes.MapHttpRoute(
                 name: "IdCardsV2",
                 routeTemplate: "v2/{controller}",
                 defaults: new { },
