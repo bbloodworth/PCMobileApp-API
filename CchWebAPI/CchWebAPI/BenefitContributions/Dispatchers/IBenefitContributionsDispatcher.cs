@@ -48,6 +48,7 @@ namespace CchWebAPI.BenefitContributions.Dispatchers
             // TODO actually get these values
             result.PayrollFileReceivedDate = await _repository.GetMaxPayrollDate();            
             result.BenefitContributionType = await _repository.GetBenefitName(cchId, categoryCode);
+            result.PercentageElected = await _repository.GetPercentageElected(cchId, categoryCode);
 
             // Business Logic for PayrollMetricName/PayrollFileReceived
             return result;

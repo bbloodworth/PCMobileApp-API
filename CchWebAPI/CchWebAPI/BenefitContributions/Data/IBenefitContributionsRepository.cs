@@ -12,6 +12,7 @@ namespace CchWebAPI.BenefitContributions.Data
         Task<List<BenefitContributionDetail>> GetContributionsByCchIdAsync(int cchid, string categoryCode);
         Task<DateTime> GetMaxPayrollDate();
         Task<String> GetBenefitName(int cchid, string categoryCode);
+        Task<List<PercentageElected>> GetPercentageElected(int cchid, string categoryCode);
 
     }
 
@@ -59,6 +60,61 @@ namespace CchWebAPI.BenefitContributions.Data
 
 
         }
+
+        public async Task<List<PercentageElected>> GetPercentageElected(int cchid, string categoryCode) {
+            List<PercentageElected> result = new List<PercentageElected>();
+
+            if (string.IsNullOrEmpty(_connectionString)) {
+                throw new InvalidOperationException("Failed to initialize Benefit Contributions repository");
+            }
+            if (cchid < 1) {
+                throw new InvalidOperationException("Invalid CCHID");
+            }
+
+            using (var context = new BenefitContributionsContext(_connectionString)) {
+                var query = context.BenefitEnrollments.
+                    Join(context.Members,
+                    be => be.EnrolledMemberKey, m => m.MemberKey,
+                    (be, m) => new {
+                        MemberKey = be.EnrolledMemberKey,
+                        BenefitPlanOptionKey = be.BenefitPlanOptionKey,
+                        CCHID = m.CCHID,
+                        Percent = be.EmployeeAnnualContributionPct,
+
+                    }).
+                    Join(context.BenefitPlanOptions,
+                    a => a.BenefitPlanOptionKey, bpo => bpo.BenefitPlanOptionKey,
+                    (a, bpo) => new PercentageElected {
+                        ContributionName = bpo.BenefitTypeName,
+                        Percentage = a.Percent,
+                        CCHID = a.CCHID,
+                        BenefitPlanTypeCode = bpo.BenefitPlanTypeCode
+                    }).
+                    Where(
+                        a =>
+                        a.CCHID.Equals(cchid)
+                        && a.BenefitPlanTypeCode.Equals(categoryCode)
+                    );
+                result = query.ToList();
+            }
+
+            return result;
+            /*
+
+                 SELECT 
+                  BenefitTypeName, EmployeeAnnualContributionPct
+                FROM BenefitEnrollment_f f
+                INNER JOIN Member_d m
+                  ON f.EnrolledMemberKey = m.MemberKey 
+                INNER JOIN BenefitPlanOption_d bpo
+                  ON f.BenefitPlanOptionKey = bpo.BenefitPlanOptionKey
+                WHERE 
+                  m.CCHID = 63841
+                  AND BenefitPlanTypeCode = '401K'
+                             */
+
+            }
+
 
         public async Task<DateTime> GetMaxPayrollDate() {
             if (string.IsNullOrEmpty(_connectionString)) {
