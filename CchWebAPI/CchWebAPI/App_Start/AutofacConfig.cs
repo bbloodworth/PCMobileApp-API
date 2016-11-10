@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Web.Http;
+using System.Web.Http;
 
 using Autofac;
 using Autofac.Integration.WebApi;
@@ -12,9 +13,10 @@ using CchWebAPI.Employees.Data;
 using CchWebAPI.Employees.Dispatchers;
 using CchWebAPI.BenefitContributions.Data;
 using CchWebAPI.BenefitContributions.Dispatchers;
-using System.Web.Mvc;
 using CchWebAPI.EmployeeDW.Data;
 using CchWebAPI.EmployeeDW.Dispatchers;
+using CchWebAPI.PaidTimeOff.Data;
+using CchWebAPI.PaidTimeOff.Dispatchers;
 using CchWebAPI.Payrolls.Data;
 using CchWebAPI.Payrolls.Dispatchers;
 
@@ -28,6 +30,7 @@ namespace CchWebAPI {
             builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
             builder.RegisterType<PayrollRepository>().As<IPayrollRepository>();
             builder.RegisterType<BenefitContributionsRepository>().As<IBenefitContributionsRepository>();
+            builder.RegisterType<PaidTimeOffRepository>().As<IPaidTimeOffRepository>();
 
             //Dispatchers
             builder.RegisterType<IdCardsDispatcher>().As<IIdCardsDispatcher>()
@@ -40,6 +43,8 @@ namespace CchWebAPI {
                 .UsingConstructor(typeof(IPayrollRepository));
             builder.RegisterType<ContributionsDispatcher>().As<IBenefitContributionsDispatcher>()
                 .UsingConstructor(typeof(IBenefitContributionsRepository));
+            builder.RegisterType<PaidTimeOffDispatcher>().As<IPaidTimeOffDispatcher>()
+                .UsingConstructor(typeof(IPaidTimeOffRepository));
 
             //Controllers
             builder.RegisterType<IdCardsController>()
@@ -56,6 +61,9 @@ namespace CchWebAPI {
                 .InstancePerRequest();
             builder.RegisterType<BenefitContributionsController>()
                 .UsingConstructor(typeof(IBenefitContributionsDispatcher))
+                .InstancePerRequest();
+            builder.RegisterType<PaidTimeOffController>()
+                .UsingConstructor(typeof(IPaidTimeOffDispatcher))
                 .InstancePerRequest();
 
             //Filters

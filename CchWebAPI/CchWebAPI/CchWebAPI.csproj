@@ -178,6 +178,7 @@
     <Folder Include="Areas\Animation\Views\Settings\" />
     <Folder Include="EmployeeDW\Models\" />
     <Folder Include="Employees\Models\" />
+    <Folder Include="Views\PaidTimeOff\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
@@ -267,8 +268,16 @@
     <Compile Include="BenefitContributions\Models\PayrollMetric.cs" />
     <Compile Include="Controllers\BenefitContributionsController.cs" />
     <Compile Include="Controllers\IdCardsController.cs" />
+    <Compile Include="Controllers\PaidTimeOffController.cs" />
     <Compile Include="Controllers\PayrollController.cs" />
     <Compile Include="DataWarehouse.cs" />
+    <Compile Include="PaidTimeOff\Data\PaidTimeOffContext.cs" />
+    <Compile Include="PaidTimeOff\Data\IPaidTimeOffRepository.cs" />
+    <Compile Include="PaidTimeOff\Dispatchers\IPaidTimeOffDispatcher.cs" />
+    <Compile Include="PaidTimeOff\Models\Dates.cs" />
+    <Compile Include="PaidTimeOff\Models\PaidTimeOffTable.cs" />
+    <Compile Include="PaidTimeOff\Models\PayrollMetric.cs" />
+    <Compile Include="PaidTimeOff\Models\PTOSnapshot.cs" />
     <Compile Include="Payrolls\Models\DatePaid.cs" />
     <Compile Include="Payrolls\Data\PayrollContext.cs" />
     <Compile Include="Payrolls\Data\IPayrollRepository.cs" />

@@ -194,7 +194,7 @@ namespace CchWebAPI.BenefitContributions.Data
                                             p => p.PayrollAuditKey, pa => pa.PayrollAuditKey,
                     (p, pa) => new BenefitContributionDetail
                     {
-                        MemberId = p.CCHID,
+                        CCHID = p.CCHID,
                         AsOfDate = p.FullDate,
                         ContributionTypeCode = p.ContributionTypeCode,
                         ContributionTypeName = p.ContributionTypeName,
@@ -210,7 +210,7 @@ namespace CchWebAPI.BenefitContributions.Data
                         CurrentPayPeriodInd = p.CurrentPayPeriodInd
                                             }
                         ).Where(
-                            p => p.MemberId == cchid 
+                            p => p.CCHID == cchid 
                             && ( string.IsNullOrEmpty(categoryCode) || p.ReportingCategoryCode.Equals(categoryCode) ) 
                             && p.CurrentPayPeriodInd
                         )

@@ -662,6 +662,16 @@ namespace CchWebAPI
                     AuthenticatedAccountHandlers)
                 );
 
+            config.Routes.MapHttpRoute(
+                name: "PaidTimeOffDetails",
+                routeTemplate: "v2/{controller}",
+                defaults: new { action = "Get" },
+                constraints: new { controller = "PaidTimeOff" },
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+
             #endregion v2
         }
     }
