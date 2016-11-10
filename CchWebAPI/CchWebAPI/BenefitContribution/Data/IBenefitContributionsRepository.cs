@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using CchWebAPI.BenefitContribution.Models;
+using System.Data.Entity;
 
 namespace CchWebAPI.BenefitContribution.Data
 {
@@ -10,9 +11,9 @@ namespace CchWebAPI.BenefitContribution.Data
     {
         void Initialize(string connectionString);
         Task<List<BenefitContributionDetail>> GetContributionsByCchIdAsync(int cchid, string categoryCode);
-        Task<DateTime> GetMaxPayrollDate();
-        Task<String> GetBenefitName(int cchid, string categoryCode);
-        Task<List<PercentageElected>> GetPercentageElected(int cchid, string categoryCode);
+        Task<DateTime> GetMaxPayrollDateAsync();
+        Task<String> GetBenefitNameAsync(int cchid, string categoryCode);
+        Task<List<PercentageElected>> GetPercentageElectedAsync(int cchid, string categoryCode);
 
     }
 
@@ -25,44 +26,45 @@ namespace CchWebAPI.BenefitContribution.Data
             _connectionString = connectionString;
         }
 
-        public async Task<String> GetBenefitName(int cchid, string categoryCode) {
+        public async Task<String> GetBenefitNameAsync(int cchid, string categoryCode) {
             if (string.IsNullOrEmpty(_connectionString)) {
                 throw new InvalidOperationException("Failed to initialize Benefit Contributions repository");
             }
 
             using (var context = new BenefitContributionsContext(_connectionString)) {
 
-                var x = context.BenefitEnrollments.
+                var res = await context.BenefitEnrollments.
                     Join(context.Members,
-                    be => be.EnrolledMemberKey, m => m.MemberKey,
-                    (be, m) => new {
-                        MemberKey = be.EnrolledMemberKey,
-                        BenefitPlanOptionKey = be.BenefitPlanOptionKey,
-                        CCHID = m.CCHID
-                    }).Join(context.BenefitPlanOptions,
-                    a => a.BenefitPlanOptionKey, bpo => bpo.BenefitPlanOptionKey,
-                    (a, bpo) => new {
-                        PayerName = bpo.PayerName,
-                        BenefitPlanOptionName = bpo.BenefitPlanOptionName,
-                        BenefitPlanTypeCode = bpo.BenefitPlanTypeCode,
-                        MemberId = a.MemberKey,
-                        CCHID = a.CCHID
-                    }).Where(
+                        be => be.EnrolledMemberKey, m => m.MemberKey,
+                        (be, m) => new {
+                            MemberKey = be.EnrolledMemberKey,
+                            BenefitPlanOptionKey = be.BenefitPlanOptionKey,
+                            CCHID = m.CCHID })
+                    .Join(context.BenefitPlanOptions,
+                        a => a.BenefitPlanOptionKey, bpo => bpo.BenefitPlanOptionKey,
+                        (a, bpo) => new {
+                            PayerName = bpo.PayerName,
+                            BenefitPlanOptionName = bpo.BenefitPlanOptionName,
+                            BenefitPlanTypeCode = bpo.BenefitPlanTypeCode,
+                            MemberId = a.MemberKey,
+                            CCHID = a.CCHID }
+                        )
+                    .Where(
                         a => 
                         a.CCHID.Equals(cchid)
                         && a.BenefitPlanTypeCode.Equals(categoryCode)
-                    ).FirstOrDefault();
+                    ).FirstOrDefaultAsync();
 
 
-                return String.Format("{0} {1}", x.PayerName, categoryCode);
+                return String.Format("{0} {1}", res.PayerName, categoryCode);
 
             }
 
 
         }
 
-        public async Task<List<PercentageElected>> GetPercentageElected(int cchid, string categoryCode) {
-            List<PercentageElected> result = new List<PercentageElected>();
+        public async Task<List<PercentageElected>> GetPercentageElectedAsync(int cchid, string categoryCode) {
+            List<PercentageElected> results = new List<PercentageElected>();
 
             if (string.IsNullOrEmpty(_connectionString)) {
                 throw new InvalidOperationException("Failed to initialize Benefit Contributions repository");
@@ -72,8 +74,8 @@ namespace CchWebAPI.BenefitContribution.Data
             }
 
             using (var context = new BenefitContributionsContext(_connectionString)) {
-                var query = context.BenefitEnrollments.
-                    Join(context.Members,
+                results = await context.BenefitEnrollments
+                    .Join(context.Members,
                     be => be.EnrolledMemberKey, m => m.MemberKey,
                     (be, m) => new {
                         MemberKey = be.EnrolledMemberKey,
@@ -81,48 +83,35 @@ namespace CchWebAPI.BenefitContribution.Data
                         CCHID = m.CCHID,
                         Percent = be.EmployeeAnnualContributionPct,
 
-                    }).
-                    Join(context.BenefitPlanOptions,
+                    })
+                    .Join(context.BenefitPlanOptions,
                     a => a.BenefitPlanOptionKey, bpo => bpo.BenefitPlanOptionKey,
                     (a, bpo) => new PercentageElected {
                         ContributionName = bpo.BenefitTypeName,
                         Percentage = a.Percent,
                         CCHID = a.CCHID,
                         BenefitPlanTypeCode = bpo.BenefitPlanTypeCode
-                    }).
-                    Where(
+                    })
+                    .Where(
                         a =>
                         a.CCHID.Equals(cchid)
                         && a.BenefitPlanTypeCode.Equals(categoryCode)
-                    );
-                result = query.ToList();
+                    ).ToListAsync();
+                
             }
 
-            return result;
-            /*
-
-                 SELECT 
-                  BenefitTypeName, EmployeeAnnualContributionPct
-                FROM BenefitEnrollment_f f
-                INNER JOIN Member_d m
-                  ON f.EnrolledMemberKey = m.MemberKey 
-                INNER JOIN BenefitPlanOption_d bpo
-                  ON f.BenefitPlanOptionKey = bpo.BenefitPlanOptionKey
-                WHERE 
-                  m.CCHID = 63841
-                  AND BenefitPlanTypeCode = '401K'
-                             */
+            return results;
 
             }
 
 
-        public async Task<DateTime> GetMaxPayrollDate() {
+        public async Task<DateTime> GetMaxPayrollDateAsync() {
             if (string.IsNullOrEmpty(_connectionString)) {
                 throw new InvalidOperationException("Failed to initialize Benefit Contributions repository");
             }
 
             using (var context = new BenefitContributionsContext(_connectionString)) {
-                return context.Payroll.Max(p => p.PayPeriodEndDate);
+                return await context.Payroll.MaxAsync(p => p.PayPeriodEndDate);
             }
         }
 
@@ -135,16 +124,16 @@ namespace CchWebAPI.BenefitContribution.Data
                 throw new InvalidOperationException("Invalid CCHID");
             }
 
+            List<BenefitContributionDetail> contributions = new List<BenefitContributionDetail>();
+
             using (var context = new BenefitContributionsContext(_connectionString))
             {
                 // TODO remove extraneous info ie FirstName/LastName
 
-                IQueryable<BenefitContributionDetail> contributions =
-                    context.Payroll
+                contributions = await context.Payroll
                     .Join(
-                        context.Dates, 
-                        p => p.PayDateKey, d => d.DateKey, (p, d) => new 
-                        {
+                        context.Dates,
+                        p => p.PayDateKey, d => d.DateKey, (p, d) => new {
                             p.EmployeeKey,
                             p.PayDateKey,
                             p.DeliveryMethodKey,
@@ -157,10 +146,9 @@ namespace CchWebAPI.BenefitContribution.Data
                             d.DateKey,
                             d.FullDate
                         }).Join(
-                            context.EmployeeMembers, 
-                            p => p.EmployeeKey, e => e.EmployeeKey, 
-                            (p, e) => new 
-                            {
+                            context.EmployeeMembers,
+                            p => p.EmployeeKey, e => e.EmployeeKey,
+                            (p, e) => new {
                                 e.CchId,
                                 e.EmployeeFirstName,
                                 e.EmployeeLastName,
@@ -177,10 +165,9 @@ namespace CchWebAPI.BenefitContribution.Data
                                 p.FullDate
                             })
                             .Join(
-                                context.DeliveryMethods, 
-                                p => p.DeliveryMethodKey, dm => dm.DeliveryMethodKey, 
-                                (p, dm) => new 
-                                {
+                                context.DeliveryMethods,
+                                p => p.DeliveryMethodKey, dm => dm.DeliveryMethodKey,
+                                (p, dm) => new {
                                     p.CchId,
                                     p.EmployeeFirstName,
                                     p.EmployeeLastName,
@@ -197,10 +184,9 @@ namespace CchWebAPI.BenefitContribution.Data
                                     p.FullDate,
                                     dm.DeliveryMethodName
                                 })
-                                .Join(context.ContributionTypes, 
-                                    p => p.ContributionTypeKey, ct => ct.ContributionTypeKey, 
-                                    (p, ct) => new
-                                    {
+                                .Join(context.ContributionTypes,
+                                    p => p.ContributionTypeKey, ct => ct.ContributionTypeKey,
+                                    (p, ct) => new {
                                         p.CchId,
                                         p.EmployeeFirstName,
                                         p.EmployeeLastName,
@@ -219,10 +205,9 @@ namespace CchWebAPI.BenefitContribution.Data
                                         ct.ContributionTypeCode,
                                         ct.ContributionTypeName
                                     })
-                                    .Join(context.PayrollMetrics, 
-                                        p => p.PayrollMetricKey, pm => pm.PayrollMetricKey, 
-                                        (p, pm) => new 
-                                        {
+                                    .Join(context.PayrollMetrics,
+                                        p => p.PayrollMetricKey, pm => pm.PayrollMetricKey,
+                                        (p, pm) => new {
                                             p.CchId,
                                             p.EmployeeFirstName,
                                             p.EmployeeLastName,
@@ -246,10 +231,9 @@ namespace CchWebAPI.BenefitContribution.Data
                                             pm.ReportingCategoryCode,
                                             pm.PreTaxInd
                                         })
-                                        .Join(context.PayrollAudits, 
+                                        .Join(context.PayrollAudits,
                                             p => p.PayrollAuditKey, pa => pa.PayrollAuditKey,
-                    (p, pa) => new BenefitContributionDetail
-                    {
+                    (p, pa) => new BenefitContributionDetail {
                         CchId = p.CchId,
                         AsOfDate = p.FullDate,
                         ContributionTypeCode = p.ContributionTypeCode,
@@ -264,15 +248,15 @@ namespace CchWebAPI.BenefitContribution.Data
                         YTDAmt = p.YTDAmt,
                         ReportingCategoryCode = p.ReportingCategoryCode,
                         CurrentPayPeriodInd = p.CurrentPayPeriodInd
-                                            }
+                    }
                         ).Where(
-                            p => p.CchId == cchid 
-                            && ( string.IsNullOrEmpty(categoryCode) || p.ReportingCategoryCode.Equals(categoryCode) ) 
+                            p => p.CchId == cchid
+                            && (string.IsNullOrEmpty(categoryCode) || p.ReportingCategoryCode.Equals(categoryCode))
                             && p.CurrentPayPeriodInd
-                        )
+                        ).ToListAsync();
                     ;
 
-                return contributions.ToList();
+                return contributions;
             }
         }
     }
