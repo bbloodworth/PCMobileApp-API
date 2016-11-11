@@ -11,6 +11,7 @@ namespace CchWebAPI.BenefitContribution.Models
         public string BenefitContributionType;
         public DateTime PayrollFileReceivedDate;
         public List<BenefitContributionDetail> BenefitContributions;
+        public List<PercentageElected> PercentageElected;
     }
 
     public class BenefitContributionDetail
@@ -35,10 +36,17 @@ namespace CchWebAPI.BenefitContribution.Models
 
         public class BenefitContributionDetailConfiguration : EntityTypeConfiguration<BenefitContributionDetail> {
             public BenefitContributionDetailConfiguration() {
-                // TODO rename properties to more "client facing" names
-               
             }
         }
+    }
+
+    public class PercentageElected {
+        [JsonIgnore]
+        public int CCHID;
+        [JsonIgnore]
+        public string BenefitPlanTypeCode;
+        public string ContributionName;
+        public float? Percentage;
     }
 
 
