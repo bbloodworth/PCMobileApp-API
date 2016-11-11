@@ -125,7 +125,7 @@ namespace CchWebAPI.Payroll.Data
         public string EmployeeClassificationDesc { get; set; } // EmployeeClassificationDesc (length: 100)
         public string TaxableStatusDesc { get; set; } // TaxableStatusDesc (length: 100)
         public string PayFrequencyDesc { get; set; } // PayFrequencyDesc (length: 100)
-        public System.DateTime? FlsaStatusDesc { get; set; } // FLSAStatusDesc
+        public string FlsaStatusDesc { get; set; } // FLSAStatusDesc
         public decimal? AnnualBaseSalaryAmt { get; set; } // AnnualBaseSalaryAmt
         public string EmploymentStatusCode { get; set; } // EmploymentStatusCode (length: 10)
         public string EmploymentStatusDesc { get; set; } // EmploymentStatusDesc (length: 100)
@@ -193,7 +193,7 @@ namespace CchWebAPI.Payroll.Data
                 Property(x => x.EmployeeClassificationDesc).HasColumnName(@"EmployeeClassificationDesc").IsOptional().HasColumnType("nvarchar").HasMaxLength(100);
                 Property(x => x.TaxableStatusDesc).HasColumnName(@"TaxableStatusDesc").IsOptional().HasColumnType("nvarchar").HasMaxLength(100);
                 Property(x => x.PayFrequencyDesc).HasColumnName(@"PayFrequencyDesc").IsOptional().HasColumnType("nvarchar").HasMaxLength(100);
-                Property(x => x.FlsaStatusDesc).HasColumnName(@"FLSAStatusDesc").IsOptional().HasColumnType("datetime");
+                Property(x => x.FlsaStatusDesc).HasColumnName(@"FLSAStatusDesc").IsOptional().HasColumnType("nvarchar");
                 Property(x => x.AnnualBaseSalaryAmt).HasColumnName(@"AnnualBaseSalaryAmt").IsOptional().HasColumnType("decimal").HasPrecision(18, 2);
                 Property(x => x.EmploymentStatusCode).HasColumnName(@"EmploymentStatusCode").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
                 Property(x => x.EmploymentStatusDesc).HasColumnName(@"EmploymentStatusDesc").IsOptional().HasColumnType("nvarchar").HasMaxLength(100);

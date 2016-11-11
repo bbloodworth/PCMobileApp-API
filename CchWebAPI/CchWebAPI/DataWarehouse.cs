@@ -16,6 +16,8 @@ namespace CchWebAPI {
                 //    return "Data source=kermitdb.cch.clearcosthealth.com,49444;Initial Catalog=CCH_CaesarsDWH;Trusted_Connection=True;Asynchronous Processing=True; MultipleActiveResultSets=true";
                 case 21:
                     return "Data source=kermitdb.cch.clearcosthealth.com,49444;Initial Catalog=CCH_DemoDWH;Trusted_Connection=True;Asynchronous Processing=True; MultipleActiveResultSets=true";
+                case 34:
+                    return "Data source=kermitdb.cch.clearcosthealth.com,49444;Initial Catalog=CCH_TYLinDWH;Trusted_Connection=True;Asynchronous Processing=True; MultipleActiveResultSets=true";
                 case 2000:
                     return "Data source=kermitdb.cch.clearcosthealth.com,49444;Initial Catalog=CCH_TYLinDWH;Trusted_Connection=True;Asynchronous Processing=True; MultipleActiveResultSets=true";
                 default:
