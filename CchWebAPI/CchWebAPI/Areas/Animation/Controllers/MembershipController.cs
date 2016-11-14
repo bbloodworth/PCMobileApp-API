@@ -622,6 +622,11 @@ namespace CchWebAPI.Areas.Animation.Controllers {
             HttpResponseMessage hrm = Request.CreateErrorResponse(
                 HttpStatusCode.PreconditionFailed, "Unexpected Error locating user membership");
 
+            if (securityRequest == null) {
+                return hrm = Request.CreateErrorResponse(
+                HttpStatusCode.PreconditionFailed, "Unexpected Error parsing request.");
+            }
+
             string userName = Request.UserName();
             MembershipUser mu = Membership.GetUser(userName);
 

@@ -9,6 +9,7 @@ using ClearCost.Security;
 using ClearCost.UnitTesting;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Newtonsoft.Json;
+using CchWebAPI.Areas.Animation.Controllers;
 
 namespace CchWebAPI.Tests {
     [TestClass]
@@ -50,10 +51,8 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public void CanUseWapiToEmailIdCard() {
-            if (!Debugger.IsAttached)
-                return;
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.dwapi,
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                 "mary.smith@cchcaesars.com");
 
             var memberUrlsResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Card/CardUrls/en");
@@ -62,7 +61,7 @@ namespace CchWebAPI.Tests {
 
             var cardWebRequest = new MemberCardWebRequest() {
                 CardToken = memberUrlsResult.Results[0].SecurityToken,
-                ToEmail = "dstrickland@clearcosthealth.com",
+                ToEmail = "bbloodworth@clearcosthealth.com",
                 Subject = "CanEmailIdCard Unit Test",
                 Message = "Unit test result"
             };
@@ -71,14 +70,28 @@ namespace CchWebAPI.Tests {
 
             Assert.IsNotNull(emailResult);
             Assert.AreEqual(HttpStatusCode.OK, emailResult.Item1);
+
+            //var cardController = new CardController();
+            //dynamic memberUrlsResult = cardController.GetMemberCardUrls("", TestAccounts.CaesarsAccounts.MarySmith.CchId);
+
+            //Assert.IsNotNull(memberUrlsResult);
+
+            //var cardWebRequest = new MemberCardWebRequest() {
+            //    CardToken = memberUrlsResult.Results[0].SecurityToken,
+            //    ToEmail = "dstrickland@clearcosthealth.com",
+            //    Subject = "CanEmailIdCard Unit Test",
+            //    Message = "Unit test result"
+            //};
+
+            //var emailResult = cardController.SendIdCardEmail(cardWebRequest);
+
+            //Assert.IsNotNull(emailResult);
         }
 
         [TestMethod]
         public void CanUseWapiToViewIdCard() {
-            if (!Debugger.IsAttached)
-                return;
 
-            var ctx = UnitTestContext.Get(ClearCost.UnitTesting.Environment.LocalWapi,
+            var ctx = UnitTestContext.Get(EnvironmentHelper.GetEnvironment(),
                 "mary.smith@cchcaesars.com");
 
             dynamic memberUrlsResult = ApiUtil.GetJsonResult<dynamic>(ctx, "Animation/Card/CardUrls/en");

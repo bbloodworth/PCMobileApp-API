@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CchWebAPI.Employees.Dispatchers {
     public interface IEmployeesDispatcher {
-        Task<Employee> ExecuteAsync(int cchId, Employer employer);
+        Task<Data.Employee> ExecuteAsync(int cchId, Employer employer);
     }
 
     public class EmployeesDispatcher : IEmployeesDispatcher {
@@ -15,7 +15,7 @@ namespace CchWebAPI.Employees.Dispatchers {
             _repository = repository;
         }
 
-        public async Task<Employee> ExecuteAsync(int cchId, Employer employer) {
+        public async Task<Data.Employee> ExecuteAsync(int cchId, Employer employer) {
             if (cchId < 1)
                 throw new InvalidOperationException("Invalid member context.");
 
