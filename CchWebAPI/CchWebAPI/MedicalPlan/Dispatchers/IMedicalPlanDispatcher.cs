@@ -24,7 +24,7 @@ namespace CchWebAPI.MedicalPlan.Dispatchers {
             if (employer == null || string.IsNullOrWhiteSpace(employer.ConnectionString))
                 throw new InvalidOperationException("Invalid employer context.");
 
-            _repository.Initialize(DataWarehouse.GetEmployerConnectionString(employer.Id));
+            _repository.Initialize(EmployerConnectionString.GetConnectionString(employer.Id).DataWarehouse);
 
             var medicalPlanOption = await _repository.GetMedicalPlanAsync(medicalPlanId);
 
@@ -51,7 +51,7 @@ namespace CchWebAPI.MedicalPlan.Dispatchers {
             if (planYear < 1)
                 throw new InvalidOperationException("Invalid year.");
 
-            _repository.Initialize(DataWarehouse.GetEmployerConnectionString(employer.Id));
+            _repository.Initialize(EmployerConnectionString.GetConnectionString(employer.Id).DataWarehouse);
 
             var medicalPlanAccumulation = await _repository.GetMedicalPlanAccumulationAsync(
                 memberId, medicalPlanId, planYear);

@@ -23,7 +23,7 @@ namespace CchWebAPI.Controllers {
         }
         [HttpGet]
         public async Task<ApiResult<MedicalPlan.Models.MedicalPlan>> GetMedicalPlanAsync(int employerId, int medicalPlanId) {
-            if (string.IsNullOrWhiteSpace(DataWarehouse.GetEmployerConnectionString(employerId))) {
+            if (string.IsNullOrWhiteSpace(EmployerConnectionString.GetConnectionString(employerId).DataWarehouse)) {
                 return ApiResult<MedicalPlan.Models.MedicalPlan>.InvalidResult(string.Empty,
                     "This feature is not configured for the specified employerId.");
             }
@@ -38,7 +38,7 @@ namespace CchWebAPI.Controllers {
         public async Task<ApiResult<MedicalPlan.Models.MedicalPlanAccumulation>>
             GetMedicalPlanAccumulationAsync(int employerId, int cchId, int medicalPlanId, int planYear) {
 
-            if (string.IsNullOrWhiteSpace(DataWarehouse.GetEmployerConnectionString(employerId))) {
+            if (string.IsNullOrWhiteSpace(EmployerConnectionString.GetConnectionString(employerId).DataWarehouse)) {
                 return ApiResult<MedicalPlan.Models.MedicalPlanAccumulation>.InvalidResult(string.Empty,
                     "This feature is not configured for the specified employerId.");
             }

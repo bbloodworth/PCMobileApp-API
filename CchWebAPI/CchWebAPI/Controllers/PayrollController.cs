@@ -23,7 +23,7 @@ namespace CchWebAPI.Controllers {
         }
         [HttpGet]
         public async Task<ApiResult<List<DatePaid>>> GetDatesPaidAsync(int employerId, int cchId) {
-            if (string.IsNullOrWhiteSpace(DataWarehouse.GetEmployerConnectionString(employerId))) {
+            if (string.IsNullOrWhiteSpace(EmployerConnectionString.GetConnectionString(employerId).DataWarehouse)) {
                 return ApiResult<List<DatePaid>>.InvalidResult(string.Empty,
                     "This feature is not configured for the specified employerId.");
             }
@@ -36,7 +36,7 @@ namespace CchWebAPI.Controllers {
         }
 
         public async Task<ApiResult<Paycheck>> GetPaycheck(int employerId, string documentId) {
-            if (string.IsNullOrWhiteSpace(DataWarehouse.GetEmployerConnectionString(employerId))) {
+            if (string.IsNullOrWhiteSpace(EmployerConnectionString.GetConnectionString(employerId).DataWarehouse)) {
                 return ApiResult<Paycheck>.InvalidResult(string.Empty,
                     "This feature is not configured for the specified employerId.");
             }
