@@ -7,7 +7,7 @@ namespace CchWebAPI.BenefitContribution.Models {
         public string BenefitPlanOptionName { get; set; }
         public string PayerName { get; set; }
         public string BenefitPlanTypeCode { get; set; }
-
+        public string BenefitTypeName { get; set;  }
 
         public class BenefitPlanOptionConfiguration : EntityTypeConfiguration<BenefitPlanOption> {
             public BenefitPlanOptionConfiguration() {

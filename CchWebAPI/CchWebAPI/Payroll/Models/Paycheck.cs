@@ -8,6 +8,7 @@ namespace CchWebAPI.Payroll.Models {
         public List<PayrollMetric> Earnings { get; set; }
         public List<PayrollMetric> Deductions { get; set; }
         public List<PayrollMetric> Taxes { get; set; }
+        public List<PayrollMetric> PaidTimeOff { get; set; }
 
         public int CchId { get; set; }
         public string FirstName { get; set; }
@@ -33,6 +34,7 @@ namespace CchWebAPI.Payroll.Models {
             Earnings = new List<PayrollMetric>();
             Deductions = new List<PayrollMetric>();
             Taxes = new List<PayrollMetric>();
+            PaidTimeOff = new List<PayrollMetric>();
         }
 
         private void Merge(List<PaycheckDetails> list) {
@@ -54,6 +56,7 @@ namespace CchWebAPI.Payroll.Models {
             Earnings = MapPayrollMetricByCategory(list, "Earning");
             Deductions = MapPayrollMetricByCategory(list, "Deduction");
             Taxes = MapPayrollMetricByCategory(list, "Tax");
+            PaidTimeOff = MapPayrollMetricByCategory(list, "PTO Balance");
         }
 
         private List<Models.PayrollMetric> MapPayrollMetricByCategory(List<PaycheckDetails> list, string category) {
