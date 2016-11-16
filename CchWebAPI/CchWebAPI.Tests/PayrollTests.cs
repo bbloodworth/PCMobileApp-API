@@ -63,7 +63,7 @@ namespace CchWebAPI.Tests {
         public async Task CanGetDatesPaid() {
             foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
                 var repository = new PayrollRepository();
-                repository.Initialize(DataWarehouse.GetEmployerConnectionString(testAccount.EmployerId));
+                repository.Initialize(EmployerConnectionString.GetConnectionString(testAccount.EmployerId).DataWarehouse);
 
                 var dispatcher = new PayrollDispatcher(repository);
                 var controller = new PayrollController(dispatcher);
@@ -78,7 +78,7 @@ namespace CchWebAPI.Tests {
         public async Task CanGetPaycheck() {
             foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
                 var repository = new PayrollRepository();
-                repository.Initialize(DataWarehouse.GetEmployerConnectionString(testAccount.EmployerId));
+                repository.Initialize(EmployerConnectionString.GetConnectionString(testAccount.EmployerId).DataWarehouse);
 
                 var dispatcher = new PayrollDispatcher(repository);
                 var controller = new PayrollController(dispatcher);

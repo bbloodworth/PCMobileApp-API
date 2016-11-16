@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace CchWebAPI.PaidTimeOff.Models {
     public class PaidTimeOffDetail {
         [JsonProperty("MemberId")]
-        public int CCHID { get; set; }
+        public int CchId { get; set; }
         [JsonIgnore]
         public int EmployerKey { get; set; }
         public int PaycheckDateKey { get; set; }

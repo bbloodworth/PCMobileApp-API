@@ -60,7 +60,7 @@ namespace CchWebAPI.Tests {
         public async Task CanGetMedicalPlan() {
             foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
                 var repository = new MedicalPlanRepository();
-                repository.Initialize(DataWarehouse.GetEmployerConnectionString(testAccount.EmployerId));
+                repository.Initialize(EmployerConnectionString.GetConnectionString(testAccount.EmployerId).DataWarehouse);
 
                 var dispatcher = new MedicalPlanDispatcher(repository);
                 var controller = new MedicalPlansController(dispatcher);
@@ -75,7 +75,7 @@ namespace CchWebAPI.Tests {
         public async Task CanGetMedicalPlanAccumulation() {
             foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
                 var repository = new MedicalPlanRepository();
-                repository.Initialize(DataWarehouse.GetEmployerConnectionString(testAccount.EmployerId));
+                repository.Initialize(EmployerConnectionString.GetConnectionString(testAccount.EmployerId).DataWarehouse);
 
                 var dispatcher = new MedicalPlanDispatcher(repository);
                 var controller = new MedicalPlansController(dispatcher);

@@ -16,6 +16,8 @@ using CchWebAPI.BenefitContribution.Dispatchers;
 using System.Web.Mvc;
 using CchWebAPI.Employee.Data;
 using CchWebAPI.Employee.Dispatchers;
+using CchWebAPI.PaidTimeOff.Data;
+using CchWebAPI.PaidTimeOff.Dispatchers;
 using CchWebAPI.Payroll.Data;
 using CchWebAPI.Payroll.Dispatchers;
 using CchWebAPI.MedicalPlan.Data;

@@ -32,7 +32,7 @@ namespace CchWebAPI.PaidTimeOff.Data {
                     Join(context.Employees,
                         pto => pto.EmployeeKey, e => e.EmployeeKey,
                         (pto, e) => new {
-                            CCHID = e.CCHID,
+                            CchId = e.CchId,
                             FirstName = e.EmployeeFirstName,
                             LastName = e.EmployeeLastName,
                             PaycheckDateKey = pto.PaycheckDateKey,
@@ -48,7 +48,7 @@ namespace CchWebAPI.PaidTimeOff.Data {
                     Join(context.PayrollMetrics,
                         a => a.PayrollMetricKey, p => p.PayrollMetricKey,
                         (a, p) => new PaidTimeOffDetail {
-                            CCHID = a.CCHID,
+                            CchId = a.CchId,
                             PaycheckDateKey = a.PaycheckDateKey,
                             AccrualRate = a.AccrualRate,
                             PerPeriodHoursQty = a.PerPeriodHoursQty,
@@ -62,7 +62,7 @@ namespace CchWebAPI.PaidTimeOff.Data {
                         }
                     ).Where(a =>
                        a.CurrentRecordInd.Equals(true)
-                       && a.CCHID.Equals(cchid)
+                       && a.CchId.Equals(cchid)
                     );
 
                 // GET data from the db

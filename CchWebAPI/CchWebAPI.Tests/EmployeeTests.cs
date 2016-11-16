@@ -35,7 +35,7 @@ namespace CchWebAPI.Tests {
             foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
                 foreach (var benefitPlanId in testAccount.BenefitPlans) {
                     var repository = new EmployeeRepository();
-                    repository.Initialize(DataWarehouse.GetEmployerConnectionString(testAccount.EmployerId));
+                    repository.Initialize(EmployerConnectionString.GetConnectionString(testAccount.EmployerId).DataWarehouse);
 
                     var dispatcher = new EmployeeDispatcher(repository);
                     var controller = new EmployeesController(dispatcher);
