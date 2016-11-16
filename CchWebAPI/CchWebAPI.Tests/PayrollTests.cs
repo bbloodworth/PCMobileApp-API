@@ -6,8 +6,8 @@ using ClearCost.UnitTesting;
 using System.Net;
 using ClearCost.Net;
 using CchWebAPI.Controllers;
-using CchWebAPI.Payrolls.Dispatchers;
-using CchWebAPI.Payrolls.Data;
+using CchWebAPI.Payroll.Dispatchers;
+using CchWebAPI.Payroll.Data;
 using System.Threading.Tasks;
 
 namespace CchWebAPI.Tests {

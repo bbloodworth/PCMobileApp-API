@@ -7,18 +7,19 @@ using Autofac.Integration.WebApi;
 
 using CchWebAPI.Controllers;
 using CchWebAPI.Filters;
-using CchWebAPI.IdCards.Data;
-using CchWebAPI.IdCards.Dispatchers;
+using CchWebAPI.IdCard.Data;
+using CchWebAPI.IdCard.Dispatchers;
 using CchWebAPI.Employees.Data;
 using CchWebAPI.Employees.Dispatchers;
-using CchWebAPI.BenefitContributions.Data;
-using CchWebAPI.BenefitContributions.Dispatchers;
-using CchWebAPI.EmployeeDW.Data;
-using CchWebAPI.EmployeeDW.Dispatchers;
-using CchWebAPI.PaidTimeOff.Data;
-using CchWebAPI.PaidTimeOff.Dispatchers;
-using CchWebAPI.Payrolls.Data;
-using CchWebAPI.Payrolls.Dispatchers;
+using CchWebAPI.BenefitContribution.Data;
+using CchWebAPI.BenefitContribution.Dispatchers;
+using System.Web.Mvc;
+using CchWebAPI.Employee.Data;
+using CchWebAPI.Employee.Dispatchers;
+using CchWebAPI.Payroll.Data;
+using CchWebAPI.Payroll.Dispatchers;
+using CchWebAPI.MedicalPlan.Data;
+using CchWebAPI.MedicalPlan.Dispatchers;
 
 namespace CchWebAPI {
     public class AutofacConfig {
@@ -30,6 +31,7 @@ namespace CchWebAPI {
             builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
             builder.RegisterType<PayrollRepository>().As<IPayrollRepository>();
             builder.RegisterType<BenefitContributionsRepository>().As<IBenefitContributionsRepository>();
+            builder.RegisterType<MedicalPlanRepository>().As<IMedicalPlanRepository>();
             builder.RegisterType<PaidTimeOffRepository>().As<IPaidTimeOffRepository>();
 
             //Dispatchers
@@ -43,6 +45,8 @@ namespace CchWebAPI {
                 .UsingConstructor(typeof(IPayrollRepository));
             builder.RegisterType<ContributionsDispatcher>().As<IBenefitContributionsDispatcher>()
                 .UsingConstructor(typeof(IBenefitContributionsRepository));
+            builder.RegisterType<MedicalPlanDispatcher>().As<IMedicalPlanDispatcher>()
+                .UsingConstructor(typeof(IMedicalPlanRepository));
             builder.RegisterType<PaidTimeOffDispatcher>().As<IPaidTimeOffDispatcher>()
                 .UsingConstructor(typeof(IPaidTimeOffRepository));
 
@@ -65,6 +69,9 @@ namespace CchWebAPI {
             builder.RegisterType<PaidTimeOffController>()
                 .UsingConstructor(typeof(IPaidTimeOffDispatcher))
                 .InstancePerRequest();
+            builder.RegisterType<MedicalPlansController>()
+                .UsingConstructor(typeof(IMedicalPlanDispatcher))
+                .InstancePerRequest();
 
             //Filters
             builder.RegisterWebApiFilterProvider(config);
@@ -75,6 +82,8 @@ namespace CchWebAPI {
                 .AsWebApiAuthorizationFilterFor<EmployeesController>().InstancePerRequest();
             builder.Register(c => new V2AuthenticatedAuthorizationFilter())
                 .AsWebApiAuthorizationFilterFor<BenefitContributionsController>().InstancePerRequest();
+            builder.Register(c => new V2AuthenticatedAuthorizationFilter())
+                .AsWebApiAuthorizationFilterFor<MedicalPlansController>().InstancePerRequest();
 
             var container = builder.Build();
 

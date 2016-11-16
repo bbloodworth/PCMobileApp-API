@@ -5,7 +5,8 @@ using CchWebAPI.Handlers;
 
 namespace CchWebAPI
 {
-    public static class WebApiConfig {
+    public static class WebApiConfig
+    {
         #region Delegating Handlers
 
         //Setup private arrays of handlers in heirarchal order for easier management
@@ -13,7 +14,7 @@ namespace CchWebAPI
         {
             get
             {
-                return new DelegatingHandler[] { 
+                return new DelegatingHandler[] {
                     new CORSHandler(),
                     new ApiKeyHandler(),
                     new BasicAuthenticationMessageHandler()
@@ -60,14 +61,15 @@ namespace CchWebAPI
                 return new DelegatingHandler[] {
                     new CORSHandler(),
                     new ApiKeyHandler(),
-                    new HashMessageHandler(), 
+                    new HashMessageHandler(),
                     new LogRequestAndResponseHandler()
                 };
             }
         }
         #endregion
 
-        public static void Register(HttpConfiguration config) {
+        public static void Register(HttpConfiguration config)
+        {
             config.MapHttpAttributeRoutes();
 
             #region Old PComm API Routes
@@ -363,7 +365,7 @@ namespace CchWebAPI
                     new HttpControllerDispatcher(config),
                     AuthenticatedAccountHandlers)
                 );
-#endregion
+            #endregion
 
             #region Animation UserContent API Routes
 
@@ -469,7 +471,7 @@ namespace CchWebAPI
                     new HttpControllerDispatcher(config),
                     AuthenticatedAccountHandlers)
                 );
-#endregion
+            #endregion
 
             #region Animation Campaign API Routes
 
@@ -507,7 +509,7 @@ namespace CchWebAPI
                 defaults: new { action = "GetMemberCardData" },
                 constraints: new { area = "Animation", controller = "Card" },
                 handler: HttpClientFactory.CreatePipeline(
-                    new HttpControllerDispatcher(config), 
+                    new HttpControllerDispatcher(config),
                     AccountHandlers)
                 );
 

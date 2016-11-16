@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using CchWebAPI.BenefitContributions.Models;
-using CchWebAPI.BenefitContributions.Dispatchers;
+using CchWebAPI.BenefitContribution.Dispatchers;
 using ClearCost.Platform;
 using ClearCost.Net;
 using System.Threading.Tasks;
@@ -22,7 +21,7 @@ namespace CchWebAPI.Controllers
         public BenefitContributionsController() { }
 
         [HttpGet]
-        public async Task<ApiResult<BenefitContribution>> Get (string categoryCode)
+        public async Task<ApiResult<BenefitContribution.Models.BenefitContribution>> Get (string categoryCode)
         {
             
             var result = await _dispatcher.GetContributionsByCchIdAsync(
@@ -30,7 +29,7 @@ namespace CchWebAPI.Controllers
                 EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())),
                 categoryCode);
 
-            return ApiResult<BenefitContribution>.ValidResult(result, string.Empty);
+            return ApiResult<BenefitContribution.Models.BenefitContribution>.ValidResult(result, string.Empty);
         }
 
     }
