@@ -25,7 +25,7 @@ namespace CchWebAPI.Employee.Dispatchers {
             if (employer == null || string.IsNullOrEmpty(employer.ConnectionString))
                 throw new ArgumentException("Invalid employer context.");
 
-            _repository.Initialize(DataWarehouse.GetEmployerConnectionString(employer.Id));
+            _repository.Initialize(EmployerConnectionString.GetConnectionString(employer.Id).DataWarehouse);
 
             var result = await _repository.GetEmployeeByCchIdAsync(cchId);
 
@@ -39,7 +39,7 @@ namespace CchWebAPI.Employee.Dispatchers {
             if (employer == null || string.IsNullOrEmpty(employer.ConnectionString))
                 throw new ArgumentException("Invalid employer context.");
 
-            _repository.Initialize(DataWarehouse.GetEmployerConnectionString(employer.Id));
+            _repository.Initialize(EmployerConnectionString.GetConnectionString(employer.Id).DataWarehouse);
 
             var result = await _repository.GetEmployeeBenefitPlanMembersAsync(cchId, planId);
 

@@ -33,9 +33,9 @@ namespace CchWebAPI.BenefitContribution.Dispatchers
             }
 
             string employerConnectionString = 
-                DataWarehouse.GetEmployerConnectionString(employer.Id).Equals(string.Empty) ? 
+                EmployerConnectionString.GetConnectionString(employer.Id).DataWarehouse.Equals(string.Empty) ? 
                 employer.ConnectionString : 
-                DataWarehouse.GetEmployerConnectionString(employer.Id);
+                EmployerConnectionString.GetConnectionString(employer.Id).DataWarehouse;
 
             _repository.Initialize(employerConnectionString);
 
