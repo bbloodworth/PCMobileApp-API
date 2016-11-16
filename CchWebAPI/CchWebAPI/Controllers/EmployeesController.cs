@@ -38,7 +38,7 @@ namespace CchWebAPI.Controllers {
 
             // Hack: Until we move over to the data warehouse completely, this hack exists to 
             // negotiate between the two repositories.
-            if (string.IsNullOrWhiteSpace(DataWarehouse.GetEmployerConnectionString(employerId))) {
+            if (string.IsNullOrWhiteSpace(EmployerConnectionString.GetConnectionString(employerId).DataWarehouse)) {
                 if (_dispatcher == null) {
                     InitDispatcher();
                 }

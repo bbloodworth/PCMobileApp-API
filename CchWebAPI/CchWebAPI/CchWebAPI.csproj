@@ -265,11 +265,12 @@
     <Compile Include="BenefitContribution\Models\Payroll.cs" />
     <Compile Include="BenefitContribution\Models\PayrollAudit.cs" />
     <Compile Include="BenefitContribution\Models\PayrollMetric.cs" />
+    <Compile Include="Configuration\EmployerConnectionStringConfiguration.cs" />
     <Compile Include="Controllers\BenefitContributionsController.cs" />
     <Compile Include="Controllers\IdCardsController.cs" />
     <Compile Include="Controllers\MedicalPlansController.cs" />
     <Compile Include="Controllers\PayrollController.cs" />
-    <Compile Include="DataWarehouse.cs" />
+    <Compile Include="EmployerConnectionString.cs" />
     <Compile Include="Employee\Models\PlanMember.cs" />
     <Compile Include="MedicalPlan\Data\IMedicalPlanRepository.cs" />
     <Compile Include="MedicalPlan\Data\MedicalPlanContext.cs" />
@@ -311,7 +312,7 @@
     <Compile Include="Handlers\HashMessageHandler.cs" />
     <Compile Include="Handlers\LogRequestAndResponseHandler.cs" />
     <Compile Include="Handlers\TimeoutHandler.cs" />
-    <Compile Include="Content\Configuration\EmailConfiguration.cs" />
+    <Compile Include="Configuration\EmailConfiguration.cs" />
     <Compile Include="IdCard\Models\CardDetail.cs" />
     <Compile Include="IdCard\Models\CardToken.cs" />
     <Compile Include="Models\Handshake.cs" />
