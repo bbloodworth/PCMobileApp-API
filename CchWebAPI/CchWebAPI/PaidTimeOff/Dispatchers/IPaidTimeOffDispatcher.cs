@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CchWebAPI.PaidTimeOff.Dispatchers {
     public interface IPaidTimeOffDispatcher {
-        Task<List<PaidTimeOffTable>> GetPaidTimeOffTable();
+        Task<List<PaidTimeOffDetail>> GetPaidTimeOffTable(Employer employer, int cchid);
     }
 
     public class PaidTimeOffDispatcher : IPaidTimeOffDispatcher {
@@ -18,8 +18,15 @@ namespace CchWebAPI.PaidTimeOff.Dispatchers {
             _repository = repository;
         }
 
-        public async Task<List<PaidTimeOffTable>> GetPaidTimeOffTable() {
-            var result = await _repository.GetPaidTimeOffDetailsByCchId(1);
+        public async Task<List<PaidTimeOffDetail>> GetPaidTimeOffTable(Employer employer, int cchid) {
+            string employerConnectionString =
+                DataWarehouse.GetEmployerConnectionString(employer.Id).Equals(string.Empty) ?
+                employer.ConnectionString :
+                DataWarehouse.GetEmployerConnectionString(employer.Id);
+
+            _repository.Initialize(employerConnectionString);
+            
+            var result = await _repository.GetPaidTimeOffDetailsByCchIdAsync(cchid);
             
             return result;
         }

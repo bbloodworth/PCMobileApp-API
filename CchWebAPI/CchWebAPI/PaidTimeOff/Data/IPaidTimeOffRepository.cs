@@ -4,12 +4,14 @@ using System.Data.Entity;
 using System.Linq;
 using System.Threading.Tasks;
 
+
+
 using CchWebAPI.PaidTimeOff.Models;
 
 namespace CchWebAPI.PaidTimeOff.Data {
     public interface IPaidTimeOffRepository {
         void Initialize(string connectionString);
-        Task<List<PaidTimeOffTable>> GetPaidTimeOffDetailsByCchId(int cchid);
+        Task<List<PaidTimeOffDetail>> GetPaidTimeOffDetailsByCchIdAsync(int cchid);
 
     }
 
@@ -20,11 +22,13 @@ namespace CchWebAPI.PaidTimeOff.Data {
             _connectionString = connectionString;
         }
 
-        public async Task<List<PaidTimeOffTable>> GetPaidTimeOffDetailsByCchId(int cchid) {
-            List<PaidTimeOffTable> result;
+        public async Task<List<PaidTimeOffDetail>> GetPaidTimeOffDetailsByCchIdAsync(int cchid) {
+            // USE this object to get data from the db
+            List<PaidTimeOffDetail> dbResult;
 
             using (var context = new PaidTimeOffContext(_connectionString)) {
-                var q = context.PTOSnapshots.
+                // QUERY the data warehouse for the users PTO details
+                var query = context.PTOSnapshots.
                     Join(context.Employees,
                         pto => pto.EmployeeKey, e => e.EmployeeKey,
                         (pto, e) => new {
@@ -43,7 +47,7 @@ namespace CchWebAPI.PaidTimeOff.Data {
                         }).
                     Join(context.PayrollMetrics,
                         a => a.PayrollMetricKey, p => p.PayrollMetricKey,
-                        (a, p) => new PaidTimeOffTable {
+                        (a, p) => new PaidTimeOffDetail {
                             CCHID = a.CCHID,
                             PaycheckDateKey = a.PaycheckDateKey,
                             AccrualRate = a.AccrualRate,
@@ -57,17 +61,17 @@ namespace CchWebAPI.PaidTimeOff.Data {
                             ReportingCategoryCode = p.ReportingCategoryCode
                         }
                     ).Where(a =>
-                       a.CurrentRecordInd.Equals(1)
-                    // && a.CCHID.Equals(foobar)
+                       a.CurrentRecordInd.Equals(true)
+                       && a.CCHID.Equals(cchid)
                     );
 
-                result = q.ToList();
+                // GET data from the db
+                dbResult = await query.ToListAsync();
 
+
+                return dbResult;
             }
-
-            return result;
         }
     }
 }
-
 
