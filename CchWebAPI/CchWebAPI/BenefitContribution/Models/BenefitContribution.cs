@@ -8,7 +8,8 @@ using System.Web;
 namespace CchWebAPI.BenefitContribution.Models
 {
     public class BenefitContribution {
-        public string BenefitContributionType;
+        public string PayerName;
+        public string BenefitTypeName;
         public DateTime PayrollFileReceivedDate;
         public List<BenefitContributionDetail> BenefitContributions;
         public List<PercentageElected> PercentageElected;

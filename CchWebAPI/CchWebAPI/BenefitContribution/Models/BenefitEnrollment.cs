@@ -9,6 +9,7 @@ namespace CchWebAPI.BenefitContribution.Models
         public int BenefitPlanOptionKey { get; set; }
         public int EnrolledMemberKey { get; set; }
         public int EmployeeAnnualContributionPct { get; set; }
+        public int PlanYearKey { get; set; }
 
         public class BenefitEnrollmentConfiguration : EntityTypeConfiguration<BenefitEnrollment>
         {
