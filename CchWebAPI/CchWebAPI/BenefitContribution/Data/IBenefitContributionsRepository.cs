@@ -12,7 +12,7 @@ namespace CchWebAPI.BenefitContribution.Data
         void Initialize(string connectionString);
         Task<List<BenefitContributionDetail>> GetContributionsByCchIdAsync(int cchid, string categoryCode);
         Task<DateTime> GetMaxPayrollDateAsync();
-        Task<String> GetBenefitNameAsync(int cchid, string categoryCode);
+        Task<List<String>> GetBenefitNameAsync(int cchid, string categoryCode);
         Task<List<PercentageElected>> GetPercentageElectedAsync(int cchid, string categoryCode);
 
     }
@@ -26,10 +26,12 @@ namespace CchWebAPI.BenefitContribution.Data
             _connectionString = connectionString;
         }
 
-        public async Task<String> GetBenefitNameAsync(int cchid, string categoryCode) {
+        public async Task<List<String>> GetBenefitNameAsync(int cchid, string categoryCode) {
             if (string.IsNullOrEmpty(_connectionString)) {
                 throw new InvalidOperationException("Failed to initialize Benefit Contributions repository");
             }
+
+            List<String> headers = new List<String>();
 
             using (var context = new BenefitContributionsContext(_connectionString)) {
 
@@ -47,7 +49,9 @@ namespace CchWebAPI.BenefitContribution.Data
                             BenefitPlanOptionName = bpo.BenefitPlanOptionName,
                             BenefitPlanTypeCode = bpo.BenefitPlanTypeCode,
                             MemberId = a.MemberKey,
-                            CCHID = a.CCHID }
+                            CCHID = a.CCHID,
+                            BenefitTypeName = bpo.BenefitTypeName
+                        }
                         )
                     .Where(
                         a => 
@@ -55,8 +59,16 @@ namespace CchWebAPI.BenefitContribution.Data
                         && a.BenefitPlanTypeCode.Equals(categoryCode)
                     ).FirstOrDefaultAsync();
 
+                String payerName = String.Empty;
+                String benefitTypeName = categoryCode;
 
-                return String.Format("{0} {1}", res.PayerName, categoryCode);
+                if (res != null) {
+                    payerName = res.PayerName;
+                    benefitTypeName = res.BenefitTypeName;
+                }
+                headers.Add(payerName);
+                headers.Add(benefitTypeName);
+                return headers;
 
             }
 
