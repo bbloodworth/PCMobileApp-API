@@ -1,4 +1,5 @@
-﻿using CchWebAPI.Employee.Data;
+﻿using CchWebAPI.Employee.Data.V1;
+using CchWebAPI.Employee.Data.V2;
 using CchWebAPI.Employee.Models;
 using ClearCost.Platform;
 using System;
@@ -8,28 +9,46 @@ using System.Threading.Tasks;
 
 namespace CchWebAPI.Employee.Dispatchers {
     public interface IEmployeeDispatcher {
-        Task<Data.Employee> GetEmployeeAsync(Employer employer, int cchId);
+        Task<Models.Employee> GetEmployeeAsync(Employer employer, int cchId);
         Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(Employer employer, int cchId, int planId);
     }
 
     public class EmployeeDispatcher : IEmployeeDispatcher {
-        private IEmployeeRepository _repository;
-        public EmployeeDispatcher(IEmployeeRepository repository) {
-            _repository = repository;
+        private Data.V1.IEmployeeRepository _repositoryV1;
+        private Data.V2.IEmployeeRepository _repositoryV2;
+        public EmployeeDispatcher(Data.V1.IEmployeeRepository repository) {
+            _repositoryV1 = repository;
+        }
+        public EmployeeDispatcher(Data.V2.IEmployeeRepository repository) {
+            _repositoryV2 = repository;
         }
 
-        public async Task<Data.Employee> GetEmployeeAsync(Employer employer, int cchId) {
+        public async Task<Models.Employee> GetEmployeeAsync(Employer employer, int cchId) {
             if (cchId < 1)
                 throw new ArgumentException("Invalid member context.");
 
             if (employer == null || string.IsNullOrEmpty(employer.ConnectionString))
                 throw new ArgumentException("Invalid employer context.");
 
-            _repository.Initialize(EmployerConnectionString.GetConnectionString(employer.Id).DataWarehouse);
+            _repositoryV2.Initialize(employer.ConnectionString);
 
-            var result = await _repository.GetEmployeeByCchIdAsync(cchId);
+            var employee = new Models.Employee();
 
-            return result;
+            // Check to see if this database has data warhouse tables.
+            if (await _repositoryV2.IsExistingTable("dbo", "Employee_d")) {
+                var employeeData = await _repositoryV2.GetEmployeeByCchIdAsync(cchId);
+                employee.Merge(employeeData);
+            }
+            else {
+                _repositoryV1 = new Data.V1.EmployeeRepository();
+                _repositoryV1.Initialize(employer.ConnectionString);
+
+                var employeeData = await _repositoryV1.GetEmployeeAsync(cchId);
+                employee.Merge(employeeData);
+            }
+
+
+            return employee;
         }
 
         public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(Employer employer, int cchId, int planId) {
@@ -39,9 +58,9 @@ namespace CchWebAPI.Employee.Dispatchers {
             if (employer == null || string.IsNullOrEmpty(employer.ConnectionString))
                 throw new ArgumentException("Invalid employer context.");
 
-            _repository.Initialize(EmployerConnectionString.GetConnectionString(employer.Id).DataWarehouse);
+            _repositoryV2.Initialize(employer.ConnectionString);
 
-            var result = await _repository.GetEmployeeBenefitPlanMembersAsync(cchId, planId);
+            var result = await _repositoryV2.GetEmployeeBenefitPlanMembersAsync(cchId, planId);
 
             return result;
         }

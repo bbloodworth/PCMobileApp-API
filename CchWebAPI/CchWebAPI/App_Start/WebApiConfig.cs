@@ -2,6 +2,7 @@
 using System.Web.Http;
 using System.Web.Http.Dispatcher;
 using CchWebAPI.Handlers;
+using System;
 
 namespace CchWebAPI
 {
@@ -614,10 +615,65 @@ namespace CchWebAPI
             #region v2
             // TODO TAKE OUT EMPLOYERID/CCHID
             config.Routes.MapHttpRoute(
-                name: "EmployeesV2",
-                routeTemplate: "v2/{controller}/{employerId}/{cchId}",
-                defaults: new { employerId = "0", cchId = "0" },
-                constraints: new { controller = "Employees" },
+                name: "EmployeesV2_GetEmployee",
+                routeTemplate: "v2/employees/{employerId}/{cchId}",
+                defaults: new {
+                    controller = "Employees",
+                    action = "GetEmployeeAsync",
+                    employerId = "0",
+                    cchId = "0"
+                },
+                constraints: null,
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+
+            config.Routes.MapHttpRoute(
+                name: "EmployeesV2_GetEmployeeBenefitPlanMembers",
+                routeTemplate: "v2/employees/{employerId}/{cchId}/benefit-plans/{planId}/members",
+                defaults: new {
+                    controller = "Employees",
+                    action = "GetEmployeeBenefitPlanMembersAsync",
+                    employerId = "0",
+                    cchId = "0",
+                    planId = "0"
+                },
+                constraints: null,
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+
+            //{{hostname}}/v2/employees/21/63841/medical-plans/45/accumulations/2016
+            config.Routes.MapHttpRoute(
+                name: "MedicalPlansV2_GetMedicalPlanAccumulation",
+                routeTemplate: "v2/employees/{employerId}/{cchId}/medical-plans/{medicalPlanId}/accumulations/{planYear}",
+                defaults: new {
+                    controller = "MedicalPlans",
+                    action = "GetMedicalPlanAccumulationAsync",
+                    employerId = "0",
+                    cchId = "0",
+                    planId = "0",
+                    planYear = ""
+                },
+                constraints: null,
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+
+            //{{hostname}}/v2/employers/21/medical-plans/45
+            config.Routes.MapHttpRoute(
+                name: "MedicalPlansV2_GetMedicalPlan",
+                routeTemplate: "v2/employers/{employerId}/medical-plans/{medicalPlanId}",
+                defaults: new {
+                    controller = "MedicalPlans",
+                    action = "GetMedicalPlanAsync",
+                    employerId = "0",
+                    planId = "0"
+                },
+                constraints: null,
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config),
                     AuthenticatedAccountHandlers)
@@ -625,9 +681,12 @@ namespace CchWebAPI
 
             config.Routes.MapHttpRoute(
                 name: "IdCardsV2",
-                routeTemplate: "v2/{controller}",
-                defaults: new { },
-                constraints: new { controller = "IdCards" },
+                routeTemplate: "v2/idcards",
+                defaults: new {
+                    controller = "IdCards",
+                    action = "Get"
+                },
+                constraints: null,
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config),
                     AuthenticatedAccountHandlers)
@@ -636,9 +695,14 @@ namespace CchWebAPI
             // TODO TAKE OUT EMPLOYERID/CCHID
             config.Routes.MapHttpRoute(
                 name: "PayrollV2_DatesPaid",
-                routeTemplate: "v2/{controller}/{employerId}/{cchId}/dates-paid",
-                defaults: new { action = "GetDatesPaidAsync", employerId = "0", cchId = "0" },
-                constraints: new { controller = "Payroll" },
+                routeTemplate: "v2/employees/{employerId}/{cchId}/dates-paid",
+                defaults: new {
+                    controller = "Payroll",
+                    action = "GetDatesPaidAsync",
+                    employerId = "0",
+                    cchId = "0"
+                },
+                constraints: null,
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config),
                     AuthenticatedAccountHandlers)
@@ -646,19 +710,28 @@ namespace CchWebAPI
 
             config.Routes.MapHttpRoute(
                 name: "PayrollV2_Paycheck",
-                routeTemplate: "v2/{controller}/{employerId}/paycheck/{documentId}",
-                defaults: new { action = "GetPaycheck", employerId = "0", documentId = "" },
-                constraints: new { controller = "Payroll" },
+                routeTemplate: "v2/employers/{employerId}/paycheck/{documentId}",
+                defaults: new {
+                    controller = "Payroll",
+                    action = "GetPaycheckAsync",
+                    employerId = "0",
+                    documentId = ""
+                },
+                constraints: null,
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config),
                     AuthenticatedAccountHandlers)
                 );
 
             config.Routes.MapHttpRoute(
-                name: "BenefitContributionsV2",
-                routeTemplate: "v2/{controller}/{categoryCode}",
-                defaults: new { action = "Get", categoryCode = "" },
-                constraints: new { controller = "BenefitContributions" },
+                name: "BenefitContributionsV2_BenefitContributions",
+                routeTemplate: "v2/benefitcontributions/{categoryCode}",
+                defaults: new {
+                    controller = "BenefitContributions",
+                    action = "Get",
+                    categoryCode = ""
+                },
+                constraints: null,
                 handler: HttpClientFactory.CreatePipeline(
                     new HttpControllerDispatcher(config),
                     AuthenticatedAccountHandlers)
