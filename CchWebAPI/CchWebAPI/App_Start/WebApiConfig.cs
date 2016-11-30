@@ -737,6 +737,37 @@ namespace CchWebAPI
                     AuthenticatedAccountHandlers)
                 );
 
+            // Return benefits employee is enrolled in.
+            config.Routes.MapHttpRoute(
+                name: "BenefitV1_EmployeeBenefitsEnrolled",
+                routeTemplate: "v2/employees/{employerId}/{cchId}/benefits/enrolled/{year}",
+                defaults: new {
+                    controller = "Employees",
+                    action = "GetEmployeeBenefitsEnrolled",
+                    employerId = "0",
+                    cchId = "0",
+                    year = DateTime.UtcNow.Year
+                },
+                constraints: null,
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+            // Return benefits employee is eligible for.
+            config.Routes.MapHttpRoute(
+                name: "BenefitV1_EmployeeBenefitsEligible",
+                routeTemplate: "v2/employees/{employerId}/{cchId}/benefits/eligible",
+                defaults: new {
+                    controller = "Employees",
+                    action = "GetEmployeeBenefitsEligible",
+                    employerId = "0",
+                    cchId = "0"
+                },
+                constraints: null,
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
             #endregion v2
         }
     }
