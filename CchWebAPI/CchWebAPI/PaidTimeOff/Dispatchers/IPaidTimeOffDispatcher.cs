@@ -19,12 +19,7 @@ namespace CchWebAPI.PaidTimeOff.Dispatchers {
         }
 
         public async Task<List<PaidTimeOffDetail>> GetPaidTimeOffAsync(Employer employer, int cchid) {
-            string employerConnectionString =
-                EmployerConnectionString.GetConnectionString(employer.Id).DataWarehouse.Equals(string.Empty) ?
-                employer.ConnectionString :
-                EmployerConnectionString.GetConnectionString(employer.Id).DataWarehouse;
-
-            _repository.Initialize(employerConnectionString);
+            _repository.Initialize(employer.ConnectionString);
             
             var result = await _repository.GetPaidTimeOffDetailsByCchIdAsync(cchid);
             

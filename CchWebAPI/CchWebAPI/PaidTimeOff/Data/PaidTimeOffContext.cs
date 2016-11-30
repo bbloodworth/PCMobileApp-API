@@ -16,14 +16,14 @@ namespace CchWebAPI.PaidTimeOff.Data
             builder.Configurations.Add(new PTOSnapshot.PTOSnapshotConfiguration());
             builder.Configurations.Add(new PayrollMetric.PayrollMetricConfiguration());
             builder.Configurations.Add(new Dates.DatesConfiguration());
-            builder.Configurations.Add(new Employee.Data.Employee.EmployeeConfiguration());
+            builder.Configurations.Add(new Employee.Data.V2.Employee.EmployeeConfiguration());
 
         }
 
         public DbSet<PTOSnapshot> PTOSnapshots { get; set; }
         public DbSet<PayrollMetric> PayrollMetrics { get; set; }
         public DbSet<Dates> Dates { get; set; }
-        public DbSet<Employee.Data.Employee> Employees { get; set; }
+        public DbSet<Employee.Data.V2.Employee> Employees { get; set; }
 
     }
 }
