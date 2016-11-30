@@ -17,6 +17,7 @@ namespace CchWebAPI.Payroll.Models {
         public string DeliveryMethodCode { get; set; }
         public string PayrollCategoryName { get; set; }
         public string PayrollMetricName { get; set; }
+        public string PayrollMetricDisplayName { get; set; }
         public bool PreTaxInd { get; set; }
         public string ContributionTypeCode { get; set; }
         public decimal? PayrollMetricRate { get; set; }

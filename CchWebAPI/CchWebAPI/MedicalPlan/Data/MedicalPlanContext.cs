@@ -82,8 +82,8 @@ namespace CchWebAPI.MedicalPlan.Data {
         public int? PayerKey { get; set; } // PayerKey
         public string PayerName { get; set; } // PayerName (length: 50)
         public int? IssuerNum { get; set; } // IssuerNum
-        public string NetworkName { get; set; } // NetworkName (length: 50)
-        public string MedicalGroupNum { get; set; } // MedicalGroupNum (length: 20)
+        //public string NetworkName { get; set; } // NetworkName (length: 50)
+        //public string MedicalGroupNum { get; set; } // MedicalGroupNum (length: 20)
         public System.DateTime? AccumulatorStartDate { get; set; } // AccumulatorStartDate
         public decimal? IndividualDeductibleAmt { get; set; } // IndividualDeductibleAmt
         public decimal? FamilyDeductibleAmt { get; set; } // FamilyDeductibleAmt
@@ -132,8 +132,8 @@ namespace CchWebAPI.MedicalPlan.Data {
                 Property(x => x.PayerKey).HasColumnName(@"PayerKey").IsOptional().HasColumnType("int");
                 Property(x => x.PayerName).HasColumnName(@"PayerName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
                 Property(x => x.IssuerNum).HasColumnName(@"IssuerNum").IsOptional().HasColumnType("int");
-                Property(x => x.NetworkName).HasColumnName(@"NetworkName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
-                Property(x => x.MedicalGroupNum).HasColumnName(@"MedicalGroupNum").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
+                //Property(x => x.NetworkName).HasColumnName(@"NetworkName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
+                //Property(x => x.MedicalGroupNum).HasColumnName(@"MedicalGroupNum").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
                 Property(x => x.AccumulatorStartDate).HasColumnName(@"AccumulatorStartDate").IsOptional().HasColumnType("datetime");
                 Property(x => x.IndividualDeductibleAmt).HasColumnName(@"IndividualDeductibleAmt").IsOptional().HasColumnType("money").HasPrecision(19, 4);
                 Property(x => x.FamilyDeductibleAmt).HasColumnName(@"FamilyDeductibleAmt").IsOptional().HasColumnType("money").HasPrecision(19, 4);

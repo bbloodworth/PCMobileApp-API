@@ -66,6 +66,7 @@ namespace CchWebAPI.Payroll.Models {
                 payrollMetrics.Add(new Models.PayrollMetric {
                     Category = p.PayrollCategoryName,
                     Name = p.PayrollMetricName,
+                    DisplayName = p.PayrollMetricDisplayName,
                     PreTaxIndicator = p.PreTaxInd,
                     ContributionTypeCode = p.ContributionTypeCode,
                     Rate = p.PayrollMetricRate,

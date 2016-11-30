@@ -177,7 +177,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Animation\Views\Settings\" />
-    <Folder Include="Employees\Models\" />
     <Folder Include="Views\PaidTimeOff\" />
   </ItemGroup>
   <ItemGroup>
@@ -266,13 +265,15 @@
     <Compile Include="BenefitContribution\Models\Payroll.cs" />
     <Compile Include="BenefitContribution\Models\PayrollAudit.cs" />
     <Compile Include="BenefitContribution\Models\PayrollMetric.cs" />
-    <Compile Include="Configuration\EmployerConnectionStringConfiguration.cs" />
     <Compile Include="Controllers\BenefitContributionsController.cs" />
     <Compile Include="Controllers\IdCardsController.cs" />
     <Compile Include="Controllers\MedicalPlansController.cs" />
     <Compile Include="Controllers\PaidTimeOffController.cs" />
     <Compile Include="Controllers\PayrollController.cs" />
-    <Compile Include="EmployerConnectionString.cs" />
+    <Compile Include="Employee\Models\Employee.cs" />
+    <Compile Include="Employee\Models\Job.cs" />
+    <Compile Include="Employee\Models\OrganizationLevel.cs" />
+    <Compile Include="Employee\Models\WorkLocation.cs" />
     <Compile Include="Employee\Models\PlanMember.cs" />
     <Compile Include="MedicalPlan\Data\IMedicalPlanRepository.cs" />
     <Compile Include="MedicalPlan\Data\MedicalPlanContext.cs" />
@@ -308,9 +309,6 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\PartnerHandshakeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Employees\Data\EmployeesContext.cs" />
-    <Compile Include="Employees\Data\IEmployeesRepository.cs" />
-    <Compile Include="Employees\Dispatchers\IEmployeesDispatcher.cs" />
     <Compile Include="Formatters\JsonpMediaTypeFormatter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

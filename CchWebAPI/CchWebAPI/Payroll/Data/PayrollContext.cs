@@ -332,6 +332,7 @@ namespace CchWebAPI.Payroll.Data
         public string DwUpdateUserId { get; set; } // DWUpdateUserID (length: 20)
         public System.DateTime? DwUpdateDate { get; set; } // DWUpdateDate
         public int? EtlControlId { get; set; } // ETLControlID
+        public string DashboardDisplayName { get; set; } //DashboardDisplayName (length: 50)
 
         public class PayrollMetricConfiguration : EntityTypeConfiguration<PayrollMetric> {
             public PayrollMetricConfiguration() {
@@ -354,6 +355,7 @@ namespace CchWebAPI.Payroll.Data
                 Property(x => x.DwUpdateUserId).HasColumnName(@"DWUpdateUserID").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
                 Property(x => x.DwUpdateDate).HasColumnName(@"DWUpdateDate").IsOptional().HasColumnType("datetime");
                 Property(x => x.EtlControlId).HasColumnName(@"ETLControlID").IsOptional().HasColumnType("int");
+                Property(x => x.DashboardDisplayName).HasColumnName(@"DashboardDisplayName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
             }
         }
     }

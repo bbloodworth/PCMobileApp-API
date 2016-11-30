@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using CchWebAPI.MedicalPlan.Data;
 using CchWebAPI.MedicalPlan.Dispatchers;
 using CchWebAPI.Controllers;
+using ClearCost.Platform;
+using System.Linq;
 
 namespace CchWebAPI.Tests {
     /// <summary>
@@ -59,8 +61,11 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         public async Task CanGetMedicalPlan() {
             foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
+                var employer = EmployerCache.Employers.FirstOrDefault(e =>
+                    e.Id == testAccount.EmployerId);
+
                 var repository = new MedicalPlanRepository();
-                repository.Initialize(EmployerConnectionString.GetConnectionString(testAccount.EmployerId).DataWarehouse);
+                repository.Initialize(employer.ConnectionString);
 
                 var dispatcher = new MedicalPlanDispatcher(repository);
                 var controller = new MedicalPlansController(dispatcher);
@@ -74,8 +79,11 @@ namespace CchWebAPI.Tests {
         [TestMethod]
         public async Task CanGetMedicalPlanAccumulation() {
             foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
+                var employer = EmployerCache.Employers.FirstOrDefault(e =>
+                    e.Id == testAccount.EmployerId);
+
                 var repository = new MedicalPlanRepository();
-                repository.Initialize(EmployerConnectionString.GetConnectionString(testAccount.EmployerId).DataWarehouse);
+                repository.Initialize(employer.ConnectionString);
 
                 var dispatcher = new MedicalPlanDispatcher(repository);
                 var controller = new MedicalPlansController(dispatcher);

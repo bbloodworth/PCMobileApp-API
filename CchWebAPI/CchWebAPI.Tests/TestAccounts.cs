@@ -147,7 +147,11 @@ namespace CchWebAPI.Tests {
                 Password = "dem0-User",
                 FullSsn = "000004835",
                 SecretAnswer = "crazytown",
-                Phone = "6176668888"
+                Phone = "6176668888",
+                ApiKey = "DB366C62-88B6-402D-BCB7-E3FC384776E1",
+                AuthHash = "631B756ADC1A2347EF43A82F21E65B3A77C30C4141714F8C4E9968962D6E6538B43B8DC963E03A63B068FBC5CF91124D7F102F138D2D7C524ED6ABB76A5ACAE952D2F2EB93CE01112B63854F8735BE65EAE60B8CF777606612DC7ED073D48C2416FAC31B2C975BD3A1889BDB9613015E9BC782D715E73F63",
+                EmployerId = 11,
+                CchId = 57020,
             };
         }
     }

@@ -9,12 +9,12 @@ using CchWebAPI.Controllers;
 using CchWebAPI.Filters;
 using CchWebAPI.IdCard.Data;
 using CchWebAPI.IdCard.Dispatchers;
-using CchWebAPI.Employees.Data;
-using CchWebAPI.Employees.Dispatchers;
+//using CchWebAPI.Employees.Data;
+//using CchWebAPI.Employees.Dispatchers;
 using CchWebAPI.BenefitContribution.Data;
 using CchWebAPI.BenefitContribution.Dispatchers;
 using System.Web.Mvc;
-using CchWebAPI.Employee.Data;
+using CchWebAPI.Employee.Data.V2;
 using CchWebAPI.Employee.Dispatchers;
 using CchWebAPI.PaidTimeOff.Data;
 using CchWebAPI.PaidTimeOff.Dispatchers;
@@ -29,7 +29,7 @@ namespace CchWebAPI {
             var builder = new ContainerBuilder();
             //Repositories
             builder.RegisterType<IdCardsRepository>().As<IIdCardsRepository>();
-            builder.RegisterType<EmployeesRepository>().As<IEmployeesRepository>();
+            //builder.RegisterType<EmployeesRepository>().As<IEmployeesRepository>();
             builder.RegisterType<EmployeeRepository>().As<IEmployeeRepository>();
             builder.RegisterType<PayrollRepository>().As<IPayrollRepository>();
             builder.RegisterType<BenefitContributionsRepository>().As<IBenefitContributionsRepository>();
@@ -39,8 +39,8 @@ namespace CchWebAPI {
             //Dispatchers
             builder.RegisterType<IdCardsDispatcher>().As<IIdCardsDispatcher>()
                 .UsingConstructor(typeof(IIdCardsRepository));
-            builder.RegisterType<EmployeesDispatcher>().As<IEmployeesDispatcher>()
-                .UsingConstructor(typeof(IEmployeesRepository));
+            //builder.RegisterType<EmployeesDispatcher>().As<IEmployeesDispatcher>()
+            //    .UsingConstructor(typeof(IEmployeesRepository));
             builder.RegisterType<EmployeeDispatcher>().As<IEmployeeDispatcher>()
                 .UsingConstructor(typeof(IEmployeeRepository));
             builder.RegisterType<PayrollDispatcher>().As<IPayrollDispatcher>()
@@ -56,9 +56,9 @@ namespace CchWebAPI {
             builder.RegisterType<IdCardsController>()
                 .UsingConstructor(typeof(IIdCardsDispatcher))
                 .InstancePerRequest();
-            builder.RegisterType<EmployeesController>()
-                .UsingConstructor(typeof(IEmployeesDispatcher))
-                .InstancePerRequest();
+            //builder.RegisterType<EmployeesController>()
+            //    .UsingConstructor(typeof(IEmployeesDispatcher))
+            //    .InstancePerRequest();
             builder.RegisterType<EmployeesController>()
                 .UsingConstructor(typeof(IEmployeeDispatcher))
                 .InstancePerRequest();
