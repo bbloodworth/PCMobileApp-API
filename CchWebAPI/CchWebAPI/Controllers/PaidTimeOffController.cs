@@ -25,7 +25,7 @@ namespace CchWebAPI.Controllers
         public async Task<ApiResult<List<PaidTimeOffDetail>>> Get() {
             var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == Request.EmployerID());
 
-            var result = await _dispatcher.GetPaidTimeOffTable(employer, Request.CCHID());
+            var result = await _dispatcher.GetPaidTimeOffAsync(employer, Request.CCHID());
 
             return ApiResult<List<PaidTimeOffDetail>>.ValidResult(result, string.Empty);
         }

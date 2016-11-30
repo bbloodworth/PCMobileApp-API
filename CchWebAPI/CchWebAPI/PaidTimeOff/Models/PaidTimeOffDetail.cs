@@ -21,6 +21,7 @@ namespace CchWebAPI.PaidTimeOff.Models {
         public string ReportingCategoryCode { get; set; }
     }
 
+    // Table should be removed from the class name.
     public class PaidTimeOffSubTable {
         public string PaidTimeOffType { get; set; }
         public double? AvailableHours { get; set; }

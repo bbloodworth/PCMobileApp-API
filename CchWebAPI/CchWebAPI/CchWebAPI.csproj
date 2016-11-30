@@ -15,7 +15,7 @@
     <AssemblyName>CchWebAPI</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -287,7 +287,7 @@
     <Compile Include="PaidTimeOff\Data\IPaidTimeOffRepository.cs" />
     <Compile Include="PaidTimeOff\Dispatchers\IPaidTimeOffDispatcher.cs" />
     <Compile Include="PaidTimeOff\Models\Dates.cs" />
-    <Compile Include="PaidTimeOff\Models\PaidTimeOffTable.cs" />
+    <Compile Include="PaidTimeOff\Models\PaidTimeOffDetail.cs" />
     <Compile Include="PaidTimeOff\Models\PayrollMetric.cs" />
     <Compile Include="PaidTimeOff\Models\PTOSnapshot.cs" />
     <Compile Include="Payroll\Models\DatePaid.cs" />
