@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Web.Http;
+using System.Web.Http;
 
 using Autofac;
 using Autofac.Integration.WebApi;
@@ -15,6 +16,8 @@ using CchWebAPI.BenefitContribution.Dispatchers;
 using System.Web.Mvc;
 using CchWebAPI.Employee.Data;
 using CchWebAPI.Employee.Dispatchers;
+using CchWebAPI.PaidTimeOff.Data;
+using CchWebAPI.PaidTimeOff.Dispatchers;
 using CchWebAPI.Payroll.Data;
 using CchWebAPI.Payroll.Dispatchers;
 using CchWebAPI.MedicalPlan.Data;
@@ -31,6 +34,7 @@ namespace CchWebAPI {
             builder.RegisterType<PayrollRepository>().As<IPayrollRepository>();
             builder.RegisterType<BenefitContributionsRepository>().As<IBenefitContributionsRepository>();
             builder.RegisterType<MedicalPlanRepository>().As<IMedicalPlanRepository>();
+            builder.RegisterType<PaidTimeOffRepository>().As<IPaidTimeOffRepository>();
 
             //Dispatchers
             builder.RegisterType<IdCardsDispatcher>().As<IIdCardsDispatcher>()
@@ -45,6 +49,8 @@ namespace CchWebAPI {
                 .UsingConstructor(typeof(IBenefitContributionsRepository));
             builder.RegisterType<MedicalPlanDispatcher>().As<IMedicalPlanDispatcher>()
                 .UsingConstructor(typeof(IMedicalPlanRepository));
+            builder.RegisterType<PaidTimeOffDispatcher>().As<IPaidTimeOffDispatcher>()
+                .UsingConstructor(typeof(IPaidTimeOffRepository));
 
             //Controllers
             builder.RegisterType<IdCardsController>()
@@ -61,6 +67,9 @@ namespace CchWebAPI {
                 .InstancePerRequest();
             builder.RegisterType<BenefitContributionsController>()
                 .UsingConstructor(typeof(IBenefitContributionsDispatcher))
+                .InstancePerRequest();
+            builder.RegisterType<PaidTimeOffController>()
+                .UsingConstructor(typeof(IPaidTimeOffDispatcher))
                 .InstancePerRequest();
             builder.RegisterType<MedicalPlansController>()
                 .UsingConstructor(typeof(IMedicalPlanDispatcher))

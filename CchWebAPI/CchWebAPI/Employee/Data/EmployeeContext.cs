@@ -24,7 +24,7 @@ namespace CchWebAPI.Employee.Data {
 
     public class Employee {
         public int EmployeeKey { get; set; } // EmployeeKey (Primary key)
-        public int Cchid { get; set; } // CCHID
+        public int CchId { get; set; } // CCHID
         public string SourceEmployeeNum { get; set; } // SourceEmployeeNum (length: 20)
         public string EmployeeFirstName { get; set; } // EmployeeFirstName (length: 50)
         public string EmployeePreferredFirstName { get; set; } // EmployeePreferredFirstName (length: 50)
@@ -92,7 +92,7 @@ namespace CchWebAPI.Employee.Data {
                 HasKey(x => x.EmployeeKey);
 
                 Property(x => x.EmployeeKey).HasColumnName(@"EmployeeKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
-                Property(x => x.Cchid).HasColumnName(@"CCHID").IsRequired().HasColumnType("int");
+                Property(x => x.CchId).HasColumnName(@"CCHID").IsRequired().HasColumnType("int");
                 Property(x => x.SourceEmployeeNum).HasColumnName(@"SourceEmployeeNum").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
                 Property(x => x.EmployeeFirstName).HasColumnName(@"EmployeeFirstName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
                 Property(x => x.EmployeePreferredFirstName).HasColumnName(@"EmployeePreferredFirstName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
@@ -159,7 +159,7 @@ namespace CchWebAPI.Employee.Data {
 
     public class Member {
         public int MemberKey { get; set; } // MemberKey (Primary key)
-        public int Cchid { get; set; } // CCHID
+        public int CchId { get; set; } // CCHID
         public string MemberNum { get; set; } // MemberNum (length: 20)
         public string MemberNumTypeDesc { get; set; } // MemberNumTypeDesc (length: 100)
         public string MemberEdiNum { get; set; } // MemberEDINum (length: 20)
@@ -217,7 +217,7 @@ namespace CchWebAPI.Employee.Data {
                 HasKey(x => x.MemberKey);
 
                 Property(x => x.MemberKey).HasColumnName(@"MemberKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
-                Property(x => x.Cchid).HasColumnName(@"CCHID").IsRequired().HasColumnType("int");
+                Property(x => x.CchId).HasColumnName(@"CCHID").IsRequired().HasColumnType("int");
                 Property(x => x.MemberNum).HasColumnName(@"MemberNum").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
                 Property(x => x.MemberNumTypeDesc).HasColumnName(@"MemberNumTypeDesc").IsOptional().HasColumnType("nvarchar").HasMaxLength(100);
                 Property(x => x.MemberEdiNum).HasColumnName(@"MemberEDINum").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
