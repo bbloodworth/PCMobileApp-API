@@ -177,6 +177,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Animation\Views\Settings\" />
+    <Folder Include="Views\PaidTimeOff\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
@@ -267,6 +268,7 @@
     <Compile Include="Controllers\BenefitContributionsController.cs" />
     <Compile Include="Controllers\IdCardsController.cs" />
     <Compile Include="Controllers\MedicalPlansController.cs" />
+    <Compile Include="Controllers\PaidTimeOffController.cs" />
     <Compile Include="Controllers\PayrollController.cs" />
     <Compile Include="Employee\Models\BenefitPlan.cs" />
     <Compile Include="Employee\Models\Employee.cs" />
@@ -283,6 +285,13 @@
     <Compile Include="MedicalPlan\Models\MedicalPlan.cs" />
     <Compile Include="MedicalPlan\Models\MedicalPlanAccumulation.cs" />
     <Compile Include="MedicalPlan\Models\OutOfPocketMaximum.cs" />
+    <Compile Include="PaidTimeOff\Data\PaidTimeOffContext.cs" />
+    <Compile Include="PaidTimeOff\Data\IPaidTimeOffRepository.cs" />
+    <Compile Include="PaidTimeOff\Dispatchers\IPaidTimeOffDispatcher.cs" />
+    <Compile Include="PaidTimeOff\Models\Dates.cs" />
+    <Compile Include="PaidTimeOff\Models\PaidTimeOffDetail.cs" />
+    <Compile Include="PaidTimeOff\Models\PayrollMetric.cs" />
+    <Compile Include="PaidTimeOff\Models\PTOSnapshot.cs" />
     <Compile Include="Payroll\Models\DatePaid.cs" />
     <Compile Include="Payroll\Data\PayrollContext.cs" />
     <Compile Include="Payroll\Data\IPayrollRepository.cs" />

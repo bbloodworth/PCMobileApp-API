@@ -737,6 +737,16 @@ namespace CchWebAPI
                     AuthenticatedAccountHandlers)
                 );
 
+            config.Routes.MapHttpRoute(
+                name: "PaidTimeOffDetails",
+                routeTemplate: "v2/{controller}",
+                defaults: new { action = "Get" },
+                constraints: new { controller = "PaidTimeOff" },
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+
             // Return benefits employee is enrolled in.
             config.Routes.MapHttpRoute(
                 name: "BenefitV1_EmployeeBenefitsEnrolled",
