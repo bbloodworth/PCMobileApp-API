@@ -82,11 +82,21 @@ namespace CchWebAPI.Employee.Data {
                 builder.Configurations.Add(new Employee.EmployeeConfiguration());
                 builder.Configurations.Add(new Member.MemberConfiguration());
                 builder.Configurations.Add(new BenefitEnrollment.BenefitEnrollmentConfiguration());
+                builder.Configurations.Add(new BenefitEligibility.BenefitEligibilityConfiguration());
+                builder.Configurations.Add(new Employer.EmployerConfiguration());
+                builder.Configurations.Add(new PlanYear.PlanYearConfiguration());
+                builder.Configurations.Add(new Date.DateConfiguration());
+                builder.Configurations.Add(new BenefitPlanOption.BenefitPlanOptionConfiguration());
             }
 
             public DbSet<Employee> Employees { get; set; }
-            public DbSet<Member> Members { get; set; }
+            public DbSet<Member> Members { get; set; } // Member_d
             public DbSet<BenefitEnrollment> BenefitEnrollments { get; set; }
+            public DbSet<BenefitEligibility> BenefitEligibilities { get; set; }
+            public DbSet<Employer> Employers { get; set; } // Employer_d
+            public DbSet<PlanYear> PlanYears { get; set; }
+            public DbSet<Date> Dates { get; set; } // Date_d
+            public DbSet<BenefitPlanOption> BenefitPlanOptions { get; set; } // BenefitPlanOption_d
         }
 
         public class Employee {
@@ -223,7 +233,6 @@ namespace CchWebAPI.Employee.Data {
                 }
             }
         }
-
         public class Member {
             public int MemberKey { get; set; } // MemberKey (Primary key)
             public int Cchid { get; set; } // CCHID
@@ -338,7 +347,6 @@ namespace CchWebAPI.Employee.Data {
                 }
             }
         }
-
         public class BenefitEnrollment {
             public int EmployerKey { get; set; } // EmployerKey (Primary key)
             public int PlanYearKey { get; set; } // PlanYearKey (Primary key)
@@ -394,6 +402,201 @@ namespace CchWebAPI.Employee.Data {
                     Property(x => x.EmployeeAnnualContributionPct).HasColumnName(@"EmployeeAnnualContributionPct").IsOptional().HasColumnType("decimal").HasPrecision(6, 4);
                     Property(x => x.CoverageTerminatedInd).HasColumnName(@"CoverageTerminatedInd").IsRequired().HasColumnType("bit");
                     Property(x => x.CurrentRecordInd).HasColumnName(@"CurrentRecordInd").IsOptional().HasColumnType("bit");
+                }
+            }
+        }
+        public class BenefitEligibility {
+            public int EmployerKey { get; set; } // EmployerKey (Primary key)
+            public int MemberKey { get; set; } // MemberKey (Primary key)
+            public int EmployeeKey { get; set; } // EmployeeKey (Primary key)
+            public int PlanYearKey { get; set; } // PlanYearKey (Primary key)
+            public int BenefitPlanOptionKey { get; set; } // BenefitPlanOptionKey (Primary key)
+            public int EligibleFromDateKey { get; set; } // EligibleFromDateKey (Primary key)
+            public int EligibleToDateKey { get; set; } // EligibleToDateKey (Primary key)
+            public string BenefitEligibilityAuditKey { get; set; } // BenefitEligibilityAuditKey (Primary key) (length: 10)
+            public bool CurrentRecordInd { get; set; } // CurrentRecordInd
+
+            public class BenefitEligibilityConfiguration : EntityTypeConfiguration<BenefitEligibility> {
+                public BenefitEligibilityConfiguration() {
+                    ToTable("BenefitEligibility_f");
+                    HasKey(x => new { x.EmployerKey, x.MemberKey, x.EligibleFromDateKey, x.EligibleToDateKey, x.PlanYearKey, x.EmployeeKey, x.BenefitPlanOptionKey, x.BenefitEligibilityAuditKey });
+
+                    Property(x => x.EmployerKey).HasColumnName(@"EmployerKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+                    Property(x => x.MemberKey).HasColumnName(@"MemberKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+                    Property(x => x.EmployeeKey).HasColumnName(@"EmployeeKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+                    Property(x => x.PlanYearKey).HasColumnName(@"PlanYearKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+                    Property(x => x.BenefitPlanOptionKey).HasColumnName(@"BenefitPlanOptionKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+                    Property(x => x.EligibleFromDateKey).HasColumnName(@"EligibleFromDateKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+                    Property(x => x.EligibleToDateKey).HasColumnName(@"EligibleToDateKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+                    Property(x => x.BenefitEligibilityAuditKey).HasColumnName(@"BenefitEligibilityAuditKey").IsRequired().IsFixedLength().IsUnicode(false).HasColumnType("char").HasMaxLength(10).HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+                    Property(x => x.CurrentRecordInd).HasColumnName(@"CurrentRecordInd").IsRequired().HasColumnType("bit");
+                }
+
+            }
+        }
+        public class Employer {
+            public int EmployerKey { get; set; } // EmployerKey (Primary key)
+            public int EmployerId { get; set; } // EmployerID
+            public string EmployerName { get; set; } // EmployerName (length: 50)
+            public bool? EmployerActiveInd { get; set; } // EmployerActiveInd
+            public string SourceCreateUserId { get; set; } // SourceCreateUserID (length: 20)
+            public System.DateTime? SourceCreateDate { get; set; } // SourceCreateDate
+            public string SourceUpdateUserId { get; set; } // SourceUpdateUserID (length: 20)
+            public System.DateTime? SourceUpdateDate { get; set; } // SourceUpdateDate
+            public string DwCreateUserId { get; set; } // DWCreateUserID (length: 20)
+            public System.DateTime? DwCreateDate { get; set; } // DWCreateDate
+            public string DwUpdateUserId { get; set; } // DWUpdateUserID (length: 20)
+            public System.DateTime? DwUpdateDate { get; set; } // DWUpdateDate
+
+            public class EmployerConfiguration : EntityTypeConfiguration<Employer> {
+                public EmployerConfiguration() {
+                    ToTable("Employer_d");
+                    HasKey(x => x.EmployerKey);
+
+                    Property(x => x.EmployerKey).HasColumnName(@"EmployerKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+                    Property(x => x.EmployerId).HasColumnName(@"EmployerID").IsRequired().HasColumnType("int");
+                    Property(x => x.EmployerName).HasColumnName(@"EmployerName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
+                    Property(x => x.EmployerActiveInd).HasColumnName(@"EmployerActiveInd").IsOptional().HasColumnType("bit");
+                    Property(x => x.SourceCreateUserId).HasColumnName(@"SourceCreateUserID").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
+                    Property(x => x.SourceCreateDate).HasColumnName(@"SourceCreateDate").IsOptional().HasColumnType("datetime2");
+                    Property(x => x.SourceUpdateUserId).HasColumnName(@"SourceUpdateUserID").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
+                    Property(x => x.SourceUpdateDate).HasColumnName(@"SourceUpdateDate").IsOptional().HasColumnType("datetime2");
+                    Property(x => x.DwCreateUserId).HasColumnName(@"DWCreateUserID").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
+                    Property(x => x.DwCreateDate).HasColumnName(@"DWCreateDate").IsOptional().HasColumnType("datetime2");
+                    Property(x => x.DwUpdateUserId).HasColumnName(@"DWUpdateUserID").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
+                    Property(x => x.DwUpdateDate).HasColumnName(@"DWUpdateDate").IsOptional().HasColumnType("datetime2");
+                }
+            }
+        }
+        public class PlanYear {
+            public int PlanYearKey { get; set; } // PlanYearKey (Primary key)
+            public string PlanYearNum { get; set; } // PlanYearNum (length: 20)
+            public string PlanYearName { get; set; } // PlanYearName (length: 50)
+            public System.DateTime? PlanYearStartDate { get; set; } // PlanYearStartDate
+            public System.DateTime? PlanYearEndDate { get; set; } // PlanYearEndDate
+            public System.DateTime? OpenEnrollmentStartDate { get; set; } // OpenEnrollmentStartDate
+            public System.DateTime? OpenEnrollmentEndDate { get; set; } // OpenEnrollmentEndDate
+            public string DwCreateUserId { get; set; } // DWCreateUserID (length: 20)
+            public System.DateTime? DwCreateDate { get; set; } // DWCreateDate
+            public int? EtlControlId { get; set; } // ETLControlID
+
+            //Relationships
+            //public virtual ICollection<MedicalPlanAccumulation> MedicalPlanAccumulations { get; set; }
+
+            public class PlanYearConfiguration : EntityTypeConfiguration<PlanYear> {
+                public PlanYearConfiguration() {
+                    ToTable("PlanYear_d");
+                    HasKey(x => x.PlanYearKey);
+
+                    Property(x => x.PlanYearKey).HasColumnName(@"PlanYearKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+                    Property(x => x.PlanYearNum).HasColumnName(@"PlanYearNum").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
+                    Property(x => x.PlanYearName).HasColumnName(@"PlanYearName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
+                    Property(x => x.PlanYearStartDate).HasColumnName(@"PlanYearStartDate").IsOptional().HasColumnType("datetime");
+                    Property(x => x.PlanYearEndDate).HasColumnName(@"PlanYearEndDate").IsOptional().HasColumnType("datetime");
+                    Property(x => x.OpenEnrollmentStartDate).HasColumnName(@"OpenEnrollmentStartDate").IsOptional().HasColumnType("datetime");
+                    Property(x => x.OpenEnrollmentEndDate).HasColumnName(@"OpenEnrollmentEndDate").IsOptional().HasColumnType("datetime");
+                    Property(x => x.DwCreateUserId).HasColumnName(@"DWCreateUserID").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
+                    Property(x => x.DwCreateDate).HasColumnName(@"DWCreateDate").IsOptional().HasColumnType("datetime");
+                    Property(x => x.EtlControlId).HasColumnName(@"ETLControlID").IsOptional().HasColumnType("int");
+                }
+            }
+        }
+        public class Date {
+            public int DateKey { get; set; } // DateKey (Primary key)
+            public System.DateTime? FullDate { get; set; } // FullDate
+            public string DayOfWeekName { get; set; } // DayOfWeekName (length: 10)
+            public int? DayOfWeekNum { get; set; } // DayOfWeekNum
+            public int? DayInMonthNum { get; set; } // DayInMonthNum
+            public int? JulianDayNum { get; set; } // JulianDayNum
+            public int? WeekInYearNum { get; set; } // WeekInYearNum
+            public string MonthName { get; set; } // MonthName (length: 10)
+            public int? MonthInYearNum { get; set; } // MonthInYearNum
+            public string QuarterName { get; set; } // QuarterName (length: 10)
+            public int? QuarterInYearNum { get; set; } // QuarterInYearNum
+            public string CalendarYearName { get; set; } // CalendarYearName (length: 4)
+            public int? CalendarYearNum { get; set; } // CalendarYearNum
+            public bool? WeekdayInd { get; set; } // WeekdayInd
+            public bool? LastDayInMonthInd { get; set; } // LastDayInMonthInd
+            public string DwCreateUserId { get; set; } // DWCreateUserID (length: 6)
+            public System.DateTime DwCreateDate { get; set; } // DWCreateDate
+
+            public class DateConfiguration : EntityTypeConfiguration<Date> {
+                public DateConfiguration() {
+                    ToTable("Date_d");
+                    HasKey(x => x.DateKey);
+
+                    Property(x => x.DateKey).HasColumnName(@"DateKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+                    Property(x => x.FullDate).HasColumnName(@"FullDate").IsOptional().HasColumnType("datetime");
+                    Property(x => x.DayOfWeekName).HasColumnName(@"DayOfWeekName").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
+                    Property(x => x.DayOfWeekNum).HasColumnName(@"DayOfWeekNum").IsOptional().HasColumnType("int");
+                    Property(x => x.DayInMonthNum).HasColumnName(@"DayInMonthNum").IsOptional().HasColumnType("int");
+                    Property(x => x.JulianDayNum).HasColumnName(@"JulianDayNum").IsOptional().HasColumnType("int");
+                    Property(x => x.WeekInYearNum).HasColumnName(@"WeekInYearNum").IsOptional().HasColumnType("int");
+                    Property(x => x.MonthName).HasColumnName(@"MonthName").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
+                    Property(x => x.MonthInYearNum).HasColumnName(@"MonthInYearNum").IsOptional().HasColumnType("int");
+                    Property(x => x.QuarterName).HasColumnName(@"QuarterName").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
+                    Property(x => x.QuarterInYearNum).HasColumnName(@"QuarterInYearNum").IsOptional().HasColumnType("int");
+                    Property(x => x.CalendarYearName).HasColumnName(@"CalendarYearName").IsOptional().IsFixedLength().IsUnicode(false).HasColumnType("char").HasMaxLength(4);
+                    Property(x => x.CalendarYearNum).HasColumnName(@"CalendarYearNum").IsOptional().HasColumnType("int");
+                    Property(x => x.WeekdayInd).HasColumnName(@"WeekdayInd").IsOptional().HasColumnType("bit");
+                    Property(x => x.LastDayInMonthInd).HasColumnName(@"LastDayInMonthInd").IsOptional().HasColumnType("bit");
+                    Property(x => x.DwCreateUserId).HasColumnName(@"DWCreateUserID").IsRequired().IsUnicode(false).HasColumnType("varchar").HasMaxLength(6);
+                    Property(x => x.DwCreateDate).HasColumnName(@"DWCreateDate").IsRequired().HasColumnType("datetime");
+                }
+            }
+        }
+
+        public class BenefitPlanOption {
+            public int BenefitPlanOptionKey { get; set; } // BenefitPlanOptionKey (Primary key)
+            public string SourcePlanOptionCode { get; set; } // SourcePlanOptionCode (length: 10)
+            public string PayrollMetricCode { get; set; } // PayrollMetricCode (length: 10)
+            public string ContractPrefixCode { get; set; } // ContractPrefixCode (length: 10)
+            public string BenefitClassName { get; set; } // BenefitClassName (length: 50)
+            public string BenefitTypeName { get; set; } // BenefitTypeName (length: 50)
+            public string BenefitPlanName { get; set; } // BenefitPlanName (length: 50)
+            public string BenefitPlanTypeCode { get; set; } // BenefitPlanTypeCode (length: 10)
+            public string BenefitPlanTypeName { get; set; } // BenefitPlanTypeName (length: 50)
+            public string BenefitPlanOptionName { get; set; } // BenefitPlanOptionName (length: 50)
+            public int? PayerKey { get; set; } // PayerKey
+            public string PayerName { get; set; } // PayerName (length: 50)
+            public bool OpenEnrollmentInd { get; set; } // OpenEnrollmentInd
+            public bool LinkedPlanInd { get; set; } // LinkedPlanInd
+            public bool IdCardInd { get; set; } // IDCardInd
+            public bool ActiveInd { get; set; } // ActiveInd
+            public string DwCreateUserId { get; set; } // DWCreateUserID (length: 20)
+            public System.DateTime? DwCreateDate { get; set; } // DWCreateDate
+            public string DwUpdateUserId { get; set; } // DWUpdateUserID (length: 20)
+            public System.DateTime? DwUpdateDate { get; set; } // DWUpdateDate
+            public int? EtlControlId { get; set; } // ETLControlID
+            public string BenefitTypeCode { get; set; } // BenefitTypeCode (length: 10)
+
+            public class BenefitPlanOptionConfiguration : EntityTypeConfiguration<BenefitPlanOption> {
+                public BenefitPlanOptionConfiguration() {
+                    ToTable("BenefitPlanOption_d");
+                    HasKey(x => x.BenefitPlanOptionKey);
+
+                    Property(x => x.BenefitPlanOptionKey).HasColumnName(@"BenefitPlanOptionKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+                    Property(x => x.SourcePlanOptionCode).HasColumnName(@"SourcePlanOptionCode").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
+                    Property(x => x.PayrollMetricCode).HasColumnName(@"PayrollMetricCode").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
+                    Property(x => x.ContractPrefixCode).HasColumnName(@"ContractPrefixCode").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
+                    Property(x => x.BenefitClassName).HasColumnName(@"BenefitClassName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
+                    Property(x => x.BenefitTypeName).HasColumnName(@"BenefitTypeName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
+                    Property(x => x.BenefitPlanName).HasColumnName(@"BenefitPlanName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
+                    Property(x => x.BenefitPlanTypeCode).HasColumnName(@"BenefitPlanTypeCode").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
+                    Property(x => x.BenefitPlanTypeName).HasColumnName(@"BenefitPlanTypeName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
+                    Property(x => x.BenefitPlanOptionName).HasColumnName(@"BenefitPlanOptionName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
+                    Property(x => x.PayerKey).HasColumnName(@"PayerKey").IsOptional().HasColumnType("int");
+                    Property(x => x.PayerName).HasColumnName(@"PayerName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
+                    Property(x => x.OpenEnrollmentInd).HasColumnName(@"OpenEnrollmentInd").IsRequired().HasColumnType("bit");
+                    Property(x => x.LinkedPlanInd).HasColumnName(@"LinkedPlanInd").IsRequired().HasColumnType("bit");
+                    Property(x => x.IdCardInd).HasColumnName(@"IDCardInd").IsRequired().HasColumnType("bit");
+                    Property(x => x.ActiveInd).HasColumnName(@"ActiveInd").IsRequired().HasColumnType("bit");
+                    Property(x => x.DwCreateUserId).HasColumnName(@"DWCreateUserID").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
+                    Property(x => x.DwCreateDate).HasColumnName(@"DWCreateDate").IsOptional().HasColumnType("datetime");
+                    Property(x => x.DwUpdateUserId).HasColumnName(@"DWUpdateUserID").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
+                    Property(x => x.DwUpdateDate).HasColumnName(@"DWUpdateDate").IsOptional().HasColumnType("datetime");
+                    Property(x => x.EtlControlId).HasColumnName(@"ETLControlID").IsOptional().HasColumnType("int");
+                    Property(x => x.BenefitTypeCode).HasColumnName(@"BenefitTypeCode").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
                 }
             }
         }

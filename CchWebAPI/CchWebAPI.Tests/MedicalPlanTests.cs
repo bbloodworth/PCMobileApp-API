@@ -60,7 +60,7 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public async Task CanGetMedicalPlan() {
-            foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
+            foreach (var testAccount in TestAccounts.TyLinAccounts.Accounts) {
                 var employer = EmployerCache.Employers.FirstOrDefault(e =>
                     e.Id == testAccount.EmployerId);
 
@@ -78,7 +78,7 @@ namespace CchWebAPI.Tests {
         }
         [TestMethod]
         public async Task CanGetMedicalPlanAccumulation() {
-            foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
+            foreach (var testAccount in TestAccounts.TyLinAccounts.Accounts) {
                 var employer = EmployerCache.Employers.FirstOrDefault(e =>
                     e.Id == testAccount.EmployerId);
 

@@ -46,7 +46,7 @@ namespace CchWebAPI.Employee.Data {
 
             public async Task<Employee> GetEmployeeAsync(int cchId) {
                 if (string.IsNullOrEmpty(_connectionString))
-                    throw new InvalidOperationException("Failed to initialized repository");
+                    throw new InvalidOperationException("Failed to initialize repository");
 
                 Employee employee = null;
 
@@ -66,6 +66,8 @@ namespace CchWebAPI.Employee.Data {
             Task<Employee> GetEmployeeByKeyAsync(int employeeKey);
             Task<Employee> GetEmployeeByCchIdAsync(int cchId);
             Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId);
+            Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(int cchId, int year);
+            Task<List<BenefitPlan>> GetEmployeeBenefitsEligible(int cchId);
         }
 
         public class EmployeeRepository : SqlRepository, IEmployeeRepository {
@@ -101,7 +103,7 @@ namespace CchWebAPI.Employee.Data {
 
             public async Task<Employee> GetEmployeeByCchIdAsync(int cchId) {
                 if (string.IsNullOrEmpty(_connectionString))
-                    throw new InvalidOperationException("Failed to initialized repository");
+                    throw new InvalidOperationException("Failed to initialize repository");
 
                 Employee employee = null;
 
@@ -114,7 +116,7 @@ namespace CchWebAPI.Employee.Data {
 
             public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId) {
                 if (string.IsNullOrEmpty(_connectionString))
-                    throw new InvalidOperationException("Failed to initialized repository");
+                    throw new InvalidOperationException("Failed to initialize repository");
 
                 List<PlanMember> planMembers = new List<PlanMember>();
 
@@ -153,6 +155,86 @@ namespace CchWebAPI.Employee.Data {
                 }
 
                 return planMembers;
+            }
+            public async Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(int cchid, int year) {
+                if (string.IsNullOrEmpty(_connectionString))
+                    throw new InvalidOperationException("Failed to initialize repository");
+
+                List<BenefitPlan> benefitPlans = new List<BenefitPlan>();
+
+                using (var ctx = new EmployeeContext(_connectionString)) {
+                    var employee = await ctx.Employees
+                        .FirstOrDefaultAsync(p => p.CchId.Equals(cchid));
+
+                    if (employee != null) {
+                        benefitPlans = await ctx.BenefitEnrollments
+                        .Join(
+                            ctx.PlanYears,
+                            benefitEnrollments => benefitEnrollments.PlanYearKey,
+                            planYears => planYears.PlanYearKey,
+                            (benefitEnrollments, planYears) => new {
+                                BenefitEnrollments = benefitEnrollments,
+                                PlanYears = planYears
+                            })
+                        .Join(
+                            ctx.BenefitPlanOptions,
+                            benefitEnrollments => benefitEnrollments.BenefitEnrollments.BenefitPlanOptionKey,
+                            benefitPlanOptions => benefitPlanOptions.BenefitPlanOptionKey,
+                            (benefitEnrollments, benefitPlanOptions) => new {
+                                BenefitEnrollments = benefitEnrollments,
+                                BenefitPlanOptions = benefitPlanOptions
+                            })
+                        .Where(
+                            p =>
+                                p.BenefitEnrollments.BenefitEnrollments.SubscriberMemberKey.Equals(employee.EmployeeKey)
+                                && p.BenefitEnrollments.PlanYears.PlanYearName.Equals(year.ToString())
+                        )
+                        .Select(
+                            p => new BenefitPlan {
+                                Id = p.BenefitPlanOptions.BenefitPlanTypeCode,
+                                Name = p.BenefitPlanOptions.BenefitPlanTypeName
+                            })
+                        .Distinct()
+                        .ToListAsync();
+                    }
+                }
+                return benefitPlans;
+            }
+            public async Task<List<BenefitPlan>> GetEmployeeBenefitsEligible(int cchId) {
+                if (string.IsNullOrEmpty(_connectionString))
+                    throw new InvalidOperationException("Failed to initialize repository");
+
+                List<BenefitPlan> benefitPlans = new List<BenefitPlan>();
+
+                using (var ctx = new EmployeeContext(_connectionString)) {
+                    var employee = await ctx.Employees
+                        .FirstOrDefaultAsync(p => p.CchId.Equals(cchId));
+
+                    if (employee != null) {
+                        benefitPlans = await ctx.BenefitEligibilities
+                        .Join(
+                            ctx.BenefitPlanOptions,
+                            benefitEligibilities => benefitEligibilities.BenefitPlanOptionKey,
+                            benefitPlanOptions => benefitPlanOptions.BenefitPlanOptionKey,
+                            (benefitEligibilities, benefitPlanOptions) => new {
+                                BenefitEligibilities = benefitEligibilities,
+                                BenefitPlanOptions = benefitPlanOptions
+                            })
+                        .Where(
+                            p =>
+                                p.BenefitEligibilities.EmployeeKey.Equals(employee.EmployeeKey)
+                                && p.BenefitEligibilities.CurrentRecordInd.Equals(true)
+                        )
+                        .Select(
+                            p => new BenefitPlan {
+                                Id = p.BenefitPlanOptions.BenefitPlanTypeCode,
+                                Name = p.BenefitPlanOptions.BenefitPlanTypeName
+                            })
+                        .Distinct()
+                        .ToListAsync();
+                    }
+                }
+                return benefitPlans;
             }
         }
     }

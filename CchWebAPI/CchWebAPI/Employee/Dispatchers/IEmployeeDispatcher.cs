@@ -9,8 +9,10 @@ using System.Threading.Tasks;
 
 namespace CchWebAPI.Employee.Dispatchers {
     public interface IEmployeeDispatcher {
-        Task<Models.Employee> GetEmployeeAsync(Employer employer, int cchId);
-        Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(Employer employer, int cchId, int planId);
+        Task<Models.Employee> GetEmployeeAsync(ClearCost.Platform.Employer employer, int cchId);
+        Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(ClearCost.Platform.Employer employer, int cchId, int planId);
+        Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(ClearCost.Platform.Employer employer, int cchId, int year);
+        Task<List<BenefitPlan>> GetEmployeeBenefitsEligible(ClearCost.Platform.Employer employer, int cchId);
     }
 
     public class EmployeeDispatcher : IEmployeeDispatcher {
@@ -23,7 +25,7 @@ namespace CchWebAPI.Employee.Dispatchers {
             _repositoryV2 = repository;
         }
 
-        public async Task<Models.Employee> GetEmployeeAsync(Employer employer, int cchId) {
+        public async Task<Models.Employee> GetEmployeeAsync(ClearCost.Platform.Employer employer, int cchId) {
             if (cchId < 1)
                 throw new ArgumentException("Invalid member context.");
 
@@ -51,7 +53,7 @@ namespace CchWebAPI.Employee.Dispatchers {
             return employee;
         }
 
-        public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(Employer employer, int cchId, int planId) {
+        public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(ClearCost.Platform.Employer employer, int cchId, int planId) {
             if (cchId < 1)
                 throw new ArgumentException("Invalid member context.");
 
@@ -61,6 +63,34 @@ namespace CchWebAPI.Employee.Dispatchers {
             _repositoryV2.Initialize(employer.ConnectionString);
 
             var result = await _repositoryV2.GetEmployeeBenefitPlanMembersAsync(cchId, planId);
+
+            return result;
+        }
+
+        public async Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(ClearCost.Platform.Employer employer, int cchId, int year) {
+            if (cchId < 1)
+                throw new ArgumentException("Invalid member context.");
+
+            if (employer == null || string.IsNullOrEmpty(employer.ConnectionString))
+                throw new ArgumentException("Invalid employer context.");
+
+            _repositoryV2.Initialize(employer.ConnectionString);
+
+            var result = await _repositoryV2.GetEmployeeBenefitsEnrolled(cchId, year);
+
+            return result;
+        }
+
+        public async Task<List<BenefitPlan>> GetEmployeeBenefitsEligible(ClearCost.Platform.Employer employer, int cchId) {
+            if (cchId < 1)
+                throw new ArgumentException("Invalid member context.");
+
+            if (employer == null || string.IsNullOrEmpty(employer.ConnectionString))
+                throw new ArgumentException("Invalid employer context.");
+
+            _repositoryV2.Initialize(employer.ConnectionString);
+
+            var result = await _repositoryV2.GetEmployeeBenefitsEligible(cchId);
 
             return result;
         }

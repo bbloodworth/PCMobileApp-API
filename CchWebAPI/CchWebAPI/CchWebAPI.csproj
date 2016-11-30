@@ -270,6 +270,7 @@
     <Compile Include="Controllers\MedicalPlansController.cs" />
     <Compile Include="Controllers\PaidTimeOffController.cs" />
     <Compile Include="Controllers\PayrollController.cs" />
+    <Compile Include="Employee\Models\BenefitPlan.cs" />
     <Compile Include="Employee\Models\Employee.cs" />
     <Compile Include="Employee\Models\Job.cs" />
     <Compile Include="Employee\Models\OrganizationLevel.cs" />

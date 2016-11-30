@@ -26,8 +26,9 @@ namespace CchWebAPI.MedicalPlan.Data {
         public int BenefitPlanOptionKey { get; set; } // BenefitPlanOptionKey (Primary key)
         public int CoverageTierKey { get; set; } // CoverageTierKey (Primary key)
         public int PlanYearKey { get; set; } // PlanYearKey (Primary key)
-        public int AsOfDateKey { get; set; } // AsOfDateKey (Primary key)
-        public int MedicalPlanAccumulationAuditKey { get; set; } // MedicalPlanAccumulationAuditKey
+        //public int AsOfDateKey { get; set; } // AsOfDateKey (Primary key)
+        public string AsOfDateKey { get; set; } // AsOfDateKey (Primary key)
+        //public int MedicalPlanAccumulationAuditKey { get; set; } // MedicalPlanAccumulationAuditKey
         public decimal? IndividualDeductiblePaidAmt { get; set; } // IndividualDeductiblePaidAmt
         public decimal? FamilyDeductiblePaidAmt { get; set; } // FamilyDeductiblePaidAmt
         public decimal? IndividualMaxOopPaidAmt { get; set; } // IndividualMaxOOPPaidAmt
@@ -50,8 +51,9 @@ namespace CchWebAPI.MedicalPlan.Data {
                 Property(x => x.BenefitPlanOptionKey).HasColumnName(@"BenefitPlanOptionKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
                 Property(x => x.CoverageTierKey).HasColumnName(@"CoverageTierKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
                 Property(x => x.PlanYearKey).HasColumnName(@"PlanYearKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-                Property(x => x.AsOfDateKey).HasColumnName(@"AsOfDateKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
-                Property(x => x.MedicalPlanAccumulationAuditKey).HasColumnName(@"MedicalPlanAccumulationAuditKey").IsRequired().HasColumnType("int");
+                //Property(x => x.AsOfDateKey).HasColumnName(@"AsOfDateKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.None);
+                Property(x => x.AsOfDateKey).HasColumnName(@"AsOfDateKey").HasColumnType("nvarchar").HasMaxLength(30);
+                //Property(x => x.MedicalPlanAccumulationAuditKey).HasColumnName(@"MedicalPlanAccumulationAuditKey").IsRequired().HasColumnType("int");
                 Property(x => x.IndividualDeductiblePaidAmt).HasColumnName(@"IndividualDeductiblePaidAmt").IsOptional().HasColumnType("money").HasPrecision(19, 4);
                 Property(x => x.FamilyDeductiblePaidAmt).HasColumnName(@"FamilyDeductiblePaidAmt").IsOptional().HasColumnType("money").HasPrecision(19, 4);
                 Property(x => x.IndividualMaxOopPaidAmt).HasColumnName(@"IndividualMaxOOPPaidAmt").IsOptional().HasColumnType("money").HasPrecision(19, 4);

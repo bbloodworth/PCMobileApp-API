@@ -12,6 +12,7 @@ namespace CchWebAPI.Tests {
         private static List<Account> _accounts;
         private static DemoAccount _demoAccounts;
         private static CaesarsAccount _caesarsAccounts;
+        private static TyLinAccount _tyLinAccounts;
         public static List<Account> Accounts {
             get {
                 if (_accounts == null) {
@@ -45,6 +46,17 @@ namespace CchWebAPI.Tests {
                 _caesarsAccounts = value;
             }
         }
+        public static TyLinAccount TyLinAccounts {
+            get {
+                if (_tyLinAccounts == null) {
+                    InitTyLinTestAccounts();
+                }
+                return _tyLinAccounts;
+            }
+            private set {
+                _tyLinAccounts = value;
+            }
+        }
 
         public TestAccounts() {
             InitTestAccounts();
@@ -64,6 +76,10 @@ namespace CchWebAPI.Tests {
 
         private static void InitDemoTestAccounts() {
             DemoAccounts = new DemoAccount();
+        }
+
+        private static void InitTyLinTestAccounts() {
+            TyLinAccounts = new TyLinAccount();
         }
     }
     public class Account {
@@ -153,6 +169,42 @@ namespace CchWebAPI.Tests {
                 EmployerId = 11,
                 CchId = 57020,
             };
+        }
+    }
+    #endregion
+    #region Demo accounts
+    public class TyLinAccount : TestAccount {
+        //public List<Account> Accounts { get; private set; }
+        public Account TomHo { get; private set; }
+
+        public TyLinAccount()
+            : base() {
+            InitAccounts();
+        }
+
+        private void InitAccounts() {
+            TomHo = GetTomHo();
+
+            Accounts.Add(TomHo);
+        }
+
+        private Account GetTomHo() {
+            var account = new Account {
+                Username = "t.ho@mpm.com",
+                Password = "password1",
+                FullSsn = "413251738",
+                SecretAnswer = "",
+                Phone = "7025552222",
+                ApiKey = "DB366C62-88B6-402D-BCB7-E3FC384776E1",
+                AuthHash = "631B756ADC1A234733AC419CD0C988D00145205BB29480B036FCC47530AED5D555A3659F25866D3864F67C9516AC860E53561D00113C020D159259D01077D79C3B5427E9EBA93730C861021A39DD807A848F09EE00053664833F48B38BD5F9B8B651DCA974BDED37",
+                EmployerId = 34,
+                CchId = 6,
+                PaycheckDocumentId = "60454",
+                BenefitPlans = new int[] { 49 },
+                MedicalPlanId = 49
+            };
+
+            return account;
         }
     }
     #endregion
