@@ -73,7 +73,7 @@ namespace CchWebAPI.IdCard.Data {
 
          public async Task<List<IdCard>> GetIdCardsByCchIdAsync(int cchId) {
             if (string.IsNullOrEmpty(_connectionString))
-                throw new InvalidOperationException("Failed to initialized repository");
+                throw new InvalidOperationException("Failed to initialize repository");
 
             using(var itx = new IdCardsContext(_connectionString)) {
                 //This is not the final production code. It's illustrative at this point pending 

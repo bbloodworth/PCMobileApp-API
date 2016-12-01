@@ -26,7 +26,7 @@ namespace CchWebAPI.Payroll.Dispatchers {
             if (employer == null || string.IsNullOrWhiteSpace(employer.ConnectionString))
                 throw new InvalidOperationException("Invalid employer context.");
 
-            _repository.Initialize(EmployerConnectionString.GetConnectionString(employer.Id).DataWarehouse);
+            _repository.Initialize(employer.ConnectionString);
 
             var result = await _repository.GetDatesPaidAsync(cchId);
 
@@ -39,7 +39,7 @@ namespace CchWebAPI.Payroll.Dispatchers {
             if (employer == null || string.IsNullOrWhiteSpace(employer.ConnectionString))
                 throw new InvalidOperationException("Invalid employer context.");
 
-            _repository.Initialize(EmployerConnectionString.GetConnectionString(employer.Id).DataWarehouse);
+            _repository.Initialize(employer.ConnectionString);
 
             var result = await _repository.GetPaycheckAsync(documentId);
 

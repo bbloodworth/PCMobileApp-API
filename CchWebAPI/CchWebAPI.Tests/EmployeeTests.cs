@@ -1,8 +1,9 @@
 ﻿using CchWebAPI.Controllers;
-using CchWebAPI.Employee.Data;
+using CchWebAPI.Employee.Data.V1;
+using CchWebAPI.Employee.Data.V2;
 using CchWebAPI.Employee.Dispatchers;
-using CchWebAPI.Employees.Data;
-using CchWebAPI.Employees.Dispatchers;
+//using CchWebAPI.Employees.Data;
+//using CchWebAPI.Employees.Dispatchers;
 using ClearCost.Platform;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
@@ -19,28 +20,37 @@ namespace CchWebAPI.Tests {
         [TestCategory("MPM-1486")]
         [TestCategory("Employees Tests")]
         public async Task CanGetEmployeeFromDB() {
-            var repo = new EmployeesRepository();
-            repo.Initialize(ConfigurationManager.ConnectionStrings["Platform"].ConnectionString);
-            var dispatcher = new EmployeesDispatcher(repo);
+            foreach(var testAccount in TestAccounts.Accounts) {
+                var employer = EmployerCache.Employers.FirstOrDefault(e => 
+                    e.Id == testAccount.EmployerId);
 
-            var result = await dispatcher.ExecuteAsync(57020,
-                EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(11)));
+                var repository = new Employee.Data.V2.EmployeeRepository();
+                repository.Initialize(employer.ConnectionString);
 
-            Assert.IsNotNull(result);
+                var dispatcher = new EmployeeDispatcher(repository);
+                var controller = new EmployeesController(dispatcher);
+
+                var employee = await controller.GetEmployeeAsync(testAccount.EmployerId, testAccount.CchId);
+
+                Assert.IsNotNull(employee);
+            }
         }
 
         [TestMethod]
         [TestCategory("Employees Tests")]
         public async Task CanGetBenefitPlanMembers() {
-            foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
+            foreach (var testAccount in TestAccounts.TyLinAccounts.Accounts) {
                 foreach (var benefitPlanId in testAccount.BenefitPlans) {
-                    var repository = new EmployeeRepository();
-                    repository.Initialize(DataWarehouse.GetEmployerConnectionString(testAccount.EmployerId));
+                    var employer = EmployerCache.Employers.FirstOrDefault(e =>
+                        e.Id == testAccount.EmployerId);
+
+                    var repository = new Employee.Data.V2.EmployeeRepository();
+                    repository.Initialize(employer.ConnectionString);
 
                     var dispatcher = new EmployeeDispatcher(repository);
                     var controller = new EmployeesController(dispatcher);
 
-                    var result = await controller.GetEmployeeBenefitPlanMembers(
+                    var result = await controller.GetEmployeeBenefitPlanMembersAsync(
                         testAccount.EmployerId,
                         testAccount.CchId,
                         benefitPlanId);
