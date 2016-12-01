@@ -450,6 +450,24 @@
     <Content Include="source\savings_alert_avaya.min.js" />
     <Content Include="source\savings_alert_avaya.properties.js" />
     <Content Include="source\savings_alert_avaya.properties.min.js" />
+    <None Include="Views\Card\MED_BlueShieldCA_TYLin_Front.cshtml" />
+    <None Include="Views\Card\MED_BlueShieldCA_TYLin_Back.cshtml" />
+    <None Include="Views\Card\MED_BlueShieldCA_TYLin_Full_Back.cshtml" />
+    <None Include="Views\Card\MED_BlueShieldCA_TYLin_Full_Front.cshtml" />
+    <None Include="Views\Card\DEN_DeltaDental_TYLin_Back.cshtml" />
+    <None Include="Views\Card\DEN_DeltaDental_TYLin_Full_Back.cshtml" />
+    <None Include="Views\Card\DEN_DeltaDental_TYLin_Front.cshtml" />
+    <None Include="Views\Card\DEN_DeltaDental_TYLin_Full_Front.cshtml" />
+    <None Include="Views\Card\VIS_VSP_TYLin_Back.cshtml" />
+    <None Include="Views\Card\VIS_VSP_TYLin_Full_Back.cshtml" />
+    <None Include="Views\Card\VIS_VSP_TYLin_Front.cshtml" />
+    <None Include="Views\Card\VIS_VSP_TYLin_Full_Front.cshtml" />
+    <None Include="Views\Card\MED_GeoBlue_TYLin_Back.cshtml" />
+    <None Include="Views\Card\MED_GeoBlue_TYLin_Full_Back.cshtml" />
+    <None Include="Views\Card\MED_GeoBlue_TYLin_Front.cshtml" />
+    <None Include="Views\Card\MED_GeoBlue_TYLin_Full_Front.cshtml" />
+    <None Include="Views\Card\MED_Kaiser_TYLin_Front.cshtml" />
+    <None Include="Views\Card\MED_Kaiser_TYLin_Full_Front.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
