@@ -3,6 +3,7 @@ using System.Data.Entity.ModelConfiguration;
 using System.Data.SqlClient;
 using ClearCost.Data;
 using Newtonsoft.Json;
+using CchWebAPI.IdCard.Models;
 
 namespace CchWebAPI.IdCard.Data {
     public class IdCardsContext : ClearCostContext<IdCardsContext> {
@@ -12,11 +13,36 @@ namespace CchWebAPI.IdCard.Data {
             builder.Configurations.Add(new IdCard.IdCardConfiguration());
             builder.Configurations.Add(new IdCardType.IdCardTypeConfiguration());
             builder.Configurations.Add(new IdCardTypeTranslation.IdCardTypeTranslationConfiguration());
+            builder.Configurations.Add(new Member.MemberConfiguration());
+            builder.Configurations.Add(new BenefitEnrollment.BenefitEnrollmentConfiguration());
+            builder.Configurations.Add(new PlanYear.PlanYearConfiguration());
+            builder.Configurations.Add(new MedicalPlanOption.MedicalPlanOptionConfiguration());
+            builder.Configurations.Add(new RxPlanOption.RxPlanOptionOptionConfiguration());
+            builder.Configurations.Add(new DentalPlanOption.DentalPlanOptionConfiguration());
+            builder.Configurations.Add(new VisionPlanOption.VisionPlanOptionConfiguration());
+            builder.Configurations.Add(new CoverageTier.CoverageTierConfiguration());
+            builder.Configurations.Add(new BenefitEnrollmentStatus.BenefitEnrollmentStatusConfiguration());
+            builder.Configurations.Add(new Relationship.RelationshipConfiguration());
+            builder.Configurations.Add(new Date.DateConfiguration());
+            builder.Configurations.Add(new CardViewMode.CardViewModeConfiguration());
         }
 
         public DbSet<IdCard> IdCards { get; set; }
         public DbSet<IdCardType> IdCardTypes { get; set; }
         public DbSet<IdCardTypeTranslation> IdCardTypeTranslations { get; set; }
+        public DbSet<BenefitEnrollment> BenefitEnrollments { get; set; }
+        public DbSet<Member> Members { get; set; }
+        public DbSet<PlanYear> PlanYears { get; set; }
+        public DbSet<MedicalPlanOption> MedicalPlanOptions { get; set; }
+        public DbSet<RxPlanOption> RxPlanOptions { get; set; }
+        public DbSet<DentalPlanOption> DentalPlanOptions { get; set; }
+        public DbSet<VisionPlanOption> VisionPlanOptions { get; set; }
+        public DbSet<CoverageTier> CoverageTiers { get; set; }
+        public DbSet<BenefitEnrollmentStatus> BenefitEnrollmentsStatuses { get; set; }
+        public DbSet<Relationship> Relationships { get; set; }
+        public DbSet<Date> Dates { get; set; }
+        public DbSet<CardViewMode> CardViewModes { get; set; }
+
     }
 
     public class IdCard {
@@ -90,4 +116,5 @@ namespace CchWebAPI.IdCard.Data {
             }
         }
     }
+
 }

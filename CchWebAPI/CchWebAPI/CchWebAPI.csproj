@@ -276,6 +276,15 @@
     <Compile Include="Employee\Models\OrganizationLevel.cs" />
     <Compile Include="Employee\Models\WorkLocation.cs" />
     <Compile Include="Employee\Models\PlanMember.cs" />
+    <Compile Include="IdCard\Models\BenefitEnrollment.cs" />
+    <Compile Include="IdCard\Models\BenefitEnrollmentStatus.cs" />
+    <Compile Include="IdCard\Models\Date.cs" />
+    <Compile Include="IdCard\Models\CardViewMode.cs" />
+    <Compile Include="IdCard\Models\Relationship.cs" />
+    <Compile Include="IdCard\Models\MedicalPlanOption.cs" />
+    <Compile Include="IdCard\Models\CoverageTier.cs" />
+    <Compile Include="IdCard\Models\PlanYear.cs" />
+    <Compile Include="IdCard\Models\Member.cs" />
     <Compile Include="MedicalPlan\Data\IMedicalPlanRepository.cs" />
     <Compile Include="MedicalPlan\Data\MedicalPlanContext.cs" />
     <Compile Include="MedicalPlan\Dispatchers\IMedicalPlanDispatcher.cs" />

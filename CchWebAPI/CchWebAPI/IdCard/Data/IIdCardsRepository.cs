@@ -5,10 +5,16 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Newtonsoft.Json;
+using ClearCost.Platform;
+
+using CchWebAPI.IdCard.Models;
+
 namespace CchWebAPI.IdCard.Data {
     public interface IIdCardsRepository {
         void Initialize(string connectionString);
-       Task<List<IdCard>> GetIdCardsByCchIdAsync(int cchId);
+        Task<List<IdCard>> GetIdCardsByCchIdAsync(int cchId);
+        Task<List<IdCard>> GetIdCardsByCchIdAsyncV2(int cchId, Employer employer);
     }
 
     public class IdCardsRepository : IIdCardsRepository {
@@ -23,7 +29,49 @@ namespace CchWebAPI.IdCard.Data {
             _connectionString = connectionString;
         }
 
-        public async Task<List<IdCard>> GetIdCardsByCchIdAsync(int cchId) {
+        public async Task<List<IdCard>> GetIdCardsByCchIdAsyncV2(int cchId, Employer employer) {
+            if (string.IsNullOrEmpty(_connectionString))
+                throw new InvalidOperationException("Failed to initialized repository");
+
+            using (var ctx = new IdCardsContext(_connectionString)) {                
+                List<CardDetail> cardDetails = await ctx.Database.SqlQuery<CardDetail>("SELECT * FROM vwIdCard WHERE EnrolledCCHID = @Id", new SqlParameter("@Id", cchId)).ToListAsync();
+
+                List<IdCard> results = new List<IdCard>();
+
+                List<CardViewMode> viewModes = await ctx.CardViewModes.ToListAsync();
+
+                // for each view mode create an id card object 
+                // todo dynamically build file name
+                foreach(CardDetail cardDetail in cardDetails) {
+                    foreach(CardViewMode viewMode in viewModes) {
+                        cardDetail.CardTypeId = 1;
+                        cardDetail.CardViewModeId = viewMode.CardViewModeId;
+
+                        IdCard card = new IdCard {
+                            LocaleId = 1,
+                            TypeId = 1,
+                            MemberId = cchId,
+                            DetailText = JsonConvert.SerializeObject(cardDetail),
+                            ViewModeId = viewMode.CardViewModeId,
+                        };
+
+                        IdCardType cardType = new IdCardType {
+                            FileName = (string.Format("{0}_{1}_{2}", cardDetail.BenefitTypeCode, cardDetail.PayerName, employer.Name).Replace(" ", String.Empty)),
+                            Id = 1
+                        };
+
+                        card.CardType = cardType;
+                        results.Add(card);
+
+                    }
+                }
+
+
+                return results;
+            }
+        }
+
+         public async Task<List<IdCard>> GetIdCardsByCchIdAsync(int cchId) {
             if (string.IsNullOrEmpty(_connectionString))
                 throw new InvalidOperationException("Failed to initialize repository");
 
@@ -80,3 +128,4 @@ namespace CchWebAPI.IdCard.Data {
         
     }
 }
+ 
