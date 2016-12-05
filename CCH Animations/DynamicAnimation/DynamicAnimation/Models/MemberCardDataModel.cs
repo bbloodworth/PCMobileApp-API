@@ -68,5 +68,7 @@
         public string MemberFirstName;
         public string MemberMiddleName;
         public string MemberLastName;
+        public string DateOfBirthMM;
+        public string DateOfBirthYY;
     }
 }
