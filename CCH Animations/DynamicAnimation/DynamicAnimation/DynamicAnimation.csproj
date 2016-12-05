@@ -458,6 +458,10 @@
     <Content Include="Views\Card\medID_bcbs_sanmina_front.cshtml" />
     <Content Include="Views\Card\medID_bcbs_sanmina_full_back.cshtml" />
     <Content Include="Views\Card\medID_bcbs_sanmina_full_front.cshtml" />
+    <Content Include="Views\Card\medID_kaiser_sanmina_back.cshtml" />
+    <Content Include="Views\Card\medID_kaiser_sanmina_front.cshtml" />
+    <Content Include="Views\Card\medID_kaiser_sanmina_full_back.cshtml" />
+    <Content Include="Views\Card\medID_kaiser_sanmina_full_front.cshtml" />
     <None Include="Views\Card\MED_BlueShieldCA_TYLin_Front.cshtml" />
     <None Include="Views\Card\MED_BlueShieldCA_TYLin_Back.cshtml" />
     <None Include="Views\Card\MED_BlueShieldCA_TYLin_Full_Back.cshtml" />
