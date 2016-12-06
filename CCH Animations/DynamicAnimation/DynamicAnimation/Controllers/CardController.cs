@@ -124,6 +124,17 @@ namespace DynamicAnimation.Controllers
             ViewBag.CoverageTypeValue = cardDetail.CoverageTypeValue;
             ViewBag.CardIssuedDateValue = cardDetail.CardIssuedDateValue;
             ViewBag.PayorIDValue = cardDetail.PayorIdValue;
+            ViewBag.IndividualDeductibleAmt = cardDetail.IndividualDeductibleAmt;
+            ViewBag.FamilyDeductibleAmt = cardDetail.FamilyDeductibleAmt;
+            ViewBag.ExamCopayAmt = cardDetail.ExamCopayAmt;
+            ViewBag.MaterialsCopayAmt = cardDetail.MaterialsCopayAmt;
+            ViewBag.GenderCode = cardDetail.GenderCode;
+            ViewBag.BirthDate= cardDetail.BirthDate;
+            ViewBag.MemberFirstName = cardDetail.MemberFirstName;
+            ViewBag.MemberMiddleName = cardDetail.MemberMiddleName;
+            ViewBag.MemberLastName = cardDetail.MemberLastName;
+            ViewBag.DateOfBirthMM = cardDetail.DateOfBirthMM;
+            ViewBag.DateOfBirthYY = cardDetail.DateOfBirthYY;
         }
 
         private string ResolveViewMode(MemberCardDataModel cardDetail) {

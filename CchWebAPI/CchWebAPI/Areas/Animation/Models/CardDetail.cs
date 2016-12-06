@@ -50,5 +50,16 @@
         public string CoverageType;
         public string CoverageTypeValue;
         public string PayorIdValue;
+        public string IndividualDeductibleAmt { get; set; }
+        public string FamilyDeductibleAmt { get; set; }
+		public string ExamCopayAmt { get; set; }
+        public string MaterialsCopayAmt { get; set; }
+        public string GenderCode { get; set; }
+        public string BirthDate { get; set; }
+        public string MemberFirstName { get; set; }
+        public string MemberMiddleName { get; set; }
+        public string MemberLastName { get; set; }
+        public string DateOfBirthMM { get; set; }
+        public string DateOfBirthYY { get; set; }
     }
 }

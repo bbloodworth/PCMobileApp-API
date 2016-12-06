@@ -15,7 +15,7 @@
     <AssemblyName>CchWebAPI</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <UseIISExpress>true</UseIISExpress>
+    <UseIISExpress>false</UseIISExpress>
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
@@ -177,7 +177,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Animation\Views\Settings\" />
-    <Folder Include="Employees\Models\" />
+    <Folder Include="Views\PaidTimeOff\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\AutofacConfig.cs" />
@@ -265,13 +265,26 @@
     <Compile Include="BenefitContribution\Models\Payroll.cs" />
     <Compile Include="BenefitContribution\Models\PayrollAudit.cs" />
     <Compile Include="BenefitContribution\Models\PayrollMetric.cs" />
-    <Compile Include="Configuration\EmployerConnectionStringConfiguration.cs" />
     <Compile Include="Controllers\BenefitContributionsController.cs" />
     <Compile Include="Controllers\IdCardsController.cs" />
     <Compile Include="Controllers\MedicalPlansController.cs" />
+    <Compile Include="Controllers\PaidTimeOffController.cs" />
     <Compile Include="Controllers\PayrollController.cs" />
-    <Compile Include="EmployerConnectionString.cs" />
+    <Compile Include="Employee\Models\BenefitPlan.cs" />
+    <Compile Include="Employee\Models\Employee.cs" />
+    <Compile Include="Employee\Models\Job.cs" />
+    <Compile Include="Employee\Models\OrganizationLevel.cs" />
+    <Compile Include="Employee\Models\WorkLocation.cs" />
     <Compile Include="Employee\Models\PlanMember.cs" />
+    <Compile Include="IdCard\Models\BenefitEnrollment.cs" />
+    <Compile Include="IdCard\Models\BenefitEnrollmentStatus.cs" />
+    <Compile Include="IdCard\Models\Date.cs" />
+    <Compile Include="IdCard\Models\CardViewMode.cs" />
+    <Compile Include="IdCard\Models\Relationship.cs" />
+    <Compile Include="IdCard\Models\MedicalPlanOption.cs" />
+    <Compile Include="IdCard\Models\CoverageTier.cs" />
+    <Compile Include="IdCard\Models\PlanYear.cs" />
+    <Compile Include="IdCard\Models\Member.cs" />
     <Compile Include="MedicalPlan\Data\IMedicalPlanRepository.cs" />
     <Compile Include="MedicalPlan\Data\MedicalPlanContext.cs" />
     <Compile Include="MedicalPlan\Dispatchers\IMedicalPlanDispatcher.cs" />
@@ -281,6 +294,13 @@
     <Compile Include="MedicalPlan\Models\MedicalPlan.cs" />
     <Compile Include="MedicalPlan\Models\MedicalPlanAccumulation.cs" />
     <Compile Include="MedicalPlan\Models\OutOfPocketMaximum.cs" />
+    <Compile Include="PaidTimeOff\Data\PaidTimeOffContext.cs" />
+    <Compile Include="PaidTimeOff\Data\IPaidTimeOffRepository.cs" />
+    <Compile Include="PaidTimeOff\Dispatchers\IPaidTimeOffDispatcher.cs" />
+    <Compile Include="PaidTimeOff\Models\Dates.cs" />
+    <Compile Include="PaidTimeOff\Models\PaidTimeOffDetail.cs" />
+    <Compile Include="PaidTimeOff\Models\PayrollMetric.cs" />
+    <Compile Include="PaidTimeOff\Models\PTOSnapshot.cs" />
     <Compile Include="Payroll\Models\DatePaid.cs" />
     <Compile Include="Payroll\Data\PayrollContext.cs" />
     <Compile Include="Payroll\Data\IPayrollRepository.cs" />
@@ -299,9 +319,6 @@
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\PartnerHandshakeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
-    <Compile Include="Employees\Data\EmployeesContext.cs" />
-    <Compile Include="Employees\Data\IEmployeesRepository.cs" />
-    <Compile Include="Employees\Dispatchers\IEmployeesDispatcher.cs" />
     <Compile Include="Formatters\JsonpMediaTypeFormatter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

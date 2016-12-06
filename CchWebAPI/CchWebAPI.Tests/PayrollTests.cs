@@ -9,6 +9,8 @@ using CchWebAPI.Controllers;
 using CchWebAPI.Payroll.Dispatchers;
 using CchWebAPI.Payroll.Data;
 using System.Threading.Tasks;
+using ClearCost.Platform;
+using System.Linq;
 
 namespace CchWebAPI.Tests {
     /// <summary>
@@ -61,9 +63,12 @@ namespace CchWebAPI.Tests {
 
         [TestMethod]
         public async Task CanGetDatesPaid() {
-            foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
+            foreach (var testAccount in TestAccounts.TyLinAccounts.Accounts) {
+                var employer = EmployerCache.Employers.FirstOrDefault(e =>
+                    e.Id == testAccount.EmployerId);
+
                 var repository = new PayrollRepository();
-                repository.Initialize(DataWarehouse.GetEmployerConnectionString(testAccount.EmployerId));
+                repository.Initialize(employer.ConnectionString);
 
                 var dispatcher = new PayrollDispatcher(repository);
                 var controller = new PayrollController(dispatcher);
@@ -76,14 +81,17 @@ namespace CchWebAPI.Tests {
         }
         [TestMethod]
         public async Task CanGetPaycheck() {
-            foreach (var testAccount in TestAccounts.DemoAccounts.Accounts) {
+            foreach (var testAccount in TestAccounts.TyLinAccounts.Accounts) {
+                var employer = EmployerCache.Employers.FirstOrDefault(e =>
+                    e.Id == testAccount.EmployerId);
+
                 var repository = new PayrollRepository();
-                repository.Initialize(DataWarehouse.GetEmployerConnectionString(testAccount.EmployerId));
+                repository.Initialize(employer.ConnectionString);
 
                 var dispatcher = new PayrollDispatcher(repository);
                 var controller = new PayrollController(dispatcher);
 
-                var result = await controller.GetPaycheck(testAccount.EmployerId, testAccount.PaycheckDocumentId);
+                var result = await controller.GetPaycheckAsync(testAccount.EmployerId, testAccount.PaycheckDocumentId);
 
                 Assert.IsNotNull(result);
                 Assert.IsTrue(result.IsSuccess);

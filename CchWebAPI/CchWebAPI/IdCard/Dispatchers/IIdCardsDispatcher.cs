@@ -28,10 +28,22 @@ namespace CchWebAPI.IdCard.Dispatchers {
 
             _repository.Initialize(employer.ConnectionString);
 
-            var result = await _repository.GetIdCardsByCchIdAsync(cchId);
+            List<Data.IdCard> result = new List<Data.IdCard>();
+
+            switch (employer.Id) {
+                case 34:
+                    result = await _repository.GetIdCardsByCchIdAsyncV2(cchId, employer);
+                    break;
+                default:
+                    result = await _repository.GetIdCardsByCchIdAsync(cchId);
+                    break;
+            }
+
+
 
             var cardBaseAddress = "CardBaseAddress".GetConfigurationValue();
             var timeout = "TimeoutInMinutes".GetConfigurationValue();
+
 
             result.ForEach(r => {
                 System.Diagnostics.Debug.Write(r.DetailText);

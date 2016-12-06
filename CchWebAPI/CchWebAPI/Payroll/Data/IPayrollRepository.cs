@@ -135,6 +135,7 @@ namespace CchWebAPI.Payroll.Data {
                             DeliveryMethodCode = p.DeliveryMethod.DeliveryMethodCode,
                             PayrollCategoryName = p.PayrollMetric.PayrollCategoryName,
                             PayrollMetricName = p.PayrollMetric.PayrollMetricName,
+                            PayrollMetricDisplayName = p.PayrollMetric.DashboardDisplayName,
                             PreTaxInd = p.PayrollMetric.PreTaxInd,
                             ContributionTypeCode = p.ContributionType.ContributionTypeCode,
                             PayrollMetricRate = p.Payroll.PayrollMetricRate,
