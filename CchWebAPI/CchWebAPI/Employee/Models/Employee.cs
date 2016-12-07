@@ -120,6 +120,17 @@ namespace CchWebAPI.Employee.Models {
             EmploymentTypeDescription = employee.EmploymentTypeDesc;
             EmploymentHoursDescription = employee.EmploymentHoursDesc;
         }
+
+        public void Merge(Data.V2.Member member)
+        {
+            if (member == null)
+                return;
+
+            Gender = member.GenderCode;
+            City = member.CityName;
+            State = member.StateCode;
+            ZipCode = member.PostalCode;
+        }
         #endregion
     }
 }

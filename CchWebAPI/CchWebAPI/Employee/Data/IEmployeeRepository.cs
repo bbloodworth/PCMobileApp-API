@@ -65,6 +65,7 @@ namespace CchWebAPI.Employee.Data {
             void Initialize(string connectionString);
             Task<Employee> GetEmployeeByKeyAsync(int employeeKey);
             Task<Employee> GetEmployeeByCchIdAsync(int cchId);
+            Task<Member> GetMemberByCchIdAsync(int cchId);
             Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId);
             Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(int cchId, int year);
             Task<List<BenefitPlan>> GetEmployeeBenefitsEligible(int cchId);
@@ -112,6 +113,21 @@ namespace CchWebAPI.Employee.Data {
                 }
 
                 return employee;
+            }
+
+            public async Task<Member> GetMemberByCchIdAsync(int cchId)
+            {
+                if (string.IsNullOrEmpty(_connectionString))
+                    throw new InvalidOperationException("Failed to initialize repository");
+
+                Member member = null;
+
+                using (var ctx = new EmployeeContext(_connectionString))
+                {
+                    member = await ctx.Members.FirstOrDefaultAsync(p => p.Cchid.Equals(cchId) && p.CurrentRecordInd);
+                }
+
+                return member;
             }
 
             public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId) {
