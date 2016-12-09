@@ -61,5 +61,6 @@
         public string MemberLastName { get; set; }
         public string DateOfBirthMM { get; set; }
         public string DateOfBirthYY { get; set; }
+        public string ContractPrefixCode { get; set; }
     }
 }

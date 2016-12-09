@@ -70,5 +70,6 @@
         public string MemberLastName;
         public string DateOfBirthMM;
         public string DateOfBirthYY;
+        public string ContractPrefixCode;
     }
 }
