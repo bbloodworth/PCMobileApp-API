@@ -50,7 +50,7 @@ namespace CchWebAPI.IdCard.Data {
                         IdCard card = new IdCard {
                             LocaleId = 1,
                             TypeId = 1,
-                            MemberId = cchId,
+                            MemberId = cardDetail.EnrolledCCHID,
                             DetailText = JsonConvert.SerializeObject(cardDetail),
                             ViewModeId = viewMode.CardViewModeId,
                         };
