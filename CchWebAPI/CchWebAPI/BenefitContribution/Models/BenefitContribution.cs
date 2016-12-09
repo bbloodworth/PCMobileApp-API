@@ -33,6 +33,7 @@ namespace CchWebAPI.BenefitContribution.Models
         public string ReportingCategoryCode;
         [JsonProperty("IsCurrent")]
         public bool CurrentPayPeriodInd;
+        public string PayrollMetricDisplayName;
 
 
         public class BenefitContributionDetailConfiguration : EntityTypeConfiguration<BenefitContributionDetail> {

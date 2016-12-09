@@ -10,6 +10,7 @@ namespace CchWebAPI.BenefitContribution.Models
         public string PayrollMetricDesc { get; set; }
         public string PayrollCategoryName { get; set; }
         public string ReportingCategoryCode { get; set; }
+        public string DashboardDisplayName { get; set; }
         public bool PreTaxInd { get; set; }
 
         public class PayrollMetricConfiguration: EntityTypeConfiguration<PayrollMetric>
