@@ -69,6 +69,7 @@ namespace CchWebAPI.Employee.Data {
             Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId);
             Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(int cchId, int year);
             Task<List<BenefitPlan>> GetEmployeeBenefitsEligible(int cchId);
+            Task<BenefitMedicalPlan> GetEmployeeBenefitEnrollmentMedicalPlan(int memberKey);
         }
 
         public class EmployeeRepository : SqlRepository, IEmployeeRepository {
@@ -251,6 +252,58 @@ namespace CchWebAPI.Employee.Data {
                     }
                 }
                 return benefitPlans;
+            }
+
+            public async Task<BenefitMedicalPlan> GetEmployeeBenefitEnrollmentMedicalPlan(int memberKey)
+            {
+                //This is a one-off method because of the "MED" and "EXPAT" criteria and is not re-usable
+                //TODO: refactor where clause if other BenefitEnrollment types are needed beyond just medical
+                if (string.IsNullOrEmpty(_connectionString))
+                    throw new InvalidOperationException("Failed to initialize repository");
+
+                BenefitMedicalPlan plan = new BenefitMedicalPlan();
+
+                using (var ctx = new EmployeeContext(_connectionString))
+                {
+                    var date = new DateTime();
+                    plan = await ctx.BenefitEnrollments
+                    .Join(
+                        ctx.PlanYears,
+                        benefitEnrollments => benefitEnrollments.PlanYearKey,
+                        planYears => planYears.PlanYearKey,
+                        (benefitEnrollments, planYears) => new
+                        {
+                            BenefitEnrollments = benefitEnrollments,
+                            PlanYears = planYears
+                        })
+                    .Join(
+                        ctx.BenefitPlanOptions,
+                        benefitEnrollments => benefitEnrollments.BenefitEnrollments.BenefitPlanOptionKey,
+                        benefitPlanOptions => benefitPlanOptions.BenefitPlanOptionKey,
+                        (benefitEnrollments, benefitPlanOptions) => new
+                        {
+                            BenefitEnrollments = benefitEnrollments,
+                            BenefitPlanOptions = benefitPlanOptions
+                        })
+                    .Where(
+                            p =>
+                                p.BenefitPlanOptions.BenefitTypeCode.Equals("MED")
+                                && !p.BenefitPlanOptions.BenefitPlanTypeCode.Equals("EXPAT")
+                                && p.BenefitEnrollments.BenefitEnrollments.EnrolledMemberKey.Equals(memberKey)
+                                && p.BenefitEnrollments.PlanYears.PlanYearStartDate.Value <= date
+                                && p.BenefitEnrollments.PlanYears.PlanYearEndDate.Value >= date
+                        )
+                    .Select(
+                            p => new BenefitMedicalPlan
+                            {
+                                MemberPlanId = p.BenefitEnrollments.BenefitEnrollments.BenefitPlanOptionKey,
+                                PlanType = p.BenefitPlanOptions.BenefitTypeCode,
+                                SubscriberPlanId = p.BenefitEnrollments.BenefitEnrollments.SubscriberPlanId
+                            }
+                        )
+                    .FirstOrDefaultAsync();
+                }
+                return plan;
             }
         }
     }

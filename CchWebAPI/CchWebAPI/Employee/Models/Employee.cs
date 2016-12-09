@@ -131,6 +131,16 @@ namespace CchWebAPI.Employee.Models {
             State = member.StateCode;
             ZipCode = member.PostalCode;
         }
+
+        public void Merge(BenefitMedicalPlan benefit)
+        {
+            if (benefit == null)
+                return;
+            MemberMedicalId = benefit.MemberPlanId.ToString();
+            MedicalPlanType = benefit.PlanType;
+            SubscriberMedicalId = benefit.SubscriberPlanId.ToString();
+
+        }
         #endregion
     }
 }

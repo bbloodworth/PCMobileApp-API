@@ -44,7 +44,13 @@ namespace CchWebAPI.Employee.Dispatchers {
                 {
                     var memberData = await _repositoryV2.GetMemberByCchIdAsync(cchId);
                     employee.Merge(memberData);
+                    if (await _repositoryV2.IsExistingTable("dbo", "BenefitEnrollment_f"))
+                    {
+                        var medicalData = await _repositoryV2.GetEmployeeBenefitEnrollmentMedicalPlan(memberData.MemberKey);
+                        employee.Merge(medicalData);
+                    }
                 }
+                
             }
             else {
                 _repositoryV1 = new Data.V1.EmployeeRepository();
