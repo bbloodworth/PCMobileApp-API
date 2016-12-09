@@ -8,11 +8,11 @@ using System.Web;
 namespace CchWebAPI.BenefitContribution.Models
 {
     public class BenefitContribution {
-        public string PayerName;
-        public string BenefitTypeName;
-        public DateTime PayrollFileReceivedDate;
-        public List<BenefitContributionDetail> BenefitContributions;
-        public List<PercentageElected> PercentageElected;
+        public string PayerName { get; set; }
+        public string BenefitTypeName { get; set; }
+        public DateTime PayrollFileReceivedDate { get; set; }
+        public List<BenefitContributionDetail> BenefitContributions { get; set; }
+        public List<PercentageElected> PercentageElected { get; set; }
     }
 
     public class BenefitContributionDetail
@@ -48,11 +48,11 @@ namespace CchWebAPI.BenefitContribution.Models
 
     public class PercentageElected {
         [JsonIgnore]
-        public int CCHID;
+        public int CCHID { get; set; }
         [JsonIgnore]
-        public string BenefitPlanTypeCode;
-        public string ContributionName;
-        public float? Percentage;
+        public string BenefitPlanTypeCode { get; set; }
+        public string ContributionName { get; set; }
+        public float? Percentage { get; set; }
     }
 
 

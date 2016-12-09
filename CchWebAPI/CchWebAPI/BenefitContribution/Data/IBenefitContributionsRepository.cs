@@ -46,6 +46,7 @@ namespace CchWebAPI.BenefitContribution.Data
                         a => a.BenefitPlanOptionKey, bpo => bpo.BenefitPlanOptionKey,
                         (a, bpo) => new {
                             PayerName = bpo.PayerName,
+                            BenefitTypeCode = bpo.BenefitTypeCode,
                             BenefitPlanOptionName = bpo.BenefitPlanOptionName,
                             BenefitPlanTypeCode = bpo.BenefitPlanTypeCode,
                             MemberId = a.MemberKey,
@@ -56,7 +57,7 @@ namespace CchWebAPI.BenefitContribution.Data
                     .Where(
                         a => 
                         a.CCHID.Equals(cchid)
-                        && a.BenefitPlanTypeCode.Equals(categoryCode)
+                        && a.BenefitTypeCode.Equals(categoryCode)
                     ).FirstOrDefaultAsync();
 
                 String payerName = String.Empty;
