@@ -57,7 +57,8 @@ namespace CchWebAPI.IdCard.Data {
 
                         IdCardType cardType = new IdCardType {
                             FileName = (string.Format("{0}_{1}_{2}", cardDetail.BenefitTypeCode, cardDetail.PayerName, employer.Name).Replace(" ", String.Empty)),
-                            Id = 1
+                            Id = 1,
+                            Translation = cardDetail.PayerName
                         };
 
                         card.CardType = cardType;
