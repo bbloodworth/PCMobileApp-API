@@ -135,6 +135,7 @@ namespace DynamicAnimation.Controllers
             ViewBag.MemberLastName = cardDetail.MemberLastName;
             ViewBag.DateOfBirthMM = cardDetail.DateOfBirthMM;
             ViewBag.DateOfBirthYY = cardDetail.DateOfBirthYY;
+            ViewBag.ContractPrefixCode = cardDetail.ContractPrefixCode;
         }
 
         private string ResolveViewMode(MemberCardDataModel cardDetail) {
