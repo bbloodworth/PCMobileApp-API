@@ -395,9 +395,6 @@
     <None Include="NLog.Processing.config">
       <DependentUpon>NLog.config</DependentUpon>
     </None>
-    <Content Include="DynamicAnimation.wpp.targets">
-      <SubType>Designer</SubType>
-    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

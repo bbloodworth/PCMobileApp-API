@@ -173,7 +173,7 @@ namespace CchWebAPI.Employee.Data {
 
                 return planMembers;
             }
-            public async Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(int cchid, int year) {
+            public async Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(int cchId, int year) {
                 if (string.IsNullOrEmpty(_connectionString))
                     throw new InvalidOperationException("Failed to initialize repository");
 
@@ -181,7 +181,7 @@ namespace CchWebAPI.Employee.Data {
 
                 using (var ctx = new EmployeeContext(_connectionString)) {
                     var employee = await ctx.Employees
-                        .FirstOrDefaultAsync(p => p.CchId.Equals(cchid));
+                        .FirstOrDefaultAsync(p => p.CchId.Equals(cchId));
 
                     if (employee != null) {
                         benefitPlans = await ctx.BenefitEnrollments
@@ -203,7 +203,7 @@ namespace CchWebAPI.Employee.Data {
                             })
                         .Where(
                             p =>
-                                p.BenefitEnrollments.BenefitEnrollments.SubscriberMemberKey.Equals(employee.EmployeeKey)
+                                p.BenefitEnrollments.BenefitEnrollments.SubscriberMemberKey.Equals(cchId)
                                 && p.BenefitEnrollments.PlanYears.PlanYearName.Equals(year.ToString())
                         )
                         .Select(
