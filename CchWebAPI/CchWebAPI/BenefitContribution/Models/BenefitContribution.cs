@@ -51,6 +51,7 @@ namespace CchWebAPI.BenefitContribution.Models
         public int CCHID { get; set; }
         [JsonIgnore]
         public string BenefitPlanTypeCode { get; set; }
+        public string BenefitPlanOptionName { get; set; }
         public string ContributionName { get; set; }
         public float? Percentage { get; set; }
     }

@@ -103,7 +103,8 @@ namespace CchWebAPI.BenefitContribution.Data
                         ContributionName = bpo.BenefitTypeName,
                         Percentage = a.Percent,
                         CCHID = a.CCHID,
-                        BenefitPlanTypeCode = bpo.BenefitPlanTypeCode
+                        BenefitPlanTypeCode = bpo.BenefitPlanTypeCode,
+                        BenefitPlanOptionName = bpo.BenefitPlanOptionName
                     })
                     .Where(
                         a =>
