@@ -162,6 +162,8 @@ namespace CchWebAPI.Employee.Data {
             public System.DateTime? DwUpdateDate { get; set; } // DWUpdateDate
             public int? EtlControlId { get; set; } // ETLControlID
             public string SupervisorFullName { get; set; } // SupervisorFullName (length: 50)
+            public string BenefitGroupCode { get; set; } // (nvarchar(10))
+            public string EarningsGroupCode { get; set; } // (nvarchar(10))
 
             public class EmployeeConfiguration : EntityTypeConfiguration<Employee> {
                 public EmployeeConfiguration() {
@@ -230,6 +232,8 @@ namespace CchWebAPI.Employee.Data {
                     Property(x => x.DwUpdateDate).HasColumnName(@"DWUpdateDate").IsOptional().HasColumnType("datetime");
                     Property(x => x.EtlControlId).HasColumnName(@"ETLControlID").IsOptional().HasColumnType("int");
                     Property(x => x.SupervisorFullName).HasColumnName(@"SupervisorFullName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
+                    Property(x => x.BenefitGroupCode).HasColumnName(@"BenefitGroupCode").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
+                    Property(x => x.EarningsGroupCode).HasColumnName(@"EarningsGroupCode").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
                 }
             }
         }

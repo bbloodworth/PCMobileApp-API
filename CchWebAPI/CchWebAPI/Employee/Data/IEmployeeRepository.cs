@@ -208,11 +208,17 @@ namespace CchWebAPI.Employee.Data {
                         )
                         .Select(
                             p => new BenefitPlan {
-                                Id = p.BenefitPlanOptions.BenefitPlanTypeCode,
-                                Name = p.BenefitPlanOptions.BenefitPlanTypeName
+                                Id = p.BenefitPlanOptions.SourcePlanOptionCode,
+                                Name = p.BenefitPlanOptions.BenefitPlanOptionName
                             })
                         .Distinct()
                         .ToListAsync();
+
+                        benefitPlans.Add(new BenefitPlan
+                        {
+                            Id = employee.EarningsGroupCode,
+                            Name = "Earnings Group"
+                        });
                     }
                 }
                 return benefitPlans;
@@ -228,27 +234,16 @@ namespace CchWebAPI.Employee.Data {
                         .FirstOrDefaultAsync(p => p.CchId.Equals(cchId));
 
                     if (employee != null) {
-                        benefitPlans = await ctx.BenefitEligibilities
-                        .Join(
-                            ctx.BenefitPlanOptions,
-                            benefitEligibilities => benefitEligibilities.BenefitPlanOptionKey,
-                            benefitPlanOptions => benefitPlanOptions.BenefitPlanOptionKey,
-                            (benefitEligibilities, benefitPlanOptions) => new {
-                                BenefitEligibilities = benefitEligibilities,
-                                BenefitPlanOptions = benefitPlanOptions
-                            })
-                        .Where(
-                            p =>
-                                p.BenefitEligibilities.EmployeeKey.Equals(employee.EmployeeKey)
-                                && p.BenefitEligibilities.CurrentRecordInd.Equals(true)
-                        )
-                        .Select(
-                            p => new BenefitPlan {
-                                Id = p.BenefitPlanOptions.BenefitPlanTypeCode,
-                                Name = p.BenefitPlanOptions.BenefitPlanTypeName
-                            })
-                        .Distinct()
-                        .ToListAsync();
+                        benefitPlans.Add(new BenefitPlan
+                        {
+                            Id = employee.BenefitGroupCode,
+                            Name = "Benefit Group"
+                        });
+                        benefitPlans.Add(new BenefitPlan
+                        {
+                            Id = employee.EarningsGroupCode,
+                            Name = "Earnings Group"
+                        });
                     }
                 }
                 return benefitPlans;

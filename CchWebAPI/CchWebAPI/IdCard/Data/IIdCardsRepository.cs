@@ -34,7 +34,7 @@ namespace CchWebAPI.IdCard.Data {
                 throw new InvalidOperationException("Failed to initialized repository");
 
             using (var ctx = new IdCardsContext(_connectionString)) {                
-                List<CardDetail> cardDetails = await ctx.Database.SqlQuery<CardDetail>("SELECT * FROM vwIdCard WHERE EnrolledCCHID = @Id", new SqlParameter("@Id", cchId)).ToListAsync();
+                List<CardDetail> cardDetails = await ctx.Database.SqlQuery<CardDetail>("SELECT * FROM vwIdCard WHERE SubscribedCCHID = @Id", new SqlParameter("@Id", cchId)).ToListAsync();
 
                 List<IdCard> results = new List<IdCard>();
 
