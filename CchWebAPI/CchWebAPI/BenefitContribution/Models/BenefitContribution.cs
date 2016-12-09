@@ -17,23 +17,27 @@ namespace CchWebAPI.BenefitContribution.Models
 
     public class BenefitContributionDetail
     {
-        [JsonProperty("EmployeeId")]
-        public int CchId { get; set; }
-        public string EmployeeFirstName { get; set; }
-        public string EmployeeLastName { get; set; }
-        public DateTime AsOfDate { get; set; }
-        public DateTime DWCreateDate { get; set; }
-        public string PayrollCategoryName { get; set; }
-        public string PayrollMetricName { get; set; }
-        public bool PreTaxInd { get; set; }
-        public string ContributionTypeCode { get; set; }
-        public string ContributionTypeName { get; set; }
-        public decimal? PerPeriodAmt { get; set; }
-        public decimal? YTDAmt { get; set; }
-        public string ReportingCategoryCode { get; set; }
-        [JsonProperty("IsCurrent")]
-        public bool CurrentPayPeriodInd { get; set; }
-        public string PayrollMetricDisplayName { get; set; }
+        [JsonIgnore]
+        public int CchId;
+        [JsonIgnore]
+        public string EmployeeFirstName;
+        [JsonIgnore]
+        public string EmployeeLastName;
+        [JsonIgnore]
+        public DateTime AsOfDate;
+        [JsonIgnore]
+        public DateTime DWCreateDate;
+        public string PayrollCategoryName;
+        public string PayrollMetricName;
+        public bool PreTaxInd;
+        public string ContributionTypeCode;
+        public string ContributionTypeName;
+        public decimal? PerPeriodAmt;
+        public decimal? YTDAmt;
+        public string ReportingCategoryCode;
+        [JsonIgnore]
+        public bool CurrentPayPeriodInd;
+        public string PayrollMetricDisplayName;
 
 
         public class BenefitContributionDetailConfiguration : EntityTypeConfiguration<BenefitContributionDetail> {

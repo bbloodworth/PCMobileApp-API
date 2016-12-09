@@ -47,10 +47,29 @@ namespace CchWebAPI.IdCard.Data {
                         cardDetail.CardTypeId = 1;
                         cardDetail.CardViewModeId = viewMode.CardViewModeId;
 
+                        int cardTypeId = 1;
+
+                        switch (cardDetail.BenefitTypeCode) {
+                            case "MED":
+                                cardTypeId = 1;
+                                break;
+                            case "RX":
+                                cardTypeId = 2;
+                                break;
+                            case "DEN":
+                                cardTypeId = 3;
+                                break;
+                            case "VIS":
+                                cardTypeId = 4;
+                                break;
+
+                        }
+
+
                         IdCard card = new IdCard {
                             LocaleId = 1,
-                            TypeId = 1,
-                            MemberId = cchId,
+                            TypeId = cardTypeId,
+                            MemberId = cardDetail.EnrolledCCHID,
                             DetailText = JsonConvert.SerializeObject(cardDetail),
                             ViewModeId = viewMode.CardViewModeId,
                         };
