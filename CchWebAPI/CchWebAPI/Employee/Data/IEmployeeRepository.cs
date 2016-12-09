@@ -260,7 +260,7 @@ namespace CchWebAPI.Employee.Data {
 
                 using (var ctx = new EmployeeContext(_connectionString))
                 {
-                    var date = new DateTime();
+                    var date = DateTime.UtcNow;
                     plan = await ctx.BenefitEnrollments
                     .Join(
                         ctx.PlanYears,
