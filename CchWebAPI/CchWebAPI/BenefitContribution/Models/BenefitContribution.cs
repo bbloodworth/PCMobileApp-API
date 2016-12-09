@@ -17,11 +17,15 @@ namespace CchWebAPI.BenefitContribution.Models
 
     public class BenefitContributionDetail
     {
-        [JsonProperty("EmployeeId")]
+        [JsonIgnore]
         public int CchId;
+        [JsonIgnore]
         public string EmployeeFirstName;
+        [JsonIgnore]
         public string EmployeeLastName;
+        [JsonIgnore]
         public DateTime AsOfDate;
+        [JsonIgnore]
         public DateTime DWCreateDate;
         public string PayrollCategoryName;
         public string PayrollMetricName;
@@ -31,7 +35,7 @@ namespace CchWebAPI.BenefitContribution.Models
         public decimal? PerPeriodAmt;
         public decimal? YTDAmt;
         public string ReportingCategoryCode;
-        [JsonProperty("IsCurrent")]
+        [JsonIgnore]
         public bool CurrentPayPeriodInd;
         public string PayrollMetricDisplayName;
 
