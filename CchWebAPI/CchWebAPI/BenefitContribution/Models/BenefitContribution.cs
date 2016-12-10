@@ -37,6 +37,7 @@ namespace CchWebAPI.BenefitContribution.Models
         public string ReportingCategoryCode;
         [JsonIgnore]
         public bool CurrentPayPeriodInd;
+        public string PayrollMetricCode;
         public string PayrollMetricDisplayName;
 
 
