@@ -100,11 +100,10 @@ namespace CchWebAPI.BenefitContribution.Data
                     .Join(context.BenefitPlanOptions,
                     a => a.BenefitPlanOptionKey, bpo => bpo.BenefitPlanOptionKey,
                     (a, bpo) => new PercentageElected {
-                        ContributionName = bpo.BenefitTypeName,
+                        ContributionName = bpo.BenefitPlanOptionName,
                         Percentage = a.Percent,
                         CCHID = a.CCHID,
-                        BenefitPlanTypeCode = bpo.BenefitPlanTypeCode,
-                        BenefitPlanOptionName = bpo.BenefitPlanOptionName
+                        BenefitPlanTypeCode = bpo.BenefitPlanTypeCode
                     })
                     .Where(
                         a =>
