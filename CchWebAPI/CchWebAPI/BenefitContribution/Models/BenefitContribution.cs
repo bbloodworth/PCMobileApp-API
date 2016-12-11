@@ -55,5 +55,4 @@ namespace CchWebAPI.BenefitContribution.Models
         public float? Percentage { get; set; }
     }
 
-
 }
