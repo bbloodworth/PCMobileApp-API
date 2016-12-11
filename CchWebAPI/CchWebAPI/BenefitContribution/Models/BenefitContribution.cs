@@ -50,11 +50,9 @@ namespace CchWebAPI.BenefitContribution.Models
     public class PercentageElected {
         [JsonIgnore]
         public int CCHID { get; set; }
-        [JsonIgnore]
         public string BenefitPlanTypeCode { get; set; }
         public string ContributionName { get; set; }
         public float? Percentage { get; set; }
     }
-
 
 }
