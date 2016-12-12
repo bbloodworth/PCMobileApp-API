@@ -68,5 +68,7 @@ namespace CchWebAPI.IdCard.Models {
         public string MemberLastName { get; set; }
         public string DateOfBirthMM { get; set; }
         public string DateOfBirthYY { get; set; }
+        public string ContractPrefixCode { get; set; }
+        public int PayerKey { get; set; }
     }
 }

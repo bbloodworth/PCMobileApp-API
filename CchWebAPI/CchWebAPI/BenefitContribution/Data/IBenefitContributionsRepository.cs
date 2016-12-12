@@ -12,7 +12,7 @@ namespace CchWebAPI.BenefitContribution.Data
         void Initialize(string connectionString);
         Task<List<BenefitContributionDetail>> GetContributionsByCchIdAsync(int cchid, string categoryCode);
         Task<DateTime> GetMaxPayrollDateAsync();
-        Task<String> GetBenefitNameAsync(int cchid, string categoryCode);
+        Task<List<String>> GetBenefitNameAsync(int cchid, string categoryCode);
         Task<List<PercentageElected>> GetPercentageElectedAsync(int cchid, string categoryCode);
 
     }
@@ -26,10 +26,12 @@ namespace CchWebAPI.BenefitContribution.Data
             _connectionString = connectionString;
         }
 
-        public async Task<String> GetBenefitNameAsync(int cchid, string categoryCode) {
+        public async Task<List<String>> GetBenefitNameAsync(int cchid, string categoryCode) {
             if (string.IsNullOrEmpty(_connectionString)) {
                 throw new InvalidOperationException("Failed to initialize Benefit Contributions repository");
             }
+
+            List<String> headers = new List<String>();
 
             using (var context = new BenefitContributionsContext(_connectionString)) {
 
@@ -44,19 +46,30 @@ namespace CchWebAPI.BenefitContribution.Data
                         a => a.BenefitPlanOptionKey, bpo => bpo.BenefitPlanOptionKey,
                         (a, bpo) => new {
                             PayerName = bpo.PayerName,
+                            BenefitTypeCode = bpo.BenefitTypeCode,
                             BenefitPlanOptionName = bpo.BenefitPlanOptionName,
                             BenefitPlanTypeCode = bpo.BenefitPlanTypeCode,
                             MemberId = a.MemberKey,
-                            CCHID = a.CCHID }
+                            CCHID = a.CCHID,
+                            BenefitTypeName = bpo.BenefitTypeName
+                        }
                         )
                     .Where(
                         a => 
                         a.CCHID.Equals(cchid)
-                        && a.BenefitPlanTypeCode.Equals(categoryCode)
+                        && a.BenefitTypeCode.Equals(categoryCode)
                     ).FirstOrDefaultAsync();
 
+                String payerName = String.Empty;
+                String benefitTypeName = categoryCode;
 
-                return String.Format("{0} {1}", res.PayerName, categoryCode);
+                if (res != null) {
+                    payerName = res.PayerName;
+                    benefitTypeName = res.BenefitTypeName;
+                }
+                headers.Add(payerName);
+                headers.Add(benefitTypeName);
+                return headers;
 
             }
 
@@ -87,7 +100,7 @@ namespace CchWebAPI.BenefitContribution.Data
                     .Join(context.BenefitPlanOptions,
                     a => a.BenefitPlanOptionKey, bpo => bpo.BenefitPlanOptionKey,
                     (a, bpo) => new PercentageElected {
-                        ContributionName = bpo.BenefitTypeName,
+                        ContributionName = bpo.BenefitPlanOptionName,
                         Percentage = a.Percent,
                         CCHID = a.CCHID,
                         BenefitPlanTypeCode = bpo.BenefitPlanTypeCode
@@ -225,6 +238,7 @@ namespace CchWebAPI.BenefitContribution.Data
                                             p.DeliveryMethodName,
                                             p.ContributionTypeCode,
                                             p.ContributionTypeName,
+                                            pm.DashboardDisplayName,
                                             pm.PayrollMetricCode,
                                             pm.PayrollMetricName,
                                             pm.PayrollCategoryName,
@@ -243,6 +257,8 @@ namespace CchWebAPI.BenefitContribution.Data
                         EmployeeLastName = p.EmployeeLastName,
                         PayrollCategoryName = p.PayrollCategoryName,
                         PayrollMetricName = p.PayrollMetricName,
+                        PayrollMetricCode = p.PayrollMetricCode,
+                        PayrollMetricDisplayName = p.DashboardDisplayName,
                         PerPeriodAmt = p.PerPeriodAmt,
                         PreTaxInd = p.PreTaxInd,
                         YTDAmt = p.YTDAmt,

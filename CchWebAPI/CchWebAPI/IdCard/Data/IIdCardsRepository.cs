@@ -34,7 +34,7 @@ namespace CchWebAPI.IdCard.Data {
                 throw new InvalidOperationException("Failed to initialized repository");
 
             using (var ctx = new IdCardsContext(_connectionString)) {                
-                List<CardDetail> cardDetails = await ctx.Database.SqlQuery<CardDetail>("SELECT * FROM vwIdCard WHERE EnrolledCCHID = @Id", new SqlParameter("@Id", cchId)).ToListAsync();
+                List<CardDetail> cardDetails = await ctx.Database.SqlQuery<CardDetail>("SELECT * FROM vwIdCard WHERE SubscribedCCHID = @Id", new SqlParameter("@Id", cchId)).ToListAsync();
 
                 List<IdCard> results = new List<IdCard>();
 
@@ -47,17 +47,37 @@ namespace CchWebAPI.IdCard.Data {
                         cardDetail.CardTypeId = 1;
                         cardDetail.CardViewModeId = viewMode.CardViewModeId;
 
+                        int cardTypeId = 1;
+
+                        switch (cardDetail.BenefitTypeCode) {
+                            case "MED":
+                                cardTypeId = 1;
+                                break;
+                            case "RX":
+                                cardTypeId = 2;
+                                break;
+                            case "DEN":
+                                cardTypeId = 3;
+                                break;
+                            case "VIS":
+                                cardTypeId = 4;
+                                break;
+
+                        }
+
+
                         IdCard card = new IdCard {
                             LocaleId = 1,
-                            TypeId = 1,
-                            MemberId = cchId,
+                            TypeId = cardTypeId,
+                            MemberId = cardDetail.EnrolledCCHID,
                             DetailText = JsonConvert.SerializeObject(cardDetail),
                             ViewModeId = viewMode.CardViewModeId,
                         };
 
                         IdCardType cardType = new IdCardType {
                             FileName = (string.Format("{0}_{1}_{2}", cardDetail.BenefitTypeCode, cardDetail.PayerName, employer.Name).Replace(" ", String.Empty)),
-                            Id = 1
+                            Id = 1,
+                            Translation = cardDetail.PayerName
                         };
 
                         card.CardType = cardType;

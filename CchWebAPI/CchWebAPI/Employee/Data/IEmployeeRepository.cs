@@ -65,9 +65,11 @@ namespace CchWebAPI.Employee.Data {
             void Initialize(string connectionString);
             Task<Employee> GetEmployeeByKeyAsync(int employeeKey);
             Task<Employee> GetEmployeeByCchIdAsync(int cchId);
+            Task<Member> GetMemberByCchIdAsync(int cchId);
             Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId);
             Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(int cchId, int year);
             Task<List<BenefitPlan>> GetEmployeeBenefitsEligible(int cchId);
+            Task<BenefitMedicalPlan> GetEmployeeBenefitEnrollmentMedicalPlan(int memberKey);
         }
 
         public class EmployeeRepository : SqlRepository, IEmployeeRepository {
@@ -114,6 +116,21 @@ namespace CchWebAPI.Employee.Data {
                 return employee;
             }
 
+            public async Task<Member> GetMemberByCchIdAsync(int cchId)
+            {
+                if (string.IsNullOrEmpty(_connectionString))
+                    throw new InvalidOperationException("Failed to initialize repository");
+
+                Member member = null;
+
+                using (var ctx = new EmployeeContext(_connectionString))
+                {
+                    member = await ctx.Members.FirstOrDefaultAsync(p => p.Cchid.Equals(cchId) && p.CurrentRecordInd);
+                }
+
+                return member;
+            }
+
             public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId) {
                 if (string.IsNullOrEmpty(_connectionString))
                     throw new InvalidOperationException("Failed to initialize repository");
@@ -156,7 +173,7 @@ namespace CchWebAPI.Employee.Data {
 
                 return planMembers;
             }
-            public async Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(int cchid, int year) {
+            public async Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(int cchId, int year) {
                 if (string.IsNullOrEmpty(_connectionString))
                     throw new InvalidOperationException("Failed to initialize repository");
 
@@ -164,7 +181,7 @@ namespace CchWebAPI.Employee.Data {
 
                 using (var ctx = new EmployeeContext(_connectionString)) {
                     var employee = await ctx.Employees
-                        .FirstOrDefaultAsync(p => p.CchId.Equals(cchid));
+                        .FirstOrDefaultAsync(p => p.CchId.Equals(cchId));
 
                     if (employee != null) {
                         benefitPlans = await ctx.BenefitEnrollments
@@ -186,16 +203,22 @@ namespace CchWebAPI.Employee.Data {
                             })
                         .Where(
                             p =>
-                                p.BenefitEnrollments.BenefitEnrollments.SubscriberMemberKey.Equals(employee.EmployeeKey)
+                                p.BenefitEnrollments.BenefitEnrollments.SubscriberMemberKey.Equals(cchId)
                                 && p.BenefitEnrollments.PlanYears.PlanYearName.Equals(year.ToString())
                         )
                         .Select(
                             p => new BenefitPlan {
-                                Id = p.BenefitPlanOptions.BenefitPlanTypeCode,
-                                Name = p.BenefitPlanOptions.BenefitPlanTypeName
+                                Id = p.BenefitPlanOptions.SourcePlanOptionCode,
+                                Name = p.BenefitPlanOptions.BenefitPlanOptionName
                             })
                         .Distinct()
                         .ToListAsync();
+
+                        benefitPlans.Add(new BenefitPlan
+                        {
+                            Id = employee.EarningsGroupCode,
+                            Name = "Earnings Group"
+                        });
                     }
                 }
                 return benefitPlans;
@@ -211,30 +234,71 @@ namespace CchWebAPI.Employee.Data {
                         .FirstOrDefaultAsync(p => p.CchId.Equals(cchId));
 
                     if (employee != null) {
-                        benefitPlans = await ctx.BenefitEligibilities
-                        .Join(
-                            ctx.BenefitPlanOptions,
-                            benefitEligibilities => benefitEligibilities.BenefitPlanOptionKey,
-                            benefitPlanOptions => benefitPlanOptions.BenefitPlanOptionKey,
-                            (benefitEligibilities, benefitPlanOptions) => new {
-                                BenefitEligibilities = benefitEligibilities,
-                                BenefitPlanOptions = benefitPlanOptions
-                            })
-                        .Where(
-                            p =>
-                                p.BenefitEligibilities.EmployeeKey.Equals(employee.EmployeeKey)
-                                && p.BenefitEligibilities.CurrentRecordInd.Equals(true)
-                        )
-                        .Select(
-                            p => new BenefitPlan {
-                                Id = p.BenefitPlanOptions.BenefitPlanTypeCode,
-                                Name = p.BenefitPlanOptions.BenefitPlanTypeName
-                            })
-                        .Distinct()
-                        .ToListAsync();
+                        benefitPlans.Add(new BenefitPlan
+                        {
+                            Id = employee.BenefitGroupCode,
+                            Name = "Benefit Group"
+                        });
+                        benefitPlans.Add(new BenefitPlan
+                        {
+                            Id = employee.EarningsGroupCode,
+                            Name = "Earnings Group"
+                        });
                     }
                 }
                 return benefitPlans;
+            }
+
+            public async Task<BenefitMedicalPlan> GetEmployeeBenefitEnrollmentMedicalPlan(int memberKey)
+            {
+                //This is a one-off method because of the "MED" and "EXPAT" criteria and is not re-usable
+                //TODO: refactor where clause if other BenefitEnrollment types are needed beyond just medical
+                if (string.IsNullOrEmpty(_connectionString))
+                    throw new InvalidOperationException("Failed to initialize repository");
+
+                BenefitMedicalPlan plan = new BenefitMedicalPlan();
+
+                using (var ctx = new EmployeeContext(_connectionString))
+                {
+                    var date = DateTime.UtcNow;
+                    plan = await ctx.BenefitEnrollments
+                    .Join(
+                        ctx.PlanYears,
+                        benefitEnrollments => benefitEnrollments.PlanYearKey,
+                        planYears => planYears.PlanYearKey,
+                        (benefitEnrollments, planYears) => new
+                        {
+                            BenefitEnrollments = benefitEnrollments,
+                            PlanYears = planYears
+                        })
+                    .Join(
+                        ctx.BenefitPlanOptions,
+                        benefitEnrollments => benefitEnrollments.BenefitEnrollments.BenefitPlanOptionKey,
+                        benefitPlanOptions => benefitPlanOptions.BenefitPlanOptionKey,
+                        (benefitEnrollments, benefitPlanOptions) => new
+                        {
+                            BenefitEnrollments = benefitEnrollments,
+                            BenefitPlanOptions = benefitPlanOptions
+                        })
+                    .Where(
+                            p =>
+                                p.BenefitPlanOptions.BenefitTypeCode.Equals("MED")
+                                && !p.BenefitPlanOptions.BenefitPlanTypeCode.Equals("EXPAT")
+                                && p.BenefitEnrollments.BenefitEnrollments.EnrolledMemberKey.Equals(memberKey)
+                                && p.BenefitEnrollments.PlanYears.PlanYearStartDate.Value <= date
+                                && p.BenefitEnrollments.PlanYears.PlanYearEndDate.Value >= date
+                        )
+                    .Select(
+                            p => new BenefitMedicalPlan
+                            {
+                                MemberPlanId = p.BenefitEnrollments.BenefitEnrollments.BenefitPlanOptionKey,
+                                PlanType = p.BenefitPlanOptions.BenefitTypeCode,
+                                SubscriberPlanId = p.BenefitEnrollments.BenefitEnrollments.SubscriberPlanId
+                            }
+                        )
+                    .FirstOrDefaultAsync();
+                }
+                return plan;
             }
         }
     }

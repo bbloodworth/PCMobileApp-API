@@ -25,13 +25,13 @@ namespace CchWebAPI.Controllers {
         public async Task<ApiResult<List<DatePaid>>> GetDatesPaidAsync(int employerId, int cchId) {
             var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == employerId);
             var result = await _dispatcher.GetDatePaidAsync(employer, cchId);
-
+            
             return ApiResult<List<DatePaid>>.ValidResult(result, string.Empty);
         }
 
         public async Task<ApiResult<Paycheck>> GetPaycheckAsync(int employerId, string documentId) {
             var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == employerId);
-            var result = await _dispatcher.GetPaycheckAsync(employer, documentId);
+            var result = await _dispatcher.GetPaycheckAsync(employer, documentId, Request.CCHID());
 
             return ApiResult<Paycheck>.ValidResult(result, string.Empty);
         }
