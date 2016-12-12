@@ -43,10 +43,17 @@ namespace CchWebAPI.Controllers {
 
         [HttpGet]
         public async Task<ApiResult<List<BenefitPlan>>> GetEmployeeBenefitsEnrolled(int employerId, int cchId, int year) {
-            var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(employerId));
-            var benefits = await _dispatcher.GetEmployeeBenefitsEnrolled(employer, cchId, year);
+            try
+            {
+                var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(employerId));
+                var benefits = await _dispatcher.GetEmployeeBenefitsEnrolled(employer, cchId, year);
 
-            return ApiResult<List<BenefitPlan>>.ValidResult(benefits, string.Empty);
+                return ApiResult<List<BenefitPlan>>.ValidResult(benefits, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                return ApiResult<List<BenefitPlan>>.InvalidResult(ex.Message);
+            }
         }
 
         [HttpGet]
