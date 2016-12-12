@@ -25,6 +25,7 @@ namespace CchWebAPI.Controllers {
 
             return ApiResult<Employee.Models.Employee>.ValidResult(employee, string.Empty);
         }
+
         [HttpGet]
         public async Task<ApiResult<List<PlanMember>>> GetEmployeeBenefitPlanMembersAsync(int employerId, int cchId, int planId) {
             var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(employerId));
@@ -32,6 +33,7 @@ namespace CchWebAPI.Controllers {
 
             return ApiResult<List<PlanMember>>.ValidResult(planMembers, string.Empty);
         }
+
         [HttpGet]
         public async Task<ApiResult<List<BenefitPlan>>> GetEmployeeBenefitsEnrolled(int employerId, int cchId, int year) {
             var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(employerId));
@@ -39,6 +41,7 @@ namespace CchWebAPI.Controllers {
 
             return ApiResult<List<BenefitPlan>>.ValidResult(benefits, string.Empty);
         }
+
         [HttpGet]
         public async Task<ApiResult<List<BenefitPlan>>> GetEmployeeBenefitsEligible(int employerId, int cchId) {
             var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(employerId));
