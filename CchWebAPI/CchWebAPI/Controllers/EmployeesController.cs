@@ -20,10 +20,17 @@ namespace CchWebAPI.Controllers {
         [HttpGet]
         //[Route("employees/{employerId}/{cchId}")]
         public async Task<ApiResult<Employee.Models.Employee>> GetEmployeeAsync(int employerId, int cchId) {
-            var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == employerId);
-            var employee = await _dispatcher.GetEmployeeAsync(employer, cchId);
+            try
+            {
+                var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == employerId);
+                var employee = await _dispatcher.GetEmployeeAsync(employer, cchId);
 
-            return ApiResult<Employee.Models.Employee>.ValidResult(employee, string.Empty);
+                return ApiResult<Employee.Models.Employee>.ValidResult(employee, string.Empty);
+            }
+            catch (Exception ex)
+            {
+                return ApiResult<Employee.Models.Employee>.InvalidResult(ex.Message);
+            }
         }
         [HttpGet]
         public async Task<ApiResult<List<PlanMember>>> GetEmployeeBenefitPlanMembersAsync(int employerId, int cchId, int planId) {

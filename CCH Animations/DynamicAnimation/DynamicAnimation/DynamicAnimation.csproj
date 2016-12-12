@@ -368,14 +368,33 @@
     <Content Include="fonts\VarelaRound-Regular.ttf" />
     <Content Include="fonts\VarelaRound-Regular.woff" />
     <Content Include="fonts\VarelaRound-Regular.woff2" />
-    <Content Include="NLog.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Content Include="NLog.config" />
     <Content Include="packages.config" />
     <Content Include="LICENSE" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
+    <None Include="NLog.Debug.config">
+      <DependentUpon>NLog.config</DependentUpon>
+    </None>
+    <None Include="NLog.Release.config">
+      <DependentUpon>NLog.config</DependentUpon>
+    </None>
+    <None Include="NLog.Dev.config">
+      <DependentUpon>NLog.config</DependentUpon>
+    </None>
+    <None Include="NLog.Test.config">
+      <DependentUpon>NLog.config</DependentUpon>
+    </None>
+    <None Include="NLog.Staging.config">
+      <DependentUpon>NLog.config</DependentUpon>
+    </None>
+    <None Include="NLog.Production.config">
+      <DependentUpon>NLog.config</DependentUpon>
+    </None>
+    <None Include="NLog.Processing.config">
+      <DependentUpon>NLog.config</DependentUpon>
+    </None>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
@@ -462,28 +481,28 @@
     <Content Include="Views\Card\medID_kaiser_sanmina_front.cshtml" />
     <Content Include="Views\Card\medID_kaiser_sanmina_full_back.cshtml" />
     <Content Include="Views\Card\medID_kaiser_sanmina_full_front.cshtml" />
-    <None Include="Views\Card\MED_BlueShieldCA_TYLin_Front.cshtml" />
-    <None Include="Views\Card\MED_BlueShieldCA_TYLin_Back.cshtml" />
-    <None Include="Views\Card\MED_BlueShieldCA_TYLin_Full_Back.cshtml" />
-    <None Include="Views\Card\MED_BlueShieldCA_TYLin_Full_Front.cshtml" />
-    <None Include="Views\Card\DEN_DeltaDental_TYLin_Back.cshtml" />
-    <None Include="Views\Card\DEN_DeltaDental_TYLin_Full_Back.cshtml" />
-    <None Include="Views\Card\DEN_DeltaDental_TYLin_Front.cshtml" />
-    <None Include="Views\Card\DEN_DeltaDental_TYLin_Full_Front.cshtml" />
+    <Content Include="Views\Card\MED_BlueShieldCA_TYLin_Front.cshtml" />
+    <Content Include="Views\Card\MED_BlueShieldCA_TYLin_Back.cshtml" />
+    <Content Include="Views\Card\MED_BlueShieldCA_TYLin_Full_Back.cshtml" />
+    <Content Include="Views\Card\MED_BlueShieldCA_TYLin_Full_Front.cshtml" />
+    <Content Include="Views\Card\DEN_DeltaDental_TYLin_Back.cshtml" />
+    <Content Include="Views\Card\DEN_DeltaDental_TYLin_Full_Back.cshtml" />
+    <Content Include="Views\Card\DEN_DeltaDental_TYLin_Front.cshtml" />
+    <Content Include="Views\Card\DEN_DeltaDental_TYLin_Full_Front.cshtml" />
     <Content Include="Views\Card\rxID_optum_sanmina_back.cshtml" />
     <Content Include="Views\Card\rxID_optum_sanmina_front.cshtml" />
     <Content Include="Views\Card\rxID_optum_sanmina_full_back.cshtml" />
     <Content Include="Views\Card\rxID_optum_sanmina_full_front.cshtml" />
-    <None Include="Views\Card\VIS_VSP_TYLin_Back.cshtml" />
-    <None Include="Views\Card\VIS_VSP_TYLin_Full_Back.cshtml" />
-    <None Include="Views\Card\VIS_VSP_TYLin_Front.cshtml" />
-    <None Include="Views\Card\VIS_VSP_TYLin_Full_Front.cshtml" />
-    <None Include="Views\Card\MED_GeoBlue_TYLin_Back.cshtml" />
-    <None Include="Views\Card\MED_GeoBlue_TYLin_Full_Back.cshtml" />
-    <None Include="Views\Card\MED_GeoBlue_TYLin_Front.cshtml" />
-    <None Include="Views\Card\MED_GeoBlue_TYLin_Full_Front.cshtml" />
-    <None Include="Views\Card\MED_Kaiser_TYLin_Front.cshtml" />
-    <None Include="Views\Card\MED_Kaiser_TYLin_Full_Front.cshtml" />
+    <Content Include="Views\Card\VIS_VSP_TYLin_Back.cshtml" />
+    <Content Include="Views\Card\VIS_VSP_TYLin_Full_Back.cshtml" />
+    <Content Include="Views\Card\VIS_VSP_TYLin_Front.cshtml" />
+    <Content Include="Views\Card\VIS_VSP_TYLin_Full_Front.cshtml" />
+    <Content Include="Views\Card\MED_GeoBlue_TYLin_Back.cshtml" />
+    <Content Include="Views\Card\MED_GeoBlue_TYLin_Full_Back.cshtml" />
+    <Content Include="Views\Card\MED_GeoBlue_TYLin_Front.cshtml" />
+    <Content Include="Views\Card\MED_GeoBlue_TYLin_Full_Front.cshtml" />
+    <Content Include="Views\Card\MED_Kaiser_TYLin_Front.cshtml" />
+    <Content Include="Views\Card\MED_Kaiser_TYLin_Full_Front.cshtml" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
@@ -704,4 +723,9 @@
   </Target>
   <Target Name="AfterBuild">
   </Target> -->
+  <UsingTask TaskName="TransformXml" AssemblyFile="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Web\Microsoft.Web.Publishing.Tasks.dll" />
+  <Target Name="AfterBuild" Condition="Exists('NLog.$(Configuration).config')">
+    <!--Generate transformed config in the output directory-->
+    <TransformXml Source="NLog.config" Destination="$(OutputPath)NLog.config" Transform="NLog.$(Configuration).config" />
+  </Target>
 </Project>

@@ -9,7 +9,7 @@ namespace CchWebAPI.Payroll.Data {
     public interface IPayrollRepository {
         void Initialize(string connectionString);
         Task<List<DatePaid>> GetDatesPaidAsync(int cchId);
-        Task<List<PaycheckDetails>> GetPaycheckAsync(string documentId);
+        Task<List<PaycheckDetails>> GetPaycheckAsync(string documentId, int cchid);
     }
 
     public class PayrollRepository : IPayrollRepository {
@@ -60,7 +60,7 @@ namespace CchWebAPI.Payroll.Data {
             return datesPaid;
         }
 
-        public async Task<List<PaycheckDetails>> GetPaycheckAsync(string documentId) {
+        public async Task<List<PaycheckDetails>> GetPaycheckAsync(string documentId, int cchid) {
             if (string.IsNullOrEmpty(_connectionString))
                 throw new InvalidOperationException("Failed to initialize repository");
 
@@ -119,7 +119,9 @@ namespace CchWebAPI.Payroll.Data {
                             PayrollMetric = payrollMetric
                         })
                     .Where(
-                        p => p.Payroll.DocumentId == documentId
+                        p => 
+                        p.Payroll.DocumentId.Equals(documentId)
+                        && p.Employee.Cchid.Equals(cchid)
                     )
                     .Select(
                         p => new PaycheckDetails {
