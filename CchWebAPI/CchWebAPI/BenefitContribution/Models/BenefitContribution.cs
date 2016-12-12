@@ -37,6 +37,7 @@ namespace CchWebAPI.BenefitContribution.Models
         public string ReportingCategoryCode;
         [JsonIgnore]
         public bool CurrentPayPeriodInd;
+        public string PayrollMetricCode;
         public string PayrollMetricDisplayName;
 
 
@@ -49,12 +50,10 @@ namespace CchWebAPI.BenefitContribution.Models
     public class PercentageElected {
         [JsonIgnore]
         public int CCHID { get; set; }
-        [JsonIgnore]
         public string BenefitPlanTypeCode { get; set; }
         public string BenefitTypeCode { get; set; }
         public string ContributionName { get; set; }
         public float? Percentage { get; set; }
     }
-
 
 }

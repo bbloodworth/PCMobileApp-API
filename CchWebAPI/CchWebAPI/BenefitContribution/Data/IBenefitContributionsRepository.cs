@@ -258,6 +258,7 @@ namespace CchWebAPI.BenefitContribution.Data
                         EmployeeLastName = p.EmployeeLastName,
                         PayrollCategoryName = p.PayrollCategoryName,
                         PayrollMetricName = p.PayrollMetricName,
+                        PayrollMetricCode = p.PayrollMetricCode,
                         PayrollMetricDisplayName = p.DashboardDisplayName,
                         PerPeriodAmt = p.PerPeriodAmt,
                         PreTaxInd = p.PreTaxInd,

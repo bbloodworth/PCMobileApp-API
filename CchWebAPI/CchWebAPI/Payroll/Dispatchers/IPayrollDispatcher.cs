@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace CchWebAPI.Payroll.Dispatchers {
     public interface IPayrollDispatcher {
         Task<List<DatePaid>> GetDatePaidAsync(Employer employer, int cchId);
-        Task<Paycheck> GetPaycheckAsync(Employer employer, string documentId);
+        Task<Paycheck> GetPaycheckAsync(Employer employer, string documentId, int cchid);
     }
 
     public class PayrollDispatcher : IPayrollDispatcher {
@@ -32,7 +32,7 @@ namespace CchWebAPI.Payroll.Dispatchers {
 
             return result;
         }
-        public async Task<Paycheck> GetPaycheckAsync(Employer employer, string documentId) {
+        public async Task<Paycheck> GetPaycheckAsync(Employer employer, string documentId, int cchid) {
             if (String.IsNullOrWhiteSpace(documentId))
                 throw new InvalidOperationException("Invalid documentId.");
 
@@ -41,7 +41,7 @@ namespace CchWebAPI.Payroll.Dispatchers {
 
             _repository.Initialize(employer.ConnectionString);
 
-            var result = await _repository.GetPaycheckAsync(documentId);
+            var result = await _repository.GetPaycheckAsync(documentId, cchid);
 
             Paycheck paycheck = null;
 
