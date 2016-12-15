@@ -280,20 +280,30 @@ namespace CchWebAPI.Employee.Data {
                             BenefitEnrollments = benefitEnrollments,
                             BenefitPlanOptions = benefitPlanOptions
                         })
+                    .Join(
+                        ctx.BenefitEnrollmentStatus,
+                        benefitEnrollments => benefitEnrollments.BenefitEnrollments.BenefitEnrollments.BenefitEnrollmentStatusKey,
+                        benefitEnrollmentStatus => benefitEnrollmentStatus.BenefitEnrollmentStatusKey,
+                        (benefitEnrollments, benefitEnrollmentStatus) => new
+                        {
+                            BenefitEnrollments = benefitEnrollments,
+                            BenefitEnrollmentStatus = benefitEnrollmentStatus
+                        })
                     .Where(
                             p =>
-                                p.BenefitPlanOptions.BenefitTypeCode.Equals("MED")
-                                && !p.BenefitPlanOptions.BenefitPlanTypeCode.Equals("EXPAT")
-                                && p.BenefitEnrollments.BenefitEnrollments.EnrolledMemberKey.Equals(memberKey)
-                                && p.BenefitEnrollments.PlanYears.PlanYearStartDate.Value <= date
-                                && p.BenefitEnrollments.PlanYears.PlanYearEndDate.Value >= date
+                                p.BenefitEnrollments.BenefitPlanOptions.BenefitTypeCode.Equals("MED")
+                                && !p.BenefitEnrollments.BenefitPlanOptions.BenefitPlanTypeCode.Equals("EXPAT")
+                                && p.BenefitEnrollments.BenefitEnrollments.BenefitEnrollments.EnrolledMemberKey.Equals(memberKey)
+                                && p.BenefitEnrollments.BenefitEnrollments.PlanYears.PlanYearStartDate.Value <= date
+                                && p.BenefitEnrollments.BenefitEnrollments.PlanYears.PlanYearEndDate.Value >= date
+                                && p.BenefitEnrollmentStatus.BenefitEnrollmentStatusName.Equals("Active")
                         )
                     .Select(
                             p => new BenefitMedicalPlan
                             {
-                                MemberPlanId = p.BenefitEnrollments.BenefitEnrollments.BenefitPlanOptionKey,
-                                PlanType = p.BenefitPlanOptions.BenefitTypeCode,
-                                SubscriberPlanId = p.BenefitEnrollments.BenefitEnrollments.SubscriberPlanId
+                                MemberPlanId = p.BenefitEnrollments.BenefitEnrollments.BenefitEnrollments.BenefitPlanOptionKey,
+                                PlanType = p.BenefitEnrollments.BenefitPlanOptions.BenefitTypeCode,
+                                SubscriberPlanId = p.BenefitEnrollments.BenefitEnrollments.BenefitEnrollments.SubscriberPlanId
                             }
                         )
                     .FirstOrDefaultAsync();
