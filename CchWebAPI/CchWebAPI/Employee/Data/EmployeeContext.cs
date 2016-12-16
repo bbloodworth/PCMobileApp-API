@@ -87,6 +87,7 @@ namespace CchWebAPI.Employee.Data {
                 builder.Configurations.Add(new PlanYear.PlanYearConfiguration());
                 builder.Configurations.Add(new Date.DateConfiguration());
                 builder.Configurations.Add(new BenefitPlanOption.BenefitPlanOptionConfiguration());
+                builder.Configurations.Add(new BenefitEnrollmentStatus.BenefitEnrollmentStatusConfiguration());
             }
 
             public DbSet<Employee> Employees { get; set; }
@@ -97,6 +98,7 @@ namespace CchWebAPI.Employee.Data {
             public DbSet<PlanYear> PlanYears { get; set; }
             public DbSet<Date> Dates { get; set; } // Date_d
             public DbSet<BenefitPlanOption> BenefitPlanOptions { get; set; } // BenefitPlanOption_d
+            public DbSet<BenefitEnrollmentStatus> BenefitEnrollmentStatus { get; set; } // BenefitEnrollmentStatus_d
         }
 
         public class Employee {
@@ -601,6 +603,34 @@ namespace CchWebAPI.Employee.Data {
                     Property(x => x.DwUpdateDate).HasColumnName(@"DWUpdateDate").IsOptional().HasColumnType("datetime");
                     Property(x => x.EtlControlId).HasColumnName(@"ETLControlID").IsOptional().HasColumnType("int");
                     Property(x => x.BenefitTypeCode).HasColumnName(@"BenefitTypeCode").IsOptional().HasColumnType("nvarchar").HasMaxLength(10);
+                }
+            }
+        }
+
+        public class BenefitEnrollmentStatus
+        {
+            public int BenefitEnrollmentStatusKey { get; set; } // BenefitEnrollmentStatusKey (Primary key)
+            public string BenefitEnrollmentStatusName { get; set; } // BenefitEnrollmentStatusName (nvarchar(50))
+            public string DwCreateUserId { get; set; } // DWCreateUserID (length: 20)
+            public System.DateTime? DwCreateDate { get; set; } // DWCreateDate
+            public string DwUpdateUserId { get; set; } // DWUpdateUserID (length: 20)
+            public System.DateTime? DwUpdateDate { get; set; } // DWUpdateDate
+            public int? EtlControlId { get; set; } // ETLControlID
+
+            public class BenefitEnrollmentStatusConfiguration : EntityTypeConfiguration<BenefitEnrollmentStatus>
+            {
+                public BenefitEnrollmentStatusConfiguration()
+                {
+                    ToTable("BenefitEnrollmentStatus_d");
+                    HasKey(x => x.BenefitEnrollmentStatusKey);
+
+                    Property(x => x.BenefitEnrollmentStatusKey).HasColumnName(@"BenefitEnrollmentStatusKey").IsRequired().HasColumnType("int").HasDatabaseGeneratedOption(System.ComponentModel.DataAnnotations.Schema.DatabaseGeneratedOption.Identity);
+                    Property(x => x.BenefitEnrollmentStatusName).HasColumnName(@"BenefitEnrollmentStatusName").IsOptional().HasColumnType("nvarchar").HasMaxLength(50);
+                    Property(x => x.DwCreateUserId).HasColumnName(@"DWCreateUserID").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
+                    Property(x => x.DwCreateDate).HasColumnName(@"DWCreateDate").IsOptional().HasColumnType("datetime");
+                    Property(x => x.DwUpdateUserId).HasColumnName(@"DWUpdateUserID").IsOptional().HasColumnType("nvarchar").HasMaxLength(20);
+                    Property(x => x.DwUpdateDate).HasColumnName(@"DWUpdateDate").IsOptional().HasColumnType("datetime");
+                    Property(x => x.EtlControlId).HasColumnName(@"ETLControlID").IsOptional().HasColumnType("int");
                 }
             }
         }
