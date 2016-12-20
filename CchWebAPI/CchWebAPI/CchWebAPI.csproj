@@ -323,6 +323,7 @@
     <Compile Include="Formatters\JsonpMediaTypeFormatter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Handlers\ApiKeyHandler.cs" />
     <Compile Include="Handlers\BasicAuthenticationMessageHandler.cs" />
