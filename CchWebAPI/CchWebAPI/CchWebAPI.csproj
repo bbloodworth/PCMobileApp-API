@@ -277,6 +277,8 @@
     <Compile Include="Employee\Models\OrganizationLevel.cs" />
     <Compile Include="Employee\Models\WorkLocation.cs" />
     <Compile Include="Employee\Models\PlanMember.cs" />
+    <Compile Include="Filters\V2EmployeeFilterAttribute.cs" />
+    <Compile Include="Filters\V2EmployerFilterAttribute.cs" />
     <Compile Include="IdCard\Models\BenefitEnrollment.cs" />
     <Compile Include="IdCard\Models\BenefitEnrollmentStatus.cs" />
     <Compile Include="IdCard\Models\Date.cs" />
@@ -323,7 +325,6 @@
     <Compile Include="Formatters\JsonpMediaTypeFormatter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Compile>
     <Compile Include="Handlers\ApiKeyHandler.cs" />
     <Compile Include="Handlers\BasicAuthenticationMessageHandler.cs" />
