@@ -617,6 +617,10 @@
     <Content Include="Views\Card\InvalidEmployerId.cshtml" />
     <Content Include="Views\Card\Dental_MetLife_ABCState_Full_Front.cshtml" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+    <Content Include="Views\Card\medID_united_PPO_back.cshtml" />
+    <Content Include="Views\Card\medID_united_PPO_front.cshtml" />
+    <Content Include="Views\Card\medID_united_PPO_full_back.cshtml" />
+    <Content Include="Views\Card\medID_united_PPO_full_front.cshtml" />
     <None Include="Web.Dev.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
