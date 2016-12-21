@@ -67,9 +67,10 @@ namespace CchWebAPI.Employee.Data {
             Task<Employee> GetEmployeeByCchIdAsync(int cchId);
             Task<Member> GetMemberByCchIdAsync(int cchId);
             Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId);
-            Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(int cchId, int year);
-            Task<List<BenefitPlan>> GetEmployeeBenefitsEligible(int cchId);
-            Task<BenefitMedicalPlan> GetEmployeeBenefitEnrollmentMedicalPlan(int memberKey);
+            Task<List<PlanMember>> GetEmployeeDependentsAsync(int cchId);
+            Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolledAsync(int cchId, int year);
+            Task<List<BenefitPlan>> GetEmployeeBenefitsEligibleAsync(int cchId);
+            Task<BenefitMedicalPlan> GetEmployeeBenefitEnrollmentMedicalPlanAsync(int memberKey);
         }
 
         public class EmployeeRepository : SqlRepository, IEmployeeRepository {
@@ -157,13 +158,15 @@ namespace CchWebAPI.Employee.Data {
                                 Dependent = dependent
                             })
                         .Where(
-                            p => p.Dependent.Cchid.Equals(cchId)
+                            //p => p.Dependent.Cchid.Equals(cchId)
+                            p => p.BenefitEnrollment.SubscriberMemberKey.Equals(cchId)
                             && p.BenefitEnrollment.BenefitPlanOptionKey.Equals(planId)
-                        //&& p.CurrentRecordInd
+                            //&& p.CurrentRecordInd
                         )
                         .Select(
                             p => new PlanMember {
-                                CchId = p.Dependent.Cchid,
+                                //CchId = p.Dependent.Cchid,
+                                CchId = p.BenefitEnrollment.EnrolledMemberKey,
                                 FirstName = p.Dependent.MemberFirstName,
                                 LastName = p.Dependent.MemberLastName
                             }
@@ -173,7 +176,50 @@ namespace CchWebAPI.Employee.Data {
 
                 return planMembers;
             }
-            public async Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(int cchId, int year) {
+            public async Task<List<PlanMember>> GetEmployeeDependentsAsync(int cchId) {
+                if (string.IsNullOrEmpty(_connectionString))
+                    throw new InvalidOperationException("Failed to initialize repository");
+
+                List<PlanMember> planMembers = new List<PlanMember>();
+
+                using (var ctx = new EmployeeContext(_connectionString)) {
+                    planMembers = await ctx.BenefitEnrollments
+                        .Join(
+                            ctx.Members,
+                            benefitEnrollment => benefitEnrollment.SubscriberMemberKey,
+                            member => member.MemberKey,
+                            (benefitEnrollment, member) => new {
+                                BenefitEnrollment = benefitEnrollment,
+                                Member = member
+                            })
+                        .Join(
+                            ctx.Members,
+                            benefitEnrollment => benefitEnrollment.BenefitEnrollment.EnrolledMemberKey,
+                            dependent => dependent.MemberKey,
+                            (benefitEnrollment, dependent) => new {
+                                BenefitEnrollment = benefitEnrollment.BenefitEnrollment,
+                                Member = benefitEnrollment.Member,
+                                Dependent = dependent
+                            })
+                        .Where(
+                            //p => p.Dependent.Cchid.Equals(cchId)
+                            p => p.BenefitEnrollment.SubscriberMemberKey.Equals(cchId)
+
+                        )
+                        .Select(
+                            p => new PlanMember {
+                                CchId = p.Dependent.Cchid,
+                                FirstName = p.Dependent.MemberFirstName,
+                                LastName = p.Dependent.MemberLastName
+                            }
+                        )
+                        .Distinct()
+                        .ToListAsync();
+                }
+
+                return planMembers;
+            }
+            public async Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolledAsync(int cchId, int year) {
                 if (string.IsNullOrEmpty(_connectionString))
                     throw new InvalidOperationException("Failed to initialize repository");
 
@@ -223,7 +269,7 @@ namespace CchWebAPI.Employee.Data {
                 }
                 return benefitPlans;
             }
-            public async Task<List<BenefitPlan>> GetEmployeeBenefitsEligible(int cchId) {
+            public async Task<List<BenefitPlan>> GetEmployeeBenefitsEligibleAsync(int cchId) {
                 if (string.IsNullOrEmpty(_connectionString))
                     throw new InvalidOperationException("Failed to initialize repository");
 
@@ -249,7 +295,7 @@ namespace CchWebAPI.Employee.Data {
                 return benefitPlans;
             }
 
-            public async Task<BenefitMedicalPlan> GetEmployeeBenefitEnrollmentMedicalPlan(int memberKey)
+            public async Task<BenefitMedicalPlan> GetEmployeeBenefitEnrollmentMedicalPlanAsync(int memberKey)
             {
                 //This is a one-off method because of the "MED" and "EXPAT" criteria and is not re-usable
                 //TODO: refactor where clause if other BenefitEnrollment types are needed beyond just medical

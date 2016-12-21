@@ -46,7 +46,7 @@ namespace CchWebAPI.Employee.Dispatchers {
                     employee.Merge(memberData);
                     if (await _repositoryV2.IsExistingTable("dbo", "BenefitEnrollment_f"))
                     {
-                        var medicalData = await _repositoryV2.GetEmployeeBenefitEnrollmentMedicalPlan(memberData.MemberKey);
+                        var medicalData = await _repositoryV2.GetEmployeeBenefitEnrollmentMedicalPlanAsync(memberData.MemberKey);
                         employee.Merge(medicalData);
                     }
                 }
@@ -78,6 +78,20 @@ namespace CchWebAPI.Employee.Dispatchers {
             return result;
         }
 
+        public async Task<List<PlanMember>> GetEmployeeDependentsAsync(ClearCost.Platform.Employer employer, int cchId) {
+            if (cchId < 1)
+                throw new ArgumentException("Invalid member context.");
+
+            if (employer == null || string.IsNullOrEmpty(employer.ConnectionString))
+                throw new ArgumentException("Invalid employer context.");
+
+            _repositoryV2.Initialize(employer.ConnectionString);
+
+            var result = await _repositoryV2.GetEmployeeDependentsAsync(cchId);
+
+            return result;
+        }
+
         public async Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(ClearCost.Platform.Employer employer, int cchId, int year) {
             if (cchId < 1)
                 throw new ArgumentException("Invalid member context.");
@@ -87,7 +101,7 @@ namespace CchWebAPI.Employee.Dispatchers {
 
             _repositoryV2.Initialize(employer.ConnectionString);
 
-            var result = await _repositoryV2.GetEmployeeBenefitsEnrolled(cchId, year);
+            var result = await _repositoryV2.GetEmployeeBenefitsEnrolledAsync(cchId, year);
 
             return result;
         }
@@ -101,7 +115,7 @@ namespace CchWebAPI.Employee.Dispatchers {
 
             _repositoryV2.Initialize(employer.ConnectionString);
 
-            var result = await _repositoryV2.GetEmployeeBenefitsEligible(cchId);
+            var result = await _repositoryV2.GetEmployeeBenefitsEligibleAsync(cchId);
 
             return result;
         }

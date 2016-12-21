@@ -22,12 +22,12 @@ namespace CchWebAPI.Controllers
         public PaidTimeOffController() { }
 
         [HttpGet]
-        public async Task<ApiResult<List<PaidTimeOffDetail>>> Get() {
+        public async Task<IHttpActionResult> Get() {
             var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == Request.EmployerID());
 
             var result = await _dispatcher.GetPaidTimeOffAsync(employer, Request.CCHID());
 
-            return ApiResult<List<PaidTimeOffDetail>>.ValidResult(result, string.Empty);
+            return Ok(result);
         }
 
 
