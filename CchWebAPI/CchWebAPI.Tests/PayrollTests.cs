@@ -11,6 +11,8 @@ using CchWebAPI.Payroll.Data;
 using System.Threading.Tasks;
 using ClearCost.Platform;
 using System.Linq;
+using System.Web.Http.Results;
+using CchWebAPI.Payroll.Models;
 
 namespace CchWebAPI.Tests {
     /// <summary>
@@ -73,10 +75,11 @@ namespace CchWebAPI.Tests {
                 var dispatcher = new PayrollDispatcher(repository);
                 var controller = new PayrollController(dispatcher);
 
-                var result = await controller.GetDatesPaidAsync(testAccount.EmployerId, testAccount.CchId);
+                var result = await controller.GetDatesPaidAsync(employer, testAccount.CchId)
+                    as OkNegotiatedContentResult<List<DatePaid>>;
 
                 Assert.IsNotNull(result);
-                Assert.IsTrue(result.IsSuccess);
+                Assert.IsNotNull(result.Content);
             }
         }
         [TestMethod]
@@ -91,10 +94,11 @@ namespace CchWebAPI.Tests {
                 var dispatcher = new PayrollDispatcher(repository);
                 var controller = new PayrollController(dispatcher);
 
-                var result = await controller.GetPaycheckAsync(testAccount.EmployerId, testAccount.PaycheckDocumentId);
+                var result = await controller.GetPaycheckAsync(employer, testAccount.PaycheckDocumentId)
+                    as OkNegotiatedContentResult<Paycheck>;
 
                 Assert.IsNotNull(result);
-                Assert.IsTrue(result.IsSuccess);
+                Assert.IsNotNull(result.Content);
             }
         }
     }

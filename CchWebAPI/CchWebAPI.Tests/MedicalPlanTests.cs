@@ -8,6 +8,7 @@ using CchWebAPI.MedicalPlan.Dispatchers;
 using CchWebAPI.Controllers;
 using ClearCost.Platform;
 using System.Linq;
+using System.Web.Http.Results;
 
 namespace CchWebAPI.Tests {
     /// <summary>
@@ -70,10 +71,11 @@ namespace CchWebAPI.Tests {
                 var dispatcher = new MedicalPlanDispatcher(repository);
                 var controller = new MedicalPlansController(dispatcher);
 
-                var result = await controller.GetMedicalPlanAsync(testAccount.EmployerId, testAccount.MedicalPlanId);
+                var result = await controller.GetMedicalPlanAsync(employer, testAccount.MedicalPlanId)
+                    as OkNegotiatedContentResult<MedicalPlan.Models.MedicalPlan>;
 
                 Assert.IsNotNull(result);
-                Assert.IsTrue(result.IsSuccess);
+                Assert.IsNotNull(result.Content);
             }
         }
         [TestMethod]
@@ -89,13 +91,14 @@ namespace CchWebAPI.Tests {
                 var controller = new MedicalPlansController(dispatcher);
 
                 var result = await controller.GetMedicalPlanAccumulationAsync(
-                    testAccount.EmployerId,
+                    employer,
                     testAccount.CchId,
                     testAccount.MedicalPlanId,
-                    DateTime.UtcNow.Year);
+                    DateTime.UtcNow.Year)
+                    as OkNegotiatedContentResult<MedicalPlanAccumulation>;
 
                 Assert.IsNotNull(result);
-                Assert.IsTrue(result.IsSuccess);
+                Assert.IsNotNull(result.Content);
             }
         }
     }

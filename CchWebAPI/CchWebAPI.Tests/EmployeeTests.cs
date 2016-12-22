@@ -2,6 +2,7 @@
 using CchWebAPI.Employee.Data.V1;
 using CchWebAPI.Employee.Data.V2;
 using CchWebAPI.Employee.Dispatchers;
+using CchWebAPI.Employee.Models;
 //using CchWebAPI.Employees.Data;
 //using CchWebAPI.Employees.Dispatchers;
 using ClearCost.Platform;
@@ -12,6 +13,7 @@ using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http.Results;
 
 namespace CchWebAPI.Tests {
     [TestClass]
@@ -30,9 +32,11 @@ namespace CchWebAPI.Tests {
                 var dispatcher = new EmployeeDispatcher(repository);
                 var controller = new EmployeesController(dispatcher);
 
-                var employee = await controller.GetEmployeeAsync(testAccount.EmployerId, testAccount.CchId);
+                var result = await controller.GetEmployeeAsync(employer, testAccount.CchId)
+                    as OkNegotiatedContentResult<Employee.Models.Employee>;
 
-                Assert.IsNotNull(employee);
+                Assert.IsNotNull(result);
+                Assert.IsNotNull(result.Content);
             }
         }
 
@@ -51,12 +55,12 @@ namespace CchWebAPI.Tests {
                     var controller = new EmployeesController(dispatcher);
 
                     var result = await controller.GetEmployeeBenefitPlanMembersAsync(
-                        testAccount.EmployerId,
+                        employer,
                         testAccount.CchId,
-                        benefitPlanId);
+                        benefitPlanId) as OkNegotiatedContentResult<List<PlanMember>>;
 
                     Assert.IsNotNull(result);
-                    Assert.IsTrue(result.IsSuccess);
+                    Assert.IsNotNull(result.Content);
                 }
             }
         }
