@@ -23,29 +23,31 @@ namespace CchWebAPI.Controllers {
 
         [HttpGet]
         //[Route("employees/{employerId}/{cchId}")]
-        public async Task<IHttpActionResult> GetEmployeeAsync(Employer employer, int cchId) {
+        public async Task<ApiResult<Employee.Models.Employee>> GetEmployeeAsync(Employer employer, int cchId) {
             var employee = await _dispatcher.GetEmployeeAsync(employer, cchId);
-            return Ok(employee);
+
+            return ApiResult<Employee.Models.Employee>.ValidResult(employee, string.Empty);
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> GetEmployeeBenefitPlanMembersAsync(Employer employer, int cchId, int planId) {
+        public async Task<ApiResult<List<PlanMember>>> GetEmployeeBenefitPlanMembersAsync(Employer employer, int cchId, int planId) {
             var planMembers = await _dispatcher.GetEmployeeBenefitPlanMembersAsync(employer, cchId, planId);
 
-            return Ok(planMembers);
+            return ApiResult<List<PlanMember>>.ValidResult(planMembers, string.Empty);
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> GetEmployeeBenefitsEnrolled(Employer employer, int cchId, int year) {
+        public async Task<ApiResult<List<BenefitPlan>>> GetEmployeeBenefitsEnrolled(Employer employer, int cchId, int year) {
             var benefits = await _dispatcher.GetEmployeeBenefitsEnrolled(employer, cchId, year);
-            return Ok(benefits);
+
+            return ApiResult<List<BenefitPlan>>.ValidResult(benefits, string.Empty);
         }
 
         [HttpGet]
-        public async Task<IHttpActionResult> GetEmployeeBenefitsEligible(Employer employer, int cchId) {
+        public async Task<ApiResult<List<BenefitPlan>>> GetEmployeeBenefitsEligible(Employer employer, int cchId) {
             var benefits = await _dispatcher.GetEmployeeBenefitsEligible(employer, cchId);
 
-            return Ok(benefits);
+            return ApiResult<List<BenefitPlan>>.ValidResult(benefits, string.Empty);
         }
         [HttpGet]
         public async Task<IHttpActionResult> LoadEmployeeAndDependentsAccumulations(Employer employer, int cchId) {

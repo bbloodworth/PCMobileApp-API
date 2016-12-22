@@ -20,11 +20,11 @@ namespace CchWebAPI.Controllers
 
         [HttpGet]
         //[Route("")]
-        public async Task<IHttpActionResult> Get() {
+        public async Task<ApiResult<List<IdCard.Data.IdCard>>> Get() {
             var result = await _dispatcher.ExecuteAsync(Request.CCHID(),
                 EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())));
 
-            return Ok(result);
+            return ApiResult<List<IdCard.Data.IdCard>>.ValidResult(result, string.Empty);
         }
     }
 }
