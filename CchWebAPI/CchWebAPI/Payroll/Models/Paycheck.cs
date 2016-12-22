@@ -65,6 +65,7 @@ namespace CchWebAPI.Payroll.Models {
             list.Where(p => p.PayrollCategoryName == category).ToList().ForEach(p =>
                 payrollMetrics.Add(new Models.PayrollMetric {
                     Category = p.PayrollCategoryName,
+                    Code = p.PayrollMetricCode,
                     Name = p.PayrollMetricName,
                     DisplayName = p.PayrollMetricDisplayName,
                     PreTaxIndicator = p.PreTaxInd,

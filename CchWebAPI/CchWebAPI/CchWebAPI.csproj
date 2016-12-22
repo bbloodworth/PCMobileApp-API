@@ -277,6 +277,8 @@
     <Compile Include="Employee\Models\OrganizationLevel.cs" />
     <Compile Include="Employee\Models\WorkLocation.cs" />
     <Compile Include="Employee\Models\PlanMember.cs" />
+    <Compile Include="Filters\V2EmployeeFilterAttribute.cs" />
+    <Compile Include="Filters\V2EmployerFilterAttribute.cs" />
     <Compile Include="IdCard\Models\BenefitEnrollment.cs" />
     <Compile Include="IdCard\Models\BenefitEnrollmentStatus.cs" />
     <Compile Include="IdCard\Models\Date.cs" />
@@ -316,7 +318,6 @@
     <Compile Include="IdCard\Data\IdCardContext.cs" />
     <Compile Include="Configuration\SecurityConfiguration.cs" />
     <Compile Include="Controllers\HandshakeController.cs" />
-    <Compile Include="Controllers\MemberCardController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\PartnerHandshakeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

@@ -8,8 +8,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using CchWebAPI.Filters;
 
 namespace CchWebAPI.Controllers {
+    [V2EmployerFilter]
+    
     public class MedicalPlansController : ApiController {
         IMedicalPlanDispatcher _dispatcher;
 
@@ -22,16 +25,15 @@ namespace CchWebAPI.Controllers {
             _dispatcher = new MedicalPlanDispatcher(new MedicalPlanRepository());
         }
         [HttpGet]
-        public async Task<ApiResult<MedicalPlan.Models.MedicalPlan>> GetMedicalPlanAsync(int employerId, int medicalPlanId) {
-            var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == employerId);
+        public async Task<ApiResult<MedicalPlan.Models.MedicalPlan>> GetMedicalPlanAsync(Employer employer, int medicalPlanId) {
             var result = await _dispatcher.GetMedicalPlanAsync(employer, medicalPlanId);
 
             return ApiResult<MedicalPlan.Models.MedicalPlan>.ValidResult(result, string.Empty);
         }
         [HttpGet]
+        [V2EmployeeFilter]
         public async Task<ApiResult<MedicalPlan.Models.MedicalPlanAccumulation>>
-            GetMedicalPlanAccumulationAsync(int employerId, int cchId, int medicalPlanId, int planYear) {
-            var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == employerId);
+            GetMedicalPlanAccumulationAsync(Employer employer, int cchId, int medicalPlanId, int planYear) {
             var result = await _dispatcher.GetMedicalPlanAccumulationAsync(employer, cchId,
                 medicalPlanId, planYear);
 

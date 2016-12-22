@@ -10,12 +10,15 @@ using System.Text.RegularExpressions;
 using System.Web.Http;
 using System.Web.Security;
 using CchWebAPI.Areas.Animation.Models;
-using CchWebAPI.Properties;
 using CchWebAPI.Support;
 
 using ClearCost.IO.Log;
 using NLog;
 using CchWebAPI.Configuration;
+using System.Threading.Tasks;
+using System.Data.SqlClient;
+using ClearCost.Platform;
+using CchWebAPI.Employee.Dispatchers;
 
 namespace CchWebAPI.Areas.Animation.Controllers {
     public class MembershipController : ApiController {
@@ -295,6 +298,11 @@ namespace CchWebAPI.Areas.Animation.Controllers {
                         hrm = Request.CreateResponse(HttpStatusCode.OK, (object)data);
 
                         LogUserLoginHistory(hsRequest.UserName, gkei.CCHID, cnxString);
+
+                        //Load accumulations for all dependents
+                        Task.Run(async () => await LoadEmployeeAndDependentsAccumulationsAsync(
+                            Int32.Parse(employerDb.Tables[0].Rows[0].GetData("employerId")),
+                            Int32.Parse(gkei.CCHID.ToString())));
                     }
                 }
             }
@@ -757,6 +765,29 @@ namespace CchWebAPI.Areas.Animation.Controllers {
                 iulh.CchApplicationId = 2;  // 1 is for Transparency App; 2 is for HR App
                 iulh.PostData(connString);
             }
+        }
+
+        private async Task LoadEmployeeAndDependentsAccumulationsAsync(int employerId, int cchId) {
+
+            // Retrieve employee dependents
+            var employer = EmployerCache.Employers.FirstOrDefault(e =>
+                        e.Id == employerId);
+
+            var repository = new Employee.Data.V2.EmployeeRepository();
+
+            var dispatcher = new EmployeeDispatcher(repository);
+            var members = await dispatcher.GetEmployeeDependentsAsync(employer, cchId);
+
+            using (var ctx = new PlatformContext()) {
+                foreach (var member in members) {
+                
+                    var pEmployerId = new SqlParameter("@EmployerID", employerId);
+                    var pCchId = new SqlParameter("@CCHID", member.CchId);
+
+                    ctx.Database.ExecuteSqlCommand("EXEC CCH_FrontEnd2.dbo.[270_CallConsoleApp] @EmployerID, @CCHID", pEmployerId, pCchId);
+                }
+            }
+            Dispose();
         }
 
         private bool CreateNewMemberAccount(string email,

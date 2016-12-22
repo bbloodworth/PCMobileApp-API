@@ -8,8 +8,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Web.Http;
+using CchWebAPI.Filters;
 
 namespace CchWebAPI.Controllers {
+    [V2EmployerFilter]
     public class PayrollController : ApiController {
         IPayrollDispatcher _dispatcher;
 
@@ -22,15 +24,13 @@ namespace CchWebAPI.Controllers {
             _dispatcher = new PayrollDispatcher(new PayrollRepository());
         }
         [HttpGet]
-        public async Task<ApiResult<List<DatePaid>>> GetDatesPaidAsync(int employerId, int cchId) {
-            var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == employerId);
+        [V2EmployeeFilter]
+        public async Task<ApiResult<List<DatePaid>>> GetDatesPaidAsync(Employer employer, int cchId) {
             var result = await _dispatcher.GetDatePaidAsync(employer, cchId);
-            
+
             return ApiResult<List<DatePaid>>.ValidResult(result, string.Empty);
         }
-
-        public async Task<ApiResult<Paycheck>> GetPaycheckAsync(int employerId, string documentId) {
-            var employer = EmployerCache.Employers.FirstOrDefault(e => e.Id == employerId);
+        public async Task<ApiResult<Paycheck>> GetPaycheckAsync(Employer employer, string documentId) {
             var result = await _dispatcher.GetPaycheckAsync(employer, documentId, Request.CCHID());
 
             return ApiResult<Paycheck>.ValidResult(result, string.Empty);
