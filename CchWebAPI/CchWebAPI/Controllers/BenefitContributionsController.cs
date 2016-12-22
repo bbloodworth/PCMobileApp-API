@@ -21,7 +21,7 @@ namespace CchWebAPI.Controllers
         public BenefitContributionsController() { }
 
         [HttpGet]
-        public async Task<IHttpActionResult> Get (string categoryCode)
+        public async Task<ApiResult<BenefitContribution.Models.BenefitContribution>> Get (string categoryCode)
         {
             
             var result = await _dispatcher.GetContributionsByCchIdAsync(
@@ -29,7 +29,7 @@ namespace CchWebAPI.Controllers
                 EmployerCache.Employers.FirstOrDefault(e => e.Id.Equals(Request.EmployerID())),
                 categoryCode);
 
-            return Ok(result);
+            return ApiResult<BenefitContribution.Models.BenefitContribution>.ValidResult(result, string.Empty);
         }
 
     }

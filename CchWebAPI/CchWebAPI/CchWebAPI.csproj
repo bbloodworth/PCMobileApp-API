@@ -318,7 +318,6 @@
     <Compile Include="IdCard\Data\IdCardContext.cs" />
     <Compile Include="Configuration\SecurityConfiguration.cs" />
     <Compile Include="Controllers\HandshakeController.cs" />
-    <Compile Include="Controllers\MemberCardController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\PartnerHandshakeController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />

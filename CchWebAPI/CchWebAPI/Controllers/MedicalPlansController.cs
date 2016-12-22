@@ -25,19 +25,19 @@ namespace CchWebAPI.Controllers {
             _dispatcher = new MedicalPlanDispatcher(new MedicalPlanRepository());
         }
         [HttpGet]
-        public async Task<IHttpActionResult> GetMedicalPlanAsync(Employer employer, int medicalPlanId) {
+        public async Task<ApiResult<MedicalPlan.Models.MedicalPlan>> GetMedicalPlanAsync(Employer employer, int medicalPlanId) {
             var result = await _dispatcher.GetMedicalPlanAsync(employer, medicalPlanId);
 
-            return Ok(result);
+            return ApiResult<MedicalPlan.Models.MedicalPlan>.ValidResult(result, string.Empty);
         }
         [HttpGet]
         [V2EmployeeFilter]
-        public async Task<IHttpActionResult>
+        public async Task<ApiResult<MedicalPlan.Models.MedicalPlanAccumulation>>
             GetMedicalPlanAccumulationAsync(Employer employer, int cchId, int medicalPlanId, int planYear) {
             var result = await _dispatcher.GetMedicalPlanAccumulationAsync(employer, cchId,
                 medicalPlanId, planYear);
 
-            return Ok(result);
+            return ApiResult<MedicalPlan.Models.MedicalPlanAccumulation>.ValidResult(result, string.Empty);
         }
     }
 }

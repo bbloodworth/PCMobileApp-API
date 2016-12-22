@@ -25,15 +25,15 @@ namespace CchWebAPI.Controllers {
         }
         [HttpGet]
         [V2EmployeeFilter]
-        public async Task<IHttpActionResult> GetDatesPaidAsync(Employer employer, int cchId) {
+        public async Task<ApiResult<List<DatePaid>>> GetDatesPaidAsync(Employer employer, int cchId) {
             var result = await _dispatcher.GetDatePaidAsync(employer, cchId);
-            
-            return Ok(result);
+
+            return ApiResult<List<DatePaid>>.ValidResult(result, string.Empty);
         }
-        public async Task<IHttpActionResult> GetPaycheckAsync(Employer employer, string documentId) {
+        public async Task<ApiResult<Paycheck>> GetPaycheckAsync(Employer employer, string documentId) {
             var result = await _dispatcher.GetPaycheckAsync(employer, documentId, Request.CCHID());
 
-            return Ok(result);
+            return ApiResult<Paycheck>.ValidResult(result, string.Empty);
         }
     }
 }
