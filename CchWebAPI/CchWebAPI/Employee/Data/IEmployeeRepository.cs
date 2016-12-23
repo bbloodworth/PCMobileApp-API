@@ -16,7 +16,7 @@ namespace CchWebAPI.Employee.Data {
     }
     namespace V1 {
         public interface IEmployeeRepository {
-            Task<bool> IsExistingTable(string schema, string table);
+            Task<bool> IsExistingTableAsync(string schema, string table);
             void Initialize(string connectionString);
             Task<Employee> GetEmployeeAsync(int cchId);
         }
@@ -27,7 +27,7 @@ namespace CchWebAPI.Employee.Data {
             //public void Initialize(string connectionString) {
             //    _connectionString = connectionString;
             //}
-            public async Task<bool> IsExistingTable(string schema, string table) {
+            public async Task<bool> IsExistingTableAsync(string schema, string table) {
                 bool tableExists = false;
 
                 using (var ctx = new EmployeeContext(_connectionString)) {
@@ -61,7 +61,7 @@ namespace CchWebAPI.Employee.Data {
     }
     namespace V2 {
         public interface IEmployeeRepository {
-            Task<bool> IsExistingTable(string schema, string table);
+            Task<bool> IsExistingTableAsync(string schema, string table);
             void Initialize(string connectionString);
             Task<Employee> GetEmployeeByKeyAsync(int employeeKey);
             Task<Employee> GetEmployeeByCchIdAsync(int cchId);
@@ -74,7 +74,7 @@ namespace CchWebAPI.Employee.Data {
         }
 
         public class EmployeeRepository : SqlRepository, IEmployeeRepository {
-            public async Task<bool> IsExistingTable(string schema, string table) {
+            public async Task<bool> IsExistingTableAsync(string schema, string table) {
                 bool tableExists = false;
 
                 using (var ctx = new EmployeeContext(_connectionString)) {
