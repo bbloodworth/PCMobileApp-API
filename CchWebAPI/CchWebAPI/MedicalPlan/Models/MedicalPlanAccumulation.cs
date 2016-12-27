@@ -9,7 +9,7 @@ namespace CchWebAPI.MedicalPlan.Models {
         public InsuranceCoverageCategory DeductibleRemainingAmount { get; set; }
         public InsuranceCoverageCategory OutOfPocketMaximumPaid { get; set; }
         public InsuranceCoverageCategory OutOfPocketMaximumRemainingAmount { get; set; }
-        public InsuranceCoverageCategory PlanAmount { get; set; }
+        public InsuranceCoverageCategory PlanDeductible { get; set; }
         public InsuranceCoverageCategory PlanOutOfPocketMaximum { get; set; }
 
         public MedicalPlanAccumulation() {
@@ -26,7 +26,7 @@ namespace CchWebAPI.MedicalPlan.Models {
             DeductibleRemainingAmount = new InsuranceCoverageCategory();
             OutOfPocketMaximumPaid = new InsuranceCoverageCategory();
             OutOfPocketMaximumRemainingAmount = new InsuranceCoverageCategory();
-            PlanAmount = new InsuranceCoverageCategory();
+            PlanDeductible = new InsuranceCoverageCategory();
             PlanOutOfPocketMaximum = new InsuranceCoverageCategory();
         }
 
@@ -47,8 +47,8 @@ namespace CchWebAPI.MedicalPlan.Models {
             OutOfPocketMaximumRemainingAmount.Family = medicalPlanAccumulation.FamilyMaxOopRemainingAmt;
             OutOfPocketMaximumRemainingAmount.Individual = medicalPlanAccumulation.IndividualMaxOopRemainingAmt;
 
-            PlanAmount.Individual = medicalPlanAccumulation.IndividualDeductibleAmt;
-            PlanAmount.Family = medicalPlanAccumulation.FamilyDeductibleAmt;
+            PlanDeductible.Individual = medicalPlanAccumulation.IndividualDeductibleAmt;
+            PlanDeductible.Family = medicalPlanAccumulation.FamilyDeductibleAmt;
 
             PlanOutOfPocketMaximum.Individual = medicalPlanAccumulation.IndividualMaxOOPAmt;
             PlanOutOfPocketMaximum.Family = medicalPlanAccumulation.FamilyMaxOOPAmt;
