@@ -37,6 +37,10 @@ namespace CchWebAPI.MedicalPlan.Data {
         public decimal? FamilyDeductibleRemainingAmt { get; set; } // FamilyDeductibleRemainingAmt
         public decimal? IndividualMaxOopRemainingAmt { get; set; } // IndividualMaxOOPRemainingAmt
         public decimal? FamilyMaxOopRemainingAmt { get; set; } // FamilyMaxOOPRemainingAmt
+        public decimal? IndividualDeductibleAmt { get; set; } // IndividualDeductibleAmt
+        public decimal? FamilyDeductibleAmt { get; set; } // FamilyDeductibleAmt
+        public decimal? IndividualMaxOOPAmt { get; set; } // IndividualMaxOOPAmt
+        public decimal? FamilyMaxOOPAmt { get; set; } // FamilyMaxOOPAmt
 
         //Relationships
         public virtual PlanYear PlanYear { get; set; }
@@ -62,6 +66,10 @@ namespace CchWebAPI.MedicalPlan.Data {
                 Property(x => x.FamilyDeductibleRemainingAmt).HasColumnName(@"FamilyDeductibleRemainingAmt").IsOptional().HasColumnType("money").HasPrecision(19, 4);
                 Property(x => x.IndividualMaxOopRemainingAmt).HasColumnName(@"IndividualMaxOOPRemainingAmt").IsOptional().HasColumnType("money").HasPrecision(19, 4);
                 Property(x => x.FamilyMaxOopRemainingAmt).HasColumnName(@"FamilyMaxOOPRemainingAmt").IsOptional().HasColumnType("money").HasPrecision(19, 4);
+                Property(x => x.IndividualDeductibleAmt).HasColumnName(@"IndividualDeductibleAmt").IsOptional().HasColumnType("money").HasPrecision(18, 20);
+                Property(x => x.FamilyDeductibleAmt).HasColumnName(@"FamilyDeductibleAmt").IsOptional().HasColumnType("money").HasPrecision(18, 20);
+                Property(x => x.IndividualMaxOOPAmt).HasColumnName(@"IndividualMaxOOPAmt").IsOptional().HasColumnType("money").HasPrecision(18, 20);
+                Property(x => x.FamilyMaxOOPAmt).HasColumnName(@"FamilyMaxOOPAmt").IsOptional().HasColumnType("money").HasPrecision(18, 20);
 
                 //Relationships
                 HasRequired(t => t.PlanYear);
