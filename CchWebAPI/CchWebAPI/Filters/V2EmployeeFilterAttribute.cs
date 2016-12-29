@@ -21,13 +21,30 @@ namespace CchWebAPI.Filters {
             var employer = EmployerCache.Employers.FirstOrDefault(e =>
                         e.Id == actionContext.Request.EmployerID());
 
-            var repository = new Employee.Data.V2.EmployeeRepository();
+            var cchId = actionContext.Request.CCHID();
             var members = new List<PlanMember>();
 
-            var dispatcher = new EmployeeDispatcher(repository);
-            Task.Run(async () => members = await dispatcher.GetEmployeeDependentsAsync(
-                            employer,
-                            actionContext.Request.CCHID())).Wait();
+            var repository = new Employee.Data.V2.EmployeeRepository();
+            repository.Initialize(employer.ConnectionString);
+
+
+            // Is this a datawarehouse database?
+            bool isDataWarehouseEnabled = false;
+            Task.Run(async () => isDataWarehouseEnabled =
+                await repository.IsExistingTableAsync("dbo", "BenefitEnrollment_f")).Wait();
+
+            // Always add a record from Request.CCHID()
+            members.Add(new PlanMember {
+                CchId = cchId
+            });
+
+            if (isDataWarehouseEnabled) {
+                // Grab list of members.
+                var dispatcher = new EmployeeDispatcher(repository);
+                Task.Run(async () => members.AddRange(await dispatcher.GetEmployeeDependentsAsync(
+                                employer,
+                                actionContext.Request.CCHID()))).Wait();
+            }
 
             // Verify that the requested cchId is viewable by the logged in cchId.
             int requestedCchId = 0;

@@ -37,14 +37,14 @@ namespace CchWebAPI.Employee.Dispatchers {
             var employee = new Models.Employee();
 
             // Check to see if this database has data warhouse tables.
-            if (await _repositoryV2.IsExistingTable("dbo", "Employee_d")) {
+            if (await _repositoryV2.IsExistingTableAsync("dbo", "Employee_d")) {
                 var employeeData = await _repositoryV2.GetEmployeeByCchIdAsync(cchId);
                 employee.Merge(employeeData);
-                if (await _repositoryV2.IsExistingTable("dbo", "Member_d"))
+                if (await _repositoryV2.IsExistingTableAsync("dbo", "Member_d"))
                 {
                     var memberData = await _repositoryV2.GetMemberByCchIdAsync(cchId);
                     employee.Merge(memberData);
-                    if (await _repositoryV2.IsExistingTable("dbo", "BenefitEnrollment_f"))
+                    if (await _repositoryV2.IsExistingTableAsync("dbo", "BenefitEnrollment_f"))
                     {
                         var medicalData = await _repositoryV2.GetEmployeeBenefitEnrollmentMedicalPlanAsync(memberData.MemberKey);
                         employee.Merge(medicalData);
