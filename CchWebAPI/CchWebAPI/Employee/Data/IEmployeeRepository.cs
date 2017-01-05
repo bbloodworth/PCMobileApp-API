@@ -262,6 +262,11 @@ namespace CchWebAPI.Employee.Data {
 
                         benefitPlans.Add(new BenefitPlan
                         {
+                            Id = employee.BenefitGroupCode,
+                            Name = "Benefit Group"
+                        });
+                        benefitPlans.Add(new BenefitPlan
+                        {
                             Id = employee.EarningsGroupCode,
                             Name = "Earnings Group"
                         });
