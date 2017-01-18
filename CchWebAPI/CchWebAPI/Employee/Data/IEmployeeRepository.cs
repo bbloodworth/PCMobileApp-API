@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace CchWebAPI.Employee.Data {
     // For testing the existence of data warehouse tables.
@@ -67,6 +68,7 @@ namespace CchWebAPI.Employee.Data {
             Task<Employee> GetEmployeeByCchIdAsync(int cchId);
             Task<Member> GetMemberByCchIdAsync(int cchId);
             Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId);
+            Task<List<Dependent>> GetEmployeeMembersAsync(int cchId);
             Task<List<PlanMember>> GetEmployeeDependentsAsync(int cchId);
             Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolledAsync(int cchId, int year);
             Task<List<BenefitPlan>> GetEmployeeBenefitsEligibleAsync(int cchId);
@@ -130,6 +132,107 @@ namespace CchWebAPI.Employee.Data {
                 }
 
                 return member;
+            }
+
+            public async Task<List<Dependent>> GetEmployeeMembersAsync(int cchId) {
+                if (string.IsNullOrEmpty(_connectionString))
+                    throw new InvalidOperationException("Failed to initialize repository");
+
+                List<PlanMember> planMembers = new List<PlanMember>();
+
+                using (var ctx = new EmployeeContext(_connectionString)) {
+                    planMembers = await ctx.BenefitEnrollments
+                        .Join(
+                            ctx.Members,
+                            benefitEnrollment => benefitEnrollment.SubscriberMemberKey,
+                            member => member.MemberKey,
+                            (benefitEnrollment, member) => new {
+                                BenefitEnrollment = benefitEnrollment,
+                                Member = member
+                            })
+                        .Join(
+                            ctx.Members,
+                            benefitEnrollment => benefitEnrollment.BenefitEnrollment.EnrolledMemberKey,
+                            dependent => dependent.MemberKey,
+                            (benefitEnrollment, dependent) => new {
+                                BenefitEnrollment = benefitEnrollment.BenefitEnrollment,
+                                Member = benefitEnrollment.Member,
+                                Dependent = dependent
+                            })
+                        .Join(
+                            ctx.BenefitPlanOptions,
+                            benefitEnrollment => benefitEnrollment.BenefitEnrollment.BenefitPlanOptionKey,
+                            benefitPlanOption => benefitPlanOption.BenefitPlanOptionKey,
+                            (benefitEnrollment, benefitPlanOption) => new {
+                                BenefitEnrollment = benefitEnrollment.BenefitEnrollment,
+                                Member = benefitEnrollment.Member,
+                                Dependent = benefitEnrollment.Dependent,
+                                BenefitPlanOption = benefitPlanOption
+                            })
+                        .Join(
+                            ctx.BenefitEnrollmentStatus,
+                            benefitEnrollment => benefitEnrollment.BenefitEnrollment.BenefitEnrollmentStatusKey,
+                            benefitEnrollmentStatus => benefitEnrollmentStatus.BenefitEnrollmentStatusKey,
+                            (benefitEnrollment, benefitEnrollmentStatus) => new {
+                                BenefitEnrollment = benefitEnrollment.BenefitEnrollment,
+                                Member = benefitEnrollment.Member,
+                                Dependent = benefitEnrollment.Dependent,
+                                BenefitPlanOption = benefitEnrollment.BenefitPlanOption,
+                                BenefitEnrollmentStatus = benefitEnrollmentStatus
+                            }
+                        )
+                        .Where(
+                            p => p.BenefitEnrollment.SubscriberMemberKey.Equals(cchId)
+                            && p.BenefitEnrollmentStatus.BenefitEnrollmentStatusKey.Equals(1)
+                        )
+                        .Select(
+                            p => new PlanMember {
+                                CchId = p.BenefitEnrollment.EnrolledMemberKey,
+                                FirstName = p.Dependent.MemberFirstName,
+                                LastName = p.Dependent.MemberLastName,
+                                BenefitPlanOptionKey = p.BenefitPlanOption.BenefitPlanOptionKey,
+                                BenefitTypeCode = p.BenefitPlanOption.BenefitTypeCode
+                            }
+                        )
+                        .ToListAsync();
+                }
+
+                List<string> benefitTypes = new List<string>(new string[] { "MED", "DEN", "VIS", "RX"});
+
+                List<PlanMember> distinctMembers = planMembers
+                  .GroupBy(p => new { p.FirstName, p.LastName })
+                  .Select(g => g.First())
+                  .ToList();
+
+
+                List<Dependent> dependents = new List<Dependent>();
+
+                foreach (PlanMember member in distinctMembers) {
+                    List<PlanMember> thisMember = planMembers
+                        .Where(i => i.FirstName == member.FirstName && i.LastName == member.LastName)
+                        .ToList();
+
+                    Dependent dependent = new Dependent {
+                        CchId = member.CchId,
+                        FirstName = member.FirstName,
+                        LastName = member.LastName
+                    };
+
+                    Dictionary<string, int> benefit = new Dictionary<string, int>();
+                    foreach (PlanMember line in thisMember) {
+                        //benefit.Add(line.BenefitTypeCode, line.BenefitPlanOptionKey);
+                        if (benefitTypes.Contains(line.BenefitTypeCode)) {
+                            PropertyInfo prop = dependent.GetType().GetProperty(line.BenefitTypeCode, BindingFlags.Public | BindingFlags.Instance);
+                            if (null != prop && prop.CanWrite) {
+                                prop.SetValue(dependent, line.BenefitPlanOptionKey);
+                            }
+                        }
+                    }
+
+                    dependents.Add(dependent);
+                }
+
+                return dependents;
             }
 
             public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId) {
