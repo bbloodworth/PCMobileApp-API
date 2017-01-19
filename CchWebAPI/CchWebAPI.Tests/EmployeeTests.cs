@@ -76,7 +76,7 @@ namespace CchWebAPI.Tests {
                     var dispatcher = new EmployeeDispatcher(repository);
                     var controller = new EmployeesController(dispatcher);
 
-                    var result = await controller.GetEmployeeMembersAsync(
+                    var result = await controller.GetEmployeeDependentsAsync(
                         employer,
                         testAccount.CchId
                     );

@@ -68,7 +68,6 @@ namespace CchWebAPI.Employee.Data {
             Task<Employee> GetEmployeeByCchIdAsync(int cchId);
             Task<Member> GetMemberByCchIdAsync(int cchId);
             Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId);
-            Task<List<Dependent>> GetEmployeeMembersAsync(int cchId);
             Task<List<PlanMember>> GetEmployeeDependentsAsync(int cchId);
             Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolledAsync(int cchId, int year);
             Task<List<BenefitPlan>> GetEmployeeBenefitsEligibleAsync(int cchId);
@@ -134,7 +133,7 @@ namespace CchWebAPI.Employee.Data {
                 return member;
             }
 
-            public async Task<List<Dependent>> GetEmployeeMembersAsync(int cchId) {
+            public async Task<List<PlanMember>> GetEmployeeDependentsAsync(int cchId) {
                 if (string.IsNullOrEmpty(_connectionString))
                     throw new InvalidOperationException("Failed to initialize repository");
 
@@ -205,14 +204,14 @@ namespace CchWebAPI.Employee.Data {
                   .ToList();
 
 
-                List<Dependent> dependents = new List<Dependent>();
+                List<PlanMember> dependents = new List<PlanMember>();
 
                 foreach (PlanMember member in distinctMembers) {
                     List<PlanMember> thisMember = planMembers
                         .Where(i => i.FirstName == member.FirstName && i.LastName == member.LastName)
                         .ToList();
 
-                    Dependent dependent = new Dependent {
+                    PlanMember dependent = new PlanMember {
                         CchId = member.CchId,
                         FirstName = member.FirstName,
                         LastName = member.LastName
@@ -279,49 +278,8 @@ namespace CchWebAPI.Employee.Data {
 
                 return planMembers;
             }
-            public async Task<List<PlanMember>> GetEmployeeDependentsAsync(int cchId) {
-                if (string.IsNullOrEmpty(_connectionString))
-                    throw new InvalidOperationException("Failed to initialize repository");
 
-                List<PlanMember> planMembers = new List<PlanMember>();
 
-                using (var ctx = new EmployeeContext(_connectionString)) {
-                    planMembers = await ctx.BenefitEnrollments
-                        .Join(
-                            ctx.Members,
-                            benefitEnrollment => benefitEnrollment.SubscriberMemberKey,
-                            member => member.MemberKey,
-                            (benefitEnrollment, member) => new {
-                                BenefitEnrollment = benefitEnrollment,
-                                Member = member
-                            })
-                        .Join(
-                            ctx.Members,
-                            benefitEnrollment => benefitEnrollment.BenefitEnrollment.EnrolledMemberKey,
-                            dependent => dependent.MemberKey,
-                            (benefitEnrollment, dependent) => new {
-                                BenefitEnrollment = benefitEnrollment.BenefitEnrollment,
-                                Member = benefitEnrollment.Member,
-                                Dependent = dependent
-                            })
-                        .Where(
-                            //p => p.Dependent.Cchid.Equals(cchId)
-                            p => p.BenefitEnrollment.SubscriberMemberKey.Equals(cchId)
-
-                        )
-                        .Select(
-                            p => new PlanMember {
-                                CchId = p.Dependent.Cchid,
-                                FirstName = p.Dependent.MemberFirstName,
-                                LastName = p.Dependent.MemberLastName
-                            }
-                        )
-                        .Distinct()
-                        .ToListAsync();
-                }
-
-                return planMembers;
-            }
             public async Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolledAsync(int cchId, int year) {
                 if (string.IsNullOrEmpty(_connectionString))
                     throw new InvalidOperationException("Failed to initialize repository");

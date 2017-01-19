@@ -650,7 +650,7 @@ namespace CchWebAPI
                 routeTemplate: "v2/employees/{employerId}/{cchId}/members",
                 defaults: new {
                     controller = "Employees",
-                    action = "GetEmployeeMembersAsync",
+                    action = "GetEmployeeDependentsAsync",
                     employerId = "0",
                     cchId = "0",
                 },
