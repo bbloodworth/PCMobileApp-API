@@ -246,7 +246,7 @@ namespace CchWebAPI.Employee.Data {
                             }
                         )
                         .Where(
-                            p => p.BenefitEnrollment.SubscriberMemberKey.Equals(cchId)
+                            p => p.Member.CchId.Equals(cchId)
                             && p.BenefitEnrollmentStatus.BenefitEnrollmentStatusKey.Equals(1)
                         )
                         .Select(
