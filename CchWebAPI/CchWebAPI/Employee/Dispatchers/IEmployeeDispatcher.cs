@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace CchWebAPI.Employee.Dispatchers {
     public interface IEmployeeDispatcher {
         Task<Models.Employee> GetEmployeeAsync(ClearCost.Platform.Employer employer, int cchId);
-        Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(ClearCost.Platform.Employer employer, int cchId, int planId);
+        Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(ClearCost.Platform.Employer employer, int cchId, int planId, int year);
         Task<List<PlanMember>> GetEmployeeDependentsAsync(ClearCost.Platform.Employer employer, int cchId);
         Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(ClearCost.Platform.Employer employer, int cchId, int year);
         Task<List<BenefitPlan>> GetEmployeeBenefitsEligible(ClearCost.Platform.Employer employer, int cchId);
@@ -65,7 +65,7 @@ namespace CchWebAPI.Employee.Dispatchers {
             return employee;
         }
 
-        public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(ClearCost.Platform.Employer employer, int cchId, int planId) {
+        public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(ClearCost.Platform.Employer employer, int cchId, int planId, int year) {
             if (cchId < 1)
                 throw new ArgumentException("Invalid member context.");
 
@@ -74,7 +74,7 @@ namespace CchWebAPI.Employee.Dispatchers {
 
             _repositoryV2.Initialize(employer.ConnectionString);
 
-            var result = await _repositoryV2.GetEmployeeBenefitPlanMembersAsync(cchId, planId);
+            var result = await _repositoryV2.GetEmployeeBenefitPlanMembersAsync(cchId, planId, year);
 
             return result;
         }

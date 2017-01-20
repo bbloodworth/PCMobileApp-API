@@ -56,7 +56,8 @@ namespace CchWebAPI.Tests {
                     var result = await controller.GetEmployeeBenefitPlanMembersAsync(
                         employer,
                         testAccount.CchId,
-                        benefitPlanId);
+                        benefitPlanId,
+                        2016);
 
                     Assert.IsNotNull(result);
                     //Assert.IsNotNull(result.Content);
