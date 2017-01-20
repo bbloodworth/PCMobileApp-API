@@ -631,13 +631,14 @@ namespace CchWebAPI
 
             config.Routes.MapHttpRoute(
                 name: "EmployeesV2_GetEmployeeBenefitPlanMembers",
-                routeTemplate: "v2/employees/{employerId}/{cchId}/benefit-plans/{planId}/members",
+                routeTemplate: "v2/employees/{employerId}/{cchId}/benefit-plans/{planId}/members/{year}",
                 defaults: new {
                     controller = "Employees",
                     action = "GetEmployeeBenefitPlanMembersAsync",
                     employerId = "0",
                     cchId = "0",
-                    planId = "0"
+                    planId = "0",
+                    year = DateTime.UtcNow.Year
                 },
                 constraints: null,
                 handler: HttpClientFactory.CreatePipeline(

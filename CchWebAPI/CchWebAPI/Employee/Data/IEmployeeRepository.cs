@@ -66,7 +66,7 @@ namespace CchWebAPI.Employee.Data {
             Task<Employee> GetEmployeeByKeyAsync(int employeeKey);
             Task<Employee> GetEmployeeByCchIdAsync(int cchId);
             Task<Member> GetMemberByCchIdAsync(int cchId);
-            Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId);
+            Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId, int year);
             Task<List<PlanMember>> GetEmployeeDependentsAsync(int cchId);
             Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolledAsync(int cchId, int year);
             Task<List<BenefitPlan>> GetEmployeeBenefitsEligibleAsync(int cchId);
@@ -111,7 +111,7 @@ namespace CchWebAPI.Employee.Data {
                 Employee employee = null;
 
                 using (var ctx = new EmployeeContext(_connectionString)) {
-                    employee = await ctx.Employees.FirstOrDefaultAsync(p => p.CchId.Equals(cchId) && p.CurrentRecordInd.Value);
+                    employee = await ctx.Employees.FirstOrDefaultAsync(p => p.CchId.Equals(cchId) && p.CurrentRecordInd.Equals(1));
                 }
 
                 return employee;
@@ -126,13 +126,13 @@ namespace CchWebAPI.Employee.Data {
 
                 using (var ctx = new EmployeeContext(_connectionString))
                 {
-                    member = await ctx.Members.FirstOrDefaultAsync(p => p.Cchid.Equals(cchId) && p.CurrentRecordInd);
+                    member = await ctx.Members.FirstOrDefaultAsync(p => p.CchId.Equals(cchId) && p.CurrentRecordInd.Equals(1));
                 }
 
                 return member;
             }
 
-            public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId) {
+            public async Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(int cchId, int planId, int year) {
                 if (string.IsNullOrEmpty(_connectionString))
                     throw new InvalidOperationException("Failed to initialize repository");
 
@@ -157,15 +157,35 @@ namespace CchWebAPI.Employee.Data {
                                 Member = benefitEnrollment.Member,
                                 Dependent = dependent
                             })
+                        .Join(
+                            ctx.PlanYears,
+                            benefitEnrollment => benefitEnrollment.BenefitEnrollment.PlanYearKey,
+                            planYears => planYears.PlanYearKey,
+                            (benefitEnrollment, planYears) => new {
+                                BenefitEnrollment = benefitEnrollment.BenefitEnrollment,
+                                Member = benefitEnrollment.Member,
+                                Dependent = benefitEnrollment.Dependent,
+                                PlanYear = planYears
+                            })
+                        .Join(
+                            ctx.BenefitEnrollmentStatus,
+                            benefitEnrollment => benefitEnrollment.BenefitEnrollment.BenefitEnrollmentStatusKey,
+                            benefitEnrollmentStatus => benefitEnrollmentStatus.BenefitEnrollmentStatusKey,
+                            (benefitEnrollment, benefitEnrollmentStatus) => new {
+                                BenefitEnrollment = benefitEnrollment.BenefitEnrollment,
+                                PlanYear = benefitEnrollment.PlanYear,
+                                Member = benefitEnrollment.Member,
+                                Dependent = benefitEnrollment.Dependent,
+                                BenefitEnrollmentStatuses = benefitEnrollmentStatus
+                            })
                         .Where(
-                            //p => p.Dependent.Cchid.Equals(cchId)
-                            p => p.BenefitEnrollment.SubscriberMemberKey.Equals(cchId)
+                            p => p.Member.CchId.Equals(cchId)
                             && p.BenefitEnrollment.BenefitPlanOptionKey.Equals(planId)
-                            //&& p.CurrentRecordInd
+                            && p.PlanYear.PlanYearName.Equals(year.ToString())
+                            && p.BenefitEnrollmentStatuses.BenefitEnrollmentStatusName.Equals("Active")
                         )
                         .Select(
                             p => new PlanMember {
-                                //CchId = p.Dependent.Cchid,
                                 CchId = p.BenefitEnrollment.EnrolledMemberKey,
                                 FirstName = p.Dependent.MemberFirstName,
                                 LastName = p.Dependent.MemberLastName
@@ -202,13 +222,12 @@ namespace CchWebAPI.Employee.Data {
                                 Dependent = dependent
                             })
                         .Where(
-                            //p => p.Dependent.Cchid.Equals(cchId)
-                            p => p.BenefitEnrollment.SubscriberMemberKey.Equals(cchId)
+                            p => p.Member.CchId.Equals(cchId)
 
                         )
                         .Select(
                             p => new PlanMember {
-                                CchId = p.Dependent.Cchid,
+                                CchId = p.Dependent.CchId,
                                 FirstName = p.Dependent.MemberFirstName,
                                 LastName = p.Dependent.MemberLastName
                             }
@@ -244,13 +263,36 @@ namespace CchWebAPI.Employee.Data {
                             benefitEnrollments => benefitEnrollments.BenefitEnrollments.BenefitPlanOptionKey,
                             benefitPlanOptions => benefitPlanOptions.BenefitPlanOptionKey,
                             (benefitEnrollments, benefitPlanOptions) => new {
-                                BenefitEnrollments = benefitEnrollments,
+                                BenefitEnrollments = benefitEnrollments.BenefitEnrollments,
+                                PlanYears = benefitEnrollments.PlanYears,
                                 BenefitPlanOptions = benefitPlanOptions
+                            })
+                        .Join(
+                            ctx.Members,
+                            benefitEnrollments => benefitEnrollments.BenefitEnrollments.EnrolledMemberKey,
+                            members => members.MemberKey,
+                            (benefitEnrollments, members) => new {
+                                BenefitEnrollments = benefitEnrollments.BenefitEnrollments,
+                                PlanYears = benefitEnrollments.PlanYears,
+                                BenefitPlanOptions = benefitEnrollments.BenefitPlanOptions,
+                                Members = members
+                            })
+                        .Join(
+                            ctx.BenefitEnrollmentStatus,
+                            benefitEnrollments => benefitEnrollments.BenefitEnrollments.BenefitEnrollmentStatusKey,
+                            benefitEnrollmentStatuses => benefitEnrollmentStatuses.BenefitEnrollmentStatusKey,
+                            (benefitEnrollments, benefitEnrollmentStatuses) => new {
+                                BenefitEnrollments = benefitEnrollments.BenefitEnrollments,
+                                PlanYears = benefitEnrollments.PlanYears,
+                                BenefitPlanOptions = benefitEnrollments.BenefitPlanOptions,
+                                Members = benefitEnrollments.Members,
+                                BenefitEnrollmentStatuses = benefitEnrollmentStatuses
                             })
                         .Where(
                             p =>
-                                p.BenefitEnrollments.BenefitEnrollments.SubscriberMemberKey.Equals(cchId)
-                                && p.BenefitEnrollments.PlanYears.PlanYearName.Equals(year.ToString())
+                                p.Members.CchId.Equals(cchId)
+                                && p.PlanYears.PlanYearName.Equals(year.ToString())
+                                && p.BenefitEnrollmentStatuses.BenefitEnrollmentStatusName.Equals("Active")
                         )
                         .Select(
                             p => new BenefitPlan {
@@ -282,7 +324,9 @@ namespace CchWebAPI.Employee.Data {
 
                 using (var ctx = new EmployeeContext(_connectionString)) {
                     var employee = await ctx.Employees
-                        .FirstOrDefaultAsync(p => p.CchId.Equals(cchId));
+                        .FirstOrDefaultAsync(
+                            p => p.CchId.Equals(cchId)
+                            && p.CurrentRecordInd.Equals(1));
 
                     if (employee != null) {
                         benefitPlans.Add(new BenefitPlan
