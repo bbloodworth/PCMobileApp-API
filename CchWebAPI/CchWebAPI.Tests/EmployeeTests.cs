@@ -56,11 +56,34 @@ namespace CchWebAPI.Tests {
                     var result = await controller.GetEmployeeBenefitPlanMembersAsync(
                         employer,
                         testAccount.CchId,
-                        benefitPlanId);
+                        benefitPlanId,
+                        2016);
 
                     Assert.IsNotNull(result);
                     //Assert.IsNotNull(result.Content);
                 }
+            }
+        }
+        [TestMethod]
+        [TestCategory("Employees Tests")]
+        public async Task CanGetMembers() {
+            foreach (var testAccount in TestAccounts.TyLinAccounts.Accounts) {
+                    var employer = EmployerCache.Employers.FirstOrDefault(e =>
+                        e.Id == testAccount.EmployerId);
+
+                    var repository = new Employee.Data.V2.EmployeeRepository();
+                    repository.Initialize(employer.ConnectionString);
+
+                    var dispatcher = new EmployeeDispatcher(repository);
+                    var controller = new EmployeesController(dispatcher);
+
+                    var result = await controller.GetEmployeeDependentsAsync(
+                        employer,
+                        testAccount.CchId
+                    );
+
+                    Assert.IsNotNull(result);
+                    //Assert.IsNotNull(result.Content);
             }
         }
     }

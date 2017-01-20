@@ -11,6 +11,7 @@ namespace CchWebAPI.Employee.Dispatchers {
     public interface IEmployeeDispatcher {
         Task<Models.Employee> GetEmployeeAsync(ClearCost.Platform.Employer employer, int cchId);
         Task<List<PlanMember>> GetEmployeeBenefitPlanMembersAsync(ClearCost.Platform.Employer employer, int cchId, int planId, int year);
+        Task<List<PlanMember>> GetEmployeeDependentsAsync(ClearCost.Platform.Employer employer, int cchId);
         Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolled(ClearCost.Platform.Employer employer, int cchId, int year);
         Task<List<BenefitPlan>> GetEmployeeBenefitsEligible(ClearCost.Platform.Employer employer, int cchId);
     }

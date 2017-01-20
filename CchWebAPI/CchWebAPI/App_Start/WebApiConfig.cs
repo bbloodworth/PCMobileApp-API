@@ -646,6 +646,22 @@ namespace CchWebAPI
                     AuthenticatedAccountHandlers)
                 );
 
+            config.Routes.MapHttpRoute(
+                name: "EmployeesV2_GetEmployeeMembers",
+                routeTemplate: "v2/employees/{employerId}/{cchId}/members",
+                defaults: new {
+                    controller = "Employees",
+                    action = "GetEmployeeDependentsAsync",
+                    employerId = "0",
+                    cchId = "0",
+                },
+                constraints: null,
+                handler: HttpClientFactory.CreatePipeline(
+                    new HttpControllerDispatcher(config),
+                    AuthenticatedAccountHandlers)
+                );
+
+
             //{{hostname}}/v2/employees/21/63841/medical-plans/45/accumulations/2016
             config.Routes.MapHttpRoute(
                 name: "MedicalPlansV2_GetMedicalPlanAccumulation",

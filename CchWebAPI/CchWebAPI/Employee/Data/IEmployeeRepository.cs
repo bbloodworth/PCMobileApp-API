@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace CchWebAPI.Employee.Data {
     // For testing the existence of data warehouse tables.
@@ -196,6 +197,7 @@ namespace CchWebAPI.Employee.Data {
 
                 return planMembers;
             }
+
             public async Task<List<PlanMember>> GetEmployeeDependentsAsync(int cchId) {
                 if (string.IsNullOrEmpty(_connectionString))
                     throw new InvalidOperationException("Failed to initialize repository");
@@ -221,23 +223,82 @@ namespace CchWebAPI.Employee.Data {
                                 Member = benefitEnrollment.Member,
                                 Dependent = dependent
                             })
+                        .Join(
+                            ctx.BenefitPlanOptions,
+                            benefitEnrollment => benefitEnrollment.BenefitEnrollment.BenefitPlanOptionKey,
+                            benefitPlanOption => benefitPlanOption.BenefitPlanOptionKey,
+                            (benefitEnrollment, benefitPlanOption) => new {
+                                BenefitEnrollment = benefitEnrollment.BenefitEnrollment,
+                                Member = benefitEnrollment.Member,
+                                Dependent = benefitEnrollment.Dependent,
+                                BenefitPlanOption = benefitPlanOption
+                            })
+                        .Join(
+                            ctx.BenefitEnrollmentStatus,
+                            benefitEnrollment => benefitEnrollment.BenefitEnrollment.BenefitEnrollmentStatusKey,
+                            benefitEnrollmentStatus => benefitEnrollmentStatus.BenefitEnrollmentStatusKey,
+                            (benefitEnrollment, benefitEnrollmentStatus) => new {
+                                BenefitEnrollment = benefitEnrollment.BenefitEnrollment,
+                                Member = benefitEnrollment.Member,
+                                Dependent = benefitEnrollment.Dependent,
+                                BenefitPlanOption = benefitEnrollment.BenefitPlanOption,
+                                BenefitEnrollmentStatus = benefitEnrollmentStatus
+                            }
+                        )
                         .Where(
                             p => p.Member.CchId.Equals(cchId)
-
+                            && p.BenefitEnrollmentStatus.BenefitEnrollmentStatusKey.Equals(1)
                         )
                         .Select(
                             p => new PlanMember {
-                                CchId = p.Dependent.CchId,
+                                CchId = p.BenefitEnrollment.EnrolledMemberKey,
                                 FirstName = p.Dependent.MemberFirstName,
-                                LastName = p.Dependent.MemberLastName
+                                LastName = p.Dependent.MemberLastName,
+                                BenefitPlanOptionKey = p.BenefitPlanOption.BenefitPlanOptionKey,
+                                BenefitTypeCode = p.BenefitPlanOption.BenefitTypeCode
                             }
                         )
-                        .Distinct()
                         .ToListAsync();
                 }
 
-                return planMembers;
+                List<string> benefitTypes = new List<string>(new string[] { "MED", "DEN", "VIS", "RX" });
+
+                List<PlanMember> distinctMembers = planMembers
+                  .GroupBy(p => new { p.FirstName, p.LastName })
+                  .Select(g => g.First())
+                  .ToList();
+
+
+                List<PlanMember> dependents = new List<PlanMember>();
+
+                foreach (PlanMember member in distinctMembers) {
+                    List<PlanMember> thisMember = planMembers
+                        .Where(i => i.FirstName == member.FirstName && i.LastName == member.LastName)
+                        .ToList();
+
+                    PlanMember dependent = new PlanMember {
+                        CchId = member.CchId,
+                        FirstName = member.FirstName,
+                        LastName = member.LastName
+                    };
+
+                    Dictionary<string, int> benefit = new Dictionary<string, int>();
+                    foreach (PlanMember line in thisMember) {
+                        //benefit.Add(line.BenefitTypeCode, line.BenefitPlanOptionKey);
+                        if (benefitTypes.Contains(line.BenefitTypeCode)) {
+                            PropertyInfo prop = dependent.GetType().GetProperty(line.BenefitTypeCode, BindingFlags.Public | BindingFlags.Instance);
+                            if (null != prop && prop.CanWrite) {
+                                prop.SetValue(dependent, line.BenefitPlanOptionKey);
+                            }
+                        }
+                    }
+
+                    dependents.Add(dependent);
+                }
+
+                return dependents;
             }
+
             public async Task<List<BenefitPlan>> GetEmployeeBenefitsEnrolledAsync(int cchId, int year) {
                 if (string.IsNullOrEmpty(_connectionString))
                     throw new InvalidOperationException("Failed to initialize repository");

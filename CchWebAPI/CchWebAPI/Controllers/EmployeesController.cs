@@ -37,6 +37,13 @@ namespace CchWebAPI.Controllers {
         }
 
         [HttpGet]
+        public async Task<ApiResult<List<PlanMember>>> GetEmployeeDependentsAsync(Employer employer, int cchId) {
+            var planMembers = await _dispatcher.GetEmployeeDependentsAsync(employer, cchId);
+
+            return ApiResult<List<PlanMember>>.ValidResult(planMembers, string.Empty);
+        }
+
+        [HttpGet]
         public async Task<ApiResult<List<BenefitPlan>>> GetEmployeeBenefitsEnrolled(Employer employer, int cchId, int year) {
             var benefits = await _dispatcher.GetEmployeeBenefitsEnrolled(employer, cchId, year);
 
