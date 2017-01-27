@@ -112,7 +112,7 @@ namespace CchWebAPI.Employee.Data {
                 Employee employee = null;
 
                 using (var ctx = new EmployeeContext(_connectionString)) {
-                    employee = await ctx.Employees.FirstOrDefaultAsync(p => p.CchId.Equals(cchId) && p.CurrentRecordInd.Equals(1));
+                    employee = await ctx.Employees.FirstOrDefaultAsync(p => p.CchId.Equals(cchId) && p.CurrentRecordInd.Value);
                 }
 
                 return employee;
@@ -127,7 +127,7 @@ namespace CchWebAPI.Employee.Data {
 
                 using (var ctx = new EmployeeContext(_connectionString))
                 {
-                    member = await ctx.Members.FirstOrDefaultAsync(p => p.CchId.Equals(cchId) && p.CurrentRecordInd.Equals(1));
+                    member = await ctx.Members.FirstOrDefaultAsync(p => p.CchId.Equals(cchId) && p.CurrentRecordInd);
                 }
 
                 return member;
@@ -387,7 +387,7 @@ namespace CchWebAPI.Employee.Data {
                     var employee = await ctx.Employees
                         .FirstOrDefaultAsync(
                             p => p.CchId.Equals(cchId)
-                            && p.CurrentRecordInd.Equals(1));
+                            && p.CurrentRecordInd.Value);
 
                     if (employee != null) {
                         benefitPlans.Add(new BenefitPlan
