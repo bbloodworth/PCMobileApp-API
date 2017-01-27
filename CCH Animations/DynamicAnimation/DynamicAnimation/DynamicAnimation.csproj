@@ -621,6 +621,8 @@
     <Content Include="Views\Card\medID_united_PPO_front.cshtml" />
     <Content Include="Views\Card\medID_united_PPO_full_back.cshtml" />
     <Content Include="Views\Card\medID_united_PPO_full_front.cshtml" />
+    <Content Include="Views\Card\MED_Kaiser_TYLin_Back.cshtml" />
+    <Content Include="Views\Card\MED_Kaiser_TYLin_full_back.cshtml" />
     <None Include="Web.Dev.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
