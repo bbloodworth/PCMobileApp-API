@@ -7,6 +7,7 @@ namespace CchWebAPI.PaidTimeOff.Models {
         public int EmployerKey { get; set; }
         public int EmployeeKey { get; set; }
         public int PaycheckDateKey { get; set; }
+        public int AccruedThroughDateKey { get; set; }
         public int PayrollMetricKey { get; set; }
         public float AccrualRate { get; set; }
         public int PerPeriodHoursQty { get; set; }

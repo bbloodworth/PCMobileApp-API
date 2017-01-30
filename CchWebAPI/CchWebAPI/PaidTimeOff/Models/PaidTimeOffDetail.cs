@@ -8,7 +8,7 @@ namespace CchWebAPI.PaidTimeOff.Models {
         public int CchId { get; set; }
         [JsonIgnore]
         public int EmployerKey { get; set; }
-        public int PaycheckDateKey { get; set; }
+        public DateTime AccruedThroughDate { get; set; }
         public double? AccrualRate { get; set; }
 	    public decimal? PerPeriodHoursQty { get; set; }
         public double? PerPeriodAccruedQty { get; set; }

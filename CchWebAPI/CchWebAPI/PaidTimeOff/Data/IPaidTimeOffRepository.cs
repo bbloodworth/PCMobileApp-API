@@ -29,47 +29,55 @@ namespace CchWebAPI.PaidTimeOff.Data {
             using (var context = new PaidTimeOffContext(_connectionString)) {
                 // QUERY the data warehouse for the users PTO details
                 var query = context.PTOSnapshots.
-                    Join(context.Employees,
-                        pto => pto.EmployeeKey, e => e.EmployeeKey,
-                        (pto, e) => new {
-                            CchId = e.CchId,
-                            FirstName = e.EmployeeFirstName,
-                            LastName = e.EmployeeLastName,
-                            PaycheckDateKey = pto.PaycheckDateKey,
-                            AccrualRate = pto.AccrualRate,
-                            PerPeriodAccruedQty = pto.PerPeriodAccruedQty,
-                            PerPeriodHoursQty = pto.PerPeriodHoursQty,
-                            PerPeriodTakenQty = pto.PerPeriodTakenQty,
-                            YTDAccruedQty = pto.YTDAccruedQty,
-                            YTDTakenQty = pto.YTDTakenQty,
-                            PayrollMetricKey = pto.PayrollMetricKey,
-                            AvailableBalanceQty = pto.AvailableBalanceQty,
-                            CurrentRecordInd = pto.CurrentRecordInd
-                        }).
-                    Join(context.PayrollMetrics,
-                        a => a.PayrollMetricKey, p => p.PayrollMetricKey,
-                        (a, p) => new PaidTimeOffDetail {
-                            CchId = a.CchId,
-                            PaycheckDateKey = a.PaycheckDateKey,
-                            AccrualRate = a.AccrualRate,
-                            PerPeriodAccruedQty = a.PerPeriodAccruedQty,
-                            PerPeriodHoursQty = a.PerPeriodHoursQty,
-                            PerPeriodTakenQty = a.PerPeriodTakenQty,
-                            YTDAccruedQty = a.YTDAccruedQty,
-                            YTDTakenQty = a.YTDTakenQty,
-                            AvailableBalanceQty = a.AvailableBalanceQty,
-                            CurrentRecordInd = a.CurrentRecordInd,
-                            PayrollCategoryName = p.PayrollCategoryName,
-                            ReportingCategoryCode = p.ReportingCategoryCode
-                        }
-                    ).Where(a =>
-                       a.CurrentRecordInd.Equals(true)
-                       && a.CchId.Equals(cchid)
-                    );
+                    Join(
+                        context.Employees,
+                        pto => pto.EmployeeKey,
+                        employee => employee.EmployeeKey,
+                        (paidTimeOff, employee) => new {
+                            PaidTimeOff = paidTimeOff,
+                            Employee = employee
+                        })
+                    .Join(
+                        context.Dates,
+                        paidTimeOff => paidTimeOff.PaidTimeOff.AccruedThroughDateKey,
+                        date => date.DateKey,
+                        (paidTimeOff, date) => new {
+                            PaidTimeOff = paidTimeOff.PaidTimeOff,
+                            Employee = paidTimeOff.Employee,
+                            Date = date
+                        })
+                    .Join(
+                        context.PayrollMetrics,
+                        paidTimeOff => paidTimeOff.PaidTimeOff.PayrollMetricKey,
+                        payrollMetric => payrollMetric.PayrollMetricKey,
+                        (paidTimeOff, payrollMetric) => new {
+                            PaidTimeOff = paidTimeOff.PaidTimeOff,
+                            Employee = paidTimeOff.Employee,
+                            Date = paidTimeOff.Date,
+                            PayrollMetric = payrollMetric
+                        })
+                    .Where(a =>
+                       a.PaidTimeOff.CurrentRecordInd.Equals(true)
+                       && a.Employee.CchId.Equals(cchid)
+                    )
+                    .Select(
+                        a => new PaidTimeOffDetail {
+                            CchId = a.Employee.CchId,
+                            AccruedThroughDate = a.Date.FullDate,
+                            AccrualRate = a.PaidTimeOff.AccrualRate,
+                            PerPeriodAccruedQty = a.PaidTimeOff.PerPeriodAccruedQty,
+                            PerPeriodHoursQty = a.PaidTimeOff.PerPeriodHoursQty,
+                            PerPeriodTakenQty = a.PaidTimeOff.PerPeriodTakenQty,
+                            YTDAccruedQty = a.PaidTimeOff.YTDAccruedQty,
+                            YTDTakenQty = a.PaidTimeOff.YTDTakenQty,
+                            AvailableBalanceQty = a.PaidTimeOff.AvailableBalanceQty,
+                            CurrentRecordInd = a.PaidTimeOff.CurrentRecordInd,
+                            PayrollCategoryName = a.PayrollMetric.PayrollCategoryName,
+                            ReportingCategoryCode = a.PayrollMetric.ReportingCategoryCode
+                        });
 
                 // GET data from the db
                 dbResult = await query.ToListAsync();
-
 
                 return dbResult;
             }
